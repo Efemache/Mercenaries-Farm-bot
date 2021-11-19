@@ -4,3 +4,9 @@ files/3840x2160/screen.png
 files/1920x1080/part.png
 files/2560x1440/part.png
 files/3840x2160/part.png
+files/1920x1080/heroes/*/main.png
+files/2560x1440/heroes/*/main.png
+files/3840x2160/heroes/*/main.png
+files/1920x1080/heroes/*/group.png
+files/2560x1440/heroes/*/group.png
+files/3840x2160/heroes/*/group.png
