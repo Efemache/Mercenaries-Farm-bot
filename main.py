@@ -441,7 +441,8 @@ def nextlvl():
             print("back nextlevel4")
             break
         else:
-            pyautogui.moveTo(windowMP()[2] / 2, windowMP()[3] - windowMP()[3] / 4.8, setings[7], mouse_random_movement())
+            #pyautogui.moveTo(windowMP()[2] / 2, windowMP()[3] - windowMP()[3] / 4.8, setings[7], mouse_random_movement()) 
+            pyautogui.moveTo(windowMP()[0] + windowMP()[2] / 2, windowMP()[1] + windowMP()[3] - windowMP()[3] / 4.8, setings[7], mouse_random_movement())
             pyautogui.click()
             time.sleep(1.5)
 	# buttons 7: 'play'
@@ -519,7 +520,8 @@ def abilicks(index):
             if raund == 1:
                 if find_ellement(obj + '/abilics/1.png', 14):
                     return True
-            pyautogui.moveTo(int(windowMP()[2] / 2.5), int(windowMP()[2] / 4), setings[7], mouse_random_movement())
+            #pyautogui.moveTo(int(windowMP()[2] / 2.5), int(windowMP()[2] / 4), setings[7], mouse_random_movement())
+            pyautogui.moveTo(int(windowMP()[0] + windowMP()[2] / 2.5), int(windowMP()[1] + windowMP()[2] / 4), setings[7], mouse_random_movement())
             pyautogui.click()
             return True
 
@@ -533,7 +535,8 @@ def abilicks(index):
             if raund > 1:
                 if find_ellement(obj + '/abilics/2.png', 14):
                     return True
-            pyautogui.moveTo(int(windowMP()[2] / 2.5), int(windowMP()[2] / 4), setings[7], mouse_random_movement())
+            #pyautogui.moveTo(int(windowMP()[2] / 2.5), int(windowMP()[2] / 4), setings[7], mouse_random_movement())
+            pyautogui.moveTo(int(windowMP()[0] + windowMP()[2] / 2.5), int(windowMP()[1] + windowMP()[2] / 4), setings[7], mouse_random_movement())
             pyautogui.click()
             return True
 
@@ -544,7 +547,8 @@ def abilicks(index):
             if raund % 2 == 0:
                 if find_ellement(obj + '/abilics/3.png', 14):
                     return False
-            pyautogui.moveTo(int(windowMP()[2] / 2.5), int(windowMP()[2] / 4), setings[7], mouse_random_movement())
+            #pyautogui.moveTo(int(windowMP()[2] / 2.5), int(windowMP()[2] / 4), setings[7], mouse_random_movement())
+            pyautogui.moveTo(int(windowMP()[0] + windowMP()[2] / 2.5), int(windowMP()[1] + windowMP()[2] / 4), setings[7], mouse_random_movement())
             pyautogui.click()
             return True
         elif obj == 'heroes/38':
@@ -557,7 +561,8 @@ def abilicks(index):
             if raund > 1:
                 if find_ellement(obj + '/abilics/2.png', 14):
                     return True
-            pyautogui.moveTo(int(windowMP()[2] / 2.5), int(windowMP()[2] / 4), setings[7], mouse_random_movement())
+            #pyautogui.moveTo(int(windowMP()[2] / 2.5), int(windowMP()[2] / 4), setings[7], mouse_random_movement())
+            pyautogui.moveTo(int(windowMP()[0] + windowMP()[2] / 2.5), int(windowMP()[1] + windowMP()[2] / 4), setings[7], mouse_random_movement())
             pyautogui.click()
             return True
         elif obj == 'heroes/40':
@@ -570,7 +575,8 @@ def abilicks(index):
             if raund > 1:
                 if find_ellement(obj + '/abilics/2.png', 14):
                     return True
-            pyautogui.moveTo(int(windowMP()[2] / 2.5), int(windowMP()[2] / 4), setings[7], mouse_random_movement())
+            #pyautogui.moveTo(int(windowMP()[2] / 2.5), int(windowMP()[2] / 4), setings[7], mouse_random_movement())
+            pyautogui.moveTo(int(windowMP()[0] + windowMP()[2] / 2.5), int(windowMP()[1] + windowMP()[2] / 4), setings[7], mouse_random_movement())
             pyautogui.click()
             return True
         elif obj == 'heroes/42':
@@ -583,7 +589,9 @@ def abilicks(index):
             if raund > 1:
                 if find_ellement(obj + '/abilics/2.png', 14):
                     return True
-    pyautogui.moveTo(int(windowMP()[2] / 2.5), int(windowMP()[2] / 4), setings[7], mouse_random_movement())
+                
+    #pyautogui.moveTo(int(windowMP()[2] / 2.5), int(windowMP()[2] / 4), setings[7], mouse_random_movement())
+    pyautogui.moveTo(int(windowMP()[0] + windowMP()[2] / 2.5), int(windowMP()[1] + windowMP()[2] / 4), setings[7], mouse_random_movement())
     pyautogui.click()
     return True
 
@@ -637,7 +645,6 @@ def battle():
     while True:
         if road == True:
             break
-        #pyautogui.moveTo(windowMP()[2] / 2, windowMP()[3] - windowMP()[3] / 4.6, setings[7], mouse_random_movement())
         pyautogui.moveTo(windowMP()[0] + (windowMP()[2] / 2.6), windowMP()[1] + (windowMP()[3] * 0.92), setings[7], mouse_random_movement())
         speed = 0
         sens = 0.85
@@ -645,7 +652,8 @@ def battle():
         find_ellement(buttons[20], 14)
 	# chekers 13: 'win'
         if find_ellement(chekers[13], 1):
-            pyautogui.moveTo(windowMP()[2] / 2, windowMP()[3] - windowMP()[3] / 4.6, setings[7], mouse_random_movement())
+            #pyautogui.moveTo(windowMP()[2] / 2, windowMP()[3] - windowMP()[3] / 4.6, setings[7], mouse_random_movement())
+            pyautogui.moveTo(windowMP()[0] + windowMP()[2] / 2, windowMP()[1] + windowMP()[3] - windowMP()[3] / 4.6, setings[7], mouse_random_movement())
             while True:
 	# Ui_Ellements 18: 'findthis'
                 if not find_ellement(Ui_Ellements[18], 1):
@@ -668,7 +676,8 @@ def battle():
 
         # chekers 23: 'lose'
         if find_ellement(chekers[23], 1):
-            pyautogui.moveTo(windowMP()[2] / 2, windowMP()[3] - windowMP()[3] / 4.6, setings[7], mouse_random_movement())
+            #pyautogui.moveTo(windowMP()[2] / 2, windowMP()[3] - windowMP()[3] / 4.6, setings[7], mouse_random_movement())
+            pyautogui.moveTo(windowMP()[0] + windowMP()[2] / 2, windowMP()[1] + windowMP()[3] - windowMP()[3] / 4.6, setings[7], mouse_random_movement())
             while True:
                 # buttons 0: 'back'
                 if not find_ellement(buttons[0], 14) :
@@ -860,7 +869,7 @@ def battlego():
 	# Ui_Ellements 32: 'free_battle'
     find_ellement(Ui_Ellements[0], 14) or find_ellement(Ui_Ellements[32],14)
     while True:
-        pyautogui.moveTo(windowMP()[0] + windowMP()[2] / 1.5, windowMP()[1] + windowMP()[3] / 2)
+        pyautogui.moveTo(windowMP()[0] + windowMP()[2] / 1.5, windowMP()[1] + windowMP()[3] / 2, setings[7], mouse_random_movement())
         levelchoice()
 	# chekers 15: 'levelstarted'
         if find_ellement(chekers[15], 14):
@@ -898,6 +907,7 @@ def battlego():
         if not find_ellement(chekers[2], 2):
 	# buttons 12: 'start1'
             find_ellement(buttons[12], 2)
+            pyautogui.moveTo(windowMP()[0] + windowMP()[2] / 1.5, windowMP()[1] + windowMP()[3] / 2, setings[7], mouse_random_movement())
             break
     while True:
         time.sleep(1.5)
