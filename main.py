@@ -891,7 +891,7 @@ def battlego():
     while True:
         time.sleep(1)
 	# setings 1: 'level(ex:20)'
-        if find_ellement("levels/" + setings[1] + ".png", 14):
+        if find_ellement("levels/" + setings[2] + "_" + setings[3] + "_" + setings[1] + ".png", 14):
             time.sleep(0.5)
 	# buttons 11: 'start'
             find_ellement(buttons[11], 14)
