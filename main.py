@@ -52,6 +52,8 @@ zipp = False
 zipchek = False
 global open
 open = False
+global createGroup
+createGroup = False
 sens = 0.75
 # for_future=['','','','','','','','','','','','','','','','','','','',]
 # Ui-ellements
@@ -106,6 +108,7 @@ def mouse_random_movement():
 def configread():
     global Resolution
     global speed
+    global createGroup
     config = configparser.ConfigParser()
     config.read("settings.ini")
     speed = float((config["BotSettings"]["bot_speed"]).split("#")[0])
@@ -117,6 +120,7 @@ def configread():
     setings.append(config["BotSettings"]["Monitor Resolution"].replace('*', 'x'))
     for i in ["level", "location", "mode", "GroupCreate", "heroesSet"]:
         setings.append(config["BotSettings"][i])
+    createGroup = setings[4]
     setings.append(int(config["BotSettings"]["monitor"]))
     setings.append(float(config["BotSettings"]["MouseSpeed"]))
     print(setings)
@@ -141,6 +145,7 @@ def configread():
                 hero.append(rt)
                 hero_colour.append(rt)
 
+    
     print(setings)
 
 
@@ -356,6 +361,9 @@ def collect():
 
 
 def nextlvl():
+    """ Start battle and do some actions on Map
+    """
+
     if road == True:
         print("back nextlevel")
         return
@@ -388,7 +396,6 @@ def nextlvl():
         x, y = find_ellement(Ui_Ellements[13 + i], 12)
         if x != 0:
             pyautogui.moveTo(x, y + windowMP()[3] / 2.5, setings[7], mouse_random_movement())
-            #pyautogui.moveTo(x, windowMP()[1] + (y + windowMP()[3] / 2.5), setings[7], mouse_random_movement())
             pyautogui.click()
             break
     sens = 0.7
@@ -402,16 +409,17 @@ def nextlvl():
         return
     time.sleep(1.5)
 	# buttons 7: 'play'
-    find_ellement(buttons[7], 2)
+    #find_ellement(buttons[7], 2)
 	# buttons 25: 'visit'
     if find_ellement(buttons[25], 14):
         time.sleep(0.5)
-        pyautogui.click()
+        #pyautogui.click()
         nextlvl()
         print("call1")
         return
 	# Ui_Ellements 19: 'sombody'
-    if find_ellement(Ui_Ellements[19], 1):
+    #if find_ellement(Ui_Ellements[19], 1):
+    while find_ellement(Ui_Ellements[19], 1):
         temp = random.randint(0, 2)
         if temp == 0:
             x = windowMP()[2] / 2.3
@@ -423,13 +431,14 @@ def nextlvl():
             x = windowMP()[2] / 1.4
             pyautogui.moveTo(x, y, setings[7], mouse_random_movement())
         pyautogui.click()
-	# buttons 18: 'take1'
+        time.sleep(0.2)
+        # buttons 18: 'take1'
         find_ellement(buttons[18], 9)
-        time.sleep(1.5)
-	# buttons 7: 'play'
-        find_ellement(buttons[7], 2)
+        time.sleep(2)
+        # buttons 7: 'play'
+    #find_ellement(buttons[7], 2)
     while True:
-	# Ui_Ellements 24: 'pick'
+        # Ui_Ellements 24: 'pick'
         if find_ellement(Ui_Ellements[24], 14):
             time.sleep(0.5)
             pyautogui.click()
@@ -437,17 +446,16 @@ def nextlvl():
             nextlvl()
             print("back nextlevel3")
             return 0
-	# Ui_Ellements 23: 'startbat'
+        # Ui_Ellements 23: 'startbat'
         if find_ellement(Ui_Ellements[23], 14):
             seth()
             print("back nextlevel4")
             break
         else:
-            #pyautogui.moveTo(windowMP()[2] / 2, windowMP()[3] - windowMP()[3] / 4.8, setings[7], mouse_random_movement()) 
             pyautogui.moveTo(windowMP()[0] + windowMP()[2] / 2, windowMP()[1] + windowMP()[3] - windowMP()[3] / 4.8, setings[7], mouse_random_movement())
             pyautogui.click()
             time.sleep(1.5)
-	# buttons 7: 'play'
+            # buttons 7: 'play'
             find_ellement(buttons[7], 14)
         if road == True:
             print("back nextlevel5")
@@ -831,127 +839,126 @@ def seth():
 
 
 
-def levelchoice():
+def travelpointSelection():
+    """ Choose a Travel Point (The Barrens, Felwood, ...)
+        and the mode : Normal or Heroic
+    """
     global sens
-    temp = sens
-    sens = 0.65
+#    temp = sens
+#    sens = 0.65
     time.sleep(0.5)
     pyautogui.moveTo(windowMP()[0] + windowMP()[2] / 1.5, windowMP()[1] + windowMP()[3] / 2, setings[7], mouse_random_movement())
-    #for i in range(70):
-    #    pyautogui.scroll(1)
+
     pyautogui.scroll(20)
-	# setings 2: 'location(ex:TheBarrens)'
-    if setings[2] == "Felwood":
-	# Ui_Ellements 26: 'Felwood'
-        find_ellement(Ui_Ellements[26], 14)
-	# setings 2: 'location(ex:TheBarrens)'
-    if setings[2] == "Winterspring":
-	# Ui_Ellements 25: 'Winterspring'
-        find_ellement(Ui_Ellements[25], 14)
-	# setings 2: 'location(ex:TheBarrens)'
-    if setings[2] == "The Barrens":
-	# Ui_Ellements 22: 'travel'
-        find_ellement(Ui_Ellements[22], 14)
+
+    if setings[2] == "Felwood":	            # setings 2: 'location(ex:TheBarrens)'
+        find_ellement(Ui_Ellements[26], 14) # Ui_Ellements 26: 'Felwood'
+
+    if setings[2] == "Winterspring":        # setings 2: 'location(ex:TheBarrens)'
+        find_ellement(Ui_Ellements[25], 14)	# Ui_Ellements 25: 'Winterspring'
+	
+    if setings[2] == "The Barrens":         # setings 2: 'location(ex:TheBarrens)'
+        find_ellement(Ui_Ellements[22], 14)	# Ui_Ellements 22: 'travel'
+
     pyautogui.moveTo(windowMP()[0] + windowMP()[2] / 2, windowMP()[1] + windowMP()[3] / 2, setings[7], mouse_random_movement())
-    time.sleep(0.5)
-	# setings 3: 'mode(ex:Heroic)'
-    if setings[3] == "Normal":
-	# Ui_Ellements 27: 'normal'
-        find_ellement(Ui_Ellements[27], 14)
-	# setings 3: 'mode(ex:Heroic)'
-    if setings[3] == "Heroic":
-	# Ui_Ellements 28: 'heroic'
-        find_ellement(Ui_Ellements[28], 14)
-    sens = temp
+	
+    if setings[3] == "Normal":              # setings 3: 'mode(ex:Heroic)'
+        find_ellement(Ui_Ellements[27], 14)	# Ui_Ellements 27: 'normal'
+    if setings[3] == "Heroic":              # setings 3: 'mode(ex:Heroic)'
+        find_ellement(Ui_Ellements[28], 14) # Ui_Ellements 28: 'heroic'
+#    sens = temp
 
 
 def battlego():
+    """ Go to a Travel Point, choose a level/bounty and go on the road to make encounter
+
+    """
+
     if road == True:
-        print("back battlgo")
-        return
-    global sens
-    print("Битва")
-    time.sleep(1)
-    #Find PVE adventure payed and free
-	# Ui_Ellements 0: 'battle'
-	# Ui_Ellements 32: 'free_battle'
-    find_ellement(Ui_Ellements[0], 14) or find_ellement(Ui_Ellements[32],14)
-    while True:
-        pyautogui.moveTo(windowMP()[0] + windowMP()[2] / 1.5, windowMP()[1] + windowMP()[3] / 2, setings[7], mouse_random_movement())
-        levelchoice()
-	# chekers 15: 'levelstarted'
-        if find_ellement(chekers[15], 14):
-            time.sleep(1)
-            nextlvl()
-            print("yeh here stops")
-            where()
-            break
-        time.sleep(1.5)
-	# buttons 7: 'play'
-        if find_ellement(buttons[7], 14):
-	# buttons 7: 'play'
-            #find_ellement(buttons[7], 14)
-            seth()
-            return
-	# buttons 10: 'sta'
-        if find_ellement(buttons[10], 14):
-            break
-    while True:
-        time.sleep(1)
-	# setings 1: 'level(ex:20)'
-        if find_ellement("levels/" + setings[2] + "_" + setings[3] + "_" + setings[1] + ".png", 14):
-            time.sleep(0.5)
-	# buttons 11: 'start'
-            find_ellement(buttons[11], 14)
-            break
-	# buttons 9: 'sec'
-        if find_ellement(buttons[9], 2):
-            pass
-        else:
-	# buttons 26: 'fir'
-            find_ellement(buttons[26], 2)
-    while True:
-	# chekers 2: 'find'
-        if not find_ellement(chekers[2], 2):
-	# buttons 12: 'start1'
-            find_ellement(buttons[12], 2)
+        print("back battlego")
+    else:
+        global sens
+        print("Battle")
+
+        # Find PVE adventure payed and free
+        find_ellement(Ui_Ellements[0], 14) or find_ellement(Ui_Ellements[32],14) # Ui_Ellements 0: 'battle' # Ui_Ellements 32: 'free_battle'
+
+
+        while True:
             pyautogui.moveTo(windowMP()[0] + windowMP()[2] / 1.5, windowMP()[1] + windowMP()[3] / 2, setings[7], mouse_random_movement())
-            break
-    while True:
-        time.sleep(1.5)
-	# buttons 7: 'play'
-        if find_ellement(buttons[7], 0):
-            time.sleep(0.5)
-            break
-        else:
-	# buttons 13: 'submit'
-            find_ellement(buttons[13], 2)
-    seth()
-    print("back set2")
+            travelpointSelection()
+            if find_ellement(chekers[15], 14): # chekers 15: 'levelstarted'
+                time.sleep(1)
+                nextlvl()
+                print("yeh here stops")
+                #where()
+                break
+            time.sleep(1.5)
+            if find_ellement(buttons[7], 14):	# buttons 7: 'play'
+                #find_ellement(buttons[7], 14) # buttons 7: 'play'
+                seth()
+                return
+        # buttons 10: 'sta'
+            if find_ellement(buttons[10], 14):
+                break
+
+
+        while True:
+            time.sleep(1)
+        # setings 1: 'level(ex:20)'
+            if find_ellement("levels/" + setings[2] + "_" + setings[3] + "_" + setings[1] + ".png", 14):
+                time.sleep(0.5)
+        # buttons 11: 'start'
+                find_ellement(buttons[11], 14)
+                break
+        # buttons 9: 'sec'
+            if find_ellement(buttons[9], 2):
+                pass
+            else:
+        # buttons 26: 'fir'
+                find_ellement(buttons[26], 2)
+        while True:
+        # chekers 2: 'find'
+            if not find_ellement(chekers[2], 2):
+        # buttons 12: 'start1'
+                find_ellement(buttons[12], 2)
+                pyautogui.moveTo(windowMP()[0] + windowMP()[2] / 1.5, windowMP()[1] + windowMP()[3] / 2, setings[7], mouse_random_movement())
+                break
+        while True:
+            time.sleep(1.5)
+        # buttons 7: 'play'
+            if find_ellement(buttons[7], 0):
+                time.sleep(0.5)
+                break
+            else:
+        # buttons 13: 'submit'
+                find_ellement(buttons[13], 2)
+        seth()
+        print("back set2")
     return
 
 
 def where():
+    """ Try to enter in Mercenaries mode and to create a group of heroes if
+    configured in settings.ini
+    """
+    global createGroup
+
     if road == True:
         print("back where")
-        return True
-	# setings 4: 'GroupCreate(ex:True)'
-    if setings[4] == 'False':
-        time.sleep(1)
-	# chekers 21: 'menu'
-        if find_ellement(chekers[21], 1):
-            battlego()
-	# buttons 4: 'join_button'
-        find_ellement(buttons[4], 0)
-	# buttons 0: 'back'
-        find_ellement(buttons[0], 0)
     else:
-	# buttons 4: 'join_button'
-        find_ellement(buttons[4], 0)
-	# Ui_Ellements 3: 'group'
-        find_ellement(Ui_Ellements[3], 0)
-	# buttons 0: 'back'
-        find_ellement(buttons[0], 0)
+        find_ellement(buttons[4], 0) # buttons 4: 'join_button' | "Mercenaries" button on principal menu
+
+        # check if we need to create a group of Mercenaries
+        if createGroup == 'True':
+            if find_ellement(Ui_Ellements[3], 14): # Ui_Ellements 3: 'group'
+                time.sleep(2)
+                if group_create() :
+                    createGroup = 'False'
+        else:
+            if find_ellement(chekers[21], 1): # chekers 21: 'menu'
+                time.sleep(2)
+                battlego()
     return True
 
 
@@ -1019,135 +1026,136 @@ def test():
         print("yes")
 
 def group_create():
-    if road == True:
-        print("back group")
-        return
+    """ Create group of mercenaries / heroes
+    """
     global speed
     global left
     global top
     global sens
-    time.sleep(1)
-	# chekers 22: 'party'
-    while not find_ellement(chekers[22], 1):
-        where()
-	# chekers 4: 'group_find'
-    if find_ellement(chekers[4], 3) == 6:
-	# buttons 2: 'create'
-        find_ellement(buttons[2], 0)
-        time.sleep(1.5)
-        print(windowMP())
-        x = int(windowMP()[2] / 1.3)
-        y = int(windowMP()[3] / 9)
-	# chekers 14: 'ifrename'
-        # while not find_ellement(chekers[14], 14):
-        pyautogui.moveTo(windowMP()[0] + x, windowMP()[1] + y, setings[7], mouse_random_movement())
-        time.sleep(0.5)
-        pyautogui.click()
-        temp = speed
-        speed = 0
-        #ahk.send_input('Botwork', 0)
-        pyautogui.write('Botwork', interval=0.25)
-	# Ui_Ellements 10: 'prev'
-        find_ellement(Ui_Ellements[10], 0)
-        time.sleep(1)
-        fx=0
-        for i in range(6):
-            if hero[i] != 'heroes/auto' and hero[i] != 'heroes/-':
-                print("Starting adding hero ", i)
-                find(i)
-            if hero[i] == 'heroes/auto':
-                fx += 1
-        print('how many auto',fx)
-        if fx != 0:
-            print("Add heroes")
-	# Ui_Ellements 6: 'page_1'
-            find_ellement(Ui_Ellements[6], 14)
+    retour = False
+
+    if find_ellement(chekers[22], 1): # chekers 22: 'party'
+        retour = True
+        # chekers 4: 'group_find'
+        if find_ellement(chekers[4], 3) == 6:
+        # buttons 2: 'create'
+            find_ellement(buttons[2], 0)
+            time.sleep(1.5)
+            print(windowMP())
+            x = int(windowMP()[2] / 1.3)
+            y = int(windowMP()[3] / 9)
+        # chekers 14: 'ifrename'
+            # while not find_ellement(chekers[14], 14):
+            pyautogui.moveTo(windowMP()[0] + x, windowMP()[1] + y, setings[7], mouse_random_movement())
             time.sleep(0.5)
-            find_merc(fx)
-        speed = temp
-	# buttons 8: 'ready'
-        find_ellement(buttons[8], 0)
-        time.sleep(0.2)
-	# buttons 1: 'continue'
-        find_ellement(buttons[1], 0)
-        time.sleep(0.2)
-	# Ui_Ellements 6: 'page_1'
-        find_ellement(Ui_Ellements[6], 2)
-        battlego()
-    else:
-        time.sleep(1)
-	# chekers 17: 'cords-search'
-        x, y = find_ellement(chekers[17], 15)
-        x = x - int(windowMP()[2] / 9)
-        y = y + int(windowMP()[3] / 18.5)
-        add = 0
-        herocust = 0
-        autoadd = 0
-        temphero = []
-        for i in range(6):
-            if hero[i] != 'heroes/auto' and hero[i] != 'heroes/-':
-                herocust += 1
-            if hero[i] == 'heroes/auto':
-                autoadd += 1
-        for i in range(herocust + autoadd):
-            temp = sens
-            sens = 0.65
-            pyautogui.moveTo(x, y, setings[7], mouse_random_movement())  # Moves the mouse instantly to absolute screen position
             pyautogui.click()
-            if i <= herocust - 1:
-                bool_check = False
-                time.sleep(0.2)
-                for i in range(herocust):
-                    if find_ellement(hero[i] + "/group.png", 1):
-                        bool_check = True
-                        temphero.append(i)
-                        y = y + int(windowMP()[3] / 19)
-                print("Temphero is ",temphero)
-                if bool_check is False:
-                    sens = 0.85
-                    pyautogui.dragTo(x - 600, y, 0.6, mouse_random_movement())
-                sens = temp
-            if i > autoadd - 1:
+            temp = speed
+            speed = 0
+            #ahk.send_input('Botwork', 0)
+            pyautogui.write('Botwork', interval=0.25)
+        # Ui_Ellements 10: 'prev'
+            find_ellement(Ui_Ellements[10], 0)
+            time.sleep(1)
+            fx=0
+            for i in range(6):
+                if hero[i] != 'heroes/auto' and hero[i] != 'heroes/-':
+                    print("Starting adding hero ", i)
+                    find(i)
+                if hero[i] == 'heroes/auto':
+                    fx += 1
+            print('how many auto',fx)
+            if fx != 0:
+                print("Add heroes")
+        # Ui_Ellements 6: 'page_1'
+                find_ellement(Ui_Ellements[6], 14)
+                time.sleep(0.5)
+                find_merc(fx)
+            speed = temp
+        # buttons 8: 'ready'
+            find_ellement(buttons[8], 0)
+            time.sleep(0.2)
+        # buttons 1: 'continue'
+            find_ellement(buttons[1], 0)
+            time.sleep(0.2)
+        # Ui_Ellements 6: 'page_1'
+            find_ellement(Ui_Ellements[6], 2)
+            #battlego()
+        else:
+            time.sleep(1)
+        # chekers 17: 'cords-search'
+            x, y = find_ellement(chekers[17], 15)
+            x = x - int(windowMP()[2] / 9)
+            y = y + int(windowMP()[3] / 18.5)
+            add = 0
+            herocust = 0
+            autoadd = 0
+            temphero = []
+            for i in range(6):
+                if hero[i] != 'heroes/auto' and hero[i] != 'heroes/-':
+                    herocust += 1
+                if hero[i] == 'heroes/auto':
+                    autoadd += 1
+            for i in range(herocust + autoadd):
                 temp = sens
-                sens = 0.85
-                time.sleep(0.5)
-	# chekers 0: '30lvl'
-	# chekers 19: '30lvl1'
-	# chekers 20: '30lvl2'
-                if find_ellement(chekers[0], 1) or find_ellement(chekers[19], 1) or find_ellement(chekers[20], 1):
-                    pyautogui.dragTo(x - 600, y, 0.6, mouse_random_movement())
-                    add += 1
-                else:
-                    y = y + int(windowMP()[3] / 17.2)
-        sens = 0.7
-	# buttons 8: 'ready'
-        find_ellement(buttons[8], 14)
-        time.sleep(0.5)
-        for i in range(herocust):
-            if i not in temphero:
-                print("Find hero with index ", i)
-                find(i)
-        if add != 0:
-            print("Add heroes")
-	# Ui_Ellements 6: 'page_1'
-            find_ellement(Ui_Ellements[6], 14)
+                sens = 0.65
+                pyautogui.moveTo(x, y, setings[7], mouse_random_movement())  # Moves the mouse instantly to absolute screen position
+                pyautogui.click()
+                if i <= herocust - 1:
+                    bool_check = False
+                    time.sleep(0.2)
+                    for i in range(herocust):
+                        if find_ellement(hero[i] + "/group.png", 1):
+                            bool_check = True
+                            temphero.append(i)
+                            y = y + int(windowMP()[3] / 19)
+                    print("Temphero is ",temphero)
+                    if bool_check is False:
+                        sens = 0.85
+                        pyautogui.dragTo(x - 600, y, 0.6, mouse_random_movement())
+                    sens = temp
+                if i > autoadd - 1:
+                    temp = sens
+                    sens = 0.85
+                    time.sleep(0.5)
+        # chekers 0: '30lvl'
+        # chekers 19: '30lvl1'
+        # chekers 20: '30lvl2'
+                    if find_ellement(chekers[0], 1) or find_ellement(chekers[19], 1) or find_ellement(chekers[20], 1):
+                        pyautogui.dragTo(x - 600, y, 0.6, mouse_random_movement())
+                        add += 1
+                    else:
+                        y = y + int(windowMP()[3] / 17.2)
+            sens = 0.7
+        # buttons 8: 'ready'
+            find_ellement(buttons[8], 14)
             time.sleep(0.5)
-            find_merc(add)
-        while True:
-	# buttons 8: 'ready'
-            if find_ellement(buttons[8], 14):
+            for i in range(herocust):
+                if i not in temphero:
+                    print("Find hero with index ", i)
+                    find(i)
+            if add != 0:
+                print("Add heroes")
+        # Ui_Ellements 6: 'page_1'
+                find_ellement(Ui_Ellements[6], 14)
                 time.sleep(0.5)
-	# buttons 1: 'continue'
-                find_ellement(buttons[1], 14)
-                break
-	# chekers 21: 'menu'
-        while not chekers[21]:
-	# buttons 0: 'back'
-            find_ellement(buttons[0],14)
+                find_merc(add)
+            while True:
+        # buttons 8: 'ready'
+                if find_ellement(buttons[8], 14):
+                    time.sleep(0.5)
+        # buttons 1: 'continue'
+                    find_ellement(buttons[1], 14)
+                    break
+        # chekers 21: 'menu'
+            while not chekers[21]:
+        # buttons 0: 'back'
+                find_ellement(buttons[0],14)
+                time.sleep(0.5)
+            sens = temp
             time.sleep(0.5)
-        sens = temp
-        time.sleep(0.5)
-        battlego()
+#        battlego()
+    
+    return retour
 
 def find_merc(n):
     time.sleep(0.5)
@@ -1287,11 +1295,6 @@ def find_ellement(file, index):
 	# buttons 7: 'play'
         if file == buttons[7]:
             return True
-	# Ui_Ellements 3: 'group'
-        if file == Ui_Ellements[3]:
-            time.sleep(0.5)
-            pyautogui.click()
-            group_create()
         if index == 14:
             return True
     else:
