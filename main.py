@@ -360,7 +360,7 @@ def nextlvl():
     global speed
     global sens
 
-    time.sleep(1.5)
+    #time.sleep(1.5)
 
     tempsens = sens
     sens = 0.9
@@ -908,8 +908,8 @@ def where():
     """
     global createGroup
 
-    find_ellement(buttons[4], 0) # buttons 4: 'join_button' | "Mercenaries" button on principal menu
-    time.sleep(0.5)
+    if find_ellement(buttons[4], 14) : # buttons 4: 'join_button' | "Mercenaries" button on principal menu
+        time.sleep(0.5)
 
     # check if we need to create a group of Mercenaries
     if createGroup == 'True':
