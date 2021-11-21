@@ -2,106 +2,34 @@
 ```diff
 - prevention: Bot is not ready and now on the development stage
 ```
-<h3 align="center">Version 0.1.2-beta</h3>
-https://github.com/Deopster/Mercenaries-Hearthstone-game-bot/releases/tag/v0.1.2-beta
 <h3 align="center">Dev progress</h3>
 <table>
   <tr>
-    <td width=500vw>2560x1440</td>
     <td width=500vw>1920x1080</td>
   </tr>
   <tr>
     <td>
 <ol>
 <li>auto assembly of the group - ✓ </li>
-<li>Checking and regrouping if the heroes have reached level 30 - ✓</li>
-<li>Transition to level selection - ✓</li>
-<li>transition between sublevels - ✓, ✗ (stranger don't work)</li>
-<li>Choosing a reward after passing a level - ✓</li> 
-<li>Putting heroes on the board - ✓</li>
+<li>transition to Travel point selection - ✓</li>
+<li>transition to Level/Bounty selection - ✓</li>
+<li>transition between encounters - ✓ </li>
+<li>choosing a treasure after passing a level - ✓</li> 
+<li>putting heroes on the board - ✓</li>
 <li>searching for suitable opponents - ✓</li>
-<li>choosing abilities - ✓</li>
-<li>attacking opponents - ✓</li>
-<li>collecting rewards for reaching the last level-  ✗</li>
-<li>repeat from 1 point - ✗</li>
-</ol>
-      <br><br>
-    </td>
-    <td><ol>
-<li>auto assembly of the group - ✓ </li>
-<li>Checking and regrouping if the heroes have reached level 30 - ✓</li>
-<li>Transition to level selection - ✓</li>
-<li>transition between sublevels - ✓ </li>
-<li>Choosing a reward after passing a level - ✓</li> 
-<li>Putting heroes on the board - ✓</li>
-<li>searching for suitable opponents - ✓</li>
-<li>choosing abilities - ✓</li>
+<li>choosing abilities (the first one by default) - ✓</li>
 <li>attacking opponents - ✓</li>
 <li>collecting rewards for reaching the last level-  ✓</li>
 <li>repeat from 1 point - ✓</li>
 </ol>
-      P.S.special thanks to https://github.com/kiiiiiingdom
     </td>
   </tr>
-  
-  <tr>
-    <td width=500vw>3840x2160</td>
-  </tr>
-  <tr>
-    <td>
-<ol>
-<li>auto assembly of the group - ✗ </li>
-<li>Checking and regrouping if the heroes have reached level 30 - ✗</li>
-<li>Transition to level selection - ✗</li>
-<li>transition between sublevels -  ✗ </li>
-<li>Choosing a reward after passing a level - ✗</li> 
-<li>Putting heroes on the board - ✗</li>
-<li>searching for suitable opponents - ✗</li>
-<li>choosing abilities - ✗</li>
-<li>attacking opponents - ✗</li>
-<li>collecting rewards for reaching the last level-  ✗</li>
-<li>repeat from 1 point - ✗</li>
-</ol>
-      <br><br>
-    </td>
-    </tr>
  </table>
  
  <h3 align="center">Supported game language</h3>
 <table>
   <tr>
-    <td width=100vw></td>
-    <td width=300vw>Russian</td>
      <td width=300vw>English</td>
-    <td  width=300vw>Chinese</td>
-  </tr>
-  <tr>
-    <td>
-      3840x2160
-    </td>
-    <td background>
-      ❌
-    </td>
-    <td>
-      ❌
-    </td>
-    <td>
-      ❌
-    </td>
-  </tr>
-  <tr>
-    <td>
-      2560x1440
-    </td>
-    <td background>
-      ✅
-    </td>
-    <td>
-      ❌
-    </td>
-    <td>
-      ❌
-    </td>
   </tr>
   <tr>
     <td>
@@ -121,23 +49,23 @@ https://github.com/Deopster/Mercenaries-Hearthstone-game-bot/releases/tag/v0.1.2
 
 <h3 align="center">PvP system work preview</h3>
 
+<br>
 [![Watch the video](https://user-images.githubusercontent.com/68296704/137970053-fe49c896-d237-49f1-8658-46d1477340d7.png)](https://www.youtube.com/watch?v=znt1P3KkrNg&t)
 
 
-The main idea of  the bot is to automatically pass the levels and assemble components, 
-simultaneously pumping all your mercenaries level 1 to 30 (so far, then to add)
-So how does it work?
-in fact, everything is based on the fact that the bot collects a team of 3 of your heroes of level 30, 
-and then throws 1 level there, and since for pumping the unit does not have to participate in the battle, 
-the bot just passes the location time and time again and shakes the rest of your mercenaries to level 30.
+<br>
+The main idea of  the bot is to automatically pass the levels for simultaneously pumping all your mercenaries level 1 to 30.
+<br>
 
-In plans
-1. Finish Project
-2. Add mode selection - collecting fragments/pumping heroes
-3. write a graphical interface for this whole case
-4. It is possible to expand the functionality originally conceived.
+More information on <a href="https://github.com/Efemache/Mercenaries-Hearthstone-game-bot/wiki">wiki</a>
+
+<br>
 
 <h1 align="center">Installation</h1>
+<h2 align="center">Warning</h1>
+This a project is a fork of a previous one. So the branch "main" & "ForDeveloment" are the orginals ones (with some commits/code from me).
+<br>
+To use the new code, you need to use the "<href="https://github.com/Efemache/Mercenaries-Hearthstone-game-bot/tree/improve2">improve2</a>" branch  
 <h2 align="center">Windows</h1>
 <ul>
   <li>Download and install AutoHotKey (AHK) : https://www.autohotkey.com/</li>
@@ -160,6 +88,7 @@ In plans
   <li>Start Hearthstone</li>
   <li>Run HSbotRunner.sh</li>
 
+<br>
 <h2 align="center">Demo</h1>
 [![Watch the video](https://user-images.githubusercontent.com/68296704/138687982-0f6d971d-783d-4f35-a3a5-4f5d5a3e59af.png)](https://www.youtube.com/watch?v=nOZXCkrQ5fk)
 
@@ -205,10 +134,8 @@ Monitor Resolution = 2560*1440
     
 
 HeroList<br>
-1 - Cariel Roame /Кариэль Роум<br>
-2 -Tyrande / Тиранда<br>
-3 -Milhous Manostorm / Милхаус маношторм<br>
+1 - Cariel Roame <br>
+2 - Tyrande <br>
+3 - Milhous Manostorm <br>
 
-
-For contacts andrey115516@gmail.com
-
+For contact, open issue on the first repo : 
