@@ -33,10 +33,8 @@
  </table>
 
 <h3 align="center">PvE system work preview</h3>
-
-<br>
-Watch the video : https://www.youtube.com/watch?v=znt1P3KkrNg&t
-
+Watch the video : <br>
+<a href="https://www.youtube.com/watch?v=znt1P3KkrNg&t"><img src="https://user-images.githubusercontent.com/68296704/137970053-fe49c896-d237-49f1-8658-46d1477340d7.png"></img></a>
 
 <br>
 <br>
@@ -73,12 +71,7 @@ To use the new code, you need to use the "<href="https://github.com/Efemache/Mer
 
 <br>
 <h2 align="center">Demo</h1>
-Watch the video : https://www.youtube.com/watch?v=nOZXCkrQ5fk
-
-
-
-
-
+<a href="https://www.youtube.com/watch?v=nOZXCkrQ5fk"><img src="https://user-images.githubusercontent.com/68296704/138687982-0f6d971d-783d-4f35-a3a5-4f5d5a3e59af.png"></img></a>
 
 <h1 align="center">Specification, Settings.ini file:</h1>
 <img align="right" src="https://user-images.githubusercontent.com/68296704/137707877-189b3ca6-9981-4db8-b60d-42168c4cea7d.png"></img>
