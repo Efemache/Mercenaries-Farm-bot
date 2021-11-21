@@ -46,8 +46,6 @@ ym = 0
 global sens
 global zipp
 global zipchek
-global road
-road = False
 zipp = False
 zipchek = False
 global open
@@ -221,9 +219,6 @@ def findgame():
     return retour
 
 def battlefind(file, coll):
-    if road == True:
-        print("back battlefind")
-        return
     global partImg
     global sens
     global top
@@ -315,50 +310,49 @@ def rand(enemyred, enemygreen, enemyblue, enemynoclass):
 
 
 def collect():
-    global road
-    while True:
-        if road == True:
-            print("back collect")
-            break
+    """ Collect the rewards just after beating the final boss of this level
+    """
+    global sens
+    tmpsens = sens
+    sens = 0.65
 
-        if not find_ellement(buttons[22], 14):	# buttons 22: 'done'
-            pyautogui.moveTo(windowMP()[0] + windowMP()[2] / 2.5, windowMP()[1] + windowMP()[3] / 3.5, setings[7], mouse_random_movement())
-            pyautogui.click()
-            pyautogui.moveTo(windowMP()[0] + windowMP()[2] / 2, windowMP()[1] + windowMP()[3] / 3.5, setings[7], mouse_random_movement())
-            pyautogui.click()
-            pyautogui.moveTo(windowMP()[0] + windowMP()[2] / 1.5, windowMP()[1] + windowMP()[3] / 3.5, setings[7], mouse_random_movement())
-            pyautogui.click()
-            pyautogui.moveTo(windowMP()[0] + windowMP()[2] / 1.5, windowMP()[1] + windowMP()[3] / 2.4, setings[7], mouse_random_movement())
-            pyautogui.click()
-            pyautogui.moveTo(windowMP()[0] + windowMP()[2] / 2.7, windowMP()[1] + windowMP()[3] / 1.4, setings[7], mouse_random_movement())
-            pyautogui.click()
-            pyautogui.moveTo(windowMP()[0] + windowMP()[2] / 3, windowMP()[1] + windowMP()[3] / 2.7, setings[7], mouse_random_movement())
-            pyautogui.click()
-            pyautogui.moveTo(windowMP()[0] + windowMP()[2] / 1.7, windowMP()[1] + windowMP()[3] / 1.3, setings[7], mouse_random_movement())
-            pyautogui.click()
-            pyautogui.moveTo(windowMP()[0] + windowMP()[2] / 1.6, windowMP()[1] + windowMP()[3] / 1.3, setings[7], mouse_random_movement())
-            pyautogui.click()
-            pyautogui.moveTo(windowMP()[0] + windowMP()[2] / 1.8, windowMP()[1] + windowMP()[3] / 1.3, setings[7], mouse_random_movement())
-            pyautogui.click()
-            pyautogui.moveTo(windowMP()[0] + windowMP()[2] / 1.9, windowMP()[1] + windowMP()[3] / 1.3, setings[7], mouse_random_movement())
-            pyautogui.click()
-            pyautogui.moveTo(windowMP()[0] + windowMP()[2] / 1.4, windowMP()[1] + windowMP()[3] / 1.3, setings[7], mouse_random_movement())
-            pyautogui.click()
-            time.sleep(1)
-        else:
-            while True:
-                if find_ellement(buttons[23], 14):	# buttons 23: 'finishok'
-                    for i in range(2):
-                        time.sleep(0.5)
-                        find_ellement(buttons[0], 0)	# buttons 0: 'back'
-                        time.sleep(0.5)
-                        find_ellement(buttons[0], 0)	# buttons 0: 'back'
-                        road = True
-                    break
+    # it's difficult to find every boxes with lib CV2 so, we try to detect just one and then we click on all known positions
+    while not find_ellement(buttons[22], 14) :	# buttons 22: 'done'
+        pyautogui.moveTo(windowMP()[0] + windowMP()[2] / 2.5, windowMP()[1] + windowMP()[3] / 3.5, setings[7], mouse_random_movement())
+        pyautogui.click()
+        pyautogui.moveTo(windowMP()[0] + windowMP()[2] / 2, windowMP()[1] + windowMP()[3] / 3.5, setings[7], mouse_random_movement())
+        pyautogui.click()
+        pyautogui.moveTo(windowMP()[0] + windowMP()[2] / 1.5, windowMP()[1] + windowMP()[3] / 3.5, setings[7], mouse_random_movement())
+        pyautogui.click()
+        pyautogui.moveTo(windowMP()[0] + windowMP()[2] / 1.5, windowMP()[1] + windowMP()[3] / 2.4, setings[7], mouse_random_movement())
+        pyautogui.click()
+        pyautogui.moveTo(windowMP()[0] + windowMP()[2] / 2.7, windowMP()[1] + windowMP()[3] / 1.4, setings[7], mouse_random_movement())
+        pyautogui.click()
+        pyautogui.moveTo(windowMP()[0] + windowMP()[2] / 3, windowMP()[1] + windowMP()[3] / 2.7, setings[7], mouse_random_movement())
+        pyautogui.click()
+        pyautogui.moveTo(windowMP()[0] + windowMP()[2] / 1.7, windowMP()[1] + windowMP()[3] / 1.3, setings[7], mouse_random_movement())
+        pyautogui.click()
+        pyautogui.moveTo(windowMP()[0] + windowMP()[2] / 1.6, windowMP()[1] + windowMP()[3] / 1.3, setings[7], mouse_random_movement())
+        pyautogui.click()
+        pyautogui.moveTo(windowMP()[0] + windowMP()[2] / 1.8, windowMP()[1] + windowMP()[3] / 1.3, setings[7], mouse_random_movement())
+        pyautogui.click()
+        pyautogui.moveTo(windowMP()[0] + windowMP()[2] / 1.9, windowMP()[1] + windowMP()[3] / 1.3, setings[7], mouse_random_movement())
+        pyautogui.click()
+        pyautogui.moveTo(windowMP()[0] + windowMP()[2] / 1.4, windowMP()[1] + windowMP()[3] / 1.3, setings[7], mouse_random_movement())
+        pyautogui.click()
+        time.sleep(1)
+    sens = tmpsens
+
+    # move the mouse to avoid a bug where the it is over a card/hero (at the end) masking the "OK" button
+    pyautogui.moveTo(windowMP()[0] + windowMP()[2] * 0.8, windowMP()[1] + windowMP()[3] * 0.8, setings[7], mouse_random_movement())
+
+    # quit the bounty
+    while not find_ellement(buttons[23], 14):	# buttons 23: 'finishok'
+        time.sleep(0.5)
 
 
 def nextlvl():
-    """ Start battle and do some actions on Map
+    """ Progress on the map (Boon, Portal, ...) to find the next battle
     """
     global speed
     global sens
@@ -411,7 +405,7 @@ def nextlvl():
             speed = temp
             sens = 0.65
             for i in range(4):
-                # c'est ici si je veux rajouter la priorisation des elements liés aux quetes (QUEST)
+                # To Do : here, we could try to find the path to the Mysterious Stranger (Task to win coins for heroes)
                 # ui_ellements 13 - 16 : 'bat1' to 'bat4'
                 x, y = find_ellement(Ui_Ellements[13 + i], 12)
                 if x != 0:
@@ -419,8 +413,6 @@ def nextlvl():
                     pyautogui.click()
                     break
             sens = 0.7
-               # pyautogui.moveTo(windowMP()[0] + windowMP()[2] / 2, windowMP()[1] + windowMP()[3] - windowMP()[3] / 4.8, setings[7], mouse_random_movement())
-               # find_ellement(buttons[7], 14) # buttons 7: 'play'
 
 
 def chooseTreasure():
@@ -599,118 +591,103 @@ def battle():
     """ Find the cards on the battlefield (yours and those of your opponents)
         and make them battle until one of yours die
     """
-    global road
     global raund
     global sens
     global zipchek
     global speed
     retour = True
-    if road == True:
-        print("back battle1")
-    else :
-        raund = 1
-        while True:
-            if road == True:
-                break
-            pyautogui.moveTo(windowMP()[0] + (windowMP()[2] / 2.6), windowMP()[1] + (windowMP()[3] * 0.92), setings[7], mouse_random_movement())
-            speed = 0
-            sens = 0.85
 
-            # we look for the (green) "ready" button because :
-            # - sometimes, the bot click on it but it doesn't work very well
-            # - during a battle, some enemies can return in hand and are put back on battlefield with a "ready" button
-            #       but the bot is waiting for a victory / defeat / ... or the yellow button ready
-            # buttons 14: 'allready'
-            find_ellement(buttons[14], 2)
+    raund = 1
+    while True:
+        pyautogui.moveTo(windowMP()[0] + (windowMP()[2] / 2.6), windowMP()[1] + (windowMP()[3] * 0.92), setings[7], mouse_random_movement())
+        speed = 0
+        sens = 0.85
 
-            find_ellement(buttons[20], 14) # buttons 20: 'onedie'
+        # we look for the (green) "ready" button because :
+        # - sometimes, the bot click on it but it doesn't work very well
+        # - during a battle, some enemies can return in hand and are put back on battlefield with a "ready" button
+        #       but the bot is waiting for a victory / defeat / ... or the yellow button ready
+        # buttons 14: 'allready'
+        find_ellement(buttons[14], 2)
 
-            if find_ellement(chekers[13], 1): # chekers 13: 'win'
-                retour = 'win'
-                pyautogui.moveTo(windowMP()[0] + windowMP()[2] / 2, windowMP()[1] + windowMP()[3] - windowMP()[3] / 4.6, setings[7], mouse_random_movement())
-                pyautogui.click()
-                break
-            elif find_ellement(chekers[23], 1): # chekers 23: 'lose'
-                retour = 'loose'
-                pyautogui.moveTo(windowMP()[0] + windowMP()[2] / 2, windowMP()[1] + windowMP()[3] - windowMP()[3] / 4.6, setings[7], mouse_random_movement())
-                pyautogui.click()
-                break
-#                pyautogui.moveTo(windowMP()[0] + windowMP()[2] / 2, windowMP()[1] + windowMP()[3] - windowMP()[3] / 4.6, setings[7], mouse_random_movement())
-#                while True:
-#                    # buttons 0: 'back'
-#                    if not find_ellement(buttons[0], 14) :
-#                        pyautogui.click()
-#                        time.sleep(0.5)
-#                    else:
-#                        road = True
-#                        break
-           
-            elif find_ellement(buttons[15], 1) or find_ellement(buttons[16], 1):  # buttons 15: 'startbattle' # buttons 16: 'startbattle1'
-                herobattlefin.clear()
+        find_ellement(buttons[20], 14) # buttons 20: 'onedie'
 
-                tmp = int(windowMP()[3] / 2)
-                partscreen(int(setings[0].split('x')[0]), tmp, 0, 0) # setings 0: 'MonitorResolution(ex:1920x1080)'
+        if find_ellement(chekers[13], 1): # chekers 13: 'win'
+            retour = 'win'
+            pyautogui.moveTo(windowMP()[0] + windowMP()[2] / 2, windowMP()[1] + windowMP()[3] - windowMP()[3] / 4.6, setings[7], mouse_random_movement())
+            pyautogui.click()
+            break
+        elif find_ellement(chekers[23], 1): # chekers 23: 'lose'
+            retour = 'loose'
+            pyautogui.moveTo(windowMP()[0] + windowMP()[2] / 2, windowMP()[1] + windowMP()[3] - windowMP()[3] / 4.6, setings[7], mouse_random_movement())
+            pyautogui.click()
+            break
+        elif find_ellement(buttons[15], 1) or find_ellement(buttons[16], 1):  # buttons 15: 'startbattle' # buttons 16: 'startbattle1'
+            herobattlefin.clear()
 
-                temp = speed
-                sens = 0.8
+            tmp = int(windowMP()[3] / 2)
+            partscreen(int(setings[0].split('x')[0]), tmp, 0, 0) # setings 0: 'MonitorResolution(ex:1920x1080)'
 
-                # Look for enemies
-                enemyred = find_ellement(Ui_Ellements[9], 12) # Ui_Ellements 9: 'red'
-                enemygreen = find_ellement(Ui_Ellements[2], 12) # Ui_Ellements 2: 'green'
-                enemyblue = find_ellement(Ui_Ellements[1], 12) # Ui_Ellements 1: 'blue'
-                enemynoclass = find_ellement(Ui_Ellements[12], 12) # Ui_Ellements 12: 'noclass'
-                print("red: ", enemyred)
-                print("green: ", enemygreen)
-                print("blue: ", enemyblue)
-                print("noclass: ", enemynoclass)
-                # Ui_Ellements 11: 'sob'
-                mol = find_ellement(Ui_Ellements[11], 12)
+            temp = speed
+            sens = 0.8
+
+            # Look for enemies
+            enemyred = find_ellement(Ui_Ellements[9], 12) # Ui_Ellements 9: 'red'
+            enemygreen = find_ellement(Ui_Ellements[2], 12) # Ui_Ellements 2: 'green'
+            enemyblue = find_ellement(Ui_Ellements[1], 12) # Ui_Ellements 1: 'blue'
+            enemynoclass = find_ellement(Ui_Ellements[12], 12) # Ui_Ellements 12: 'noclass'
+            print("red: ", enemyred)
+            print("green: ", enemygreen)
+            print("blue: ", enemyblue)
+            print("noclass: ", enemynoclass)
+            # Ui_Ellements 11: 'sob'
+            mol = find_ellement(Ui_Ellements[11], 12)
+            # Go (mouse) to "central zone" and click on an empty space
+            pyautogui.moveTo(windowMP()[0] + windowMP()[2] / 2, windowMP()[1] + windowMP()[3] - windowMP()[3] / 4.8, setings[7], mouse_random_movement())
+            pyautogui.click()
+            time.sleep(1)
+            # setings 0: 'MonitorResolution(ex:1920x1080)'
+            partscreen(int(setings[0].split('x')[0]), tmp, tmp, 0)
+            # setings 0: 'MonitorResolution(ex:1920x1080)'
+            print("enter serch Red")
+            # Ui_Ellements 9: 'red'
+            battlefind(Ui_Ellements[9], 'Red')  # find all yr Red
+            if len(herobattlefin) != 3:
+                print("enter serch Green")
+                # Ui_Ellements 2: 'green'
+                battlefind(Ui_Ellements[2], 'Green')  # find all yr Green
+            if len(herobattlefin) != 3:
+                print("enter serch Blue")
+                # Ui_Ellements 1: 'blue'
+                battlefind(Ui_Ellements[1], 'Blue')  # find all yr Blue
+            print("cords of my heroes ")
+            print(herobattlefin)
+            for i in herobattlefin:
                 # Go (mouse) to "central zone" and click on an empty space
                 pyautogui.moveTo(windowMP()[0] + windowMP()[2] / 2, windowMP()[1] + windowMP()[3] - windowMP()[3] / 4.8, setings[7], mouse_random_movement())
                 pyautogui.click()
-                time.sleep(1)
-                # setings 0: 'MonitorResolution(ex:1920x1080)'
-                partscreen(int(setings[0].split('x')[0]), tmp, tmp, 0)
-                # setings 0: 'MonitorResolution(ex:1920x1080)'
-                print("enter serch Red")
-                # Ui_Ellements 9: 'red'
-                battlefind(Ui_Ellements[9], 'Red')  # find all yr Red
-                if len(herobattlefin) != 3:
-                    print("enter serch Green")
-                    # Ui_Ellements 2: 'green'
-                    battlefind(Ui_Ellements[2], 'Green')  # find all yr Green
-                if len(herobattlefin) != 3:
-                    print("enter serch Blue")
-                    # Ui_Ellements 1: 'blue'
-                    battlefind(Ui_Ellements[1], 'Blue')  # find all yr Blue
-                print("cords of my heroes ")
-                print(herobattlefin)
-                for i in herobattlefin:
-                    # Go (mouse) to "central zone" and click on an empty space
-                    pyautogui.moveTo(windowMP()[0] + windowMP()[2] / 2, windowMP()[1] + windowMP()[3] - windowMP()[3] / 4.8, setings[7], mouse_random_movement())
-                    pyautogui.click()
-                    debug("print atack", i, enemyred, enemygreen, enemyblue, enemynoclass, mol)
-                    atack(i, enemyred, enemygreen, enemyblue, enemynoclass, mol)
-                    time.sleep(0.1)
-                sens = 0.75
-                speed = temp
-                i = 0
-                while True:
-                    if not find_ellement(buttons[14], 2): # buttons 14: 'allready'
-                        break
-                    if i > 10:
-                        pyautogui.rightClick()
-                        if(myOS=='windows'):
-                            ahk.show_warning_traytip("Battle", "Battle error,please write what happend on github issue")
-                        else :
-                            print("Battle error,please write what happend on github issue")
-                        find_ellement(buttons[15], 2) # buttons 15: 'startbattle'
-                        break
-                    time.sleep(0.2)
-                    i += 1
-                time.sleep(3)
-                raund += 1
-        return retour
+                debug("print atack", i, enemyred, enemygreen, enemyblue, enemynoclass, mol)
+                atack(i, enemyred, enemygreen, enemyblue, enemynoclass, mol)
+                time.sleep(0.1)
+            sens = 0.75
+            speed = temp
+            i = 0
+            while True:
+                if not find_ellement(buttons[14], 2): # buttons 14: 'allready'
+                    break
+                if i > 10:
+                    pyautogui.rightClick()
+                    if(myOS=='windows'):
+                        ahk.show_warning_traytip("Battle", "Battle error,please write what happend on github issue")
+                    else :
+                        print("Battle error,please write what happend on github issue")
+                    find_ellement(buttons[15], 2) # buttons 15: 'startbattle'
+                    break
+                time.sleep(0.2)
+                i += 1
+            time.sleep(3)
+            raund += 1
+    return retour
 
 
 def seth():
@@ -718,57 +695,53 @@ def seth():
         and then, start the 'battle' function
     """
 
-    retour = True
     debug("[ SETH - START]")
-    if road == True:
-        print("back set1")
-    else :
-        global speed
-        global sens
-        while True:
-            time.sleep(0.5)
-            # buttons 5: 'num'
-            if find_ellement(buttons[5], 1):
-                break
-        debug("windowsMP() : ", windowMP())
-        x = windowMP()[0] + (windowMP()[2] / 2.6)
-        y = windowMP()[1] + (windowMP()[3] * 0.92)
-        i = 0
-        temp = speed
-        speed = 0
-        sens = 0.85
-        i = 0
-        # setings 5: 'heroSet(ex:True)'
-        if setings[5] == "True":
-            # buttons 14: 'allready'
-            while not find_ellement(buttons[14], 1):
-                print('Entrance')
-                sens = 0.75
-                pyautogui.moveTo(x, y, setings[7])
-                #debug("mouse move to : ", x, y, setings[7])
-                for n in range(3):
-                    if i >= 7:
-                        pyautogui.moveTo(windowMP()[0] + (windowMP()[2] / 2), windowMP()[1] + (windowMP()[3] * 0.92), setings[7], mouse_random_movement())
-                        pyautogui.dragTo(windowMP()[0] + (windowMP()[2] / 2), (windowMP()[1] + (windowMP()[3] * 0.92)) - windowMP()[3] / 3, 0.6, mouse_random_movement())
-                        break
-                    if find_ellement(hero[n] + '/set.png', 6):
-                        time.sleep(0.2)
-                        pyautogui.dragTo(x, y - windowMP()[3] / 3, 0.6, mouse_random_movement())
-                        time.sleep(0.5)
-                        break
-                else :
-                    x += windowMP()[2] / 22.5
-                    if x > windowMP()[2] / 1.5:
-                        x = windowMP()[0] + (windowMP()[2] / 2.85)
-                i += 1
-            print('Optout')
-            speed = temp
-            sens = 0.7
-            pyautogui.moveTo(windowMP()[0] + (windowMP()[2]*0.1), windowMP()[1] + (windowMP()[3]*0.1), setings[7], mouse_random_movement())
-            time.sleep(1)
-        retour = battle()
-        print ("seth - retour = ", retour)
-        debug("[ SETH - END]")
+    retour = True
+
+    global speed
+    global sens
+    while not find_ellement(buttons[5], 1): # buttons 5: 'num'
+        time.sleep(0.5)
+        
+    debug("windowsMP() : ", windowMP())
+    x = windowMP()[0] + (windowMP()[2] / 2.6)
+    y = windowMP()[1] + (windowMP()[3] * 0.92)
+    i = 0
+    temp = speed
+    speed = 0
+    sens = 0.85
+    i = 0
+    # setings 5: 'heroSet(ex:True)'
+    if setings[5] == "True":
+        # buttons 14: 'allready'
+        while not find_ellement(buttons[14], 1):
+            print('Entrance')
+            sens = 0.75
+            pyautogui.moveTo(x, y, setings[7])
+            #debug("mouse move to : ", x, y, setings[7])
+            for n in range(3):
+                if i >= 7:
+                    pyautogui.moveTo(windowMP()[0] + (windowMP()[2] / 2), windowMP()[1] + (windowMP()[3] * 0.92), setings[7], mouse_random_movement())
+                    pyautogui.dragTo(windowMP()[0] + (windowMP()[2] / 2), (windowMP()[1] + (windowMP()[3] * 0.92)) - windowMP()[3] / 3, 0.6, mouse_random_movement())
+                    break
+                if find_ellement(hero[n] + '/set.png', 6):
+                    time.sleep(0.2)
+                    pyautogui.dragTo(x, y - windowMP()[3] / 3, 0.6, mouse_random_movement())
+                    time.sleep(0.5)
+                    break
+            else :
+                x += windowMP()[2] / 22.5
+                if x > windowMP()[2] / 1.5:
+                    x = windowMP()[0] + (windowMP()[2] / 2.85)
+            i += 1
+        print('Optout')
+        speed = temp
+        sens = 0.7
+        pyautogui.moveTo(windowMP()[0] + (windowMP()[2]*0.1), windowMP()[1] + (windowMP()[3]*0.1), setings[7], mouse_random_movement())
+        time.sleep(1)
+    retour = battle()
+    debug("[ SETH - END]")
+
     return retour
 
 
@@ -819,6 +792,7 @@ def goToEncounter():
     """ Start new fight, continue on the road and collect everything (treasure, rewards, ...) 
     """
     print ("goToEncounter : entering")
+    time.sleep(2)
     travelEnd=False
     while not travelEnd :
         if find_ellement(buttons[7], 14): # buttons 7: 'play'
@@ -856,14 +830,6 @@ def goToEncounter():
                 print("goToEncounter : don't know what happened !")
         else :
             nextlvl()
-    
-    while True:
-        if not find_ellement(buttons[0], 14) : # buttons 0: 'back'
-            pyautogui.click()
-            time.sleep(0.5)
-        else:
-            road = True
-            break
 
 
 def travelToLevel():
@@ -871,44 +837,42 @@ def travelToLevel():
 
     """
 
-    if road == True:
-        print("back travelToLevel")
-    else:
-        global sens
-        print("travelToLevel : entering")
+    global sens
 
-        # Find PVE adventure payed and free
-        find_ellement(Ui_Ellements[0], 14) or find_ellement(Ui_Ellements[32],14) # Ui_Ellements 0: 'battle' # Ui_Ellements 32: 'free_battle'
+    print("travelToLevel : entering")
+
+    # Find PVE adventure payed and free
+    find_ellement(Ui_Ellements[0], 14) or find_ellement(Ui_Ellements[32],14) # Ui_Ellements 0: 'battle' # Ui_Ellements 32: 'free_battle'
+    time.sleep(1)
+
+    # Find the travel point and the mode (normal/heroic)
+    pyautogui.moveTo(windowMP()[0] + windowMP()[2] / 1.5, windowMP()[1] + windowMP()[3] / 2, setings[7], mouse_random_movement())
+    travelpointSelection()
+
+    # Look for the level/bounty even if it's on another page
+    while find_ellement(Ui_Ellements[21], 1) : # Ui_Ellements 21: 'bounties'
         time.sleep(1)
-
-        # Find the travel point and the mode (normal/heroic)
-        pyautogui.moveTo(windowMP()[0] + windowMP()[2] / 1.5, windowMP()[1] + windowMP()[3] / 2, setings[7], mouse_random_movement())
-        travelpointSelection()
-
-        # Look for the level/bounty even if it's on another page
-        while find_ellement(Ui_Ellements[21], 1) : # Ui_Ellements 21: 'bounties'
-            time.sleep(1)
-            if find_ellement("levels/" + setings[2] + "_" + setings[3] + "_" + setings[1] + ".png", 14): # setings 1: 'level(ex:20)'
+        if find_ellement("levels/" + setings[2] + "_" + setings[3] + "_" + setings[1] + ".png", 14): # setings 1: 'level(ex:20)'
+            time.sleep(0.5)
+            find_ellement(buttons[11], 14) # buttons 11: 'start'
+        else :
+            if find_ellement(buttons[9], 2): # buttons 9: 'sec'
                 time.sleep(0.5)
-                find_ellement(buttons[11], 14) # buttons 11: 'start'
-            else :
-                if find_ellement(buttons[9], 2): # buttons 9: 'sec'
-                    time.sleep(0.5)
-                    pass
-                else:
-                    find_ellement(buttons[26], 2) # buttons 26: 'fir'
-                    time.sleep(0.5)
+                pass
+            else:
+                find_ellement(buttons[26], 2) # buttons 26: 'fir'
+                time.sleep(0.5)
 
-        # Look for the mercenaries group 'Botwork' and select it (with 'LockIn' if necessary)
-        while True:
-            if not find_ellement(chekers[2], 2): # chekers 2: 'find'
-                find_ellement(buttons[12], 2) # buttons 12: 'start1'
-                pyautogui.moveTo(windowMP()[0] + windowMP()[2] / 1.5, windowMP()[1] + windowMP()[3] / 2, setings[7], mouse_random_movement())
-                time.sleep(1.5)
-                find_ellement(buttons[13], 14) # buttons 13: 'submit' / LockIn
-                break
+    # Look for the mercenaries group 'Botwork' and select it (with 'LockIn' if necessary)
+    while True:
+        if not find_ellement(chekers[2], 2): # chekers 2: 'find'
+            find_ellement(buttons[12], 2) # buttons 12: 'start1'
+            pyautogui.moveTo(windowMP()[0] + windowMP()[2] / 1.5, windowMP()[1] + windowMP()[3] / 2, setings[7], mouse_random_movement())
+            time.sleep(1.5)
+            find_ellement(buttons[13], 14) # buttons 13: 'submit' / LockIn
+            break
 
-        print("travelToLevel ended")
+    print("travelToLevel ended")
     return
 
 
@@ -918,25 +882,23 @@ def where():
     """
     global createGroup
 
-    if road == True:
-        print("back where")
-    else:
-        find_ellement(buttons[4], 0) # buttons 4: 'join_button' | "Mercenaries" button on principal menu
+    find_ellement(buttons[4], 0) # buttons 4: 'join_button' | "Mercenaries" button on principal menu
 
-        # check if we need to create a group of Mercenaries
-        if createGroup == 'True':
-            print("where : Go to create a group of mercenaries")
-            if find_ellement(Ui_Ellements[3], 14): # Ui_Ellements 3: 'group'
-                time.sleep(2)
-                if group_create() :
-                    createGroup = 'False'
-        else :
-            if find_ellement(chekers[21], 1): # chekers 21: 'menu'
-                time.sleep(2)
-                travelToLevel()
-                goToEncounter()
-                sleep(1.5)
-                find_ellement(buttons[0], 14) 
+    # check if we need to create a group of Mercenaries
+    if createGroup == 'True':
+        print("where : Go to create a group of mercenaries")
+        if find_ellement(Ui_Ellements[3], 14): # Ui_Ellements 3: 'group'
+            time.sleep(2)
+            if group_create() :
+                createGroup = 'False'
+    else :
+        if find_ellement(chekers[21], 1): # chekers 21: 'menu'
+            time.sleep(2)
+            travelToLevel()
+            goToEncounter()
+
+            time.sleep(1.5)
+            find_ellement(buttons[0], 14) 
     return True
 
 
@@ -1176,8 +1138,6 @@ def find_merc(n):
 
 
 def find_ellement(file, index):
-#    if road == True:
-#        return
     global sens
     global top
     global left
@@ -1275,7 +1235,6 @@ def find_ellement(file, index):
 
 
 def main():
-    global road
     print("start")
     try:
         #ahk.show_info_traytip("Starting", "loading files", slient=False, blocking=True)
@@ -1295,7 +1254,6 @@ def main():
         while True:
             print("Loop start")
             if findgame():
-                road = False
                 where()
             else:
                 print("Not found Game window.")
