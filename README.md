@@ -32,10 +32,10 @@
   <tr> <td> 1920x1080 </td> <td> ✅ </tr>
  </table>
 
-<h3 align="center">PvP system work preview</h3>
+<h3 align="center">PvE system work preview</h3>
 
 <br>
-![Watch the video](https://www.youtube.com/watch?v=znt1P3KkrNg&t)
+Watch the video : https://www.youtube.com/watch?v=znt1P3KkrNg&t
 
 
 <br>
@@ -73,7 +73,7 @@ To use the new code, you need to use the "<href="https://github.com/Efemache/Mer
 
 <br>
 <h2 align="center">Demo</h1>
-![Watch the video](https://www.youtube.com/watch?v=nOZXCkrQ5fk)
+Watch the video : https://www.youtube.com/watch?v=nOZXCkrQ5fk
 
 
 
