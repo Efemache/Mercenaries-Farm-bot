@@ -359,6 +359,8 @@ def nextlvl():
 
     time.sleep(1.5)
 
+    tempsens = sens
+    sens = 0.9
     if not find_ellement(buttons[7], 1) : # buttons 7: 'play'
 
         if find_ellement(buttons[21], 14):	# buttons 21: 'reveal'
@@ -397,7 +399,6 @@ def nextlvl():
             y = windowMP()[1] + windowMP()[3] / 2.2
             temp = speed
             speed = 0
-            sens = 0.7
             for n in range(8):
                 pyautogui.moveTo(x, y, setings[7])
                 pyautogui.click()
@@ -412,7 +413,7 @@ def nextlvl():
                     pyautogui.moveTo(x, y + windowMP()[3] / 2.5, setings[7], mouse_random_movement())
                     pyautogui.click()
                     break
-            sens = 0.7
+    sens = tempsens
 
 
 def chooseTreasure():
@@ -597,6 +598,7 @@ def battle():
     global speed
     retour = True
 
+    tempsens = sens
     raund = 1
     while True:
         pyautogui.moveTo(windowMP()[0] + (windowMP()[2] / 2.6), windowMP()[1] + (windowMP()[3] * 0.92), setings[7], mouse_random_movement())
@@ -687,6 +689,7 @@ def battle():
                 i += 1
             time.sleep(3)
             raund += 1
+    sens = tempsens
     return retour
 
 
@@ -752,7 +755,7 @@ def travelpointSelection():
         and the mode : Normal or Heroic
     """
     global sens
-    temp = sens
+    tempsens = sens
     sens = 0.65
     time.sleep(0.5)
 
@@ -785,18 +788,22 @@ def travelpointSelection():
     time.sleep(1)
     find_ellement(buttons[10], 14)
     time.sleep(1)
-    sens = temp
+    sens = tempsens
 
 
 def goToEncounter():
     """ Start new fight, continue on the road and collect everything (treasure, rewards, ...) 
     """
     print ("goToEncounter : entering")
+    global sens
     time.sleep(2)
     travelEnd=False
     while not travelEnd :
+        tempsens = sens
+        sens = 0.85
         if find_ellement(buttons[7], 14): # buttons 7: 'play'
             time.sleep(0.5)
+            sens = tempsens
             retour = seth() # Start the battle : the bot choose the cards and fight against the enemy
             print("goToEncounter - retour = ", retour)
             time.sleep(1)
@@ -833,6 +840,7 @@ def goToEncounter():
                 travelEnd=True
                 print("goToEncounter : don't know what happened !")
         else :
+            sens = tempsens
             nextlvl()
 
 
