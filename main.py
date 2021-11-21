@@ -797,12 +797,16 @@ def goToEncounter():
     while not travelEnd :
         if find_ellement(buttons[7], 14): # buttons 7: 'play'
             time.sleep(0.5)
-            retour = seth()
+            retour = seth() # Start the battle : the bot choose the cards and fight against the enemy
             print("goToEncounter - retour = ", retour)
             time.sleep(1)
             if retour == 'win':
                 print("goToEncounter : battle won")
                 while True:
+                    ### ToDo : add a tempo when you detect a new completed task
+                    # if find (task completed) :
+                    #   time.sleep(2)
+
                     if not find_ellement(Ui_Ellements[18], 1): # Ui_Ellements 18: 'findthis' ('Take' grey button)
                         pyautogui.click()
                         time.sleep(0.5)
@@ -897,8 +901,11 @@ def where():
             travelToLevel()
             goToEncounter()
 
-            time.sleep(1.5)
-            find_ellement(buttons[0], 14) 
+            while not find_ellement(chekers[21], 1) :	# chekers 21: 'menu'
+                pyautogui.click()
+                time.sleep(0.5)
+                find_ellement(buttons[0], 14) # buttons 0: 'back'
+            
     return True
 
 
