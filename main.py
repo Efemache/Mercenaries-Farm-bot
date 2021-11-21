@@ -373,6 +373,7 @@ def nextlvl():
             time.sleep(1.5)
 
         elif find_ellement(buttons[25], 14):	# buttons 25: 'visit'
+            y = windowMP()[1] + windowMP()[3] / 2.2
             time.sleep(1.5)
             while find_ellement(Ui_Ellements[19], 1): # Ui_Ellements 19: 'sombody'
                 temp = random.randint(0, 2)
