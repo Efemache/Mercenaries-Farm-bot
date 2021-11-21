@@ -910,7 +910,7 @@ def where():
     global createGroup
 
     if find_ellement(buttons[4], 14) : # buttons 4: 'join_button' | "Mercenaries" button on principal menu
-        time.sleep(0.5)
+        time.sleep(2)
 
     # check if we need to create a group of Mercenaries
     if createGroup == 'True':
@@ -928,6 +928,11 @@ def where():
                 pyautogui.click()
                 time.sleep(0.5)
                 find_ellement(buttons[0], 14) # buttons 0: 'back'
+#        goToEncounter()
+#        while not find_ellement(chekers[21], 1) :	# chekers 21: 'menu'
+#            pyautogui.click()
+#            time.sleep(0.5)
+#            find_ellement(buttons[0], 14) # buttons 0: 'back'
             
     return True
 
