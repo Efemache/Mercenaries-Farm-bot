@@ -360,10 +360,10 @@ def nextlvl():
     global speed
     global sens
 
-    #time.sleep(1.5)
+    time.sleep(1.5)
 
     tempsens = sens
-    sens = 0.9
+    sens = 0.95
     if not find_ellement(buttons[7], 1) : # buttons 7: 'play'
 
         if find_ellement(buttons[21], 14):	# buttons 21: 'reveal'
