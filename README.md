@@ -28,31 +28,17 @@
  
  <h3 align="center">Supported game language</h3>
 <table>
-  <tr>
-     <td width=300vw>English</td>
-  </tr>
-  <tr>
-    <td>
-      1920x1080
-    </td>
-    <td>
-      ❌
-    </td>
-    <td>
-      ✅
-    </td>
-    <td>
-      In progress
-    </td>
-  </tr>
+  <tr> <td> </td> <td width=300vw>English</td> </tr>
+  <tr> <td> 1920x1080 </td> <td> ✅ </tr>
  </table>
 
 <h3 align="center">PvP system work preview</h3>
 
 <br>
-[![Watch the video](https://user-images.githubusercontent.com/68296704/137970053-fe49c896-d237-49f1-8658-46d1477340d7.png)](https://www.youtube.com/watch?v=znt1P3KkrNg&t)
+![Watch the video](https://www.youtube.com/watch?v=znt1P3KkrNg&t)
 
 
+<br>
 <br>
 The main idea of  the bot is to automatically pass the levels for simultaneously pumping all your mercenaries level 1 to 30.
 <br>
@@ -72,13 +58,9 @@ To use the new code, you need to use the "<href="https://github.com/Efemache/Mer
   <li>Download the project</li>
   <li>Open Settings.ini and set your settings</li>
   <li>Start Hearthstone</li>
+  <li>Run HSbotRunner.bat</li>
 </ul>
 
-![image](https://user-images.githubusercontent.com/68296704/138607261-d743018d-4c50-4482-a4e7-81091cb0f963.png)
-
-<ul>
-  <li>Start the game</li>
-</ul>
 
 <h2 align="center">Linux</h1>
 <ul>
@@ -87,10 +69,11 @@ To use the new code, you need to use the "<href="https://github.com/Efemache/Mer
   <li>Open Settings.ini and set your settings</li>
   <li>Start Hearthstone</li>
   <li>Run HSbotRunner.sh</li>
+</ul>
 
 <br>
 <h2 align="center">Demo</h1>
-[![Watch the video](https://user-images.githubusercontent.com/68296704/138687982-0f6d971d-783d-4f35-a3a5-4f5d5a3e59af.png)](https://www.youtube.com/watch?v=nOZXCkrQ5fk)
+![Watch the video](https://www.youtube.com/watch?v=nOZXCkrQ5fk)
 
 
 
@@ -139,3 +122,4 @@ HeroList<br>
 3 - Milhous Manostorm <br>
 
 For contact, open issue on the first repo : 
+https://github.com/Deopster/Mercenaries-Hearthstone-game-bot
