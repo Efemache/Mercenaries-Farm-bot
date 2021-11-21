@@ -104,6 +104,9 @@ def mouse_random_movement():
     return random.choices([pyautogui.easeInQuad, pyautogui.easeOutQuad, pyautogui.easeInOutQuad])[0]
 
 def configread():
+    """ Read settings.ini and put it in a table :
+            Setings - 0: MonitorResolution (1920x1080), 1: level (20), 2: location (The Barrens), 3: mode (Heroic), 4: GroupCreate (True), 5: heroSet (True)
+    """
     global Resolution
     global speed
     global createGroup
@@ -388,31 +391,42 @@ def nextlvl():
                 time.sleep(2)
 
         elif find_ellement(Ui_Ellements[24], 14): # Ui_Ellements 24: 'pick'
+            time.sleep(1)
             pyautogui.click()
-            time.sleep(0.5)
+            time.sleep(1.5)
 
         else :
-            tm = int(windowMP()[3] / 3.1)
-            # setings 0: 'MonitorResolution(ex:1920x1080)'
-            partscreen(int(setings[0].split('x')[0]), tm, tm, 0)
-            x = windowMP()[0] + windowMP()[2] / 3.7
-            y = windowMP()[1] + windowMP()[3] / 2.2
-            temp = speed
-            speed = 0
-            for n in range(8):
-                pyautogui.moveTo(x, y, setings[7])
-                pyautogui.click()
-                x += windowMP()[2] / 25
-            speed = temp
-            sens = 0.65
-            for i in range(4):
-                # To Do : here, we could try to find the path to the Mysterious Stranger (Task to win coins for heroes)
-                # ui_ellements 13 - 16 : 'bat1' to 'bat4'
-                x, y = find_ellement(Ui_Ellements[13 + i], 12)
-                if x != 0:
-                    pyautogui.moveTo(x, y + windowMP()[3] / 2.5, setings[7], mouse_random_movement())
-                    pyautogui.click()
-                    break
+            x, y = pyautogui.position()
+            debug("Mouse (x, y) : ", x, y)
+            if (y == windowMP()[1] + windowMP()[3] // 2.2) :
+                x += windowMP()[2] // 25
+                #if (x > windowMP()[0] + windowMP()[2]) :
+                #    x = windowMP()[0] + windowMP()[2] / 3.7
+            else :
+                #tm = int(windowMP()[3] / 3.1)
+                #partscreen(int(setings[0].split('x')[0]), tm, tm, 0) # setings 0: 'MonitorResolution(ex:1920x1080)'
+                x = windowMP()[0] + windowMP()[2] // 3.7
+                y = windowMP()[1] + windowMP()[3] // 2.2
+            debug("move mouse to (x, y) : ", x, y)
+            pyautogui.moveTo(x, y, setings[7])
+            pyautogui.click()
+
+#            temp = speed
+#            speed = 0
+#            for n in range(8):
+#                pyautogui.moveTo(x, y, setings[7])
+#                pyautogui.click()
+#                x += windowMP()[2] / 25
+#            speed = temp
+#            sens = 0.65
+#            for i in range(4):
+#                # To Do : here, we could try to find the path to the Mysterious Stranger (Task to win coins for heroes)
+#                # ui_ellements 13 - 16 : 'bat1' to 'bat4'
+#                x, y = find_ellement(Ui_Ellements[13 + i], 12)
+#                if x != 0:
+#                    pyautogui.moveTo(x, y + windowMP()[3] / 2.5, setings[7], mouse_random_movement())
+#                    pyautogui.click()
+#                    break
     sens = tempsens
 
 
@@ -895,6 +909,7 @@ def where():
     global createGroup
 
     find_ellement(buttons[4], 0) # buttons 4: 'join_button' | "Mercenaries" button on principal menu
+    time.sleep(0.5)
 
     # check if we need to create a group of Mercenaries
     if createGroup == 'True':
@@ -905,7 +920,6 @@ def where():
                 createGroup = 'False'
     else :
         if find_ellement(chekers[21], 1): # chekers 21: 'menu'
-            time.sleep(2)
             travelToLevel()
             goToEncounter()
 
@@ -1026,7 +1040,6 @@ def group_create():
             time.sleep(0.2)
         # Ui_Ellements 6: 'page_1'
             find_ellement(Ui_Ellements[6], 2)
-            #travelToLevel()
         else:
             time.sleep(1)
         # chekers 17: 'cords-search'
@@ -1100,7 +1113,6 @@ def group_create():
                 time.sleep(0.5)
             sens = temp
             time.sleep(0.5)
-#        travelToLevel()
     
     return retour
 
