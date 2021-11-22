@@ -228,7 +228,6 @@ def battlefind(file, coll):
     global left
     herobattle.clear()
     img = partImg                                                                                      
-    #img = cv2.imread('files/' + setings[0] + '/part.png')
     gray_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)  # преобразуем её в серуюш                        
     template = cv2.imread('files/' + setings[0] + '/' + file, cv2.IMREAD_GRAYSCALE) # объект, который преобразуем в серый, и ищем его на gray_img
     w, h = template.shape[::-1]  # инвертируем из (y,x) в (x,y)`
@@ -305,8 +304,6 @@ def rand(enemyred, enemygreen, enemyblue, enemynoclass):
             # which can touch one central minion or one on the left
             x = int(windowMP()[0] + (windowMP()[2] / 2) - (windowMP()[2] / 68))
             y = int(windowMP()[1] + (windowMP()[3] / 4))
-#            x = int(windowMP()[2] / 2)
-#            y = int(windowMP()[3] / 6)
             pyautogui.dragTo(x, y, 0.6, mouse_random_movement())
             pyautogui.click()
             break
@@ -351,6 +348,7 @@ def collect():
 
     # quit the bounty
     while not find_ellement(buttons[23], 14):	# buttons 23: 'finishok'
+        pyautogui.click()
         time.sleep(0.5)
 
 
@@ -401,8 +399,8 @@ def nextlvl():
             debug("Mouse (x, y) : ", x, y)
             if (y == windowMP()[1] + windowMP()[3] // 2.2) :
                 x += windowMP()[2] // 25
-                #if (x > windowMP()[0] + windowMP()[2]) :
-                #    x = windowMP()[0] + windowMP()[2] / 3.7
+                if (x > windowMP()[0] + windowMP()[2]) :
+                    x = windowMP()[0] + windowMP()[2] / 3.7
             else :
                 #tm = int(windowMP()[3] / 3.1)
                 #partscreen(int(setings[0].split('x')[0]), tm, tm, 0) # setings 0: 'MonitorResolution(ex:1920x1080)'
@@ -787,8 +785,8 @@ def travelpointSelection():
 	
     if setings[2] == "The Barrens":         # setings 2: 'location(ex:TheBarrens)'
         find_ellement(Ui_Ellements[22], 14)	# Ui_Ellements 22: 'travel'
-    #else :
-    #    print("[INFO] Travel Point unknown. The bot won't change the one already selected.")
+    else :
+        print("[INFO] Travel Point unknown. The bot won't change the one already selected.")
 
     pyautogui.moveTo(windowMP()[0] + windowMP()[2] / 2, windowMP()[1] + windowMP()[3] / 2, setings[7], mouse_random_movement())
     time.sleep(0.5)
@@ -801,8 +799,7 @@ def travelpointSelection():
     #    print("[INFO] Settings (for Heroic/Normal) unrecognized.")
 
     time.sleep(1)
-    find_ellement(buttons[10], 14)
-    time.sleep(1)
+    find_ellement(buttons[10], 14) # buttons 7: 'sta' (= "choose" in Travel Point selection)
     sens = tempsens
 
 
@@ -877,18 +874,26 @@ def travelToLevel():
     travelpointSelection()
 
     # Look for the level/bounty even if it's on another page
+    tempsens= sens
+    sens = 0.9
+    for i in range(8) :
+        time.sleep(0.5)
+        if find_ellement(Ui_Ellements[21], 1) : # Ui_Ellements 21: 'bounties'
+            break
+        
     while find_ellement(Ui_Ellements[21], 1) : # Ui_Ellements 21: 'bounties'
         time.sleep(1)
         if find_ellement("levels/" + setings[2] + "_" + setings[3] + "_" + setings[1] + ".png", 14): # setings 1: 'level(ex:20)'
             time.sleep(0.5)
             find_ellement(buttons[11], 14) # buttons 11: 'start'
         else :
-            if find_ellement(buttons[9], 2): # buttons 9: 'sec'
+            if find_ellement(buttons[9], 2): # buttons 9: 'sec' (= 'right arrow' (next page))
                 time.sleep(0.5)
                 pass
             else:
-                find_ellement(buttons[26], 2) # buttons 26: 'fir'
+                find_ellement(buttons[26], 2) # buttons 26: 'fir' (= 'left arrow' (previous page))
                 time.sleep(0.5)
+    sens = tempsens
 
     # Look for the mercenaries group 'Botwork' and select it (with 'LockIn' if necessary)
     while True:
@@ -909,8 +914,10 @@ def where():
     """
     global createGroup
 
-    if find_ellement(buttons[4], 14) : # buttons 4: 'join_button' | "Mercenaries" button on principal menu
-        time.sleep(2)
+    for i in range(4) : 
+        time.sleep(0.5)
+        if find_ellement(buttons[4], 14) : # buttons 4: 'join_button' | "Mercenaries" button on principal menu
+            break
 
     # check if we need to create a group of Mercenaries
     if createGroup == 'True':
@@ -920,14 +927,27 @@ def where():
             if group_create() :
                 createGroup = 'False'
     else :
-        if find_ellement(chekers[21], 1): # chekers 21: 'menu'
-            travelToLevel()
-            goToEncounter()
+# To Do : make some loops with range / time.sleep / find an image in screen 
+# even if you dont' find it after a looking time, try to go next
+# (maybe somebody came back to an already started trip)
 
-            while not find_ellement(chekers[21], 1) :	# chekers 21: 'menu'
-                pyautogui.click()
-                time.sleep(0.5)
-                find_ellement(buttons[0], 14) # buttons 0: 'back'
+        for i in range(6) : 
+            time.sleep(0.5)
+            if find_ellement(chekers[21], 1): # chekers 21: 'menu'
+                break
+
+        if find_ellement(chekers[21], 1): # chekers 21: 'menu'
+            time.sleep(2)
+        # To Do : need to add a for/time/find 
+            travelToLevel()
+            time.sleep(2)
+            goToEncounter()
+            time.sleep(2)
+
+        while not find_ellement(chekers[21], 1) :	# chekers 21: 'menu'
+            pyautogui.click()
+            time.sleep(0.5)
+            find_ellement(buttons[0], 14) # buttons 0: 'back'
 #        goToEncounter()
 #        while not find_ellement(chekers[21], 1) :	# chekers 21: 'menu'
 #            pyautogui.click()
