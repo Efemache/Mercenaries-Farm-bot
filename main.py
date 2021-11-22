@@ -58,11 +58,11 @@ sens = 0.75
 
 Ui_Ellements = ['battle', 'blue', 'green', 'group', 'next', 'one', 'page_1', 'page_2', 'page_3', 'red', 'prev', 'sob',
                 'noclass', 'bat1', 'bat2', 'bat3', 'bat4', 'bat5', 'findthis', 'sombody', 'pack_open',
-                'bounties', 'travel', 'startbat', 'pick', 'Winterspring', 'Felwood', 'normal',
+                'bounties', 'Barrens', 'startbat', 'pick', 'Winterspring', 'Felwood', 'normal',
                 'heroic','replace_grey', 'presents3','presents_thing', 'free_battle']  # noclass 12, bat5-17
 # buttons
 buttons = ['back', 'continue', 'create', 'del', 'join_button', 'num', 'ok', 'play', 'ready', 'sec', 'sta', 'start',
-           'start1', 'submit', 'allready', 'startbattle', 'startbattle1', 'take', 'take1', 'yes', 'onedie', 'reveal',
+           'start1', 'submit', 'allready', 'startbattle', 'startbattle1', 'take', 'take1', 'portal-warp', 'onedie', 'reveal',
            'done', 'finishok', 'confirm', 'visit','fir','replace', 'keep']  # last take -17
 # chekers
 chekers = ['30lvl', 'empty_check', 'find', 'goto', 'group_find', 'level_check', 'rename', 'shab', 'drop', '301', '302',
@@ -392,6 +392,11 @@ def nextlvl():
         elif find_ellement(Ui_Ellements[24], 14): # Ui_Ellements 24: 'pick'
             time.sleep(1)
             pyautogui.click()
+            time.sleep(1.5)
+
+        elif find_ellement(buttons[19], 14): # Ui_Ellements 24: 'portal-warp'
+            time.sleep(1)
+#            pyautogui.click()
             time.sleep(1.5)
 
         else :
@@ -784,7 +789,7 @@ def travelpointSelection():
         find_ellement(Ui_Ellements[25], 14)	# Ui_Ellements 25: 'Winterspring'
 	
     if setings[2] == "The Barrens":         # setings 2: 'location(ex:TheBarrens)'
-        find_ellement(Ui_Ellements[22], 14)	# Ui_Ellements 22: 'travel'
+        find_ellement(Ui_Ellements[22], 14)	# Ui_Ellements 22: 'Barrens'
     else :
         print("[INFO] Travel Point unknown. The bot won't change the one already selected.")
 
@@ -870,29 +875,26 @@ def travelToLevel():
     time.sleep(1)
 
     # Find the travel point and the mode (normal/heroic)
-    pyautogui.moveTo(windowMP()[0] + windowMP()[2] / 1.5, windowMP()[1] + windowMP()[3] / 2, setings[7], mouse_random_movement())
+    #pyautogui.moveTo(windowMP()[0] + windowMP()[2] / 1.5, windowMP()[1] + windowMP()[3] / 2, setings[7], mouse_random_movement())
     travelpointSelection()
 
     # Look for the level/bounty even if it's on another page
     tempsens= sens
     sens = 0.9
-    for i in range(8) :
-        time.sleep(0.5)
-        if find_ellement(Ui_Ellements[21], 1) : # Ui_Ellements 21: 'bounties'
-            break
+    waitForItOrPass(Ui_Ellements[21], 4) # Ui_Ellements 21: 'bounties'
         
     while find_ellement(Ui_Ellements[21], 1) : # Ui_Ellements 21: 'bounties'
         time.sleep(1)
         if find_ellement("levels/" + setings[2] + "_" + setings[3] + "_" + setings[1] + ".png", 14): # setings 1: 'level(ex:20)'
-            time.sleep(0.5)
+            waitForItOrPass(buttons[11], 4) # buttons 11: 'start'
             find_ellement(buttons[11], 14) # buttons 11: 'start'
         else :
             if find_ellement(buttons[9], 2): # buttons 9: 'sec' (= 'right arrow' (next page))
-                time.sleep(0.5)
+                time.sleep(1)
                 pass
             else:
                 find_ellement(buttons[26], 2) # buttons 26: 'fir' (= 'left arrow' (previous page))
-                time.sleep(0.5)
+                time.sleep(1)
     sens = tempsens
 
     # Look for the mercenaries group 'Botwork' and select it (with 'LockIn' if necessary)
@@ -907,6 +909,22 @@ def travelToLevel():
     print("travelToLevel ended")
     return
 
+def waitForItOrPass(image, duration):
+    """ Wait to find 'image' on screen during 'duration' seconds (max)
+            and continue if you don't find it. The purpose is to permit to find a particular part in Hearthstone
+            but if the bot doesn't find it, try to go further if you can find another part that it could recognize
+    """
+    retour = False
+
+    print("Waiting (", duration, "s) for : ", image)
+    for i in range(duration*2) :
+        time.sleep(0.5)
+        if find_ellement(image, 1) : # '1' is for 'find it and don't do anything else'
+            retour = True
+            break
+        
+    return retour 
+
 
 def where():
     """ Try to enter in Mercenaries mode and to create a group of heroes if
@@ -914,35 +932,24 @@ def where():
     """
     global createGroup
 
-    for i in range(4) : 
-        time.sleep(0.5)
-        if find_ellement(buttons[4], 14) : # buttons 4: 'join_button' | "Mercenaries" button on principal menu
-            break
+    if waitForItOrPass(buttons[4], 2) : # buttons 4: 'join_button' | "Mercenaries" button on principal menu
+        find_ellement(buttons[4], 14)   # if you find it, click on it
 
     # check if we need to create a group of Mercenaries
     if createGroup == 'True':
-        print("where : Go to create a group of mercenaries")
-        if find_ellement(Ui_Ellements[3], 14): # Ui_Ellements 3: 'group'
+        print("where : create a group of mercenaries")
+        waitForItOrPass(Ui_Ellements[3], 2)  # Ui_Ellements 3: 'group'
+        if find_ellement(Ui_Ellements[3], 14) : # Ui_Ellements 3: 'group'
             time.sleep(2)
             if group_create() :
                 createGroup = 'False'
     else :
-# To Do : make some loops with range / time.sleep / find an image in screen 
-# even if you dont' find it after a looking time, try to go next
-# (maybe somebody came back to an already started trip)
-
-        for i in range(6) : 
-            time.sleep(0.5)
-            if find_ellement(chekers[21], 1): # chekers 21: 'menu'
-                break
-
-        if find_ellement(chekers[21], 1): # chekers 21: 'menu'
-            time.sleep(2)
-        # To Do : need to add a for/time/find 
-            travelToLevel()
-            time.sleep(2)
-            goToEncounter()
-            time.sleep(2)
+        
+        waitForItOrPass(chekers[21], 3) # chekers 21: 'menu'
+        travelToLevel()
+        time.sleep(2)
+        goToEncounter()
+        time.sleep(2)
 
         while not find_ellement(chekers[21], 1) :	# chekers 21: 'menu'
             pyautogui.click()
@@ -1209,9 +1216,15 @@ def find_ellement(file, index):
 
     gray_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)                                # Transform the image in grey; that's how CV2 will find the match
     template = cv2.imread('files/' + setings[0] + '/' + file, cv2.IMREAD_GRAYSCALE) # setings 0: 'MonitorResolution(ex:1920x1080)'
-
     w, h = template.shape[::-1]  # inverse (y,x) to (x,y)
     result = cv2.matchTemplate(gray_img, template, cv2.TM_CCOEFF_NORMED)
+
+# To Do: futur code to support transparency images. Need to check it there is transparency in an image before using a mask
+#    gray_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)                                # Transform the image in grey; that's how CV2 will find the match
+#    mask = cv2.imread('files/' + setings[0] + '/' + file, cv2.IMREAD_GRAYSCALE)     # setings 0: 'MonitorResolution(ex:1920x1080)'
+#    template = cv2.cvtColor(mask, cv2.COLOR_BGR2GRAY)
+#    w, h = template.shape[::-1]   # inverse (y,x) to (x,y)
+#    result = cv2.matchTemplate(gray_img, template, cv2.TM_CCOEFF_NORMED, mask)
 
     loc = np.where(result >= sens)
     if len(loc[0]) != 0:
