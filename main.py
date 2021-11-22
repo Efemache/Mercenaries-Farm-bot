@@ -59,7 +59,7 @@ sens = 0.75
 Ui_Ellements = ['battle', 'blue', 'green', 'group', 'next', 'one', 'page_1', 'page_2', 'page_3', 'red', 'prev', 'sob',
                 'noclass', 'bat1', 'bat2', 'bat3', 'bat4', 'bat5', 'findthis', 'sombody', 'pack_open',
                 'bounties', 'Barrens', 'startbat', 'pick', 'Winterspring', 'Felwood', 'normal',
-                'heroic','replace_grey', 'presents3','presents_thing', 'free_battle']  # noclass 12, bat5-17
+                'heroic','replace_grey', 'travelpoint','presents_thing', 'free_battle', 'choose_team']  # noclass 12, bat5-17
 # buttons
 buttons = ['back', 'continue', 'create', 'del', 'join_button', 'num', 'ok', 'play', 'ready', 'sec', 'sta', 'start',
            'start1', 'submit', 'allready', 'startbattle', 'startbattle1', 'take', 'take1', 'portal-warp', 'onedie', 'reveal',
@@ -775,35 +775,37 @@ def travelpointSelection():
     global sens
     tempsens = sens
     sens = 0.65
-    time.sleep(0.5)
 
-    pyautogui.moveTo(windowMP()[0] + windowMP()[2] / 1.5, windowMP()[1] + windowMP()[3] / 2, setings[7], mouse_random_movement())
+    waitForItOrPass(Ui_Ellements[30], 6) # Ui_Ellements 30: 'travelpoint'
+    if find_ellement(Ui_Ellements[30], 1) : # Ui_Ellements 30: 'travelpoint'
 
-    pyautogui.scroll(20)
-    time.sleep(0.5)
+        pyautogui.moveTo(windowMP()[0] + windowMP()[2] / 1.5, windowMP()[1] + windowMP()[3] / 2, setings[7], mouse_random_movement())
 
-    if setings[2] == "Felwood":	            # setings 2: 'location(ex:TheBarrens)'
-        find_ellement(Ui_Ellements[26], 14) # Ui_Ellements 26: 'Felwood'
+        pyautogui.scroll(20)
+        time.sleep(0.5)
 
-    if setings[2] == "Winterspring":        # setings 2: 'location(ex:TheBarrens)'
-        find_ellement(Ui_Ellements[25], 14)	# Ui_Ellements 25: 'Winterspring'
-	
-    if setings[2] == "The Barrens":         # setings 2: 'location(ex:TheBarrens)'
-        find_ellement(Ui_Ellements[22], 14)	# Ui_Ellements 22: 'Barrens'
-    else :
-        print("[INFO] Travel Point unknown. The bot won't change the one already selected.")
+        if setings[2] == "Felwood":	            # setings 2: 'location(ex:TheBarrens)'
+            find_ellement(Ui_Ellements[26], 14) # Ui_Ellements 26: 'Felwood'
 
-    pyautogui.moveTo(windowMP()[0] + windowMP()[2] / 2, windowMP()[1] + windowMP()[3] / 2, setings[7], mouse_random_movement())
-    time.sleep(0.5)
-	
-    if setings[3] == "Normal":              # setings 3: 'mode(ex:Heroic)'
-        find_ellement(Ui_Ellements[27], 14)	# Ui_Ellements 27: 'normal'
-    if setings[3] == "Heroic":              # setings 3: 'mode(ex:Heroic)'
-        find_ellement(Ui_Ellements[28], 14) # Ui_Ellements 28: 'heroic'
-    #else : 
-    #    print("[INFO] Settings (for Heroic/Normal) unrecognized.")
+        if setings[2] == "Winterspring":        # setings 2: 'location(ex:TheBarrens)'
+            find_ellement(Ui_Ellements[25], 14)	# Ui_Ellements 25: 'Winterspring'
+        
+        if setings[2] == "The Barrens":         # setings 2: 'location(ex:TheBarrens)'
+            find_ellement(Ui_Ellements[22], 14)	# Ui_Ellements 22: 'Barrens'
+        else :
+            print("[INFO] Travel Point unknown. The bot won't change the one already selected.")
 
-    time.sleep(1)
+        pyautogui.moveTo(windowMP()[0] + windowMP()[2] / 2, windowMP()[1] + windowMP()[3] / 2, setings[7], mouse_random_movement())
+        time.sleep(0.5)
+        
+        if setings[3] == "Normal":              # setings 3: 'mode(ex:Heroic)'
+            find_ellement(Ui_Ellements[27], 14)	# Ui_Ellements 27: 'normal'
+        if setings[3] == "Heroic":              # setings 3: 'mode(ex:Heroic)'
+            find_ellement(Ui_Ellements[28], 14) # Ui_Ellements 28: 'heroic'
+        else : 
+            print("[INFO] Settings (for Heroic/Normal) unrecognized.")
+        time.sleep(1)
+
     find_ellement(buttons[10], 14) # buttons 7: 'sta' (= "choose" in Travel Point selection)
     sens = tempsens
 
@@ -880,24 +882,26 @@ def travelToLevel():
 
     # Look for the level/bounty even if it's on another page
     tempsens= sens
-    sens = 0.9
-    waitForItOrPass(Ui_Ellements[21], 4) # Ui_Ellements 21: 'bounties'
+    sens = 0.65
         
+    waitForItOrPass(Ui_Ellements[21], 6) # Ui_Ellements 21: 'bounties'
     while find_ellement(Ui_Ellements[21], 1) : # Ui_Ellements 21: 'bounties'
-        time.sleep(1)
+        #time.sleep(1)
         if find_ellement("levels/" + setings[2] + "_" + setings[3] + "_" + setings[1] + ".png", 14): # setings 1: 'level(ex:20)'
             waitForItOrPass(buttons[11], 4) # buttons 11: 'start'
             find_ellement(buttons[11], 14) # buttons 11: 'start'
+            break
         else :
             if find_ellement(buttons[9], 2): # buttons 9: 'sec' (= 'right arrow' (next page))
                 time.sleep(1)
-                pass
+                #pass
             else:
                 find_ellement(buttons[26], 2) # buttons 26: 'fir' (= 'left arrow' (previous page))
                 time.sleep(1)
-    sens = tempsens
 
+    sens = 0.5
     # Look for the mercenaries group 'Botwork' and select it (with 'LockIn' if necessary)
+    waitForItOrPass(Ui_Ellements[33], 6) # Ui_Ellements 33: 'choose_team'
     while True:
         if not find_ellement(chekers[2], 2): # chekers 2: 'find'
             find_ellement(buttons[12], 2) # buttons 12: 'start1'
@@ -905,6 +909,7 @@ def travelToLevel():
             time.sleep(1.5)
             find_ellement(buttons[13], 14) # buttons 13: 'submit' / LockIn
             break
+    sens = tempsens
 
     print("travelToLevel ended")
     return
@@ -916,7 +921,7 @@ def waitForItOrPass(image, duration):
     """
     retour = False
 
-    print("Waiting (", duration, "s) for : ", image)
+    print("Waiting ("+str(duration)+"s max) for : ", image)
     for i in range(duration*2) :
         time.sleep(0.5)
         if find_ellement(image, 1) : # '1' is for 'find it and don't do anything else'
@@ -932,7 +937,7 @@ def where():
     """
     global createGroup
 
-    if waitForItOrPass(buttons[4], 2) : # buttons 4: 'join_button' | "Mercenaries" button on principal menu
+    if waitForItOrPass(buttons[4], 3) : # buttons 4: 'join_button' | "Mercenaries" button on principal menu
         find_ellement(buttons[4], 14)   # if you find it, click on it
 
     # check if we need to create a group of Mercenaries
@@ -1214,17 +1219,21 @@ def find_ellement(file, index):
         screen()
         img = screenImg
 
-    gray_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)                                # Transform the image in grey; that's how CV2 will find the match
-    template = cv2.imread('files/' + setings[0] + '/' + file, cv2.IMREAD_GRAYSCALE) # setings 0: 'MonitorResolution(ex:1920x1080)'
-    w, h = template.shape[::-1]  # inverse (y,x) to (x,y)
-    result = cv2.matchTemplate(gray_img, template, cv2.TM_CCOEFF_NORMED)
-
-# To Do: futur code to support transparency images. Need to check it there is transparency in an image before using a mask
 #    gray_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)                                # Transform the image in grey; that's how CV2 will find the match
-#    mask = cv2.imread('files/' + setings[0] + '/' + file, cv2.IMREAD_GRAYSCALE)     # setings 0: 'MonitorResolution(ex:1920x1080)'
-#    template = cv2.cvtColor(mask, cv2.COLOR_BGR2GRAY)
-#    w, h = template.shape[::-1]   # inverse (y,x) to (x,y)
-#    result = cv2.matchTemplate(gray_img, template, cv2.TM_CCOEFF_NORMED, mask)
+#    template = cv2.imread('files/' + setings[0] + '/' + file, cv2.IMREAD_GRAYSCALE) # setings 0: 'MonitorResolution(ex:1920x1080)'
+#    w, h = template.shape[::-1]  # inverse (y,x) to (x,y)
+#    result = cv2.matchTemplate(gray_img, template, cv2.TM_CCOEFF_NORMED)
+
+    gray_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    pngfile = cv2.imread('files/1920x1080/' + file)
+    template = cv2.cvtColor(pngfile, cv2.COLOR_BGR2GRAY)
+    w, h = template.shape[::-1]
+    try:
+        # look if the png file has alpha channel
+        IMG_RED, IMG_GREEN, IMG_BLUE, IMG_ALPHA = cv2.split(pngfile)
+        result = cv2.matchTemplate(gray_img, template, cv2.TM_CCOEFF_NORMED, pngfile)
+    except:
+        result = cv2.matchTemplate(gray_img, template, cv2.TM_CCOEFF_NORMED)
 
     loc = np.where(result >= sens)
     if len(loc[0]) != 0:
