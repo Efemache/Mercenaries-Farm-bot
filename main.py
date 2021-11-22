@@ -902,6 +902,7 @@ def travelToLevel():
     sens = 0.5
     # Look for the mercenaries group 'Botwork' and select it (with 'LockIn' if necessary)
     waitForItOrPass(Ui_Ellements[33], 6) # Ui_Ellements 33: 'choose_team'
+    sens = 0.75
     while True:
         if not find_ellement(chekers[2], 2): # chekers 2: 'find'
             find_ellement(buttons[12], 2) # buttons 12: 'start1'
