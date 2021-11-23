@@ -387,17 +387,17 @@ def nextlvl():
                 pyautogui.click()
                 time.sleep(0.2)
                 find_ellement(buttons[18], 9) # buttons 18: 'take1'
-                time.sleep(2)
+                time.sleep(5)
 
         elif find_ellement(Ui_Ellements[24], 14): # Ui_Ellements 24: 'pick'
             time.sleep(1)
             pyautogui.click()
-            time.sleep(1.5)
+            time.sleep(5)
 
         elif find_ellement(buttons[19], 14): # Ui_Ellements 24: 'portal-warp'
             time.sleep(1)
 #            pyautogui.click()
-            time.sleep(1.5)
+            time.sleep(5)
 
         else :
             x, y = pyautogui.position()
@@ -938,7 +938,7 @@ def where():
     """
     global createGroup
 
-    if waitForItOrPass(buttons[4], 3) : # buttons 4: 'join_button' | "Mercenaries" button on principal menu
+    if waitForItOrPass(buttons[4], 6) : # buttons 4: 'join_button' | "Mercenaries" button on principal menu
         find_ellement(buttons[4], 14)   # if you find it, click on it
 
     # check if we need to create a group of Mercenaries
@@ -951,7 +951,7 @@ def where():
                 createGroup = 'False'
     else :
         
-        waitForItOrPass(chekers[21], 3) # chekers 21: 'menu'
+        waitForItOrPass(chekers[21], 6) # chekers 21: 'menu'
         travelToLevel()
         time.sleep(2)
         goToEncounter()
@@ -959,7 +959,7 @@ def where():
 
         while not find_ellement(chekers[21], 1) :	# chekers 21: 'menu'
             pyautogui.click()
-            time.sleep(0.5)
+            time.sleep(1)
             find_ellement(buttons[0], 14) # buttons 0: 'back'
 #        goToEncounter()
 #        while not find_ellement(chekers[21], 1) :	# chekers 21: 'menu'
