@@ -1,6 +1,6 @@
-# Hearthstone-Mercenaries-game-bot
+# Mercenaries-Farm-Bot for Hearthstone
 ```diff
-- prevention: Bot is not ready and now on the development stage
+Bot is on a development stage but it already works to do some "Tasks" and run low level bounties
 ```
 <h3 align="center">Dev progress</h3>
 <table>
@@ -10,7 +10,6 @@
   <tr>
     <td>
 <ol>
-<li>auto assembly of the group - ✓ </li>
 <li>transition to Travel point selection - ✓</li>
 <li>transition to Level/Bounty selection - ✓</li>
 <li>transition between encounters - ✓ </li>
@@ -38,18 +37,20 @@ Watch the video : <br>
 
 <br>
 <br>
-The main idea of  the bot is to automatically pass the levels for simultaneously pumping all your mercenaries level 1 to 30.
+The purpose of this bot is to automatically pass the levels to level up your heros, win somes coins and do some campfire tasks 
 <br>
 
-More information on <a href="https://github.com/Efemache/Mercenaries-Hearthstone-game-bot/wiki">wiki</a>
+More information on <a href="https://github.com/Efemache/Mercenaries-Farm-Bot/wiki">wiki</a>
 
 <br>
 
 <h1 align="center">Installation</h1>
 <h2 align="center">Warning</h1>
-This a project is a fork of a previous one. So the branch "main" & "ForDeveloment" are the orginals ones (with some commits/code from me).
+This a project was a fork of a previous one but after being the only dev and going with a different point of view, I decided to start with a new project.
 <br>
-To use the new code, you need to use the "<href="https://github.com/Efemache/Mercenaries-Hearthstone-game-bot/tree/improve2">improve2</a>" branch  
+(the purpose of the previous project was to autogroup heroes to level them up to 30)
+<br>
+There is a branch main to use and a branch for dev with new features but not well tested.
 <h2 align="center">Windows</h1>
 <ul>
   <li>Download and install AutoHotKey (AHK) : https://www.autohotkey.com/</li>
@@ -77,42 +78,9 @@ To use the new code, you need to use the "<href="https://github.com/Efemache/Mer
 <img align="right" src="https://user-images.githubusercontent.com/68296704/137707877-189b3ca6-9981-4db8-b60d-42168c4cea7d.png"></img>
 
 
-```diff
-[BotSettings]
-monitor=1 
-bot_speed=0.5 
-+0.1-the fastest mode , 5-the slowest (not recomending do faster then 0.5) 
-[Hero1]
-number = 1
-colour = Red
-[Hero2]
-number = 2
-colour = Green
-[Hero3]
-number = 3
-colour = Blue
-+3 main heroes that you will use for pumping other ones.List of heroes by numbers you can see in in HeroesList.txt
-
-[NumberOfPages]
-Red = 1
-Green = 2
-Blue = 2
-+number of pages each colour(or type) in section Red - defenders , Green - warriors ,Blue - Wizards
-[Resolution]
-Monitor Resolution = 2560*1440
-+could be 2560*1440 or 1920*1080
-
-```
-
 <br>
 <br>
 <br>
     
 
-HeroList<br>
-1 - Cariel Roame <br>
-2 - Tyrande <br>
-3 - Milhous Manostorm <br>
-
-For contact, open issue on the first repo : 
-https://github.com/Deopster/Mercenaries-Hearthstone-game-bot
+For contact, open issue(s) on this repo 
