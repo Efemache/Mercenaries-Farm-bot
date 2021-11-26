@@ -873,7 +873,7 @@ def travelToLevel():
         
     while find_ellement(Ui_Ellements[20], 1): # Ui_Ellements 20: 'bounties'
         sens = tempsens
-        #time.sleep(1)
+        #time.sleep(2)
         if find_ellement("levels/" + setings[2] + "_" + setings[3] + "_" + setings[1] + ".png", 14): # setings 1: 'level(ex:20)'
             waitForItOrPass(buttons[11], 6) # buttons 11: 'start'
             find_ellement(buttons[11], 14) # buttons 11: 'start'
@@ -896,15 +896,16 @@ def selectGroup():
     print("selectGroup : entering")
     # Look for the mercenaries group 'Botwork' and select it (with 'LockIn' if necessary)
     sens = 0.75
-    waitForItOrPass(Ui_Ellements[33], 6) # Ui_Ellements 33: 'choose_team'
+#    waitForItOrPass(Ui_Ellements[33], 6) # Ui_Ellements 33: 'choose_team'
     sens = 0.8
-    while True:
-        if not find_ellement(chekers[2], 2): # chekers 2: 'find' ('Botwork' name)
-            find_ellement(buttons[12], 2) # buttons 12: 'start1'
-            pyautogui.moveTo(windowMP()[0] + windowMP()[2] / 1.5, windowMP()[1] + windowMP()[3] / 2, setings[7], mouse_random_movement())
-            waitForItOrPass(Ui_Ellements[13], 2)
-            find_ellement(buttons[13], 14) # buttons 13: 'submit' / LockIn
-            break
+#    while True:
+    if find_ellement(chekers[2], 14): # chekers 2: 'find' ('Botwork' name)
+        find_ellement(buttons[12], 14) # buttons 12: 'start1'
+        pyautogui.moveTo(windowMP()[0] + windowMP()[2] / 1.5, windowMP()[1] + windowMP()[3] / 2, setings[7], mouse_random_movement())
+        waitForItOrPass(Ui_Ellements[13], 3) # buttons 13: 'submit' / LockIn
+        find_ellement(buttons[13], 14) # buttons 13: 'submit' / LockIn
+#            break
+
     sens = tempsens
     print("selectGroup : ended")
     return
@@ -936,27 +937,34 @@ def where():
     find_ellement(buttons[4], 14)   # buttons 4: 'join_button' ("Mercenaries" button on principal menu) => if you find it, click on it
 
     if find_ellement(chekers[21], 1) : # chekers 21: 'menu'
+        time.sleep(4)
         # Find PVE adventure payed and free
         find_ellement(Ui_Ellements[0], 14) or find_ellement(Ui_Ellements[32],14) # Ui_Ellements 0: 'battle' # Ui_Ellements 32: 'free_battle'
         
     sens = 0.6
     if find_ellement(Ui_Ellements[30], 1) : # Ui_Ellements 30: 'travelpoint'
         sens = tempsens
+        time.sleep(4)
         # Find the travel point and the mode (normal/heroic)
         #pyautogui.moveTo(windowMP()[0] + windowMP()[2] / 1.5, windowMP()[1] + windowMP()[3] / 2, setings[7], mouse_random_movement())
         travelpointSelection()
+        time.sleep(4)
     sens = tempsens
     
     sens = 0.65
     if find_ellement(Ui_Ellements[20], 1): # Ui_Ellements 19: 'bounties'
+        time.sleep(4)
         sens = tempsens
         travelToLevel()
+        time.sleep(4)
     sens = tempsens
 
     sens = 0.6
     if find_ellement(Ui_Ellements[33], 1) : # Ui_Ellements 33: 'choose_team'
+        time.sleep(4)
         sens = tempsens
         selectGroup()
+        time.sleep(4)
     sens = tempsens
 
     #if find_ellement(Ui_Ellements[34], 1) : # Ui_Ellements 33: 'view_party' (button when you are on the road to battle)
@@ -964,8 +972,10 @@ def where():
 
     sens = 0.95
     if find_ellement(buttons[7], 1) : # buttons 7: 'play'
+        time.sleep(4)
         sens = tempsens
         goToEncounter()
+        time.sleep(4)
     sens = tempsens
 
     #if find_ellement(buttons[5], 1): # buttons 5: 'num'
@@ -1055,7 +1065,7 @@ def find_ellement(file, index):
     global left
     global screenImg
     global partImg
-#    time.sleep(speed)
+    time.sleep(speed)
 
     # choose if the bot need to look into the screen or in a part of the screen
     if index == 12:
