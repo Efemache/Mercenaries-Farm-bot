@@ -936,6 +936,7 @@ def where():
     find_ellement(buttons[4], 14)   # buttons 4: 'join_button' ("Mercenaries" button on principal menu) => if you find it, click on it
 
     if find_ellement(chekers[21], 1) : # chekers 21: 'menu'
+        time.sleep(2)
         # Find PVE adventure payed and free
         find_ellement(Ui_Ellements[0], 14) or find_ellement(Ui_Ellements[32],14) # Ui_Ellements 0: 'battle' # Ui_Ellements 32: 'free_battle'
         
