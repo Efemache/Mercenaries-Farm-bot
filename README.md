@@ -39,20 +39,21 @@ Watch the video : <br>
 <br>
 The purpose of this bot is to automatically pass the levels to level up your heros, win somes coins and do some campfire tasks 
 <br>
+It started as a fork of (and a collaboration to) a previous project but after being the only dev and going with a different point of view, I decided to make a new project.
+<br>
+(the purpose of the previous project was to autogroup heroes to level them up to 30)
+<br>
+There is a branch main to use and a branch for dev with new features but not well tested.
+<br>
 
 More information on <a href="https://github.com/Efemache/Mercenaries-Farm-Bot/wiki">wiki</a>
 
 <br>
 
 <h1 align="center">Installation</h1>
-<h2 align="center">Warning</h1>
-This a project was a fork of a previous one but after being the only dev and going with a different point of view, I decided to start with a new project.
-<br>
-(the purpose of the previous project was to autogroup heroes to level them up to 30)
-<br>
-There is a branch main to use and a branch for dev with new features but not well tested.
 <h2 align="center">Windows</h1>
 <ul>
+  <li>Install Python (see the video below) (Example : https://www.python.org/ftp/python/3.9.0/python-3.9.0-amd64-webinstall.exe)</li>
   <li>Download and install AutoHotKey (AHK) : https://www.autohotkey.com/</li>
   <li>Download the project</li>
   <li>Open Settings.ini and set your settings</li>
@@ -73,10 +74,6 @@ There is a branch main to use and a branch for dev with new features but not wel
 <br>
 <h2 align="center">Demo</h1>
 <a href="https://www.youtube.com/watch?v=nOZXCkrQ5fk"><img src="https://user-images.githubusercontent.com/68296704/138687982-0f6d971d-783d-4f35-a3a5-4f5d5a3e59af.png"></img></a>
-
-<h1 align="center">Specification, Settings.ini file:</h1>
-<img align="right" src="https://user-images.githubusercontent.com/68296704/137707877-189b3ca6-9981-4db8-b60d-42168c4cea7d.png"></img>
-
 
 <br>
 <br>
