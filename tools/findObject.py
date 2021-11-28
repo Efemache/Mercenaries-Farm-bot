@@ -4,22 +4,22 @@ from mss import mss
 import mss
 import sys
 
-""" If the bot doesn't find an object (Button, UI Element, ...), use this script
-to test it and find the right 'threshold'
-"""
 
-if len(sys.argv) == 4 : 
-    print("arg: 3")
+if len(sys.argv) == 4 :
     img = cv2.imread(sys.argv[1], cv2.IMREAD_COLOR)
-    imgTmpPath = sys.argv[2]
+    template_alpha = cv2.imread(sys.argv[2], cv2.IMREAD_UNCHANGED)
+    template = cv2.cvtColor(template_alpha, cv2.IMREAD_COLOR)
+#    template = cv2.imread(sys.argv[2], cv2.IMREAD_COLOR)
     threshold = float(sys.argv[3])
-elif  len(sys.argv) == 3 : 
-    print("arg: 2")
+elif  len(sys.argv) == 3 :
     sct = mss.mss()
     img = np.array(sct.grab(sct.monitors[1]))
-    imgTmpPath = sys.argv[1]
+    img = cv2.cvtColor(img, cv2.IMREAD_COLOR)
+    template_alpha = cv2.imread(sys.argv[1], cv2.IMREAD_UNCHANGED)
+    template = cv2.cvtColor(template_alpha, cv2.IMREAD_COLOR)
+#    template = cv2.imread(sys.argv[1], cv2.IMREAD_COLOR)
     threshold = float(sys.argv[2])
-else : 
+else :
     print("Usage : ")
     print("")
     print(sys.argv[0],"'/path/to/screenshot.png' '/path/to/the/imageObject/to/find.png' <threshold>")
@@ -35,11 +35,15 @@ else :
     print("")
     exit(1)
 
-gray_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-template = cv2.imread(imgTmpPath, cv2.IMREAD_GRAYSCALE)
-w, h = template.shape[::-1]
-result = cv2.matchTemplate(gray_img, template, cv2.TM_CCOEFF_NORMED)
 
+h = template.shape[0]
+w = template.shape[1]
+channels = cv2.split(template_alpha)
+#extract "transparency" channel from image
+alpha_channel = np.array(channels[3]) 
+#generate mask image, all black dots will be ignored during matching
+mask = cv2.merge([alpha_channel,alpha_channel,alpha_channel])
+result = cv2.matchTemplate(img, template, cv2.TM_CCORR_NORMED, None, mask)
 
 loc = np.where(result >= threshold)
 if len(loc[0]) != 0 :
@@ -48,7 +52,7 @@ if len(loc[0]) != 0 :
         break
     print("Found ", pt[0], pt[1] )
     print("Use 'Echap' on your keyboard to exit.")
-    cv2.imshow("Keyboard: 'Echap' to exit", img)
+    cv2.imshow("Keyboard/'Echap' to exit", img)
     while True:
         if cv2.waitKey(10) == 27:
             break
