@@ -71,7 +71,7 @@ setings = []
 # heroes
 hero = []
 hero_colour = []
-pages = ['', '', '']
+#pages = ['', '', '']
 heroNUM = ['', '', '', '', '', '']
 # for battle
 herobattle = []
@@ -112,16 +112,16 @@ def configread():
     config.read("settings.ini")
     speed = float((config["BotSettings"]["bot_speed"]).split("#")[0])
     n = 0
-    for i in ['Red', 'Green', 'Blue']:
-        pages[n] = [i, int((config["NumberOfPages"][i]).split("#")[0])]
-        n += 1
+#    for i in ['Red', 'Green', 'Blue']:
+#        pages[n] = [i, int((config["NumberOfPages"][i]).split("#")[0])]
+#        n += 1
 
     setings.append(config["BotSettings"]["Monitor Resolution"].replace('*', 'x'))
     for i in ["level", "location", "mode", "GroupCreate", "heroesSet"]:
         setings.append(config["BotSettings"][i])
     setings.append(int(config["BotSettings"]["monitor"]))
     setings.append(float(config["BotSettings"]["MouseSpeed"]))
-    setings.append(float(config["BotSettings"]["WaitForEXP"]))
+    setings.append(float(config["BotSettings"]["WaitForEXP"])*60)
     print(setings)
     files = os.listdir('./files/1920x1080/heroes')
     for obj in files:
@@ -222,8 +222,8 @@ def findgame():
 def battlefind(file, coll):
     global partImg
     global threshold
-    global top
-    global left
+#    global top
+#    global left
     herobattle.clear()
     img = partImg                                                                                      
     gray_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)  # преобразуем её в серуюш                        
@@ -436,6 +436,7 @@ def nextlvl():
 #                    pyautogui.moveTo(x, y + windowMP()[3] / 2.5, setings[7], mouse_random_movement())
 #                    pyautogui.click()
 #                    break
+
     threshold = tempthreshold
 
 
@@ -662,7 +663,7 @@ def battle():
             break
         elif find_ellement(buttons[15], 1) or find_ellement(buttons[16], 1):  # buttons 15: 'startbattle' # buttons 16: 'startbattle1'
             # wait 'WaitForEXP' (float) in minutes, to make the battle longer and win more EXP (for the Hearthstone reward track)
-            time.sleep(WaitForEXP)
+            time.sleep(setings[8]) # setings 8: WaitForEXP
 
             herobattlefin.clear()
 
@@ -744,7 +745,8 @@ def seth():
 
     global speed
     global threshold
-    while not find_ellement(buttons[5], 2): # buttons 5: 'num'
+    #while not find_ellement(buttons[5], 2): # buttons 5: 'num'
+    while find_ellement(buttons[5], 1): # buttons 5: 'num'
         time.sleep(0.5)
         
     debug("windowsMP() : ", windowMP())
@@ -1045,6 +1047,23 @@ def where():
     return True
 
 
+def find_ellement_trans(file, index):
+    """ Find an object ('file') on the screen (UI, Button, ...) and do some actions ('index') 
+        support PNG with transparency / alpha channel
+    """
+    global threshold
+    global screenImg
+    global partImg
+    time.sleep(speed)
+
+    # choose if the bot need to look into the screen or in a part of the screen
+    if index == 12:
+        img = partImg
+    else:
+        screen()
+        img = screenImg
+
+
 def find_ellement(file, index):
     """ Find an object ('file') on the screen (UI, Button, ...) and do some actions ('index') 
                   FullScreenshot | PartOfTheScreen(shot) |  Actions   | Return
@@ -1056,37 +1075,46 @@ def find_ellement(file, index):
         (new index needed to return a tab of object/coordinates)
     """
     global threshold
-    global top
-    global left
+#    global top
+#    global left
     global screenImg
     global partImg
     time.sleep(speed)
 
     # choose if the bot need to look into the screen or in a part of the screen
     if index == 12:
-        img = partImg 
-#        img = cv2.cvtColor(partImg, cv2.IMREAD_COLOR)
+        img = partImg
     else:
         screen()
         img = screenImg
-#        img = cv2.cvtColor(screenImg, cv2.IMREAD_COLOR)
 
-#    mask = cv2.imread('files/1920x1080/' + file, cv2.IMREAD_UNCHANGED)
-#    template = cv2.imread('files/1920x1080/' + file, cv2.IMREAD_COLOR)
-#    h = template.shape[0]
-#    w = template.shape[1]
+    # Try to find image with transparency
+    # need to make a different "match" (with color and alpha)
+    pathToImage = str('files/' + setings[0] + '/' + file)
+    image = Image.open(pathToImage)
+    if image.mode == 'RGBA' :
+        extrema = image.getextrema()
+        if extrema[3][0] < 255:
+            img = cv2.cvtColor(img, cv2.IMREAD_COLOR)
+            template_alpha = cv2.imread(pathToImage, cv2.IMREAD_UNCHANGED)
+            template = cv2.cvtColor(template_alpha, cv2.IMREAD_COLOR)
+            channels = cv2.split(template_alpha)
+            # extract "transparency" channel from image
+            alpha_channel = np.array(channels[3])
+            # generate mask image, all black dots will be ignored during matching
+            mask = cv2.merge([alpha_channel,alpha_channel,alpha_channel])
+            result = cv2.matchTemplate(img, template, cv2.TM_CCORR_NORMED, None, mask)
+        else :
+            img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+            template = cv2.imread(pathToImage, cv2.IMREAD_GRAYSCALE)
+            result = cv2.matchTemplate(img, template, cv2.TM_CCOEFF_NORMED)
+    else :
+        img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+        template = cv2.imread(pathToImage, cv2.IMREAD_GRAYSCALE)
+        result = cv2.matchTemplate(img, template, cv2.TM_CCOEFF_NORMED)
 
-#    channels = cv2.split(mask)
-    # extract "transparency" channel from image
-#    alpha_channel = np.array(channels[3]) 
-    # generate mask image, all black dots will be ignored during matching
-#    mask = cv2.merge([alpha_channel,alpha_channel,alpha_channel])
-#    result = cv2.matchTemplate(img, template, cv2.TM_CCORR_NORMED, None, mask)
-
-    gray_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    template = cv2.imread('files/' + setings[0] + '/' + file, cv2.IMREAD_GRAYSCALE)
-    w, h = template.shape[::-1]
-    result = cv2.matchTemplate(gray_img, template, cv2.TM_CCOEFF_NORMED)
+    h = template.shape[0]
+    w = template.shape[1]
 
     loc = np.where(result >= threshold)
     if len(loc[0]) != 0:
