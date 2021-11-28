@@ -44,12 +44,12 @@ global partImg
 #global ym
 #ym = 0
 global threshold
-global zipp
-global zipchek
-zipp = False
-zipchek = False
-global open
-open = False
+#global zipp
+#global zipchek
+#zipp = False
+#zipchek = False
+#global open
+#open = False
 threshold = 0.75
 # for_future=['','','','','','','','','','','','','','','','','','','',]
 # Ui-ellements
@@ -87,7 +87,7 @@ def debug(*message):
     if debug_mode :
         print("[DEBUG] ", message)
 
-# window multi-platorm (Windows & Linux support)
+# window multi-platorms (Windows & Linux support)
 def windowMP() :
     if(myOS=='windows'):
         retour=win.rect
@@ -97,13 +97,14 @@ def windowMP() :
         retour=None
     return retour
 
-# define function to use mouse on Windows & Linux
+# define function to use serveral mouse movements on Windows & Linux
 def mouse_random_movement():
     return random.choices([pyautogui.easeInQuad, pyautogui.easeOutQuad, pyautogui.easeInOutQuad])[0]
 
 def configread():
     """ Read settings.ini and put it in a table :
             Setings - 0: MonitorResolution (1920x1080), 1: level (20), 2: location (The Barrens), 3: mode (Heroic), 4: GroupCreate (True), 5: heroSet (True)
+            6: monitor (1), 7: MouseSpeed (0.5), 8: WaitForEXP (3)
     """
     global Resolution
     global speed
@@ -120,6 +121,7 @@ def configread():
         setings.append(config["BotSettings"][i])
     setings.append(int(config["BotSettings"]["monitor"]))
     setings.append(float(config["BotSettings"]["MouseSpeed"]))
+    setings.append(float(config["BotSettings"]["WaitForEXP"]))
     print(setings)
     files = os.listdir('./files/1920x1080/heroes')
     for obj in files:
@@ -492,17 +494,17 @@ def abilicks(index):
             if raund > 1 and raund % 2 == 0:
                 if find_ellement(obj + '/abilics/2.png', 14):
                     return False
-            if raund == 1:
-                if find_ellement(obj + '/abilics/1.png', 14):
-                    return True
+#            if raund == 1:
+#                if find_ellement(obj + '/abilics/1.png', 14):
+#                    return True
             pyautogui.moveTo(int(windowMP()[0] + windowMP()[2] / 2.5), int(windowMP()[1] + windowMP()[2] / 4), setings[7], mouse_random_movement())
             pyautogui.click()
             return True
 
         elif obj == 'heroes/3.Milhous Manashtorm.Blue':
-            if raund == 1:
-                if find_ellement(obj + '/abilics/1.png', 14):
-                    return False
+#            if raund == 1:
+#                if find_ellement(obj + '/abilics/1.png', 14):
+#                    return False
             if raund == 3:
                 if find_ellement(obj + '/abilics/3.png', 14):
                     return False
@@ -523,7 +525,17 @@ def abilicks(index):
             pyautogui.moveTo(int(windowMP()[0] + windowMP()[2] / 2.5), int(windowMP()[1] + windowMP()[2] / 4), setings[7], mouse_random_movement())
             pyautogui.click()
             return True
-        elif obj == 'heroes/38':
+        elif obj == 'heroes/32.Brightwing.Blue':
+            if raund % 4 == 0:
+                if find_ellement(obj + '/abilics/3.png', 14):
+                    return False
+            if raund % 2 == 0:
+                if find_ellement(obj + '/abilics/2.png', 14):
+                    return False
+            pyautogui.moveTo(int(windowMP()[0] + windowMP()[2] / 2.5), int(windowMP()[1] + windowMP()[2] / 4), setings[7], mouse_random_movement())
+            pyautogui.click()
+            return True
+        elif obj == 'heroes/38.Natalie Seline.Blue':
             if raund == 1:
                 if find_ellement(obj + '/abilics/1.png', 14):
                     return False
@@ -536,7 +548,7 @@ def abilicks(index):
             pyautogui.moveTo(int(windowMP()[0] + windowMP()[2] / 2.5), int(windowMP()[1] + windowMP()[2] / 4), setings[7], mouse_random_movement())
             pyautogui.click()
             return True
-        elif obj == 'heroes/40':
+        elif obj == 'heroes/40.Tamsin Roame.Blue':
             if raund == 1:
                 if find_ellement(obj + '/abilics/1.png', 14):
                     return False
@@ -549,17 +561,19 @@ def abilicks(index):
             pyautogui.moveTo(int(windowMP()[0] + windowMP()[2] / 2.5), int(windowMP()[1] + windowMP()[2] / 4), setings[7], mouse_random_movement())
             pyautogui.click()
             return True
-        elif obj == 'heroes/42':
+        elif obj == 'heroes/42.Vol\'jin.Blue':
             if raund == 1:
                 if find_ellement(obj + '/abilics/1.png', 14):
-                    return False
+                    return True
             if raund == 3:
                 if find_ellement(obj + '/abilics/3.png', 14):
                     return False
             if raund > 1:
                 if find_ellement(obj + '/abilics/2.png', 14):
-                    return True
-        #elif obj == 'heroes/44':
+                    return False
+            pyautogui.moveTo(int(windowMP()[0] + windowMP()[2] / 2.5), int(windowMP()[1] + windowMP()[2] / 4), setings[7], mouse_random_movement())
+            pyautogui.click()
+            return True
         elif obj == 'heroes/44.Gul\'dan.Blue':
             if raund %2 == 0:
                 if find_ellement(obj + '/abilics/2.png', 14):
@@ -615,7 +629,7 @@ def battle():
     """
     global raund
     global threshold
-    global zipchek
+#    global zipchek
     global speed
     retour = True
 
@@ -647,6 +661,9 @@ def battle():
             pyautogui.click()
             break
         elif find_ellement(buttons[15], 1) or find_ellement(buttons[16], 1):  # buttons 15: 'startbattle' # buttons 16: 'startbattle1'
+            # wait 'WaitForEXP' (float) in minutes, to make the battle longer and win more EXP (for the Hearthstone reward track)
+            time.sleep(WaitForEXP)
+
             herobattlefin.clear()
 
             tmp = int(windowMP()[3] / 2)
@@ -984,9 +1001,6 @@ def where():
         time.sleep(4)
     threshold = tempthreshold
 
-    #if find_ellement(Ui_Ellements[34], 1) : # Ui_Ellements 33: 'view_party' (button when you are on the road to battle)
-    #    nextlvl()
-
     threshold = 0.95
     if find_ellement(buttons[7], 1) : # buttons 7: 'play'
         time.sleep(4)
@@ -994,6 +1008,9 @@ def where():
         goToEncounter()
         time.sleep(4)
     threshold = tempthreshold
+
+    if find_ellement(Ui_Ellements[34], 1) : # Ui_Ellements 33: 'view_party' (button when you are on the road to battle)
+        nextlvl()
 
     #if find_ellement(buttons[5], 1): # buttons 5: 'num'
     #    seth()
