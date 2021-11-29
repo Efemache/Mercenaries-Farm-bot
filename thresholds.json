@@ -1,4 +1,6 @@
 {
-"UI_ellements/bounties.png" : 0.95
+"default" : 0.95, 
+"UI_ellements/bounties.png" : "-",
+"32.Brightwing.Blue/set.png" : "-"
 
 }
