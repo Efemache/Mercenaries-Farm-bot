@@ -1,3 +1,4 @@
+#! /usr/bin/env python3
 import time
 import cv2
 import numpy as np
@@ -13,7 +14,8 @@ from PIL import Image
 import os
 import sys
 import pyautogui
-
+import json
+ 
 ## try to detect the OS (Windows, Linux, Mac, ...)
 ## to load specific libs
 if sys.platform in ['Windows', 'win32', 'cygwin']:
@@ -44,6 +46,7 @@ global partImg
 #global ym
 #ym = 0
 global threshold
+global jthreshold
 #global zipp
 #global zipchek
 #zipp = False
@@ -100,6 +103,12 @@ def windowMP() :
 # define function to use serveral mouse movements on Windows & Linux
 def mouse_random_movement():
     return random.choices([pyautogui.easeInQuad, pyautogui.easeOutQuad, pyautogui.easeInOutQuad])[0]
+
+def readjson(jfile) :
+    descriptor = open(jfile)
+    data = json.load(descriptor)
+    descriptor.close()
+    return data
 
 def configread():
     """ Read settings.ini and put it in a table :
@@ -526,6 +535,18 @@ def abilicks(index):
             pyautogui.moveTo(int(windowMP()[0] + windowMP()[2] / 2.5), int(windowMP()[1] + windowMP()[2] / 4), setings[7], mouse_random_movement())
             pyautogui.click()
             return True
+
+        elif obj == 'heroes/17.King Krush.Green' :
+            if raund % 3 == 2:
+                if find_ellement(obj + '/abilics/2.png', 14):
+                    return False
+            if raund % 3 == 0:
+                if find_ellement(obj + '/abilics/3.png', 14):
+                    return False
+            pyautogui.moveTo(int(windowMP()[0] + windowMP()[2] / 2.5), int(windowMP()[1] + windowMP()[2] / 4), setings[7], mouse_random_movement())
+            pyautogui.click()
+            return False
+
         elif obj == 'heroes/32.Brightwing.Blue':
             if raund % 4 == 0:
                 if find_ellement(obj + '/abilics/3.png', 14):
@@ -745,8 +766,7 @@ def seth():
 
     global speed
     global threshold
-    #while not find_ellement(buttons[5], 2): # buttons 5: 'num'
-    while find_ellement(buttons[5], 1): # buttons 5: 'num'
+    while not find_ellement(buttons[5], 2): # buttons 5: 'num'
         time.sleep(0.5)
         
     debug("windowsMP() : ", windowMP())
@@ -980,35 +1000,35 @@ def where():
     threshold = 0.6
     if find_ellement(Ui_Ellements[30], 1) : # Ui_Ellements 30: 'travelpoint'
         threshold = tempthreshold
-        time.sleep(4)
+        time.sleep(3)
         # Find the travel point and the mode (normal/heroic)
         #pyautogui.moveTo(windowMP()[0] + windowMP()[2] / 1.5, windowMP()[1] + windowMP()[3] / 2, setings[7], mouse_random_movement())
         travelpointSelection()
-        time.sleep(4)
+        time.sleep(3)
     threshold = tempthreshold
     
     threshold = 0.65
     if find_ellement(Ui_Ellements[20], 1): # Ui_Ellements 19: 'bounties'
-        time.sleep(4)
+        time.sleep(3)
         threshold = tempthreshold
         travelToLevel()
-        time.sleep(4)
+        time.sleep(3)
     threshold = tempthreshold
 
     threshold = 0.6
     if find_ellement(Ui_Ellements[33], 1) : # Ui_Ellements 33: 'choose_team'
-        time.sleep(4)
+        time.sleep(3)
         threshold = tempthreshold
         selectGroup()
-        time.sleep(4)
+        time.sleep(3)
     threshold = tempthreshold
 
     threshold = 0.95
     if find_ellement(buttons[7], 1) : # buttons 7: 'play'
-        time.sleep(4)
+        time.sleep(3)
         threshold = tempthreshold
         goToEncounter()
-        time.sleep(4)
+        time.sleep(3)
     threshold = tempthreshold
 
     if find_ellement(Ui_Ellements[34], 1) : # Ui_Ellements 33: 'view_party' (button when you are on the road to battle)
@@ -1047,24 +1067,81 @@ def where():
     return True
 
 
-def find_ellement_trans(file, index):
+def find_ellement_trans(file, index, threshold):
     """ Find an object ('file') on the screen (UI, Button, ...) and do some actions ('index') 
         support PNG with transparency / alpha channel
+        - the old function 'find_ellement' should be deleted
+        - need to migrate to this one (find_ellement_trans) and find the right threshold for each image
+        - maybe the old find_ellement will be renamed "find_ellement_grey" and will be used for images which could be with different color (silver or gold like heroes cards)
     """
-    global threshold
     global screenImg
     global partImg
+
     time.sleep(speed)
 
     # choose if the bot need to look into the screen or in a part of the screen
     if index == 12:
-        img = partImg
+        img = cv2.cvtColor(partImg, cv2.IMREAD_COLOR)
     else:
         screen()
-        img = screenImg
+        img = cv2.cvtColor(screenImg, cv2.IMREAD_COLOR)
+    
+    template_alpha = cv2.imread('files/' + setings[0] + '/' + file, cv2.IMREAD_UNCHANGED)
+    template = cv2.cvtColor(template_alpha, cv2.IMREAD_COLOR)
+    channels = cv2.split(template_alpha)
+    # extract "transparency" channel from image
+    alpha_channel = np.array(channels[3])
+    # generate mask image, all black dots will be ignored during matching
+    mask = cv2.merge([alpha_channel,alpha_channel,alpha_channel])
+    result = cv2.matchTemplate(img, template, cv2.TM_CCORR_NORMED, None, mask)
+
+    h = template.shape[0]
+    w = template.shape[1]
+
+    loc = np.where(result >= threshold)
+    if len(loc[0]) != 0:
+        for pt in zip(*loc[::-1]):
+            pt[0] + w
+            pt[1] + h
+        x = int((pt[0] * 2 + w) / 2)
+        y = int((pt[1] * 2 + h) / 2)
+        print("Found " + file, x, y)
+        if index == 12 or index == 15:
+            return (x, y)
+        if index == 2 :
+            pyautogui.moveTo(x, y, setings[7], mouse_random_movement())
+            return True
+        if index == 1:
+            return True
+        p = random.randint(-2, 2)
+        s = random.randint(-2, 2)
+        pyautogui.moveTo(x + p, y + s, setings[7], mouse_random_movement())  # Moves the mouse instantly to absolute screen position
+        time.sleep(0.1)
+        pyautogui.click()
+        if index == 14:
+            return True
+    else :
+        print("Not found  " + file)
+        if index == 14:
+            return False
+        if index == 2:
+            return False
+        if index == 12 or index == 15:
+            return 0, 0
+        if index == 1 :
+            return False
 
 
 def find_ellement(file, index):
+    global jthreshold
+    if file in jthreshold : 
+        retour = find_ellement_trans(file, index, jthreshold[file])
+    else :
+        retour = find_ellement_grey(file, index)
+
+    return retour
+
+def find_ellement_grey(file, index):
     """ Find an object ('file') on the screen (UI, Button, ...) and do some actions ('index') 
                   FullScreenshot | PartOfTheScreen(shot) |  Actions   | Return
       index = 1 :       x        |                       |     -      | True / False      
@@ -1090,28 +1167,32 @@ def find_ellement(file, index):
 
     # Try to find image with transparency
     # need to make a different "match" (with color and alpha)
-    pathToImage = str('files/' + setings[0] + '/' + file)
-    image = Image.open(pathToImage)
-    if image.mode == 'RGBA' :
-        extrema = image.getextrema()
-        if extrema[3][0] < 255:
-            img = cv2.cvtColor(img, cv2.IMREAD_COLOR)
-            template_alpha = cv2.imread(pathToImage, cv2.IMREAD_UNCHANGED)
-            template = cv2.cvtColor(template_alpha, cv2.IMREAD_COLOR)
-            channels = cv2.split(template_alpha)
-            # extract "transparency" channel from image
-            alpha_channel = np.array(channels[3])
-            # generate mask image, all black dots will be ignored during matching
-            mask = cv2.merge([alpha_channel,alpha_channel,alpha_channel])
-            result = cv2.matchTemplate(img, template, cv2.TM_CCORR_NORMED, None, mask)
-        else :
-            img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-            template = cv2.imread(pathToImage, cv2.IMREAD_GRAYSCALE)
-            result = cv2.matchTemplate(img, template, cv2.TM_CCOEFF_NORMED)
-    else :
-        img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-        template = cv2.imread(pathToImage, cv2.IMREAD_GRAYSCALE)
-        result = cv2.matchTemplate(img, template, cv2.TM_CCOEFF_NORMED)
+#    pathToImage = str('files/' + setings[0] + '/' + file)
+#    image = Image.open(pathToImage)
+#    if image.mode == 'RGBA' :
+#        extrema = image.getextrema()
+#        if extrema[3][0] < 255:
+#            img = cv2.cvtColor(img, cv2.IMREAD_COLOR)
+#            template_alpha = cv2.imread(pathToImage, cv2.IMREAD_UNCHANGED)
+#            template = cv2.cvtColor(template_alpha, cv2.IMREAD_COLOR)
+#            channels = cv2.split(template_alpha)
+#            # extract "transparency" channel from image
+#            alpha_channel = np.array(channels[3])
+#            # generate mask image, all black dots will be ignored during matching
+#            mask = cv2.merge([alpha_channel,alpha_channel,alpha_channel])
+#            result = cv2.matchTemplate(img, template, cv2.TM_CCORR_NORMED, None, mask)
+#        else :
+#            img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+#            template = cv2.imread(pathToImage, cv2.IMREAD_GRAYSCALE)
+#            result = cv2.matchTemplate(img, template, cv2.TM_CCOEFF_NORMED)
+#    else :
+#        img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+#        template = cv2.imread(pathToImage, cv2.IMREAD_GRAYSCALE)
+#        result = cv2.matchTemplate(img, template, cv2.TM_CCOEFF_NORMED)
+
+    img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    template = cv2.imread('files/' + setings[0] + '/' + file, cv2.IMREAD_GRAYSCALE)
+    result = cv2.matchTemplate(img, template, cv2.TM_CCOEFF_NORMED)
 
     h = template.shape[0]
     w = template.shape[1]
@@ -1174,6 +1255,7 @@ def find_ellement(file, index):
 
 
 def main():
+    global jthreshold
     print("start")
     try:
         #ahk.show_info_traytip("Starting", "loading files", slient=False, blocking=True)
@@ -1181,6 +1263,7 @@ def main():
         findgame()
         parslist()
         resize()
+        jthreshold = readjson("thresholds.json")
         if(myOS=="windows"):
             ahk.show_info_traytip("started", "all files loaded successfully", slient=False, blocking=True)
             win.show()
