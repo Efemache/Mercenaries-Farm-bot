@@ -530,7 +530,8 @@ def abilicks(index):
                 if find_ellement(obj + '/abilics/1.png', 14):
                     return True
             if raund % 2 == 0:
-                if find_ellement(obj + '/abilics/3.png', 14):
+#                if find_ellement(obj + '/abilics/3.png', 14):
+                if find_ellement(obj + '/abilics/2.png', 14):
                     return False
             pyautogui.moveTo(int(windowMP()[0] + windowMP()[2] / 2.5), int(windowMP()[1] + windowMP()[2] / 4), setings[7], mouse_random_movement())
             pyautogui.click()
@@ -958,7 +959,7 @@ def selectGroup():
     if find_ellement(chekers[2], 14): # chekers 2: 'find' ('Botwork' name)
         find_ellement(buttons[12], 14) # buttons 12: 'start1'
         pyautogui.moveTo(windowMP()[0] + windowMP()[2] / 1.5, windowMP()[1] + windowMP()[3] / 2, setings[7], mouse_random_movement())
-        waitForItOrPass(Ui_Ellements[13], 3) # buttons 13: 'submit' / LockIn
+        waitForItOrPass(buttons[13], 3) # buttons 13: 'submit' / LockIn
         find_ellement(buttons[13], 14) # buttons 13: 'submit' / LockIn
 #            break
 
@@ -1076,6 +1077,9 @@ def find_ellement_trans(file, index, threshold):
     """
     global screenImg
     global partImg
+    global jthreshold
+    if threshold == '-' :
+        threshold = jthreshold['default']
 
     time.sleep(speed)
 
