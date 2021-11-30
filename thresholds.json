@@ -1,6 +1,6 @@
 {
 "default" : 0.95, 
 "UI_ellements/bounties.png" : "-",
-"32.Brightwing.Blue/set.png" : "-"
-
+"heroes/32.Brightwing.Blue/set.png" : "-",
+"lastOne": "dont touch"
 }
