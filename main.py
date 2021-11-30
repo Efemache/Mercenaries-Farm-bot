@@ -278,7 +278,8 @@ def battlefind(file, coll):
 def move(index):
     if index != (0, 0):
         time.sleep(0.2)
-        pyautogui.dragTo(index[0] + 40, index[1] - 30, 0.6, mouse_random_movement())
+        pyautogui.moveTo(index[0] + 40, index[1] - 30, 0.6, mouse_random_movement())
+        #pyautogui.dragTo(index[0] + 40, index[1] - 30, 0.6, mouse_random_movement())
         debug("Move index (index, x, y) : ",index, index[0] + 40, index[1] - 30)
         time.sleep(0.1)
         pyautogui.click()
@@ -493,12 +494,14 @@ def resize():
 
 
 def abilicks(index):
+#    global raund
     heroTEMP.clear()
     for i in range(3):
         if hero_colour[i] == index:
             heroTEMP.append(hero[i])
     print(index)
     print("Hero dump",heroTEMP)
+    print("round : ",raund)
     for obj in heroTEMP:
         if obj == 'heroes/1.Cariel Roame.Red':
             if raund > 1 and raund % 2 == 0:
@@ -523,37 +526,68 @@ def abilicks(index):
                     return True
             pyautogui.moveTo(int(windowMP()[0] + windowMP()[2] / 2.5), int(windowMP()[1] + windowMP()[2] / 4), setings[7], mouse_random_movement())
             pyautogui.click()
+            return False
+
+        elif obj == 'heroes/2.Tyrande.Green':
+            if raund % 2 == 1:
+                if find_ellement_trans(obj + '/abilics/1.png', 14):
+                    return True
+#            if raund % 2 == 0:
+#                if find_ellement(obj + '/abilics/3.png', 14):
+#                if find_ellement_trans(obj + '/abilics/2.png', 14):
+#                    return False
+            pyautogui.moveTo(int(windowMP()[0] + windowMP()[2] / 2.5), int(windowMP()[1] + windowMP()[2] / 4), setings[7], mouse_random_movement())
+            pyautogui.click()
             return True
 
-        elif obj == 'heroes/2.Tirande.Green':
-            if raund % 2 == 1:
-                if find_ellement(obj + '/abilics/1.png', 14):
+        elif obj == '21.Rathorian.Green':
+            if raund == 1:
+                if find_ellement_trans(obj + '/abilics/1.png', 14):
                     return True
-            if raund % 2 == 0:
-#                if find_ellement(obj + '/abilics/3.png', 14):
-                if find_ellement(obj + '/abilics/2.png', 14):
+            elif raund == 2:
+                if find_ellement_trans(obj + '/abilics/2.png', 14):
                     return False
+            elif raund % 3 == 1:
+                if find_ellement_trans(obj + '/abilics/2.png', 14):
+                    return False
+            elif raund % 3 == 2:
+                if find_ellement_trans(obj + '/abilics/3.png', 14):
+                    return True
+            elif raund % 3 == 0:
+                if find_ellement_trans(obj + '/abilics/1.png', 14):
+                    return True
             pyautogui.moveTo(int(windowMP()[0] + windowMP()[2] / 2.5), int(windowMP()[1] + windowMP()[2] / 4), setings[7], mouse_random_movement())
             pyautogui.click()
             return True
 
         elif obj == 'heroes/17.King Krush.Green' :
             if raund % 3 == 2:
-                if find_ellement(obj + '/abilics/2.png', 14):
+                if find_ellement_trans(obj + '/abilics/2.png', 14):
                     return False
-            if raund % 3 == 0:
-                if find_ellement(obj + '/abilics/3.png', 14):
+            elif raund % 3 == 0:
+                if find_ellement_trans(obj + '/abilics/3.png', 14):
                     return False
             pyautogui.moveTo(int(windowMP()[0] + windowMP()[2] / 2.5), int(windowMP()[1] + windowMP()[2] / 4), setings[7], mouse_random_movement())
             pyautogui.click()
             return False
 
+        elif obj == 'heroes/18.Lady Anacondra.Green' :
+            if raund % 2 == 1:
+                if find_ellement_trans(obj + '/abilics/1.png', 14):
+                    return True
+            if raund % 2 == 0:
+                if find_ellement_trans(obj + '/abilics/3.png', 14):
+                    return False
+            pyautogui.moveTo(int(windowMP()[0] + windowMP()[2] / 2.5), int(windowMP()[1] + windowMP()[2] / 4), setings[7], mouse_random_movement())
+            pyautogui.click()
+            return True
+
         elif obj == 'heroes/32.Brightwing.Blue':
             if raund % 4 == 0:
-                if find_ellement(obj + '/abilics/3.png', 14):
+                if find_ellement_trans(obj + '/abilics/3.png', 14):
                     return False
             if raund % 2 == 0:
-                if find_ellement(obj + '/abilics/2.png', 14):
+                if find_ellement_trans(obj + '/abilics/2.png', 14):
                     return False
             pyautogui.moveTo(int(windowMP()[0] + windowMP()[2] / 2.5), int(windowMP()[1] + windowMP()[2] / 4), setings[7], mouse_random_movement())
             pyautogui.click()
@@ -767,7 +801,7 @@ def seth():
 
     global speed
     global threshold
-    while not find_ellement(buttons[5], 2): # buttons 5: 'num'
+    while not find_ellement_trans(buttons[5], 2): # buttons 5: 'num'
         time.sleep(0.5)
         
     debug("windowsMP() : ", windowMP())
@@ -780,8 +814,7 @@ def seth():
     i = 0
     # setings 5: 'heroSet(ex:True)'
     if setings[5] == "True":
-        # buttons 14: 'allready'
-        while not find_ellement(buttons[14], 1):
+        while not find_ellement_trans(buttons[14], 1): # buttons 14: 'allready'
             print('Entrance')
             threshold = 0.75
             pyautogui.moveTo(x, y, setings[7])
@@ -791,7 +824,7 @@ def seth():
                     pyautogui.moveTo(windowMP()[0] + (windowMP()[2] / 2), windowMP()[1] + (windowMP()[3] * 0.92), setings[7], mouse_random_movement())
                     pyautogui.dragTo(windowMP()[0] + (windowMP()[2] / 2), (windowMP()[1] + (windowMP()[3] * 0.92)) - windowMP()[3] / 3, 0.6, mouse_random_movement())
                     break
-                if find_ellement(hero[n] + '/set.png', 1):
+                if find_ellement_trans(hero[n] + '/set.png', 1):
                 #if find_ellement(hero[n] + '/set.png', 6):
                     time.sleep(0.2)
                     pyautogui.dragTo(x, y - windowMP()[3] / 3, 0.6, mouse_random_movement())
@@ -991,15 +1024,15 @@ def where():
     global threshold
     tempthreshold = threshold
 
-    find_ellement(buttons[4], 14)   # buttons 4: 'join_button' ("Mercenaries" button on principal menu) => if you find it, click on it
+    find_ellement_trans(buttons[4], 14)   # buttons 4: 'join_button' ("Mercenaries" button on principal menu) => if you find it, click on it
 
-    if find_ellement(chekers[21], 1) : # chekers 21: 'menu'
+    if find_ellement_trans(chekers[21], 1) : # chekers 21: 'menu'
         time.sleep(4)
         # Find PVE adventure payed and free
-        find_ellement(Ui_Ellements[0], 14) or find_ellement(Ui_Ellements[32],14) # Ui_Ellements 0: 'battle' # Ui_Ellements 32: 'free_battle'
+        find_ellement_trans(Ui_Ellements[0], 14) or find_ellement_trans(Ui_Ellements[32],14) # Ui_Ellements 0: 'battle' # Ui_Ellements 32: 'free_battle'
         
     threshold = 0.6
-    if find_ellement(Ui_Ellements[30], 1) : # Ui_Ellements 30: 'travelpoint'
+    if find_ellement_trans(Ui_Ellements[30], 1) : # Ui_Ellements 30: 'travelpoint'
         threshold = tempthreshold
         time.sleep(3)
         # Find the travel point and the mode (normal/heroic)
@@ -1009,7 +1042,7 @@ def where():
     threshold = tempthreshold
     
     threshold = 0.65
-    if find_ellement(Ui_Ellements[20], 1): # Ui_Ellements 19: 'bounties'
+    if find_ellement_trans(Ui_Ellements[20], 1): # Ui_Ellements 19: 'bounties'
         time.sleep(3)
         threshold = tempthreshold
         travelToLevel()
@@ -1017,7 +1050,7 @@ def where():
     threshold = tempthreshold
 
     threshold = 0.6
-    if find_ellement(Ui_Ellements[33], 1) : # Ui_Ellements 33: 'choose_team'
+    if find_ellement_trans(Ui_Ellements[33], 1) : # Ui_Ellements 33: 'choose_team'
         time.sleep(3)
         threshold = tempthreshold
         selectGroup()
@@ -1025,14 +1058,14 @@ def where():
     threshold = tempthreshold
 
     threshold = 0.95
-    if find_ellement(buttons[7], 1) : # buttons 7: 'play'
+    if find_ellement_trans(buttons[7], 1) : # buttons 7: 'play'
         time.sleep(3)
         threshold = tempthreshold
         goToEncounter()
         time.sleep(3)
     threshold = tempthreshold
 
-    if find_ellement(Ui_Ellements[34], 1) : # Ui_Ellements 33: 'view_party' (button when you are on the road to battle)
+    if find_ellement_trans(Ui_Ellements[34], 1) : # Ui_Ellements 33: 'view_party' (button when you are on the road to battle)
         nextlvl()
 
     #if find_ellement(buttons[5], 1): # buttons 5: 'num'
@@ -1068,17 +1101,19 @@ def where():
     return True
 
 
-def find_ellement_trans(file, index, threshold):
+def find_ellement_trans(file, index, threshold="-"):
     """ Find an object ('file') on the screen (UI, Button, ...) and do some actions ('index') 
         support PNG with transparency / alpha channel
         - the old function 'find_ellement' should be deleted
         - need to migrate to this one (find_ellement_trans) and find the right threshold for each image
         - maybe the old find_ellement will be renamed "find_ellement_grey" and will be used for images which could be with different color (silver or gold like heroes cards)
     """
+    print("DEBUG : find_ellement_trans START")
     global screenImg
     global partImg
     global jthreshold
-    if threshold == '-' :
+    retour = False
+    if threshold == "-" :
         threshold = jthreshold['default']
 
     time.sleep(speed)
@@ -1104,6 +1139,7 @@ def find_ellement_trans(file, index, threshold):
 
     loc = np.where(result >= threshold)
     if len(loc[0]) != 0:
+        retour = True
         for pt in zip(*loc[::-1]):
             pt[0] + w
             pt[1] + h
@@ -1111,38 +1147,45 @@ def find_ellement_trans(file, index, threshold):
         y = int((pt[1] * 2 + h) / 2)
         print("Found " + file, x, y)
         if index == 12 or index == 15:
-            return (x, y)
-        if index == 2 :
+            retour = (x, y)
+        elif index == 2 :
             pyautogui.moveTo(x, y, setings[7], mouse_random_movement())
-            return True
-        if index == 1:
-            return True
-        p = random.randint(-2, 2)
-        s = random.randint(-2, 2)
-        pyautogui.moveTo(x + p, y + s, setings[7], mouse_random_movement())  # Moves the mouse instantly to absolute screen position
-        time.sleep(0.1)
-        pyautogui.click()
-        if index == 14:
-            return True
+#            retour = True
+#        elif index == 1:
+#            retour = True
+        elif index == 14 :
+            p = random.randint(-2, 2)
+            s = random.randint(-2, 2)
+            pyautogui.moveTo(x + p, y + s, setings[7], mouse_random_movement())  # Moves the mouse instantly to absolute screen position
+            time.sleep(0.1)
+            pyautogui.click()
+#            if index == 14:
+#                return True
     else :
         print("Not found  " + file)
-        if index == 14:
-            return False
-        if index == 2:
-            return False
+#        if index == 14:
+#            return False
+#        if index == 2:
+#            return False
+#        if index == 12 or index == 15:
+#            return 0, 0
+#        if index == 1 :
+#            return False
         if index == 12 or index == 15:
-            return 0, 0
-        if index == 1 :
-            return False
+            retour = (0, 0)
+    print("DEBUG : find_ellement_trans END")
+    return retour
 
 
 def find_ellement(file, index):
     global jthreshold
+    print("DEBUG : find_ellement START")
     if file in jthreshold : 
         retour = find_ellement_trans(file, index, jthreshold[file])
     else :
         retour = find_ellement_grey(file, index)
 
+    print("DEBUG : find_ellement END")
     return retour
 
 def find_ellement_grey(file, index):
@@ -1155,12 +1198,14 @@ def find_ellement_grey(file, index):
       index = 15:       x        |                       |     -      |  x,y / 0,0
         (new index needed to return a tab of object/coordinates)
     """
+    print("DEBUG : find_ellement_grey START")
     global threshold
 #    global top
 #    global left
     global screenImg
     global partImg
     time.sleep(speed)
+    retour = False
 
     # choose if the bot need to look into the screen or in a part of the screen
     if index == 12:
@@ -1203,6 +1248,7 @@ def find_ellement_grey(file, index):
 
     loc = np.where(result >= threshold)
     if len(loc[0]) != 0:
+        retour = True
         for pt in zip(*loc[::-1]):
             pt[0] + w
             pt[1] + h
@@ -1210,7 +1256,7 @@ def find_ellement_grey(file, index):
         y = int((pt[1] * 2 + h) / 2)
         print("Found " + file, x, y)
         if index == 12 or index == 15:
-            return (x, y)
+            retour = (x, y)
 #        if (index == 6):	# chekers 7: 'shab'
 #            global xm
 #            global ym
@@ -1222,28 +1268,29 @@ def find_ellement_grey(file, index):
 #            pyautogui.click()
 #            return True
 #        if file == buttons[5]:	# buttons 5: 'num'
-        if index == 2 :	
+        elif index == 2 :	
             pyautogui.moveTo(x, y, setings[7], mouse_random_movement())
-            return True
+#            return True
 #        if file == chekers[3]:	# chekers 3: 'goto'
 #            pyautogui.moveTo(x, y, setings[7], mouse_random_movement())
-        if index == 1:
-            return True
-        p = random.randint(-2, 2)
-        s = random.randint(-2, 2)
-        pyautogui.moveTo(x + p, y + s, setings[7], mouse_random_movement())  # Moves the mouse instantly to absolute screen position
-        time.sleep(0.1)
-        pyautogui.click()
-        if index == 14:
-            return True
+#        if index == 1:
+#            return True
+        elif index == 14 :
+            p = random.randint(-2, 2)
+            s = random.randint(-2, 2)
+            pyautogui.moveTo(x + p, y + s, setings[7], mouse_random_movement())  # Moves the mouse instantly to absolute screen position
+            time.sleep(0.1)
+            pyautogui.click()
+#            if index == 14:
+#                return True
     else:
         print("Not found  " + file)
-        if index == 14:
-            return False
-        if index == 2:
-            return False
+#        if index == 14:
+#            return False
+#        if index == 2:
+#            return False
         if index == 12 or index == 15:
-            return 0, 0
+            retour = (0, 0)
 #        if index == 6:
 #            return False
 #        if index == 3:
@@ -1251,11 +1298,13 @@ def find_ellement_grey(file, index):
 #        if index == 2:
 #            return True
 #        if index == 1 or index == 9 or index == 12:
-        if index == 1 :
+#        if index == 1 :
 #        if index == 1 or index == 12:
-            return False
+#            return False
 #        if file == buttons[7]:	# buttons 7: 'play'
 #            return False
+    print("DEBUG : find_ellement_grey END")
+    return retour
 
 
 def main():
