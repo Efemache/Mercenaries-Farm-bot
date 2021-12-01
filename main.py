@@ -478,19 +478,18 @@ def chooseTreasure():
 def resize():
     for i in range(6):
         if hero[i] != 'heroes/auto' and hero[i] != 'heroes/-':
-	# setings 0: 'MonitorResolution(ex:1920x1080)'
-            image_path = './files/' + setings[0] + '/' + hero[i] + '/set.png'
-            img = Image.open(image_path)
-            # получаем ширину и высоту
-            width, height = img.size
-            print(width, height)
-            # открываем картинку в окне
-            new_image = img.resize((int(width * 0.65), int(height * 0.65)))
-            new_image1 = img.resize((int(width * 0.75), int(height * 0.75)))
-	# setings 0: 'MonitorResolution(ex:1920x1080)'
-            new_image.save('./files/' + setings[0] + '/' + hero[i] + '/main.png')
-	# setings 0: 'MonitorResolution(ex:1920x1080)'
-            new_image1.save('./files/' + setings[0] + '/' + hero[i] + '/group.png')
+            # setings 0: 'MonitorResolution(ex:1920x1080)'
+            mainPath = './files/' + setings[0] + '/' + hero[i] + '/main.png'
+            groupPath = './files/' + setings[0] + '/' + hero[i] + '/group.png'
+            if not os.path.exists(mainPath) or not os.path.exists(groupPath) :
+                image_path = './files/' + setings[0] + '/' + hero[i] + '/set.png' # setings 0: 'MonitorResolution(ex:1920x1080)'
+                img = Image.open(image_path)
+                width, height = img.size
+                #print(width, height)
+                new_image = img.resize((int(width * 0.65), int(height * 0.65)))
+                new_image1 = img.resize((int(width * 0.75), int(height * 0.75)))
+                new_image.save(mainPath)
+                new_image1.save(groupPath)
 
 
 def abilicks(index):
