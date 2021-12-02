@@ -12,7 +12,12 @@ It started as a fork of (and a collaboration to) a previous project but after be
 There is a branch main to use and a branch for dev with new features but not well tested.
 
 
-More information and news on [the Wiki](https://github.com/Efemache/Mercenaries-Farm-Bot/wiki)
+## News & contact 
+More informations in [Wiki](https://github.com/Efemache/Mercenaries-Farm-Bot/wiki)
+
+For contact, open an [issue](/issues)
+
+For news, follow us on Twitter : [@MercenariesFarm](https://twitter.com/MercenariesFarm)
 
 ## Dev progress
 |               |  1920x1080 (fullscreen & windowed mode) |
@@ -23,7 +28,9 @@ More information and news on [the Wiki](https://github.com/Efemache/Mercenaries-
 |4. choosing a treasure after passing a level | ✓|
 |5. putting heroes on the board | ✓|
 |6. searching for suitable opponents | ✓|
-|7. choosing abilities (the first one by default) | ✓|
+|7. choosing abilities :  | ✓|
+|    * for [supported Mercenaries](/wiki/Mercenaries) | ✓|
+|    * or the first one by default | ✓|
 |8. attacking opponents | ✓|
 |9. collecting rewards for reaching the last level|  ✓|
 |10. repeat from 1 point | ✓|
@@ -59,5 +66,3 @@ Watch the video : [![Watch the video](https://user-images.githubusercontent.com/
 [![Watch the video](https://user-images.githubusercontent.com/68296704/138687982-0f6d971d-783d-4f35-a3a5-4f5d5a3e59af.png)](https://www.youtube.com/watch?v=nOZXCkrQ5fk)
 
 
-## Contact
-For contact, open an [issue](/issues)
