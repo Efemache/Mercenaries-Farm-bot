@@ -380,7 +380,7 @@ def nextlvl():
                 time.sleep(0.1)
                 pyautogui.click()
                 time.sleep(0.2)
-                find_ellement(buttons[18], 14) # buttons 18: 'choose_task'
+                find_ellement_trans(buttons[18], 14) # buttons 18: 'choose_task'
                 time.sleep(5)
 
         elif find_ellement(Ui_Ellements[24], 14): # Ui_Ellements 24: 'pick'
