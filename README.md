@@ -29,7 +29,7 @@ For news, follow us on Twitter : [@MercenariesFarm](https://twitter.com/Mercenar
 |5. putting heroes on the board | ✓|
 |6. searching for suitable opponents | ✓|
 |7. choosing abilities :  | ✓|
-|    * for [supported Mercenaries](/wiki/Mercenaries) | ✓|
+|    * for [supported Mercenaries](wiki/Mercenaries) | ✓|
 |    * or the first one by default | ✓|
 |8. attacking opponents | ✓|
 |9. collecting rewards for reaching the last level|  ✓|
