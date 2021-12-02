@@ -52,7 +52,7 @@ Ui_Ellements = ['battle', 'blue', 'green', 'group', 'next', 'one', 'page_1', 'pa
                 'heroic','replace_grey', 'travelpoint','presents_thing', 'free_battle', 'choose_team', 'view_party']  # noclass 12, bat5-17
 # buttons
 buttons = ['back', 'continue', 'create', 'del', 'join_button', 'num', 'ok', 'play', 'ready', 'sec', 'sta', 'start',
-           'start1', 'submit', 'allready', 'startbattle', 'startbattle1', 'take', 'take1', 'portal-warp', 'onedie', 'reveal',
+           'start1', 'submit', 'allready', 'startbattle', 'startbattle1', 'take', 'choose_task', 'portal-warp', 'onedie', 'reveal',
            'done', 'finishok', 'confirm', 'visit','fir','replace', 'keep']  # last take -17
 # chekers
 chekers = ['30lvl', 'empty_check', 'find', 'goto', 'group_find', 'level_check', 'rename', 'shab', 'drop', '301', '302',
@@ -366,7 +366,7 @@ def nextlvl():
         elif find_ellement(buttons[25], 14):	# buttons 25: 'visit'
             y = windowMP()[1] + windowMP()[3] / 2.2
             time.sleep(1.5)
-            while find_ellement(Ui_Ellements[19], 1): # Ui_Ellements 19: 'sombody'
+            while find_ellement_trans(Ui_Ellements[19], 1): # Ui_Ellements 19: 'sombody'
                 temp = random.randint(0, 2)
                 if temp == 0:
                     x = windowMP()[2] / 2.3
@@ -380,7 +380,7 @@ def nextlvl():
                 time.sleep(0.1)
                 pyautogui.click()
                 time.sleep(0.2)
-                find_ellement(buttons[18], 14) # buttons 18: 'take1'
+                find_ellement(buttons[18], 14) # buttons 18: 'choose_task'
                 time.sleep(5)
 
         elif find_ellement(Ui_Ellements[24], 14): # Ui_Ellements 24: 'pick'
@@ -634,9 +634,8 @@ def abilicks(index):
             return True
 
         elif localhero == "Gul'dan":
-            if raund %2 == 0:
-                if find_ellement(obj + '/abilics/2.png', 14):
-                    return False
+            if find_ellement(obj + '/abilics/3.png', 14):
+                return True
             pyautogui.moveTo(int(windowMP()[0] + windowMP()[2] / 2.5), int(windowMP()[1] + windowMP()[2] / 4), setings[7], mouse_random_movement())
             pyautogui.click()
             return True
