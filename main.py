@@ -955,7 +955,7 @@ def goToEncounter():
             threshold = tempthreshold
             nextlvl()
     threshold = tempthreshold
-    while not find_ellement(buttons[0], 1) : # buttons 0: 'back'
+    while not find_ellement_trans(buttons[0], 1) : # buttons 0: 'back'
         pyautogui.click()
         time.sleep(1)
     
