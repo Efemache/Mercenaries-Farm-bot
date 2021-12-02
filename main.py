@@ -557,10 +557,10 @@ def abilicks(index):
             if raund % 3 == 1:
                 if find_ellement_trans(obj + '/abilics/1.png', 14):
                     return True
-            if raund % 3 == 2:
+            if raund % 3 == 0:
                 if find_ellement_trans(obj + '/abilics/2.png', 14):
                     return True
-            if raund % 3 == 0:
+            if raund % 3 == 2:
                 if find_ellement_trans(obj + '/abilics/3.png', 14):
                     return False
             pyautogui.moveTo(int(windowMP()[0] + windowMP()[2] / 2.5), int(windowMP()[1] + windowMP()[2] / 4), setings[7], mouse_random_movement())
