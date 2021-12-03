@@ -1,7 +1,9 @@
 {
 "default" : 0.95, 
 "buttons/take.png" : 0.99,
-"UI_ellements/findthis.png" : 0.99,
+"buttons/replace.png" : 0.99,
+"UI_ellements/take_grey.png" : 0.99,
+"UI_ellements/replace_grey.png" : 0.99,
 "heroes/32.Brightwing.Blue/set.png" : "-",
 "lastOne": "dont touch"
 }

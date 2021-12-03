@@ -47,7 +47,7 @@ threshold = 0.75
 
 # Ui-ellements
 Ui_Ellements = ['battle', 'blue', 'green', 'group', 'next', 'one', 'page_1', 'page_2', 'page_3', 'red', 'prev', 'sob',
-                'noclass', 'bat1', 'bat2', 'bat3', 'bat4', 'bat5', 'findthis', 'sombody', 'bounties',
+                'noclass', 'bat1', 'bat2', 'bat3', 'bat4', 'bat5', 'take_grey', 'sombody', 'bounties',
                 'bounties', 'Barrens', 'startbat', 'pick', 'Winterspring', 'Felwood', 'normal',
                 'heroic','replace_grey', 'travelpoint','presents_thing', 'free_battle', 'choose_team', 'view_party']  # noclass 12, bat5-17
 # buttons
@@ -428,10 +428,10 @@ def chooseTreasure():
         if find_ellement_trans(buttons[17], 14):	# buttons 17: 'take'
             time.sleep(1)
             break
-        if find_ellement(buttons[28], 14):	# buttons 28: 'keep'
+        if find_ellement_trans(buttons[28], 14):	# buttons 28: 'keep'
             time.sleep(1)
             break
-        if find_ellement(buttons[27], 14):	# buttons 27: 'replace'
+        if find_ellement_trans(buttons[27], 14):	# buttons 27: 'replace'
             time.sleep(1)
             break
 
@@ -926,14 +926,14 @@ def goToEncounter():
                     # if find (task completed) :
                     #   time.sleep(2)
 
-                    if not find_ellement_trans(Ui_Ellements[18], 1): # Ui_Ellements 18: 'findthis' ('Take' grey button)
+                    if not find_ellement_trans(Ui_Ellements[18], 1): # Ui_Ellements 18: 'take_grey'
                         pyautogui.click()
                         time.sleep(0.5)
                     else:
                         chooseTreasure()
                         break
 
-                    if not find_ellement(Ui_Ellements[29], 1): # Ui_Ellements 29: 'replace_grey' (To keep/replace a Treasure?) 
+                    if not find_ellement_trans(Ui_Ellements[29], 1): # Ui_Ellements 29: 'replace_grey' (To keep/replace a Treasure?) 
                         pyautogui.click()
                         time.sleep(0.5)
                     else:
