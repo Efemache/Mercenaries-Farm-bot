@@ -19,6 +19,8 @@ For contact, open an [issue](https://github.com/Efemache/Mercenaries-Farm-Bot/is
 
 For news, follow us on Twitter : [@MercenariesFarm](https://twitter.com/MercenariesFarm)
 
+To discuss with the community, go to discord [Mercenaries Farm server](https://discord.gg/ePghxaUBEK)
+
 ## Dev progress
 |               |  1920x1080 (fullscreen & windowed mode) |
 | :------------ | :-------------:| 
