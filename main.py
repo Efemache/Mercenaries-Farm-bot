@@ -501,10 +501,10 @@ def abilicks(index):
             if raund % 3 == 1:
                 if find_ellement_trans(obj + '/abilics/1.png', 14):
                     return True
-            if raund % 3 == 2:
+            if raund % 3 == 0:
                 if find_ellement_trans(obj + '/abilics/2.png', 14):
                     return True
-            if raund % 3 == 0:
+            if raund % 3 == 2:
                 if find_ellement_trans(obj + '/abilics/3.png', 14):
                     return False
             pyautogui.moveTo(int(windowMP()[0] + windowMP()[2] / 2.5), int(windowMP()[1] + windowMP()[2] / 4), setings[7], mouse_random_movement())
@@ -526,6 +526,17 @@ def abilicks(index):
                     return True
             elif raund % 3 == 0:
                 if find_ellement_trans(obj + '/abilics/1.png', 14):
+                    return True
+            pyautogui.moveTo(int(windowMP()[0] + windowMP()[2] / 2.5), int(windowMP()[1] + windowMP()[2] / 4), setings[7], mouse_random_movement())
+            pyautogui.click()
+            return True
+
+        elif localhero == 'Rexxar':
+            if raund % 3 == 1:
+                if find_ellement_trans(obj + '/abilics/1.png', 14):
+                    return True
+            if raund % 3 == 0:
+                if find_ellement_trans(obj + '/abilics/3.png', 14):
                     return True
             pyautogui.moveTo(int(windowMP()[0] + windowMP()[2] / 2.5), int(windowMP()[1] + windowMP()[2] / 4), setings[7], mouse_random_movement())
             pyautogui.click()
@@ -668,6 +679,7 @@ def atack(i, enemyred, enemygreen, enemyblue, enemynoclass, mol):
         pyautogui.moveTo(x, y, setings[7], mouse_random_movement())
         pyautogui.click()
         time.sleep(0.2)
+        pyautogui.moveTo(windowMP()[0] + windowMP()[2]/3, windowMP()[1] + windowMP()[3]/2, setings[7], mouse_random_movement())
         if abilicks('Red'):
             if move(enemygreen):
                 if move(mol):
@@ -678,6 +690,7 @@ def atack(i, enemyred, enemygreen, enemyblue, enemynoclass, mol):
         pyautogui.moveTo(x, y, setings[7], mouse_random_movement())
         pyautogui.click()
         time.sleep(0.2)
+        pyautogui.moveTo(windowMP()[0] + windowMP()[2]/3, windowMP()[1] + windowMP()[3]/2, setings[7], mouse_random_movement())
         if abilicks('Green'):
             if move(enemyblue):
                 if move(mol):
@@ -688,6 +701,7 @@ def atack(i, enemyred, enemygreen, enemyblue, enemynoclass, mol):
         pyautogui.moveTo(x, y, setings[7], mouse_random_movement())
         pyautogui.click()
         time.sleep(0.2)
+        pyautogui.moveTo(windowMP()[0] + windowMP()[2]/3, windowMP()[1] + windowMP()[3]/2, setings[7], mouse_random_movement())
         if abilicks('Blue'):
             if move(enemyred):
                 if move(mol):
@@ -1095,7 +1109,10 @@ def find_ellement_trans(file, index, threshold="-"):
     retour = False
     if threshold == "-" :
         if file in jthreshold : 
-            threshold = jthreshold[file]
+            if jthreshold[file] == "-" :
+                threshold = jthreshold['default']
+            else :
+                threshold = jthreshold[file]
         else:
             threshold = jthreshold['default']
 
