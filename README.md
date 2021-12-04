@@ -19,6 +19,8 @@ For contact, open an [issue](https://github.com/Efemache/Mercenaries-Farm-Bot/is
 
 For news, follow us on Twitter : [@MercenariesFarm](https://twitter.com/MercenariesFarm)
 
+To discuss with the community, go to discord [Mercenaries Farm server](https://discord.gg/ePghxaUBEK)
+
 ## Dev progress
 |               |  1920x1080 (fullscreen & windowed mode) |
 | :------------ | :-------------:| 
@@ -46,7 +48,7 @@ Watch the video : [![Watch the video](https://user-images.githubusercontent.com/
 
 ## Installation
 ### Windows
-* Install Python 3.8 (see the video below) (Example : https://www.python.org/ftp/python/3.9.0/python-3.9.0-amd64-webinstall.exe)
+* Install Python 3.9 (see the video below) (Example : https://www.python.org/ftp/python/3.9.0/python-3.9.0-amd64-webinstall.exe)
 * Download and install AutoHotKey (AHK) : https://www.autohotkey.com/
 * Download the project
 * Open Settings.ini and set your settings

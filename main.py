@@ -47,7 +47,7 @@ threshold = 0.75
 
 # Ui-ellements
 Ui_Ellements = ['battle', 'blue', 'green', 'group', 'next', 'one', 'page_1', 'page_2', 'page_3', 'red', 'prev', 'sob',
-                'noclass', 'bat1', 'bat2', 'bat3', 'bat4', 'bat5', 'findthis', 'sombody', 'bounties',
+                'noclass', 'bat1', 'bat2', 'bat3', 'bat4', 'bat5', 'take_grey', 'sombody', 'bounties',
                 'bounties', 'Barrens', 'startbat', 'pick', 'Winterspring', 'Felwood', 'normal',
                 'heroic','replace_grey', 'travelpoint','presents_thing', 'free_battle', 'choose_team', 'view_party']  # noclass 12, bat5-17
 # buttons
@@ -428,10 +428,10 @@ def chooseTreasure():
         if find_ellement_trans(buttons[17], 14):	# buttons 17: 'take'
             time.sleep(1)
             break
-        if find_ellement(buttons[28], 14):	# buttons 28: 'keep'
+        if find_ellement_trans(buttons[28], 14):	# buttons 28: 'keep'
             time.sleep(1)
             break
-        if find_ellement(buttons[27], 14):	# buttons 27: 'replace'
+        if find_ellement_trans(buttons[27], 14):	# buttons 27: 'replace'
             time.sleep(1)
             break
 
@@ -501,10 +501,10 @@ def abilicks(index):
             if raund % 3 == 1:
                 if find_ellement_trans(obj + '/abilics/1.png', 14):
                     return True
-            if raund % 3 == 2:
+            if raund % 3 == 0:
                 if find_ellement_trans(obj + '/abilics/2.png', 14):
                     return True
-            if raund % 3 == 0:
+            if raund % 3 == 2:
                 if find_ellement_trans(obj + '/abilics/3.png', 14):
                     return False
             pyautogui.moveTo(int(windowMP()[0] + windowMP()[2] / 2.5), int(windowMP()[1] + windowMP()[2] / 4), setings[7], mouse_random_movement())
@@ -526,6 +526,17 @@ def abilicks(index):
                     return True
             elif raund % 3 == 0:
                 if find_ellement_trans(obj + '/abilics/1.png', 14):
+                    return True
+            pyautogui.moveTo(int(windowMP()[0] + windowMP()[2] / 2.5), int(windowMP()[1] + windowMP()[2] / 4), setings[7], mouse_random_movement())
+            pyautogui.click()
+            return True
+
+        elif localhero == 'Rexxar':
+            if raund % 3 == 1:
+                if find_ellement_trans(obj + '/abilics/1.png', 14):
+                    return True
+            if raund % 3 == 0:
+                if find_ellement_trans(obj + '/abilics/3.png', 14):
                     return True
             pyautogui.moveTo(int(windowMP()[0] + windowMP()[2] / 2.5), int(windowMP()[1] + windowMP()[2] / 4), setings[7], mouse_random_movement())
             pyautogui.click()
@@ -668,6 +679,7 @@ def atack(i, enemyred, enemygreen, enemyblue, enemynoclass, mol):
         pyautogui.moveTo(x, y, setings[7], mouse_random_movement())
         pyautogui.click()
         time.sleep(0.2)
+        pyautogui.moveTo(windowMP()[0] + windowMP()[2]/3, windowMP()[1] + windowMP()[3]/2, setings[7], mouse_random_movement())
         if abilicks('Red'):
             if move(enemygreen):
                 if move(mol):
@@ -678,6 +690,7 @@ def atack(i, enemyred, enemygreen, enemyblue, enemynoclass, mol):
         pyautogui.moveTo(x, y, setings[7], mouse_random_movement())
         pyautogui.click()
         time.sleep(0.2)
+        pyautogui.moveTo(windowMP()[0] + windowMP()[2]/3, windowMP()[1] + windowMP()[3]/2, setings[7], mouse_random_movement())
         if abilicks('Green'):
             if move(enemyblue):
                 if move(mol):
@@ -688,6 +701,7 @@ def atack(i, enemyred, enemygreen, enemyblue, enemynoclass, mol):
         pyautogui.moveTo(x, y, setings[7], mouse_random_movement())
         pyautogui.click()
         time.sleep(0.2)
+        pyautogui.moveTo(windowMP()[0] + windowMP()[2]/3, windowMP()[1] + windowMP()[3]/2, setings[7], mouse_random_movement())
         if abilicks('Blue'):
             if move(enemyred):
                 if move(mol):
@@ -926,14 +940,14 @@ def goToEncounter():
                     # if find (task completed) :
                     #   time.sleep(2)
 
-                    if not find_ellement_trans(Ui_Ellements[18], 1): # Ui_Ellements 18: 'findthis' ('Take' grey button)
+                    if not find_ellement_trans(Ui_Ellements[18], 1): # Ui_Ellements 18: 'take_grey'
                         pyautogui.click()
                         time.sleep(0.5)
                     else:
                         chooseTreasure()
                         break
 
-                    if not find_ellement(Ui_Ellements[29], 1): # Ui_Ellements 29: 'replace_grey' (To keep/replace a Treasure?) 
+                    if not find_ellement_trans(Ui_Ellements[29], 1): # Ui_Ellements 29: 'replace_grey' (To keep/replace a Treasure?) 
                         pyautogui.click()
                         time.sleep(0.5)
                     else:
@@ -955,7 +969,7 @@ def goToEncounter():
             threshold = tempthreshold
             nextlvl()
     threshold = tempthreshold
-    while not find_ellement(buttons[0], 1) : # buttons 0: 'back'
+    while not find_ellement_trans(buttons[0], 1) : # buttons 0: 'back'
         pyautogui.click()
         time.sleep(1)
     
@@ -1095,7 +1109,10 @@ def find_ellement_trans(file, index, threshold="-"):
     retour = False
     if threshold == "-" :
         if file in jthreshold : 
-            threshold = jthreshold[file]
+            if jthreshold[file] == "-" :
+                threshold = jthreshold['default']
+            else :
+                threshold = jthreshold[file]
         else:
             threshold = jthreshold['default']
 
