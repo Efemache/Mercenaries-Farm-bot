@@ -471,11 +471,18 @@ def abilicks(index):
             pyautogui.click()
             return True
 
-        elif localhero == 'Milhous Manashtorm':
+        elif localhero == 'Antonidas':
+            if find_ellement_trans(obj + '/abilics/2.png', 14):
+                return False
+            pyautogui.moveTo(int(windowMP()[0] + windowMP()[2] / 2.5), int(windowMP()[1] + windowMP()[2] / 4), setings[7], mouse_random_movement())
+            pyautogui.click()
+            return True
+
+        elif localhero == 'Millhouse Manastorm':
             if raund == 1:
                 if find_ellement(obj + '/abilics/1.png', 14):
                     return False
-            if raund == 3:
+            if raund % 3 == 0:
                 if find_ellement(obj + '/abilics/3.png', 14):
                     return False
             if raund > 1:
@@ -493,6 +500,14 @@ def abilicks(index):
 #                if find_ellement(obj + '/abilics/3.png', 14):
 #                if find_ellement_trans(obj + '/abilics/2.png', 14):
 #                    return False
+            pyautogui.moveTo(int(windowMP()[0] + windowMP()[2] / 2.5), int(windowMP()[1] + windowMP()[2] / 4), setings[7], mouse_random_movement())
+            pyautogui.click()
+            return True
+
+        elif localhero == 'Malfurion Stormrage':
+            if raund % 2 == 0:
+                if find_ellement_trans(obj + '/abilics/2.png', 14):
+                    return True
             pyautogui.moveTo(int(windowMP()[0] + windowMP()[2] / 2.5), int(windowMP()[1] + windowMP()[2] / 4), setings[7], mouse_random_movement())
             pyautogui.click()
             return True
@@ -535,6 +550,14 @@ def abilicks(index):
             if raund % 3 == 1:
                 if find_ellement_trans(obj + '/abilics/1.png', 14):
                     return True
+            if raund % 3 == 0:
+                if find_ellement_trans(obj + '/abilics/3.png', 14):
+                    return True
+            pyautogui.moveTo(int(windowMP()[0] + windowMP()[2] / 2.5), int(windowMP()[1] + windowMP()[2] / 4), setings[7], mouse_random_movement())
+            pyautogui.click()
+            return True
+
+        elif localhero == '23.Rokara.Green':
             if raund % 3 == 0:
                 if find_ellement_trans(obj + '/abilics/3.png', 14):
                     return True
@@ -895,6 +918,10 @@ def travelpointSelection():
             find_ellement(Ui_Ellements[26], 14) # Ui_Ellements 26: 'Felwood'
 
         elif setings[2] == "Winterspring":        # setings 2: 'location(ex:TheBarrens)'
+#            if not find_ellement(Ui_Ellements[25], 14):	# Ui_Ellements 25: 'Winterspring'
+            pyautogui.scroll(-2)
+            pyautogui.moveTo(windowMP()[0] + windowMP()[2] / 3, windowMP()[1] + windowMP()[3] / 2, setings[7], mouse_random_movement())
+            time.sleep(0.5)
             find_ellement(Ui_Ellements[25], 14)	# Ui_Ellements 25: 'Winterspring'
         
         elif setings[2] == "The Barrens":         # setings 2: 'location(ex:TheBarrens)'
@@ -1158,7 +1185,7 @@ def find_ellement_trans(file, index, threshold="-"):
             time.sleep(0.1)
             pyautogui.click()
     else :
-        print("Not found " + file, "(", threshold,")")
+        print("Looked for " + file, "(", threshold,")")
         if index == 12 or index == 15:
             retour = (0, 0)
 #    print("DEBUG : find_ellement_trans END")
@@ -1227,7 +1254,7 @@ def find_ellement_grey(file, index):
             time.sleep(0.1)
             pyautogui.click()
     else:
-        print("Not found " + file, "(", threshold,")")
+        print("Looked for " + file, "(", threshold,")")
         if index == 12 or index == 15:
             retour = (0, 0)
     return retour
@@ -1257,7 +1284,7 @@ def main():
                 where()
                 time.sleep(0.5)
             else:
-                print("Not found Game window.")
+                print("Game window not found.")
                 time.sleep(3)
     except Exception as E:
         print("Error", E)
