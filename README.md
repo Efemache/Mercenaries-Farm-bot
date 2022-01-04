@@ -37,7 +37,7 @@ To discuss with the community, go to discord [Mercenaries Farm server](https://d
 |9. collecting rewards for reaching the last level|  ✓|
 |10. repeat from 1 point | ✓|
  
-## Supported game language
+## Supported game language & resolution
 |               |     English    |
 | :------------ | :-------------:| 
 |   1920x1080   |        ✅      |
@@ -45,14 +45,20 @@ To discuss with the community, go to discord [Mercenaries Farm server](https://d
 ## PvE system work preview
 Watch the video : [![Watch the video](https://user-images.githubusercontent.com/68296704/137970053-fe49c896-d237-49f1-8658-46d1477340d7.png)](https://www.youtube.com/watch?v=znt1P3KkrNg&t)
 
+## When the bot is running
+* don't move the Hearthstone window
+* don't put another window in front of Hearthstone
+* don't touch your mouse (except if you want to bypass the bot)
+* don't resize the Hearthstone window
 
 ## Installation
 ### Windows
-* Install Python 3.9 (see the video below) (Example : https://www.python.org/ftp/python/3.9.0/python-3.9.0-amd64-webinstall.exe)
+* Install [Python 3.9](https://www.python.org/ftp/python/3.9.0/python-3.9.0-amd64-webinstall.exe) (see the video below) 
 * Download and install AutoHotKey (AHK) : https://www.autohotkey.com/
 * Download the project
 * Open Settings.ini and set your settings
 * Start Hearthstone
+* Create a group of mercenaries named "Botwork" (and go back to main menu)
 * Run HSbotRunner.bat
 
 
@@ -61,8 +67,8 @@ Watch the video : [![Watch the video](https://user-images.githubusercontent.com/
 * Download the project
 * Open Settings.ini and set your settings
 * Start Hearthstone
+* Create a group of mercenaries named "Botwork" (and go back to main menu)
 * Run HSbotRunner.sh
-
 
 ### Demo
 [![Watch the video](https://user-images.githubusercontent.com/68296704/138687982-0f6d971d-783d-4f35-a3a5-4f5d5a3e59af.png)](https://www.youtube.com/watch?v=nOZXCkrQ5fk)
