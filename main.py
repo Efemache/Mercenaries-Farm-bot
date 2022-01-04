@@ -464,8 +464,8 @@ def abilicks(index):
     for obj in heroTEMP:
         localhero = obj.split(".")[1]
         if localhero == 'Cariel Roame':
-            if raund > 1 and raund % 2 == 0:
-                if find_ellement(obj + '/abilics/2.png', 14):
+            if raund % 2 == 0:
+                if find_ellement_trans(obj + '/abilics/2.png', 14):
                     return False
             pyautogui.moveTo(int(windowMP()[0] + windowMP()[2] / 2.5), int(windowMP()[1] + windowMP()[2] / 4), setings[7], mouse_random_movement())
             pyautogui.click()
@@ -480,17 +480,17 @@ def abilicks(index):
 
         elif localhero == 'Millhouse Manastorm':
             if raund == 1:
-                if find_ellement(obj + '/abilics/1.png', 14):
+                if find_ellement_trans(obj + '/abilics/1.png', 14):
                     return False
             if raund % 3 == 0:
-                if find_ellement(obj + '/abilics/3.png', 14):
+                if find_ellement_trans(obj + '/abilics/3.png', 14):
                     return False
             if raund > 1:
-                if find_ellement(obj + '/abilics/2.png', 14):
+                if find_ellement_trans(obj + '/abilics/2.png', 14):
                     return True
             pyautogui.moveTo(int(windowMP()[0] + windowMP()[2] / 2.5), int(windowMP()[1] + windowMP()[2] / 4), setings[7], mouse_random_movement())
             pyautogui.click()
-            return True
+            return False
 
         elif localhero == 'Tyrande':
             if raund % 2 == 1:
@@ -557,8 +557,8 @@ def abilicks(index):
             pyautogui.click()
             return True
 
-        elif localhero == '23.Rokara.Green':
-            if raund % 3 == 0:
+        elif localhero == 'Rokara':
+            if raund % 2 == 0:
                 if find_ellement_trans(obj + '/abilics/3.png', 14):
                     return True
             pyautogui.moveTo(int(windowMP()[0] + windowMP()[2] / 2.5), int(windowMP()[1] + windowMP()[2] / 4), setings[7], mouse_random_movement())
@@ -1268,7 +1268,7 @@ def main():
         findgame()
         parslist()
         resize()
-        jthreshold = readjson("thresholds.json")
+        jthreshold = readjson("js/thresholds.json")
         if(myOS=="windows"):
             ahk.show_info_traytip("started", "all files loaded successfully", slient=False, blocking=True)
             win.show()
