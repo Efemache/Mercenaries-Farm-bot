@@ -15,6 +15,7 @@ import os
 import sys
 import pyautogui
 import json
+from modules.log_board import *
  
 ## try to detect the OS (Windows, Linux, Mac, ...)
 ## to load specific libs
@@ -43,6 +44,7 @@ global screenImg
 global partImg
 global threshold
 global jthreshold
+global zoneLog
 threshold = 0.75
 
 # Ui-ellements
@@ -59,7 +61,7 @@ chekers = ['30lvl', 'empty_check', 'find', 'goto', 'group_find', 'level_check', 
            'taken', 'text', 'win', 'ifrename', 'levelstarted', 'nextlvlcheck', 'cords-search', '303', '30lvl1',
            '30lvl2', 'menu', 'party','lose']
 
-# Settings - 0: MonitorResolution (1920x1080), 1: level (20), 2: location (The Barrens), 3: mode (Heroic), 4: GroupCreate (True), 5: heroSet (True)
+# Settings - 0: MonitorResolution (1920x1080), 1: level (20), 2: location (The Barrens), 3: mode (Heroic), 4: GroupCreate (True), 5: heroSet (True), 6: GameDir (path)
 setings = []
 # heroes
 hero = []
@@ -101,8 +103,8 @@ def readjson(jfile) :
 
 def configread():
     """ Read settings.ini and put it in a table :
-            Setings - 0: MonitorResolution (1920x1080), 1: level (20), 2: location (The Barrens), 3: mode (Heroic), 4: GroupCreate (True), 5: heroSet (True)
-            6: monitor (1), 7: MouseSpeed (0.5), 8: WaitForEXP (3)
+            Setings - 0: MonitorResolution (1920x1080), 1: level (20), 2: location (The Barrens), 3: mode (Heroic), 4: GroupCreate (True), 5: heroSet (True),
+            6: monitor (1), 7: MouseSpeed (0.5), 8: WaitForEXP (3), 9: Zonelog (GameDir/Logs/Zone.log)
     """
     global Resolution
     global speed
@@ -117,7 +119,14 @@ def configread():
     setings.append(int(config["BotSettings"]["monitor"]))
     setings.append(float(config["BotSettings"]["MouseSpeed"]))
     setings.append(float(config["BotSettings"]["WaitForEXP"])*60)
-    print(setings)
+    if os.path.exists(config["BotSettings"]["GameDir"] + '/Hearthstone.exe') :
+        setings.append(config["BotSettings"]["GameDir"] + '/Logs/Zone.log')
+    else :
+        print("[ERROR] Set the correct Hearthstone Game Directory in settings.ini ('GameDir' var)")
+        # yeah it's bad coding but don't have time to change everything else
+        exit(2)
+        
+    #print(setings)
     files = os.listdir('./files/1920x1080/heroes')
     for obj in files:
         for i in range(6):
@@ -739,6 +748,7 @@ def battle():
     global raund
     global threshold
     global speed
+    global zoneLog
     retour = True
 
     tempthreshold = threshold
@@ -760,15 +770,21 @@ def battle():
             retour = 'win'
             pyautogui.moveTo(windowMP()[0] + windowMP()[2] / 2, windowMP()[1] + windowMP()[3] - windowMP()[3] / 4.6, setings[7], mouse_random_movement())
             pyautogui.click()
+            zoneLog.cleanBoard()
+            
             break
         elif find_ellement(chekers[23], 1): # chekers 23: 'lose'
             retour = 'loose'
             pyautogui.moveTo(windowMP()[0] + windowMP()[2] / 2, windowMP()[1] + windowMP()[3] - windowMP()[3] / 4.6, setings[7], mouse_random_movement())
             pyautogui.click()
+            zoneLog.cleanBoard()
             break
         elif find_ellement_trans(buttons[15], 1) or find_ellement_trans(buttons[16], 1):  # buttons 15: 'startbattle' # buttons 16: 'startbattle1'
             # wait 'WaitForEXP' (float) in minutes, to make the battle longer and win more EXP (for the Hearthstone reward track)
             time.sleep(setings[8]) # setings 8: WaitForEXP
+
+            mercenaries = zoneLog.getBoard()
+            print(mercenaries)
 
             herobattlefin.clear()
 
@@ -864,7 +880,6 @@ def seth():
     # setings 5: 'heroSet(ex:True)'
     if setings[5] == "True":
         while not find_ellement_trans(buttons[14], 1): # buttons 14: 'allready'
-            print('Entrance')
             threshold = 0.75
             pyautogui.moveTo(x, y, setings[7])
             for n in range(3):
@@ -949,11 +964,16 @@ def goToEncounter():
     """
     print ("goToEncounter : entering")
     global threshold
+    global zoneLog
     time.sleep(2)
     travelEnd=False
+
+    zoneLog = LogHSMercs(setings[9]) # setings 9 : 'ZoneLog' (GameDir/Logs/Zone.log)
+    zoneLog.start()
     while not travelEnd :
         tempthreshold = threshold
         threshold = 0.85
+
         if find_ellement(buttons[7], 14): # buttons 7: 'play'
             time.sleep(0.5)
             threshold = tempthreshold
@@ -996,6 +1016,7 @@ def goToEncounter():
             threshold = tempthreshold
             nextlvl()
     threshold = tempthreshold
+    zoneLog.stop()
     while not find_ellement_trans(buttons[0], 1) : # buttons 0: 'back'
         pyautogui.click()
         time.sleep(1)
