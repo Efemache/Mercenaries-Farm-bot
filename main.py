@@ -65,25 +65,15 @@ chekers = ['30lvl', 'empty_check', 'find', 'goto', 'group_find', 'level_check', 
 
 # Settings - 0: MonitorResolution (1920x1080), 1: level (20), 2: location (The Barrens), 3: mode (Heroic), 4: GroupCreate (True), 5: heroSet (True), 6: GameDir (path)
 setings = []
-## heroes
-#hero = []
-#hero_colour = []
-#heroNUM = ['', '', '', '', '', '']
-## for battle
-#herobattle = []
-#herobattlefin = []
-# damp
-enemywiz = [0, 0, 0, 0, 0, 0]
-#heroTEMP = []
-# img list
-picparser = ['/1.png', '/2.png', '/3.png', '/4.png']
 
 debug_mode=False
 def debug(*message):
     if debug_mode :
         print("[DEBUG] ", message)
 
-# window multi-platorms (Windows & Linux support)
+
+""" window multi-platorms (Windows & Linux support)
+"""
 def windowMP() :
     if(myOS=='windows'):
         retour=win.rect
@@ -93,7 +83,9 @@ def windowMP() :
         retour=None
     return retour
 
-# define function to use serveral mouse movements on Windows & Linux
+
+""" define function to use serveral mouse movements on Windows & Linux
+"""
 def mouse_random_movement():
     return random.choices([pyautogui.easeInQuad, pyautogui.easeOutQuad, pyautogui.easeInOutQuad])[0]
 
@@ -103,11 +95,12 @@ def readjson(jfile) :
     descriptor.close()
     return data
 
+
+""" Read settings.ini and put it in a table :
+        Setings - 0: MonitorResolution (1920x1080), 1: level (20), 2: location (The Barrens), 3: mode (Heroic), 4: GroupCreate (True), 5: heroSet (True),
+        6: monitor (1), 7: MouseSpeed (0.5), 8: WaitForEXP (3), 9: Zonelog (GameDir/Logs/Zone.log)
+"""
 def configread():
-    """ Read settings.ini and put it in a table :
-            Setings - 0: MonitorResolution (1920x1080), 1: level (20), 2: location (The Barrens), 3: mode (Heroic), 4: GroupCreate (True), 5: heroSet (True),
-            6: monitor (1), 7: MouseSpeed (0.5), 8: WaitForEXP (3), 9: Zonelog (GameDir/Logs/Zone.log)
-    """
     global jthreshold
     global mercslist
 
@@ -135,28 +128,6 @@ def configread():
     jthreshold = readjson("js/thresholds.json")
     mercslist = readjson("js/mercs.json")
 
-    #print(setings)
-#    files = os.listdir('./files/1920x1080/heroes')
-#    for obj in files:
-#        for i in range(6):
-#            rt = (config["Heroes"]["hero" + str(i + 1) + "_Number"]).split("#")[0]
-#            if rt != 'auto' and rt != '-':
-#                if rt == obj.split(".")[0] or rt in obj.split(".")[1]:
-#                    print(rt)
-#                    hero.append(obj)
-#                    hero_colour.append(obj.split(".")[2])
-#    for n in range(2):
-#        for i in range(6):
-#            rt = (config["Heroes"]["hero" + str(i + 1) + "_Number"]).split("#")[0]
-#            if rt == 'auto' and n==0:
-#                print(rt)
-#                hero.append(rt)
-#                hero_colour.append(rt)
-#            if rt == '-' and n==1:
-#                print(rt)
-#                hero.append(rt)
-#                hero_colour.append(rt)
-    
     print(setings)
 
 
@@ -169,18 +140,14 @@ def filepp(name, strname):
     except:
         print(strname, "file list got error")
 
-
 def parslist():
     filepp(Ui_Ellements, "UI_ellements")
     filepp(buttons, "buttons")
     filepp(chekers, "chekers")
-    i = 0
-    #while i < len(hero):
-    #    hero[i] = "heroes/" + hero[i]
-    #    i += 1
-    #return 0
 
 
+""" take screeenshot to find some part of the image
+"""
 def screen():
     global screenImg
     sct = mss.mss()
@@ -190,6 +157,8 @@ def screen():
     screenImg = np.array(sct.grab(sct.monitors[setings[6]]))
 
 
+""" like "screen()" function but only for a part of the screen
+"""
 def partscreen(x, y, top, left):
     global partImg
     print("entered screenpart")
@@ -203,6 +172,8 @@ def partscreen(x, y, top, left):
             mss.tools.to_png(sct_img.rgb, sct_img.size, output='files/' + setings[0] + '/part.png')
         partImg = np.array(sct_img)
 
+""" look for Hearthstone window for Windows or Linux
+"""
 def findgame():
     global win
     retour = False
@@ -790,10 +761,12 @@ def battle():
     return retour
 
 
+""" Select the cards to put on battlefield
+    and then, start the 'battle' function
+    Update : actually, the bot doesn't choose it anymore since we stopped to use image with mercenaries text (so we can easily support multi-language)
+            this feature will come back later using HS logs 
+"""
 def selectCardsInHand():
-    """ Select the cards to put on battlefield
-        and then, start the 'battle' function
-    """
 
     debug("[ SETH - START]")
     retour = True
@@ -808,11 +781,11 @@ def selectCardsInHand():
     debug("windowsMP() : ", windowMP())
     x = windowMP()[0] + (windowMP()[2] / 2.6)
     y = windowMP()[1] + (windowMP()[3] * 0.92)
-    i = 0
     temp = speed
     speed = 0
     threshold = 0.85
     i = 0
+    ### Here, find the part which - previously - was selecting cards/mercs in hand
     ## setings 5: 'heroSet(ex:True)'
     #if setings[5] == "True":
     #    while not find_ellement_trans(buttons[14], 1): # buttons 14: 'allready'

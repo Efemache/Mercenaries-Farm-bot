@@ -22,7 +22,7 @@ For news, follow us on Twitter : [@MercenariesFarm](https://twitter.com/Mercenar
 To discuss with the community, go to discord [Mercenaries Farm server](https://discord.gg/ePghxaUBEK)
 
 ## Dev progress
-|               |  1920x1080 (fullscreen & windowed mode) |
+|               |  1920x1080 (windowed mode) |
 | :------------ | :-------------:| 
 |1. transition to Travel point selection | ✓|
 |2. transition to Level/Bounty selection | ✓|
