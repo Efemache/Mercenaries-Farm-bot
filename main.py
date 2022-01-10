@@ -638,8 +638,19 @@ def attacks(position, mercName, number, enemyred, enemygreen, enemyblue, enemyno
     debug("[DEBUG] Attacks function")
 
     print("attack with : ", mercName, "( position :", position, "/", number, ")")
-    positionOdd=[640,800,960,1120,1280]
-    positionEven=[560,720,880,1040,1200,1360]
+
+    cardSize=int(windowMP()[2] / 12)
+    firstOdd=int(windowMP()[0] + (windowMP()[2] / 3))
+    firstEven=int(windowMP()[0] + (windowMP()[2] / 3.4))
+
+    #positionOdd=[640,800,960,1120,1280]
+    #positionEven=[560,720,880,1040,1200,1360]
+    positionOdd=[]
+    positionEven=[]
+    for i in range(6) :
+        positionEven.append(int(firstEven + (i * cardSize)))
+        if i != 5 :
+            positionOdd.append(int(firstOdd + (i * cardSize)))
     
     if number % 2 == 0 : # if mercenaries are even
         pos= int(2 - (number/2 - 1)  + (position - 1))
