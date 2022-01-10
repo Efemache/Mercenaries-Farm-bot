@@ -13,3 +13,4 @@ files/3840x2160/heroes/*/group.png
 __pycache__/
 *.bck
 *.old
+backup/
