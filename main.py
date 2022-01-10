@@ -46,6 +46,8 @@ global threshold
 global jthreshold
 global zoneLog
 threshold = 0.75
+global mercslist
+mercslist={}
 
 # Ui-ellements
 Ui_Ellements = ['battle', 'blue', 'green', 'group', 'next', 'one', 'page_1', 'page_2', 'page_3', 'red', 'prev', 'sob',
@@ -461,6 +463,241 @@ def resize():
                 new_image.save(mainPath)
                 new_image1.save(groupPath)
 
+def abilities(localhero):
+
+    print("Merc : ",localhero)
+    print("round : ",raund)
+    if localhero == 'Cariel Roame':
+        obj='heroes/1.Cariel Roame.Red'
+        if raund % 2 == 0:
+            if find_ellement_trans(obj + '/abilics/2.png', 14):
+                return False
+        pyautogui.moveTo(int(windowMP()[0] + windowMP()[2] / 2.5), int(windowMP()[1] + windowMP()[2] / 4), setings[7], mouse_random_movement())
+        pyautogui.click()
+        return True
+
+    elif localhero == 'Antonidas':
+        obj='heroes/29.Antonidas.Blue'
+        if find_ellement_trans(obj + '/abilics/2.png', 14):
+            return False
+        pyautogui.moveTo(int(windowMP()[0] + windowMP()[2] / 2.5), int(windowMP()[1] + windowMP()[2] / 4), setings[7], mouse_random_movement())
+        pyautogui.click()
+        return True
+
+    elif localhero == 'Millhouse Manastorm':
+        if raund == 1:
+            if find_ellement_trans(obj + '/abilics/1.png', 14):
+                return False
+        if raund % 3 == 0:
+            if find_ellement_trans(obj + '/abilics/3.png', 14):
+                return False
+        if raund > 1:
+            if find_ellement_trans(obj + '/abilics/2.png', 14):
+                return True
+        pyautogui.moveTo(int(windowMP()[0] + windowMP()[2] / 2.5), int(windowMP()[1] + windowMP()[2] / 4), setings[7], mouse_random_movement())
+        pyautogui.click()
+        return False
+
+    elif localhero == 'Tyrande':
+        if raund % 2 == 1:
+            if find_ellement_trans(obj + '/abilics/1.png', 14):
+                return True
+#            if raund % 2 == 0:
+#                if find_ellement(obj + '/abilics/3.png', 14):
+#                if find_ellement_trans(obj + '/abilics/2.png', 14):
+#                    return False
+        pyautogui.moveTo(int(windowMP()[0] + windowMP()[2] / 2.5), int(windowMP()[1] + windowMP()[2] / 4), setings[7], mouse_random_movement())
+        pyautogui.click()
+        return True
+
+    elif localhero == 'Malfurion Stormrage':
+        if raund % 2 == 0:
+            if find_ellement_trans(obj + '/abilics/2.png', 14):
+                return True
+        pyautogui.moveTo(int(windowMP()[0] + windowMP()[2] / 2.5), int(windowMP()[1] + windowMP()[2] / 4), setings[7], mouse_random_movement())
+        pyautogui.click()
+        return True
+
+    elif localhero == 'Mannoroth':
+        if raund % 3 == 1:
+            if find_ellement_trans(obj + '/abilics/1.png', 14):
+                return True
+        if raund % 3 == 0:
+            if find_ellement_trans(obj + '/abilics/2.png', 14):
+                return True
+        if raund % 3 == 2:
+            if find_ellement_trans(obj + '/abilics/3.png', 14):
+                return False
+        pyautogui.moveTo(int(windowMP()[0] + windowMP()[2] / 2.5), int(windowMP()[1] + windowMP()[2] / 4), setings[7], mouse_random_movement())
+        pyautogui.click()
+        return True
+
+    elif localhero == 'Rathorian':
+        obj='heroes/21.Rathorian.Green'
+        if raund == 1:
+            if find_ellement_trans(obj + '/abilics/1.png', 14):
+                return True
+        elif raund == 2:
+            if find_ellement_trans(obj + '/abilics/2.png', 14):
+                return False
+        elif raund % 3 == 1:
+            if find_ellement_trans(obj + '/abilics/2.png', 14):
+                return False
+        elif raund % 3 == 2:
+            if find_ellement_trans(obj + '/abilics/3.png', 14):
+                return True
+        elif raund % 3 == 0:
+            if find_ellement_trans(obj + '/abilics/1.png', 14):
+                return True
+        pyautogui.moveTo(int(windowMP()[0] + windowMP()[2] / 2.5), int(windowMP()[1] + windowMP()[2] / 4), setings[7], mouse_random_movement())
+        pyautogui.click()
+        return True
+
+    elif localhero == 'Rexxar':
+        if raund % 3 == 1:
+            if find_ellement_trans(obj + '/abilics/1.png', 14):
+                return True
+        if raund % 3 == 0:
+            if find_ellement_trans(obj + '/abilics/3.png', 14):
+                return True
+        pyautogui.moveTo(int(windowMP()[0] + windowMP()[2] / 2.5), int(windowMP()[1] + windowMP()[2] / 4), setings[7], mouse_random_movement())
+        pyautogui.click()
+        return True
+
+    elif localhero == 'Rokara':
+        if raund % 2 == 0:
+            if find_ellement_trans(obj + '/abilics/3.png', 14):
+                return True
+        pyautogui.moveTo(int(windowMP()[0] + windowMP()[2] / 2.5), int(windowMP()[1] + windowMP()[2] / 4), setings[7], mouse_random_movement())
+        pyautogui.click()
+        return True
+
+    elif localhero == 'King Krush' :
+        if raund % 3 == 2:
+            if find_ellement_trans(obj + '/abilics/2.png', 14):
+                return False
+        elif raund % 3 == 0:
+            if find_ellement_trans(obj + '/abilics/3.png', 14):
+                return False
+        pyautogui.moveTo(int(windowMP()[0] + windowMP()[2] / 2.5), int(windowMP()[1] + windowMP()[2] / 4), setings[7], mouse_random_movement())
+        pyautogui.click()
+        return False
+
+    elif localhero == 'Lady Anacondra' :
+        if raund % 2 == 1:
+            if find_ellement_trans(obj + '/abilics/1.png', 14):
+                return True
+        if raund % 2 == 0:
+            if find_ellement_trans(obj + '/abilics/3.png', 14):
+                return False
+        pyautogui.moveTo(int(windowMP()[0] + windowMP()[2] / 2.5), int(windowMP()[1] + windowMP()[2] / 4), setings[7], mouse_random_movement())
+        pyautogui.click()
+        return True
+
+    elif localhero == 'War Master Voone':
+        if raund % 3 == 1:
+            if find_ellement_trans(obj + '/abilics/1.png', 14):
+                return True
+        if raund % 3 == 0:
+            if find_ellement_trans(obj + '/abilics/2.png', 14):
+                return True
+        if raund % 3 == 2:
+            if find_ellement_trans(obj + '/abilics/3.png', 14):
+                return False
+        pyautogui.moveTo(int(windowMP()[0] + windowMP()[2] / 2.5), int(windowMP()[1] + windowMP()[2] / 4), setings[7], mouse_random_movement())
+        pyautogui.click()
+        return True
+
+    elif localhero == 'Brightwing':
+        if raund % 4 == 0:
+            if find_ellement_trans(obj + '/abilics/3.png', 14):
+                return False
+        if raund % 2 == 0:
+            if find_ellement_trans(obj + '/abilics/2.png', 14):
+                return False
+        pyautogui.moveTo(int(windowMP()[0] + windowMP()[2] / 2.5), int(windowMP()[1] + windowMP()[2] / 4), setings[7], mouse_random_movement())
+        pyautogui.click()
+        return True
+    elif localhero == "Bru'Kan":
+        if raund % 3 == 1:
+            if find_ellement_trans(obj + '/abilics/1.png', 14):
+                return True
+        if raund % 3 == 2:
+            if find_ellement_trans(obj + '/abilics/2.png', 14):
+                return True
+        if raund % 3 == 0:
+            if find_ellement_trans(obj + '/abilics/3.png', 14):
+                return True
+        pyautogui.moveTo(int(windowMP()[0] + windowMP()[2] / 2.5), int(windowMP()[1] + windowMP()[2] / 4), setings[7], mouse_random_movement())
+        pyautogui.click()
+        return True
+
+    elif localhero == 'Natalie Seline':
+        if raund == 1:
+            if find_ellement(obj + '/abilics/1.png', 14):
+                return False
+        if raund == 3:
+            if find_ellement(obj + '/abilics/3.png', 14):
+                return False
+        if raund > 1:
+            if find_ellement(obj + '/abilics/2.png', 14):
+                return True
+        pyautogui.moveTo(int(windowMP()[0] + windowMP()[2] / 2.5), int(windowMP()[1] + windowMP()[2] / 4), setings[7], mouse_random_movement())
+        pyautogui.click()
+        return True
+
+    elif localhero == 'Tamsin Roame':
+        if raund == 1:
+            if find_ellement(obj + '/abilics/1.png', 14):
+                return False
+        if raund == 3:
+            if find_ellement(obj + '/abilics/3.png', 14):
+                return False
+        if raund > 1:
+            if find_ellement(obj + '/abilics/2.png', 14):
+                return True
+        pyautogui.moveTo(int(windowMP()[0] + windowMP()[2] / 2.5), int(windowMP()[1] + windowMP()[2] / 4), setings[7], mouse_random_movement())
+        pyautogui.click()
+        return True
+
+    elif localhero == "Vol'jin":
+        if raund == 1:
+            if find_ellement(obj + '/abilics/1.png', 14):
+                return True
+        if raund == 3:
+            if find_ellement(obj + '/abilics/3.png', 14):
+                return False
+        if raund > 1:
+            if find_ellement(obj + '/abilics/2.png', 14):
+                return False
+        pyautogui.moveTo(int(windowMP()[0] + windowMP()[2] / 2.5), int(windowMP()[1] + windowMP()[2] / 4), setings[7], mouse_random_movement())
+        pyautogui.click()
+        return True
+
+    elif localhero == "Gul'dan":
+        if find_ellement(obj + '/abilics/3.png', 14):
+            return True
+        pyautogui.moveTo(int(windowMP()[0] + windowMP()[2] / 2.5), int(windowMP()[1] + windowMP()[2] / 4), setings[7], mouse_random_movement())
+        pyautogui.click()
+        return True
+
+    elif localhero == "Mr Smite":
+        if raund %3 == 1:
+            if find_ellement_trans(obj + '/abilics/1.png', 14):
+                return True
+        if raund %3 == 2:
+            if find_ellement_trans(obj + '/abilics/2.png', 14):
+                return False
+        if raund %3 == 0:
+            if find_ellement_trans(obj + '/abilics/3.png', 14):
+                return False
+        pyautogui.moveTo(int(windowMP()[0] + windowMP()[2] / 2.5), int(windowMP()[1] + windowMP()[2] / 4), setings[7], mouse_random_movement())
+        pyautogui.click()
+        return True
+
+    pyautogui.moveTo(int(windowMP()[0] + windowMP()[2] / 2.5), int(windowMP()[1] + windowMP()[2] / 4), setings[7], mouse_random_movement())
+    pyautogui.click()
+    return True
 
 def abilicks(index):
     heroTEMP.clear()
@@ -702,6 +939,46 @@ def abilicks(index):
     return True
 
 
+def attacks(position, mercsName, number, enemyred, enemygreen, enemyblue, enemynoclass, mol):
+    global mercslist
+    print("[DEBUG] Attacks function")
+    positionOdd=[640,800,960,1120,1280]
+    positionEven=[560,720,880,1040,1200,1360]
+    y=windowMP()[1] + windowMP()[3]/1.5
+    
+    if number % 2 == 0 : # if mercenaries are even
+        pos= int(2 - (number/2 - 1)  + (position - 1))
+        x= int(positionEven[pos])
+    else :  # if mercenaries are odd
+        pos= int(2 - (number-1)/2 + (position - 1))
+        x=int(positionOdd[pos])
+
+    #print("merclist", mercslist.keys())
+    if mercsName in mercslist :
+        print("Fight with ",mercsName)
+        pyautogui.moveTo(x, y, setings[7], mouse_random_movement())
+        pyautogui.click()
+        time.sleep(0.2)
+        pyautogui.moveTo(windowMP()[0] + windowMP()[2]/3, windowMP()[1] + windowMP()[3]/2, setings[7], mouse_random_movement())
+        if mercslist[mercsName]["type"] == "Protector" :
+            if abilities(mercsName):
+                if move(enemygreen):
+                    if move(mol):
+                        if move(enemynoclass):
+                            rand(enemyred, enemygreen, enemyblue, enemynoclass)
+        elif mercslist[mercsName]["type"] == "Fighter" :
+            if abilities(mercsName):
+                if move(enemyblue):
+                    if move(mol):
+                        if move(enemynoclass):
+                            rand(enemyred, enemygreen, enemyblue, enemynoclass)
+        elif mercslist[mercsName]["type"] == "Caster" :
+            if abilities(mercsName):
+                if move(enemyred):
+                    if move(mol):
+                        if move(enemynoclass):
+                            rand(enemyred, enemygreen, enemyblue, enemynoclass)
+
 def atack(i, enemyred, enemygreen, enemyblue, enemynoclass, mol):
     x = int(i[1])
     y = int(i[2])
@@ -783,6 +1060,7 @@ def battle():
             # wait 'WaitForEXP' (float) in minutes, to make the battle longer and win more EXP (for the Hearthstone reward track)
             time.sleep(setings[8]) # setings 8: WaitForEXP
 
+            # looks for your Mercenaries on board thanks to log file
             mercenaries = zoneLog.getBoard()
             print(mercenaries)
 
@@ -809,29 +1087,40 @@ def battle():
             pyautogui.moveTo(windowMP()[0] + windowMP()[2] / 2, windowMP()[1] + windowMP()[3] - windowMP()[3] / 4.8, setings[7], mouse_random_movement())
             pyautogui.click()
             time.sleep(1)
-            # setings 0: 'MonitorResolution(ex:1920x1080)'
-            partscreen(int(setings[0].split('x')[0]), tmp, tmp, 0)
-            # setings 0: 'MonitorResolution(ex:1920x1080)'
-            print("enter serch Red")
-            # Ui_Ellements 9: 'red'
-            battlefind(Ui_Ellements[9], 'Red')  # find all yr Red
-            if len(herobattlefin) != 3:
-                print("enter serch Green")
-                # Ui_Ellements 2: 'green'
-                battlefind(Ui_Ellements[2], 'Green')  # find all yr Green
-            if len(herobattlefin) != 3:
-                print("enter serch Blue")
-                # Ui_Ellements 1: 'blue'
-                battlefind(Ui_Ellements[1], 'Blue')  # find all yr Blue
-            print("cords of my heroes ")
-            print(herobattlefin)
-            for i in herobattlefin:
+
+#            # setings 0: 'MonitorResolution(ex:1920x1080)'
+#            partscreen(int(setings[0].split('x')[0]), tmp, tmp, 0)
+#            # setings 0: 'MonitorResolution(ex:1920x1080)'
+#            print("enter serch Red")
+#            # Ui_Ellements 9: 'red'
+#            battlefind(Ui_Ellements[9], 'Red')  # find all yr Red
+#            if len(herobattlefin) != 3:
+#                print("enter serch Green")
+#                # Ui_Ellements 2: 'green'
+#                battlefind(Ui_Ellements[2], 'Green')  # find all yr Green
+#            if len(herobattlefin) != 3:
+#                print("enter serch Blue")
+#                # Ui_Ellements 1: 'blue'
+#                battlefind(Ui_Ellements[1], 'Blue')  # find all yr Blue
+#            print("cords of my heroes ")
+#            print(herobattlefin)
+#            for i in herobattlefin:
+#                # Go (mouse) to "central zone" and click on an empty space
+#                pyautogui.moveTo(windowMP()[0] + windowMP()[2] / 2, windowMP()[1] + windowMP()[3] - windowMP()[3] / 4.8, setings[7], mouse_random_movement())
+#                pyautogui.click()
+#                debug("print atack", i, enemyred, enemygreen, enemyblue, enemynoclass, mol)
+#                atack(i, enemyred, enemygreen, enemyblue, enemynoclass, mol)
+#                time.sleep(0.1)
+
+            for i in mercenaries :
                 # Go (mouse) to "central zone" and click on an empty space
                 pyautogui.moveTo(windowMP()[0] + windowMP()[2] / 2, windowMP()[1] + windowMP()[3] - windowMP()[3] / 4.8, setings[7], mouse_random_movement())
                 pyautogui.click()
-                debug("print atack", i, enemyred, enemygreen, enemyblue, enemynoclass, mol)
-                atack(i, enemyred, enemygreen, enemyblue, enemynoclass, mol)
+
+                print("attacks : ", mercenaries[i], "( position :", int(i), "/", int(list(mercenaries)[-1]), ")")
+                attacks(int(i), mercenaries[i], int(list(mercenaries)[-1]), enemyred, enemygreen, enemyblue, enemynoclass, mol)
                 time.sleep(0.1)
+
             threshold = 0.75
             speed = temp
             i = 0
@@ -840,10 +1129,6 @@ def battle():
                     break
                 if i > 10:
                     pyautogui.rightClick()
-                    if(myOS=='windows'):
-                        ahk.show_warning_traytip("Battle", "Battle error,please write what happend on github issue")
-                    else :
-                        print("Battle error,please write what happend on github issue")
                     find_ellement_trans(buttons[15], 14) # buttons 15: 'startbattle'
                     break
                 time.sleep(0.2)
@@ -1283,6 +1568,7 @@ def find_ellement_grey(file, index):
 
 def main():
     global jthreshold
+    global mercslist
     print("start")
     try:
         configread()
@@ -1290,6 +1576,7 @@ def main():
         parslist()
         resize()
         jthreshold = readjson("js/thresholds.json")
+        mercslist = readjson("js/mercs.json")
         if(myOS=="windows"):
             ahk.show_info_traytip("started", "all files loaded successfully", slient=False, blocking=True)
             win.show()
