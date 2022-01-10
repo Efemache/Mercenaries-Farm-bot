@@ -396,6 +396,14 @@ def abilities(localhero):
         pyautogui.click()
         return True
 
+    elif localhero == 'Cairne Bloodhoof':
+        if raund % 2 == 0:
+            if find_ellement_trans(obj + '/abilics/3.png', 14):
+                return False
+        pyautogui.moveTo(int(windowMP()[0] + windowMP()[2] / 2.5), int(windowMP()[1] + windowMP()[2] / 4), setings[7], mouse_random_movement())
+        pyautogui.click()
+        return True
+
     elif localhero == 'Antonidas':
         if find_ellement_trans(obj + '/abilics/2.png', 14):
             return False
