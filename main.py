@@ -480,10 +480,7 @@ def abilities(localhero):
         return True
 
     elif localhero == 'Rexxar':
-        if raund % 3 == 1:
-            if find_ellement_trans(obj + '/abilics/1.png', 14):
-                return True
-        if raund % 3 == 0:
+        if raund % 2 == 0:
             if find_ellement_trans(obj + '/abilics/3.png', 14):
                 return True
         pyautogui.moveTo(int(windowMP()[0] + windowMP()[2] / 2.5), int(windowMP()[1] + windowMP()[2] / 4), setings[7], mouse_random_movement())
@@ -697,6 +694,9 @@ def battle():
     global zoneLog
     retour = True
 
+    zoneLog = LogHSMercs(setings[9]) # setings 9 : 'ZoneLog' (GameDir/Logs/Zone.log)
+    zoneLog.start()
+
     tempthreshold = threshold
     raund = 1
     while True:
@@ -777,6 +777,7 @@ def battle():
             time.sleep(3)
             raund += 1
     threshold = tempthreshold
+    zoneLog.stop()
     return retour
 
 
@@ -796,7 +797,7 @@ def selectCardsInHand():
 
     while not find_ellement_trans(buttons[5], 2): # buttons 5: 'num'
         time.sleep(0.5)
-        
+
     debug("windowsMP() : ", windowMP())
     x = windowMP()[0] + (windowMP()[2] / 2.6)
     y = windowMP()[1] + (windowMP()[3] * 0.92)
@@ -836,7 +837,7 @@ def selectCardsInHand():
     #    time.sleep(1)
     while not find_ellement_trans(buttons[5], 14) :  # buttons 5: 'num'
         pyautogui.moveTo(x, y, setings[7])
-        time.sleep(1)
+        #time.sleep(1)
         pyautogui.moveTo(windowMP()[0] + (windowMP()[2]*0.1), windowMP()[1] + (windowMP()[3]*0.1), setings[7], mouse_random_movement())
 
     retour = battle()
@@ -897,12 +898,12 @@ def goToEncounter():
     """
     print ("goToEncounter : entering")
     global threshold
-    global zoneLog
+    #global zoneLog
     time.sleep(2)
     travelEnd=False
 
-    zoneLog = LogHSMercs(setings[9]) # setings 9 : 'ZoneLog' (GameDir/Logs/Zone.log)
-    zoneLog.start()
+    #zoneLog = LogHSMercs(setings[9]) # setings 9 : 'ZoneLog' (GameDir/Logs/Zone.log)
+    #zoneLog.start()
     while not travelEnd :
         tempthreshold = threshold
         threshold = 0.85
@@ -949,7 +950,7 @@ def goToEncounter():
             threshold = tempthreshold
             nextlvl()
     threshold = tempthreshold
-    zoneLog.stop()
+    #zoneLog.stop()
     while not find_ellement_trans(buttons[0], 1) : # buttons 0: 'back'
         pyautogui.click()
         time.sleep(1)
@@ -1072,8 +1073,8 @@ def where():
     if find_ellement_trans(Ui_Ellements[34], 1) : # Ui_Ellements 33: 'view_party' (button when you are on the road to battle)
         nextlvl()
 
-    #if find_ellement(buttons[5], 1): # buttons 5: 'num'
-    #    selectCardsInHand()
+    if find_ellement(buttons[5], 1): # buttons 5: 'num'
+        selectCardsInHand()
 
     return True
 
