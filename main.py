@@ -312,7 +312,7 @@ def nextlvl():
         elif find_ellement(buttons[25], 14):	# buttons 25: 'visit'
             y = windowMP()[1] + windowMP()[3] / 2.2
             time.sleep(1.5)
-            while find_ellement_trans(Ui_Ellements[19], 1): # Ui_Ellements 19: 'sombody'
+            while find_ellement(Ui_Ellements[19], 1): # Ui_Ellements 19: 'sombody'
                 temp = random.randint(0, 2)
                 if temp == 0:
                     x = windowMP()[2] / 2.3
@@ -326,7 +326,7 @@ def nextlvl():
                 time.sleep(0.1)
                 pyautogui.click()
                 time.sleep(0.2)
-                find_ellement_trans(buttons[18], 14) # buttons 18: 'choose_task'
+                find_ellement(buttons[18], 14) # buttons 18: 'choose_task'
                 time.sleep(5)
 
         elif find_ellement(Ui_Ellements[24], 14): # Ui_Ellements 24: 'pick'
@@ -375,13 +375,13 @@ def chooseTreasure():
         pyautogui.moveTo(x, y, setings[7], mouse_random_movement())
     pyautogui.click()
     while True:
-        if find_ellement_trans(buttons[17], 14):	# buttons 17: 'take'
+        if find_ellement(buttons[17], 14):	# buttons 17: 'take'
             time.sleep(1)
             break
-        if find_ellement_trans(buttons[28], 14):	# buttons 28: 'keep'
+        if find_ellement(buttons[28], 14):	# buttons 28: 'keep'
             time.sleep(1)
             break
-        if find_ellement_trans(buttons[27], 14):	# buttons 27: 'replace'
+        if find_ellement(buttons[27], 14):	# buttons 27: 'replace'
             time.sleep(1)
             break
 
@@ -624,39 +624,40 @@ def abilities(localhero):
     return True
 
 
-""" Function to attack an enemy (red, green or blue ideally) with the selected mercenary
-    red attacks green (if exists)
-    green attacks blue (if exists)
-    blue attacks red (if exists)
-    else merc attacks minion with special abilities or neutral
-"""
 def attacks(position, mercName, number, enemyred, enemygreen, enemyblue, enemynoclass, mol):
+    """ Function to attack an enemy (red, green or blue ideally) with the selected mercenary
+        red attacks green (if exists)
+        green attacks blue (if exists)
+        blue attacks red (if exists)
+        else merc attacks minion with special abilities or neutral
+    """
     global mercslist
 
     debug("[DEBUG] Attacks function")
 
-    print("attack with : ", mercName, "( position :", position, "/", number, ")")
-
     cardSize=int(windowMP()[2] / 12)
     firstOdd=int(windowMP()[0] + (windowMP()[2] / 3))
-    firstEven=int(windowMP()[0] + (windowMP()[2] / 3.4))
+    firstEven=int(windowMP()[0] + (windowMP()[2] / 3.6))
 
-    #positionOdd=[640,800,960,1120,1280]
     #positionEven=[560,720,880,1040,1200,1360]
+    #positionOdd=[640,800,960,1120,1280]
     positionOdd=[]
     positionEven=[]
     for i in range(6) :
         positionEven.append(int(firstEven + (i * cardSize)))
         if i != 5 :
             positionOdd.append(int(firstOdd + (i * cardSize)))
+    print("position even :",positionEven)
     
     if number % 2 == 0 : # if mercenaries are even
         pos= int(2 - (number/2 - 1)  + (position - 1))
-        x= int(positionEven[pos])
+        x= positionEven[pos]
     else :  # if mercenaries are odd
         pos= int(2 - (number-1)/2 + (position - 1))
-        x=int(positionOdd[pos])
+        x=positionOdd[pos]
     y=windowMP()[1] + windowMP()[3]/1.5
+
+    print("attack with : ", mercName, "( position :", position, "/", number, ") (x =",x)
 
     #print("merclist", mercslist.keys())
     if mercName in mercslist :
@@ -726,7 +727,7 @@ def battle():
             pyautogui.click()
             zoneLog.cleanBoard()
             break
-        elif find_ellement_trans(buttons[15], 1) or find_ellement_trans(buttons[16], 1):  # buttons 15: 'startbattle' # buttons 16: 'startbattle1'
+        elif find_ellement(buttons[15], 1) or find_ellement(buttons[16], 1):  # buttons 15: 'startbattle' # buttons 16: 'startbattle1'
             # wait 'WaitForEXP' (float) in minutes, to make the battle longer and win more EXP (for the Hearthstone reward track)
             time.sleep(setings[8]) # setings 8: WaitForEXP
 
@@ -760,7 +761,7 @@ def battle():
                 pyautogui.moveTo(windowMP()[0] + windowMP()[2] / 2, windowMP()[1] + windowMP()[3] - windowMP()[3] / 4.8, setings[7], mouse_random_movement())
                 pyautogui.click()
 
-                attacks(int(i), mercenaries[i], int(list(mercenaries)[-1]), enemyred, enemygreen, enemyblue, enemynoclass, mol)
+                attacks(int(i), mercenaries[i], int(sorted(mercenaries)[-1]), enemyred, enemygreen, enemyblue, enemynoclass, mol)
                 time.sleep(0.1)
 
             #threshold = 0.75
@@ -771,7 +772,7 @@ def battle():
                     break
                 if i > 10:
                     pyautogui.rightClick()
-                    find_ellement_trans(buttons[15], 14) # buttons 15: 'startbattle'
+                    find_ellement(buttons[15], 14) # buttons 15: 'startbattle'
                     break
                 time.sleep(0.2)
                 i += 1
@@ -796,7 +797,7 @@ def selectCardsInHand():
 #    global threshold
     heroesOnBattlefield = 0
 
-    while not find_ellement_trans(buttons[5], 2): # buttons 5: 'num'
+    while not find_ellement(buttons[5], 2): # buttons 5: 'num'
         time.sleep(0.5)
 
     debug("windowsMP() : ", windowMP())
@@ -836,7 +837,7 @@ def selectCardsInHand():
     #    threshold = 0.7
     #    pyautogui.moveTo(windowMP()[0] + (windowMP()[2]*0.1), windowMP()[1] + (windowMP()[3]*0.1), setings[7], mouse_random_movement())
     #    time.sleep(1)
-    while not find_ellement_trans(buttons[5], 14) :  # buttons 5: 'num'
+    while not find_ellement(buttons[5], 14) :  # buttons 5: 'num'
         pyautogui.moveTo(x, y, setings[7])
         #time.sleep(1)
         pyautogui.moveTo(windowMP()[0] + (windowMP()[2]*0.1), windowMP()[1] + (windowMP()[3]*0.1), setings[7], mouse_random_movement())
@@ -922,14 +923,14 @@ def goToEncounter():
                     # if find (task completed) :
                     #   time.sleep(2)
 
-                    if not find_ellement_trans(Ui_Ellements[18], 1): # Ui_Ellements 18: 'take_grey'
+                    if not find_ellement(Ui_Ellements[18], 1): # Ui_Ellements 18: 'take_grey'
                         pyautogui.click()
                         time.sleep(0.5)
                     else:
                         chooseTreasure()
                         break
 
-                    if not find_ellement_trans(Ui_Ellements[29], 1): # Ui_Ellements 29: 'replace_grey' (To keep/replace a Treasure?) 
+                    if not find_ellement(Ui_Ellements[29], 1): # Ui_Ellements 29: 'replace_grey' (To keep/replace a Treasure?) 
                         pyautogui.click()
                         time.sleep(0.5)
                     else:
@@ -952,7 +953,7 @@ def goToEncounter():
             nextlvl()
     #threshold = tempthreshold
     #zoneLog.stop()
-    while not find_ellement_trans(buttons[0], 1) : # buttons 0: 'back'
+    while not find_ellement(buttons[0], 1) : # buttons 0: 'back'
         pyautogui.click()
         time.sleep(1)
     
@@ -1031,12 +1032,12 @@ def where():
     #global threshold
     #tempthreshold = threshold
 
-    find_ellement_trans(buttons[4], 14)   # buttons 4: 'join_button' ("Mercenaries" button on principal menu) => if you find it, click on it
+    find_ellement(buttons[4], 14)   # buttons 4: 'join_button' ("Mercenaries" button on principal menu) => if you find it, click on it
 
     if find_ellement(chekers[21], 1) : # chekers 21: 'menu'
         time.sleep(4)
         # Find PVE adventure payed and free
-        find_ellement_trans(Ui_Ellements[0], 14) or find_ellement_trans(Ui_Ellements[32],14) # Ui_Ellements 0: 'battle' # Ui_Ellements 32: 'free_battle'
+        find_ellement(Ui_Ellements[0], 14) or find_ellement(Ui_Ellements[32],14) # Ui_Ellements 0: 'battle' # Ui_Ellements 32: 'free_battle'
         
     #threshold = 0.6
     if find_ellement(Ui_Ellements[30], 1) : # Ui_Ellements 30: 'travelpoint'
@@ -1056,7 +1057,7 @@ def where():
     #threshold = tempthreshold
 
     #threshold = 0.6
-    if find_ellement_trans(Ui_Ellements[33], 1) : # Ui_Ellements 33: 'choose_team'
+    if find_ellement(Ui_Ellements[33], 1) : # Ui_Ellements 33: 'choose_team'
         time.sleep(3)
         #threshold = tempthreshold
         selectGroup()
@@ -1064,14 +1065,14 @@ def where():
     #threshold = tempthreshold
 
     #threshold = 0.95
-    if find_ellement_trans(buttons[7], 1) : # buttons 7: 'play'
+    if find_ellement(buttons[7], 1) : # buttons 7: 'play'
         time.sleep(3)
         #threshold = tempthreshold
         goToEncounter()
         time.sleep(3)
     #threshold = tempthreshold
 
-    if find_ellement_trans(Ui_Ellements[34], 1) : # Ui_Ellements 33: 'view_party' (button when you are on the road to battle)
+    if find_ellement(Ui_Ellements[34], 1) : # Ui_Ellements 33: 'view_party' (button when you are on the road to battle)
         nextlvl()
 
     if find_ellement(buttons[5], 1): # buttons 5: 'num'
@@ -1081,90 +1082,76 @@ def where():
 
 
 def find_ellement_trans(file, index, threshold="-"):
-    find_ellement(file, index, threshold)
-#def find_ellement_trans(file, index, threshold="-"):
-#    """ Find an object ('file') on the screen (UI, Button, ...) and do some actions ('index') 
-#        support PNG with transparency / alpha channel
-#        - the old function 'find_ellement' should be deleted
-#        - need to migrate to this one (find_ellement_trans) and find the right threshold for each image
-#        - maybe the old find_ellement will be renamed "find_ellement_grey" and will be used for images which could be with different color (silver or gold like heroes cards)
-#    """
-#    debug("DEBUG : find_ellement_trans START")
-#    global screenImg
-#    global partImg
-#    global jthreshold
-#    retour = False
-#    if threshold == "-" :
-#        if file in jthreshold : 
-#            if jthreshold[file] == "-" :
-#                threshold = jthreshold['default']
-#            else :
-#                threshold = jthreshold[file]
-#        else:
-#            threshold = jthreshold['default']
-#
-#    time.sleep(speed)
-#
-#    # choose if the bot need to look into the screen or in a part of the screen
-#    if index == 12:
-#        img = cv2.cvtColor(partImg, cv2.IMREAD_COLOR)
-#    else:
-#        screen()
-#        img = cv2.cvtColor(screenImg, cv2.IMREAD_COLOR)
-#    
-#    template_alpha = cv2.imread('files/' + setings[0] + '/' + file, cv2.IMREAD_UNCHANGED)
-#    template = cv2.cvtColor(template_alpha, cv2.IMREAD_COLOR)
-#    channels = cv2.split(template_alpha)
-#    # extract "transparency" channel from image
-#    alpha_channel = np.array(channels[3])
-#    # generate mask image, all black dots will be ignored during matching
-#    mask = cv2.merge([alpha_channel,alpha_channel,alpha_channel])
-#    result = cv2.matchTemplate(img, template, cv2.TM_CCORR_NORMED, None, mask)
-#
-#    h = template.shape[0]
-#    w = template.shape[1]
-#
-#    loc = np.where(result >= threshold)
-#    if len(loc[0]) != 0:
-#        retour = True
-#        j=0
-#        for pt in zip(*loc[::-1]):
-#            pt[0] + w
-#            pt[1] + h
-#        x = int((pt[0] * 2 + w) / 2)
-#        y = int((pt[1] * 2 + h) / 2)
-#        print("Found " + file, "(", threshold,")", x, y)
-#        if index == 12 or index == 15:
-#            retour = (x, y)
-#        elif index == 2 :
-#            pyautogui.moveTo(x, y, setings[7], mouse_random_movement())
-#        elif index == 14 :
-#            p = random.randint(-2, 2)
-#            s = random.randint(-2, 2)
-#            pyautogui.moveTo(x + p, y + s, setings[7], mouse_random_movement())  # Moves the mouse instantly to absolute screen position
-#            time.sleep(0.1)
-#            pyautogui.click()
-#    else :
-#        print("Looked for " + file, "(", threshold,")")
-#        if index == 12 or index == 15:
-#            retour = (0, 0)
-##    print("DEBUG : find_ellement_trans END")
-#    return retour
+    """ Find an object ('file') on the screen (UI, Button, ...) and do some actions ('index') 
+        support PNG with transparency / alpha channel
+        - the old function 'find_ellement' should be deleted
+        - need to migrate to this one (find_ellement_trans) and find the right threshold for each image
+        - maybe the old find_ellement will be renamed "find_ellement_grey" and will be used for images which could be with different color (silver or gold like heroes cards)
+    """
+    debug("DEBUG : find_ellement_trans START")
+    global screenImg
+    global partImg
+    global jthreshold
+    retour = False
+    if threshold == "-" :
+        if file in jthreshold : 
+            if jthreshold[file] == "-" :
+                threshold = jthreshold['default']
+            else :
+                threshold = jthreshold[file]
+        else:
+            threshold = jthreshold['default']
 
+    time.sleep(speed)
 
-#def find_ellement(file, index):
-#    global jthreshold
-#    debug("DEBUG : find_ellement START")
-#    if file in jthreshold : 
-#        retour = find_ellement_trans(file, index, jthreshold[file])
-#    else :
-#        retour = find_ellement_grey(file, index)
-#
-#    debug("DEBUG : find_ellement END")
-#    return retour
+    # choose if the bot need to look into the screen or in a part of the screen
+    if index == 12:
+        img = cv2.cvtColor(partImg, cv2.IMREAD_COLOR)
+    else:
+        screen()
+        img = cv2.cvtColor(screenImg, cv2.IMREAD_COLOR)
+    
+    template_alpha = cv2.imread('files/' + setings[0] + '/' + file, cv2.IMREAD_UNCHANGED)
+    template = cv2.cvtColor(template_alpha, cv2.IMREAD_COLOR)
+    channels = cv2.split(template_alpha)
+    # extract "transparency" channel from image
+    alpha_channel = np.array(channels[3])
+    # generate mask image, all black dots will be ignored during matching
+    mask = cv2.merge([alpha_channel,alpha_channel,alpha_channel])
+    result = cv2.matchTemplate(img, template, cv2.TM_CCORR_NORMED, None, mask)
+
+    h = template.shape[0]
+    w = template.shape[1]
+
+    loc = np.where(result >= threshold)
+    if len(loc[0]) != 0:
+        retour = True
+        j=0
+        for pt in zip(*loc[::-1]):
+            pt[0] + w
+            pt[1] + h
+        x = int((pt[0] * 2 + w) / 2)
+        y = int((pt[1] * 2 + h) / 2)
+        print("Found " + file, "(", threshold,")", x, y)
+        if index == 12 or index == 15:
+            retour = (x, y)
+        elif index == 2 :
+            pyautogui.moveTo(x, y, setings[7], mouse_random_movement())
+        elif index == 14 :
+            p = random.randint(-2, 2)
+            s = random.randint(-2, 2)
+            pyautogui.moveTo(x + p, y + s, setings[7], mouse_random_movement())  # Moves the mouse instantly to absolute screen position
+            time.sleep(0.1)
+            pyautogui.click()
+    else :
+        print("Looked for " + file, "(", threshold,")")
+        if index == 12 or index == 15:
+            retour = (0, 0)
+#    print("DEBUG : find_ellement_trans END")
+    return retour
+
 
 def find_ellement(file, index, threshold="-"):
-#def find_ellement_grey(file, index):
     """ Find an object ('file') on the screen (UI, Button, ...) and do some actions ('index') 
                   FullScreenshot | PartOfTheScreen(shot) |  Actions   | Return
       index = 1 :       x        |                       |     -      | True / False      
