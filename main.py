@@ -42,10 +42,10 @@ else:
 
 global screenImg
 global partImg
-global threshold
+#global threshold
 global jthreshold
 global zoneLog
-threshold = 0.75
+#threshold = 0.75
 global mercslist
 mercslist={}
 
@@ -53,7 +53,7 @@ mercslist={}
 Ui_Ellements = ['battle', 'blue', 'green', 'group', 'next', 'one', 'page_1', 'page_2', 'page_3', 'red', 'prev', 'sob',
                 'noclass', 'bat1', 'bat2', 'bat3', 'bat4', 'bat5', 'take_grey', 'sombody', 'bounties',
                 'bounties', 'Barrens', 'startbat', 'pick', 'Winterspring', 'Felwood', 'normal',
-                'heroic','replace_grey', 'travelpoint','presents_thing', 'free_battle', 'choose_team', 'view_party']  # noclass 12, bat5-17
+                'heroic','replace_grey', 'travelpoint','presents_thing', 'free_battle', 'choose_team', 'view_party', 'surprise']  # noclass 12, bat5-17
 # buttons
 buttons = ['back', 'continue', 'create', 'del', 'join_button', 'num', 'ok', 'play', 'ready', 'sec', 'sta', 'start',
            'start1', 'submit', 'allready', 'startbattle', 'startbattle1', 'take', 'choose_task', 'portal-warp', 'onedie', 'reveal',
@@ -249,13 +249,13 @@ def rand(enemyred, enemygreen, enemyblue, enemynoclass):
 def collect():
     """ Collect the rewards just after beating the final boss of this level
     """
-    global threshold
-    tmpthreshold = threshold
+#    global threshold
+#    tmpthreshold = threshold
 #    threshold = 0.65
-    threshold = 0.59
+#    threshold = 0.59
 
     # it's difficult to find every boxes with lib CV2 so, we try to detect just one and then we click on all known positions
-    while not find_ellement(buttons[22], 14) :	# buttons 22: 'done'
+    while not find_ellement(buttons[22], 14, 0.65) :	# buttons 22: 'done'
         pyautogui.moveTo(windowMP()[0] + windowMP()[2] / 2.5, windowMP()[1] + windowMP()[3] / 3.5, setings[7], mouse_random_movement())
         pyautogui.click()
         pyautogui.moveTo(windowMP()[0] + windowMP()[2] / 2, windowMP()[1] + windowMP()[3] / 3.5, setings[7], mouse_random_movement())
@@ -279,7 +279,7 @@ def collect():
         pyautogui.moveTo(windowMP()[0] + windowMP()[2] / 1.4, windowMP()[1] + windowMP()[3] / 1.3, setings[7], mouse_random_movement())
         pyautogui.click()
         time.sleep(1)
-    threshold = tmpthreshold
+#    threshold = tmpthreshold
 
     # move the mouse to avoid a bug where the it is over a card/hero (at the end) masking the "OK" button
     pyautogui.moveTo(windowMP()[0] + windowMP()[2] * 0.8, windowMP()[1] + windowMP()[3] * 0.8, setings[7], mouse_random_movement())
@@ -294,12 +294,12 @@ def nextlvl():
     """ Progress on the map (Boon, Portal, ...) to find the next battle
     """
     global speed
-    global threshold
+#    global threshold
 
     time.sleep(1.5)
 
-    tempthreshold = threshold
-    threshold = 0.95
+#    tempthreshold = threshold
+#    threshold = 0.95
     if not find_ellement(buttons[7], 1) : # buttons 7: 'play'
 
         if find_ellement(buttons[21], 14):	# buttons 21: 'reveal'
@@ -339,6 +339,10 @@ def nextlvl():
 #            pyautogui.click()
             time.sleep(5)
 
+        elif find_ellement(Ui_Ellements[35], 1): # Ui_Ellements 24: 'surprise'
+            time.sleep(1)
+            find_ellement(Ui_Ellements[35], 14) # Ui_Ellements 24: 'surprise'
+
         else :
             x, y = pyautogui.position()
             debug("Mouse (x, y) : ", x, y)
@@ -354,7 +358,7 @@ def nextlvl():
             time.sleep(0.1)
             pyautogui.click()
 
-    threshold = tempthreshold
+#    threshold = tempthreshold
 
 
 def chooseTreasure():
@@ -686,7 +690,7 @@ def battle():
         and make them battle until one of yours die
     """
     global raund
-    global threshold
+#    global threshold
     global speed
     global zoneLog
     retour = True
@@ -694,12 +698,12 @@ def battle():
     zoneLog = LogHSMercs(setings[9]) # setings 9 : 'ZoneLog' (GameDir/Logs/Zone.log)
     zoneLog.start()
 
-    tempthreshold = threshold
+#    tempthreshold = threshold
     raund = 1
     while True:
         pyautogui.moveTo(windowMP()[0] + (windowMP()[2] / 2.6), windowMP()[1] + (windowMP()[3] * 0.92), setings[7], mouse_random_movement())
         speed = 0
-        threshold = 0.85
+#        threshold = 0.85
 
         # we look for the (green) "ready" button because :
         # - sometimes, the bot click on it but it doesn't work very well
@@ -736,7 +740,7 @@ def battle():
             partscreen(int(setings[0].split('x')[0]), tmp, 0, 0) # setings 0: 'MonitorResolution(ex:1920x1080)'
 
             temp = speed
-            threshold = 0.8
+            #threshold = 0.8
 
             # Look for enemies
             enemyred = find_ellement(Ui_Ellements[9], 12) # Ui_Ellements 9: 'red'
@@ -759,7 +763,7 @@ def battle():
                 attacks(int(i), mercenaries[i], int(list(mercenaries)[-1]), enemyred, enemygreen, enemyblue, enemynoclass, mol)
                 time.sleep(0.1)
 
-            threshold = 0.75
+            #threshold = 0.75
             speed = temp
             i = 0
             while True:
@@ -773,7 +777,7 @@ def battle():
                 i += 1
             time.sleep(3)
             raund += 1
-    threshold = tempthreshold
+    #threshold = tempthreshold
     zoneLog.stop()
     return retour
 
@@ -789,7 +793,7 @@ def selectCardsInHand():
     retour = True
 
     global speed
-    global threshold
+#    global threshold
     heroesOnBattlefield = 0
 
     while not find_ellement_trans(buttons[5], 2): # buttons 5: 'num'
@@ -800,7 +804,7 @@ def selectCardsInHand():
     y = windowMP()[1] + (windowMP()[3] * 0.92)
     temp = speed
     speed = 0
-    threshold = 0.85
+    #threshold = 0.85
     i = 0
     ### Here, find the part which - previously - was selecting cards/mercs in hand
     ## setings 5: 'heroSet(ex:True)'
@@ -849,9 +853,9 @@ def travelpointSelection():
     """ Choose a Travel Point (The Barrens, Felwood, ...)
         and the mode : Normal or Heroic
     """
-    global threshold
-    tempthreshold = threshold
-    threshold = 0.65
+#    global threshold
+#    tempthreshold = threshold
+#    threshold = 0.65
 
     if find_ellement(Ui_Ellements[30], 1) : # Ui_Ellements 30: 'travelpoint'
 
@@ -887,14 +891,14 @@ def travelpointSelection():
 
     waitForItOrPass(buttons[10], 2)
     find_ellement(buttons[10], 14) # buttons 7: 'sta' (= "choose" in Travel Point selection)
-    threshold = tempthreshold
+    #threshold = tempthreshold
 
 
 def goToEncounter():
     """ Start new fight, continue on the road and collect everything (treasure, rewards, ...) 
     """
     print ("goToEncounter : entering")
-    global threshold
+#    global threshold
     #global zoneLog
     time.sleep(2)
     travelEnd=False
@@ -902,12 +906,12 @@ def goToEncounter():
     #zoneLog = LogHSMercs(setings[9]) # setings 9 : 'ZoneLog' (GameDir/Logs/Zone.log)
     #zoneLog.start()
     while not travelEnd :
-        tempthreshold = threshold
-        threshold = 0.85
+       # tempthreshold = threshold
+        #threshold = 0.85
 
         if find_ellement(buttons[7], 14): # buttons 7: 'play'
             time.sleep(0.5)
-            threshold = tempthreshold
+            #threshold = tempthreshold
             retour = selectCardsInHand() # Start the battle : the bot choose the cards and fight against the enemy
             print("goToEncounter - retour = ", retour)
             time.sleep(1)
@@ -944,9 +948,9 @@ def goToEncounter():
                 travelEnd=True
                 print("goToEncounter : don't know what happened !")
         else :
-            threshold = tempthreshold
+            #threshold = tempthreshold
             nextlvl()
-    threshold = tempthreshold
+    #threshold = tempthreshold
     #zoneLog.stop()
     while not find_ellement_trans(buttons[0], 1) : # buttons 0: 'back'
         pyautogui.click()
@@ -958,18 +962,18 @@ def travelToLevel():
 
     """
 
-    global threshold
+#    global threshold
 
     print("travelToLevel : entering")
 
     # Look for the level/bounty even if it's on another page
-    tempthreshold= threshold
-    threshold = 0.65
+#    tempthreshold= threshold
+#    threshold = 0.65
         
-    while find_ellement_trans(Ui_Ellements[20], 1): # Ui_Ellements 20: 'bounties'
-        threshold = tempthreshold
+    while find_ellement(Ui_Ellements[20], 1): # Ui_Ellements 20: 'bounties'
+        #threshold = tempthreshold
         #time.sleep(2)
-        if find_ellement("levels/" + setings[2] + "_" + setings[3] + "_" + setings[1] + ".png", 14): # setings 1: 'level(ex:20)'
+        if find_ellement("levels/" + setings[2] + "_" + setings[3] + "_" + setings[1] + ".png", 14, 0.6): # setings 1: 'level(ex:20)'
             waitForItOrPass(buttons[11], 6) # buttons 11: 'start'
             if find_ellement(buttons[11], 14) : # buttons 11: 'start'
                 break
@@ -980,18 +984,18 @@ def travelToLevel():
             else:
                 find_ellement(buttons[26], 14) # buttons 26: 'fir' (= 'left arrow' (previous page))
                 time.sleep(1)
-        threshold = 0.6
-    threshold = tempthreshold
+#        threshold = 0.6
+#    threshold = tempthreshold
     print("travelToLevel ended")
     return
 
 def selectGroup():
     """ Look for the mercenaries group 'Botwork' and select it (click on 'LockIn' if necessary)
     """
-    global threshold
-    tempthreshold = threshold
+    #global threshold
+    #tempthreshold = threshold
     print("selectGroup : entering")
-    threshold = 0.8
+    #threshold = 0.8
 
     if find_ellement(chekers[2], 14): # chekers 2: 'find' ('Botwork' name)
         find_ellement(buttons[12], 14) # buttons 12: 'start1'
@@ -999,7 +1003,7 @@ def selectGroup():
         waitForItOrPass(buttons[13], 3) # buttons 13: 'submit' / LockIn
         find_ellement(buttons[13], 14) # buttons 13: 'submit' / LockIn
 
-    threshold = tempthreshold
+    #threshold = tempthreshold
     debug("selectGroup : ended")
     return
 
@@ -1024,48 +1028,48 @@ def waitForItOrPass(image, duration):
 def where():
     """ Try to enter in Mercenaries mode, detect where the bot have to resume and go for it 
     """
-    global threshold
-    tempthreshold = threshold
+    #global threshold
+    #tempthreshold = threshold
 
     find_ellement_trans(buttons[4], 14)   # buttons 4: 'join_button' ("Mercenaries" button on principal menu) => if you find it, click on it
 
-    if find_ellement_trans(chekers[21], 1) : # chekers 21: 'menu'
+    if find_ellement(chekers[21], 1) : # chekers 21: 'menu'
         time.sleep(4)
         # Find PVE adventure payed and free
         find_ellement_trans(Ui_Ellements[0], 14) or find_ellement_trans(Ui_Ellements[32],14) # Ui_Ellements 0: 'battle' # Ui_Ellements 32: 'free_battle'
         
-    threshold = 0.6
-    if find_ellement_trans(Ui_Ellements[30], 1) : # Ui_Ellements 30: 'travelpoint'
-        threshold = tempthreshold
+    #threshold = 0.6
+    if find_ellement(Ui_Ellements[30], 1) : # Ui_Ellements 30: 'travelpoint'
+        #threshold = tempthreshold
         time.sleep(3)
         # Find the travel point and the mode (normal/heroic)
         travelpointSelection()
         time.sleep(3)
-    threshold = tempthreshold
+    #threshold = tempthreshold
     
-    threshold = 0.65
-    if find_ellement_trans(Ui_Ellements[20], 1): # Ui_Ellements 19: 'bounties'
+    #threshold = 0.65
+    if find_ellement(Ui_Ellements[20], 1): # Ui_Ellements 20: 'bounties'
         time.sleep(3)
-        threshold = tempthreshold
+        #threshold = tempthreshold
         travelToLevel()
         time.sleep(3)
-    threshold = tempthreshold
+    #threshold = tempthreshold
 
-    threshold = 0.6
+    #threshold = 0.6
     if find_ellement_trans(Ui_Ellements[33], 1) : # Ui_Ellements 33: 'choose_team'
         time.sleep(3)
-        threshold = tempthreshold
+        #threshold = tempthreshold
         selectGroup()
         time.sleep(3)
-    threshold = tempthreshold
+    #threshold = tempthreshold
 
-    threshold = 0.95
+    #threshold = 0.95
     if find_ellement_trans(buttons[7], 1) : # buttons 7: 'play'
         time.sleep(3)
-        threshold = tempthreshold
+        #threshold = tempthreshold
         goToEncounter()
         time.sleep(3)
-    threshold = tempthreshold
+    #threshold = tempthreshold
 
     if find_ellement_trans(Ui_Ellements[34], 1) : # Ui_Ellements 33: 'view_party' (button when you are on the road to battle)
         nextlvl()
@@ -1077,87 +1081,90 @@ def where():
 
 
 def find_ellement_trans(file, index, threshold="-"):
-    """ Find an object ('file') on the screen (UI, Button, ...) and do some actions ('index') 
-        support PNG with transparency / alpha channel
-        - the old function 'find_ellement' should be deleted
-        - need to migrate to this one (find_ellement_trans) and find the right threshold for each image
-        - maybe the old find_ellement will be renamed "find_ellement_grey" and will be used for images which could be with different color (silver or gold like heroes cards)
-    """
-    debug("DEBUG : find_ellement_trans START")
-    global screenImg
-    global partImg
-    global jthreshold
-    retour = False
-    if threshold == "-" :
-        if file in jthreshold : 
-            if jthreshold[file] == "-" :
-                threshold = jthreshold['default']
-            else :
-                threshold = jthreshold[file]
-        else:
-            threshold = jthreshold['default']
+    find_ellement(file, index, threshold)
+#def find_ellement_trans(file, index, threshold="-"):
+#    """ Find an object ('file') on the screen (UI, Button, ...) and do some actions ('index') 
+#        support PNG with transparency / alpha channel
+#        - the old function 'find_ellement' should be deleted
+#        - need to migrate to this one (find_ellement_trans) and find the right threshold for each image
+#        - maybe the old find_ellement will be renamed "find_ellement_grey" and will be used for images which could be with different color (silver or gold like heroes cards)
+#    """
+#    debug("DEBUG : find_ellement_trans START")
+#    global screenImg
+#    global partImg
+#    global jthreshold
+#    retour = False
+#    if threshold == "-" :
+#        if file in jthreshold : 
+#            if jthreshold[file] == "-" :
+#                threshold = jthreshold['default']
+#            else :
+#                threshold = jthreshold[file]
+#        else:
+#            threshold = jthreshold['default']
+#
+#    time.sleep(speed)
+#
+#    # choose if the bot need to look into the screen or in a part of the screen
+#    if index == 12:
+#        img = cv2.cvtColor(partImg, cv2.IMREAD_COLOR)
+#    else:
+#        screen()
+#        img = cv2.cvtColor(screenImg, cv2.IMREAD_COLOR)
+#    
+#    template_alpha = cv2.imread('files/' + setings[0] + '/' + file, cv2.IMREAD_UNCHANGED)
+#    template = cv2.cvtColor(template_alpha, cv2.IMREAD_COLOR)
+#    channels = cv2.split(template_alpha)
+#    # extract "transparency" channel from image
+#    alpha_channel = np.array(channels[3])
+#    # generate mask image, all black dots will be ignored during matching
+#    mask = cv2.merge([alpha_channel,alpha_channel,alpha_channel])
+#    result = cv2.matchTemplate(img, template, cv2.TM_CCORR_NORMED, None, mask)
+#
+#    h = template.shape[0]
+#    w = template.shape[1]
+#
+#    loc = np.where(result >= threshold)
+#    if len(loc[0]) != 0:
+#        retour = True
+#        j=0
+#        for pt in zip(*loc[::-1]):
+#            pt[0] + w
+#            pt[1] + h
+#        x = int((pt[0] * 2 + w) / 2)
+#        y = int((pt[1] * 2 + h) / 2)
+#        print("Found " + file, "(", threshold,")", x, y)
+#        if index == 12 or index == 15:
+#            retour = (x, y)
+#        elif index == 2 :
+#            pyautogui.moveTo(x, y, setings[7], mouse_random_movement())
+#        elif index == 14 :
+#            p = random.randint(-2, 2)
+#            s = random.randint(-2, 2)
+#            pyautogui.moveTo(x + p, y + s, setings[7], mouse_random_movement())  # Moves the mouse instantly to absolute screen position
+#            time.sleep(0.1)
+#            pyautogui.click()
+#    else :
+#        print("Looked for " + file, "(", threshold,")")
+#        if index == 12 or index == 15:
+#            retour = (0, 0)
+##    print("DEBUG : find_ellement_trans END")
+#    return retour
 
-    time.sleep(speed)
 
-    # choose if the bot need to look into the screen or in a part of the screen
-    if index == 12:
-        img = cv2.cvtColor(partImg, cv2.IMREAD_COLOR)
-    else:
-        screen()
-        img = cv2.cvtColor(screenImg, cv2.IMREAD_COLOR)
-    
-    template_alpha = cv2.imread('files/' + setings[0] + '/' + file, cv2.IMREAD_UNCHANGED)
-    template = cv2.cvtColor(template_alpha, cv2.IMREAD_COLOR)
-    channels = cv2.split(template_alpha)
-    # extract "transparency" channel from image
-    alpha_channel = np.array(channels[3])
-    # generate mask image, all black dots will be ignored during matching
-    mask = cv2.merge([alpha_channel,alpha_channel,alpha_channel])
-    result = cv2.matchTemplate(img, template, cv2.TM_CCORR_NORMED, None, mask)
+#def find_ellement(file, index):
+#    global jthreshold
+#    debug("DEBUG : find_ellement START")
+#    if file in jthreshold : 
+#        retour = find_ellement_trans(file, index, jthreshold[file])
+#    else :
+#        retour = find_ellement_grey(file, index)
+#
+#    debug("DEBUG : find_ellement END")
+#    return retour
 
-    h = template.shape[0]
-    w = template.shape[1]
-
-    loc = np.where(result >= threshold)
-    if len(loc[0]) != 0:
-        retour = True
-        j=0
-        for pt in zip(*loc[::-1]):
-            pt[0] + w
-            pt[1] + h
-        x = int((pt[0] * 2 + w) / 2)
-        y = int((pt[1] * 2 + h) / 2)
-        print("Found " + file, "(", threshold,")", x, y)
-        if index == 12 or index == 15:
-            retour = (x, y)
-        elif index == 2 :
-            pyautogui.moveTo(x, y, setings[7], mouse_random_movement())
-        elif index == 14 :
-            p = random.randint(-2, 2)
-            s = random.randint(-2, 2)
-            pyautogui.moveTo(x + p, y + s, setings[7], mouse_random_movement())  # Moves the mouse instantly to absolute screen position
-            time.sleep(0.1)
-            pyautogui.click()
-    else :
-        print("Looked for " + file, "(", threshold,")")
-        if index == 12 or index == 15:
-            retour = (0, 0)
-#    print("DEBUG : find_ellement_trans END")
-    return retour
-
-
-def find_ellement(file, index):
-    global jthreshold
-    debug("DEBUG : find_ellement START")
-    if file in jthreshold : 
-        retour = find_ellement_trans(file, index, jthreshold[file])
-    else :
-        retour = find_ellement_grey(file, index)
-
-    debug("DEBUG : find_ellement END")
-    return retour
-
-def find_ellement_grey(file, index):
+def find_ellement(file, index, threshold="-"):
+#def find_ellement_grey(file, index):
     """ Find an object ('file') on the screen (UI, Button, ...) and do some actions ('index') 
                   FullScreenshot | PartOfTheScreen(shot) |  Actions   | Return
       index = 1 :       x        |                       |     -      | True / False      
@@ -1168,11 +1175,21 @@ def find_ellement_grey(file, index):
         (new index needed to return a tab of object/coordinates)
     """
     debug("DEBUG : find_ellement_grey START")
-    global threshold
+#    global threshold
+    global jthreshold
     global screenImg
     global partImg
     time.sleep(speed)
     retour = False
+
+    if threshold == "-" :
+        if file in jthreshold : 
+            if jthreshold[file] == "-" :
+                threshold = jthreshold['default_grey']
+            else :
+                threshold = jthreshold[file]
+        else:
+            threshold = jthreshold['default_grey']
 
     # choose if the bot need to look into the screen or in a part of the screen
     if index == 12:
