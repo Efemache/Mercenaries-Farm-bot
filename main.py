@@ -53,7 +53,7 @@ mercslist={}
 # Ui-ellements
 Ui_Ellements = ['battle', 'blue', 'green', 'group', 'spirithealer', 'one', 'page_1', 'page_2', 'page_3',
                 'red', 'prev', 'sob', 'noclass', 'bat1', 'bat2', 'bat3', 'bat4', 'bat5', 'take_grey',
-                'sombody', 'bounties', 'bounties', 'Barrens', 'startbat', 'pick', 'Winterspring',
+                'sombody', 'bounties', 'Blackrock', 'Barrens', 'startbat', 'pick', 'Winterspring',
                 'Felwood', 'normal', 'heroic','replace_grey', 'travelpoint','presents_thing', 'free_battle',
                 'choose_team', 'view_party', 'surprise']  # noclass 12, bat5-17
 # buttons
@@ -956,7 +956,10 @@ def travelpointSelection():
         pyautogui.scroll(20)
         time.sleep(0.5)
 
-        if setings[2] == "Felwood":	            # setings 2: 'location(ex:TheBarrens)'
+        if setings[2] == "The Barrens":         # setings 2: 'location(ex:TheBarrens)'
+            find_ellement(Ui_Ellements[22], 14)	# Ui_Ellements 22: 'Barrens'
+
+        elif setings[2] == "Felwood":	            # setings 2: 'location(ex:TheBarrens)'
             find_ellement(Ui_Ellements[26], 14) # Ui_Ellements 26: 'Felwood'
 
         elif setings[2] == "Winterspring":        # setings 2: 'location(ex:TheBarrens)'
@@ -966,8 +969,12 @@ def travelpointSelection():
             time.sleep(0.5)
             find_ellement(Ui_Ellements[25], 14)	# Ui_Ellements 25: 'Winterspring'
         
-        elif setings[2] == "The Barrens":         # setings 2: 'location(ex:TheBarrens)'
-            find_ellement(Ui_Ellements[22], 14)	# Ui_Ellements 22: 'Barrens'
+        elif setings[2] == "Blackrock":        # setings 2: 'location(ex:TheBarrens)'
+            pyautogui.scroll(-10)
+            pyautogui.moveTo(windowMP()[0] + windowMP()[2] / 3, windowMP()[1] + windowMP()[3] / 2, setings[7], mouse_random_movement())
+            time.sleep(0.5)
+            find_ellement(Ui_Ellements[21], 14)	# Ui_Ellements 25: 'Blackrock'
+
         else :
             print("[INFO] Travel Point unknown. The bot won't change the one already selected.")
 
@@ -1049,37 +1056,50 @@ def goToEncounter():
         time.sleep(1)
     
 
-def travelToLevel():
+def travelToLevel(page="next"):
     """ Go to a Travel Point, choose a level/bounty and go on the road to make encounter
 
     """
 
-#    global threshold
+    retour = False
 
-    print("travelToLevel : entering")
-
-    # Look for the level/bounty even if it's on another page
-#    tempthreshold= threshold
-#    threshold = 0.65
-        
-    while find_ellement(Ui_Ellements[20], 1): # Ui_Ellements 20: 'bounties'
-        #threshold = tempthreshold
-        #time.sleep(2)
+    if find_ellement(Ui_Ellements[20], 1): # Ui_Ellements 20: 'bounties'
         if find_ellement("levels/" + setings[2] + "_" + setings[3] + "_" + setings[1] + ".png", 14, 0.6): # setings 1: 'level(ex:20)'
             waitForItOrPass(buttons[11], 6) # buttons 11: 'start'
-            if find_ellement(buttons[11], 14) : # buttons 11: 'start'
-                break
+            find_ellement(buttons[11], 14) # buttons 11: 'start'
+            retour = True
         else :
-            if find_ellement(buttons[9], 14): # buttons 9: 'sec' (= 'right arrow' (next page))
-                time.sleep(1)
-                #pass
-            else:
-                find_ellement(buttons[26], 14) # buttons 26: 'fir' (= 'left arrow' (previous page))
-                time.sleep(1)
-#        threshold = 0.6
-#    threshold = tempthreshold
-    print("travelToLevel ended")
-    return
+            if page == "next" :
+                if find_ellement(buttons[9], 14): # buttons 9: 'sec' (= 'right arrow' (next page))
+                    time.sleep(1)
+                    retour = travelToLevel("next")
+                if retour == False and find_ellement(buttons[26], 14) : # buttons 26: 'fir' (= 'left arrow' (previous page))
+                        time.sleep(1)
+                        retour = travelToLevel("previous")
+            elif page == "previous" :
+                if find_ellement(buttons[26], 14) : # buttons 26: 'fir' (= 'left arrow' (previous page))
+                    time.sleep(1)
+                    retour = travelToLevel("previous")
+    return retour
+
+#    debug("travelToLevel : entering")
+#    # Look for the level/bounty even if it's on another page
+#    while find_ellement(Ui_Ellements[20], 1): # Ui_Ellements 20: 'bounties'
+#        #threshold = tempthreshold
+#        #time.sleep(2)
+#        if find_ellement("levels/" + setings[2] + "_" + setings[3] + "_" + setings[1] + ".png", 14, 0.6): # setings 1: 'level(ex:20)'
+#            waitForItOrPass(buttons[11], 6) # buttons 11: 'start'
+#            if find_ellement(buttons[11], 14) : # buttons 11: 'start'
+#                break
+#        else :
+#            if find_ellement(buttons[9], 14): # buttons 9: 'sec' (= 'right arrow' (next page))
+#                time.sleep(1)
+#                #pass
+#            else:
+#                find_ellement(buttons[26], 14) # buttons 26: 'fir' (= 'left arrow' (previous page))
+#                time.sleep(1)
+#    debug("travelToLevel ended")
+#    return
 
 def selectGroup():
     """ Look for the mercenaries group 'Botwork' and select it (click on 'LockIn' if necessary)
