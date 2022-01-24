@@ -1,7 +1,9 @@
 {
 "default" : 0.95, 
 "default_grey" : 0.75, 
+"buttons/back.png" : 0.8,
 "buttons/choose_task.png" : 0.75,
+"buttons/finishok.png" : 0.85,
 "buttons/done.png" : 0.65,
 "buttons/onedie.png" : 0.85,
 "buttons/play.png" : 0.85,

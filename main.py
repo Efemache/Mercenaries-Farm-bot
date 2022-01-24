@@ -51,7 +51,7 @@ global mercslist
 mercslist={}
 
 # Ui-ellements
-Ui_Ellements = ['battle', 'blue', 'green', 'group', 'spirithealer', 'one', 'page_1', 'page_2', 'page_3',
+Ui_Ellements = ['battle', 'blue', 'green', 'group', 'spirithealer', 'one', 'page_1', 'page_2', 'encounter_battle',
                 'red', 'prev', 'sob', 'noclass', 'bat1', 'bat2', 'bat3', 'bat4', 'bat5', 'take_grey',
                 'sombody', 'bounties', 'Blackrock', 'Barrens', 'startbat', 'pick', 'Winterspring',
                 'Felwood', 'normal', 'heroic','replace_grey', 'travelpoint','presents_thing', 'free_battle',
@@ -347,19 +347,24 @@ def nextlvl():
             pyautogui.click()
             time.sleep(5)
 
-        elif find_ellement(buttons[19], 14): # Ui_Ellements 24: 'portal-warp'
+        elif find_ellement(buttons[19], 14): # Ui_Ellements 19: 'portal-warp'
             time.sleep(1)
-#            pyautogui.click()
+            pyautogui.click()
             time.sleep(5)
 
-        elif find_ellement(Ui_Ellements[35], 1): # Ui_Ellements 24: 'surprise'
+        elif find_ellement(Ui_Ellements[35], 1): # Ui_Ellements 35: 'surprise'
             time.sleep(1)
-            find_ellement(Ui_Ellements[35], 14) # Ui_Ellements 24: 'surprise'
+            find_ellement(Ui_Ellements[35], 14) # Ui_Ellements 35: 'surprise'
 
-        elif find_ellement(Ui_Ellements[4], 1): # Ui_Ellements 24: 'spirithealer'
+        elif find_ellement(Ui_Ellements[4], 1): # Ui_Ellements 4: 'spirithealer'
             time.sleep(1)
-            find_ellement(Ui_Ellements[4], 14) # Ui_Ellements 24: 'spirithealer'
-            time.sleep(7)
+            find_ellement(Ui_Ellements[4], 14) # Ui_Ellements 4: 'spirithealer'
+            time.sleep(10)
+
+        #elif find_ellement(Ui_Ellements[8], 1): # Ui_Ellements 8: 'encounter_battle'
+        #    time.sleep(1)
+        #    find_ellement(Ui_Ellements[8], 14) # Ui_Ellements 8: 'encounter_battle'
+        #    time.sleep(1)
 
         else :
             x, y = pyautogui.position()
@@ -423,7 +428,25 @@ def abilities(localhero):
     #pyautogui.moveTo(1065 + 135//2, 450 + 150//2, setings[7], mouse_random_movement())
 
     obj='heroes/'+localhero
-    if localhero == 'Cariel Roame':
+    if localhero == 'Blademaster Samuro':
+        #if raund % 3 == 0:
+        #    #attack 3
+        #    partscreen(135, 150, 450, 1065)
+        #    if find_ellement(chekers[5], 12) == (0,0) : # chekers[5] : hourglass
+        #        pyautogui.moveTo(1065 + 135//2, 450 + 150//2, setings[7], mouse_random_movement())
+        #        pyautogui.click()
+        #        return False
+        if raund % 2 == 0:
+            partscreen(135, 150, 450, 885)
+            if find_ellement(chekers[5], 12) == (0,0) : # chekers[5] : hourglass
+                pyautogui.moveTo(885 + 135//2, 450 + 150//2, setings[7], mouse_random_movement())
+                pyautogui.click()
+                return True
+        pyautogui.moveTo(int(windowMP()[0] + windowMP()[2] / 2.5), int(windowMP()[1] + windowMP()[2] / 4), setings[7], mouse_random_movement())
+        pyautogui.click()
+        return True
+
+    elif localhero == 'Cariel Roame':
         if raund % 2 == 0:
             if find_ellement_trans(obj + '/abilics/2.png', 14):
                 return False
@@ -490,6 +513,43 @@ def abilities(localhero):
         if raund % 3 == 2:
             if find_ellement_trans(obj + '/abilics/3.png', 14):
                 return False
+        pyautogui.moveTo(int(windowMP()[0] + windowMP()[2] / 2.5), int(windowMP()[1] + windowMP()[2] / 4), setings[7], mouse_random_movement())
+        pyautogui.click()
+        return True
+
+    elif localhero == 'Morgl the Oracle':
+        #if raund % 3 == 0:
+        #    #attack 3
+        #    partscreen(135, 150, 450, 1065)
+        #    if find_ellement(chekers[5], 12) == (0,0) : # chekers[5] : hourglass
+        #        pyautogui.moveTo(1065 + 135//2, 450 + 150//2, setings[7], mouse_random_movement())
+        #        pyautogui.click()
+        #        return True
+        if raund % 2 == 0:
+            #attack 2
+            partscreen(135, 150, 450, 885)
+            if find_ellement(chekers[5], 12) == (0,0) : # chekers[5] : hourglass
+                pyautogui.moveTo(885 + 135//2, 450 + 150//2, setings[7], mouse_random_movement())
+                pyautogui.click()
+                return False
+        pyautogui.moveTo(int(windowMP()[0] + windowMP()[2] / 2.5), int(windowMP()[1] + windowMP()[2] / 4), setings[7], mouse_random_movement())
+        pyautogui.click()
+        return True
+
+    elif localhero == 'Mutanus':
+        if raund % 3 == 0:
+            #attack 3
+            partscreen(135, 150, 450, 1065)
+            if find_ellement(chekers[5], 12) == (0,0) : # chekers[5] : hourglass
+                pyautogui.moveTo(1065 + 135//2, 450 + 150//2, setings[7], mouse_random_movement())
+                pyautogui.click()
+                return False
+        #if raund % 3 == 2:
+        #    partscreen(135, 150, 450, 885)
+        #    if find_ellement(chekers[5], 12) == (0,0) : # chekers[5] : hourglass
+        #        pyautogui.moveTo(885 + 135//2, 450 + 150//2, setings[7], mouse_random_movement())
+        #        pyautogui.click()
+        #        return False
         pyautogui.moveTo(int(windowMP()[0] + windowMP()[2] / 2.5), int(windowMP()[1] + windowMP()[2] / 4), setings[7], mouse_random_movement())
         pyautogui.click()
         return True
@@ -578,15 +638,32 @@ def abilities(localhero):
         return False
 
     elif localhero == 'Lady Anacondra' :
-        if raund % 2 == 1:
-            if find_ellement_trans(obj + '/abilics/1.png', 14):
-                return True
         if raund % 2 == 0:
-            if find_ellement_trans(obj + '/abilics/3.png', 14):
+            #attack 3
+            partscreen(135, 150, 450, 1065)
+            if find_ellement(chekers[5], 12) == (0,0) : # chekers[5] : hourglass
+                pyautogui.moveTo(1065 + 135//2, 450 + 150//2, setings[7], mouse_random_movement())
+                pyautogui.click()
                 return False
+        #if raund % 2 == 0:
+        #    partscreen(135, 150, 450, 885)
+        #    if find_ellement(chekers[5], 12) == (0,0) : # chekers[5] : hourglass
+        #        pyautogui.moveTo(885 + 135//2, 450 + 150//2, setings[7], mouse_random_movement())
+        #        pyautogui.click()
+        #        return True
         pyautogui.moveTo(int(windowMP()[0] + windowMP()[2] / 2.5), int(windowMP()[1] + windowMP()[2] / 4), setings[7], mouse_random_movement())
         pyautogui.click()
         return True
+
+#        if raund % 2 == 1:
+#            if find_ellement_trans(obj + '/abilics/1.png', 14):
+#                return True
+#        if raund % 2 == 0:
+#            if find_ellement_trans(obj + '/abilics/3.png', 14):
+#                return False
+#        pyautogui.moveTo(int(windowMP()[0] + windowMP()[2] / 2.5), int(windowMP()[1] + windowMP()[2] / 4), setings[7], mouse_random_movement())
+#        pyautogui.click()
+#        return True
 
     elif localhero == 'War Master Voone':
         if raund % 3 == 0:
@@ -647,15 +724,25 @@ def abilities(localhero):
         return True
 
     elif localhero == 'Tamsin Roame':
-        if raund % 3 == 0:
-            if find_ellement(obj + '/abilics/3.png', 14):
-                return False
-        if raund % 3 == 2:
-            if find_ellement(obj + '/abilics/2.png', 14):
+        if raund % 2 == 0:
+            partscreen(135, 150, 450, 885)
+            if find_ellement(chekers[5], 12) == (0,0) : # chekers[5] : hourglass
+                pyautogui.moveTo(885 + 135//2, 450 + 150//2, setings[7], mouse_random_movement())
+                pyautogui.click()
                 return False
         pyautogui.moveTo(int(windowMP()[0] + windowMP()[2] / 2.5), int(windowMP()[1] + windowMP()[2] / 4), setings[7], mouse_random_movement())
         pyautogui.click()
         return True
+
+#        if raund % 3 == 0:
+#            if find_ellement(obj + '/abilics/3.png', 14):
+#                return False
+#        if raund % 3 == 2:
+#            if find_ellement(obj + '/abilics/2.png', 14):
+#                return False
+#        pyautogui.moveTo(int(windowMP()[0] + windowMP()[2] / 2.5), int(windowMP()[1] + windowMP()[2] / 4), setings[7], mouse_random_movement())
+#        pyautogui.click()
+#        return True
 
     elif localhero == "Vol'jin":
         if raund == 1:
@@ -1076,30 +1163,15 @@ def travelToLevel(page="next"):
                 if retour == False and find_ellement(buttons[26], 14) : # buttons 26: 'fir' (= 'left arrow' (previous page))
                         time.sleep(1)
                         retour = travelToLevel("previous")
+                elif retour == False :
+                    find_ellement(buttons[0], 14) # buttons 0: 'back'
             elif page == "previous" :
                 if find_ellement(buttons[26], 14) : # buttons 26: 'fir' (= 'left arrow' (previous page))
                     time.sleep(1)
                     retour = travelToLevel("previous")
+                else :
+                    find_ellement(buttons[0], 14) # buttons 0: 'back'
     return retour
-
-#    debug("travelToLevel : entering")
-#    # Look for the level/bounty even if it's on another page
-#    while find_ellement(Ui_Ellements[20], 1): # Ui_Ellements 20: 'bounties'
-#        #threshold = tempthreshold
-#        #time.sleep(2)
-#        if find_ellement("levels/" + setings[2] + "_" + setings[3] + "_" + setings[1] + ".png", 14, 0.6): # setings 1: 'level(ex:20)'
-#            waitForItOrPass(buttons[11], 6) # buttons 11: 'start'
-#            if find_ellement(buttons[11], 14) : # buttons 11: 'start'
-#                break
-#        else :
-#            if find_ellement(buttons[9], 14): # buttons 9: 'sec' (= 'right arrow' (next page))
-#                time.sleep(1)
-#                #pass
-#            else:
-#                find_ellement(buttons[26], 14) # buttons 26: 'fir' (= 'left arrow' (previous page))
-#                time.sleep(1)
-#    debug("travelToLevel ended")
-#    return
 
 def selectGroup():
     """ Look for the mercenaries group 'Botwork' and select it (click on 'LockIn' if necessary)
