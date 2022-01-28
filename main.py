@@ -53,7 +53,7 @@ mercslist={}
 # Ui-ellements
 Ui_Ellements = ['battle', 'blue', 'green', 'group', 'spirithealer', 'one', 'page_1', 'Alterac', 'encounter_battle',
                 'red', 'prev', 'sob', 'noclass', 'bat1', 'bat2', 'bat3', 'bat4', 'bat5', 'take_grey',
-                'sombody', 'bounties', 'Blackrock', 'Barrens', 'startbat', 'pick', 'Winterspring',
+                'visitor', 'bounties', 'Blackrock', 'Barrens', 'startbat', 'pick', 'Winterspring',
                 'Felwood', 'normal', 'heroic','replace_grey', 'travelpoint','presents_thing', 'free_battle',
                 'choose_team', 'view_party', 'surprise']  # noclass 12, bat5-17
 # buttons
@@ -331,7 +331,7 @@ def nextlvl():
         elif find_ellement(buttons[25], 14):	# buttons 25: 'visit'
             y = windowMP()[1] + windowMP()[3] / 2.2
             time.sleep(7)
-            while find_ellement(Ui_Ellements[19], 1): # Ui_Ellements 19: 'sombody'
+            while find_ellement(Ui_Ellements[19], 1): # Ui_Ellements 19: 'visitor'
                 temp = random.randint(0, 2)
                 if temp == 0:
                     x = windowMP()[2] // 3
