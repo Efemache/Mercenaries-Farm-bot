@@ -51,7 +51,7 @@ global mercslist
 mercslist={}
 
 # Ui-ellements
-Ui_Ellements = ['battle', 'blue', 'green', 'group', 'spirithealer', 'one', 'page_1', 'page_2', 'encounter_battle',
+Ui_Ellements = ['battle', 'blue', 'green', 'group', 'spirithealer', 'one', 'page_1', 'Alterac', 'encounter_battle',
                 'red', 'prev', 'sob', 'noclass', 'bat1', 'bat2', 'bat3', 'bat4', 'bat5', 'take_grey',
                 'sombody', 'bounties', 'Blackrock', 'Barrens', 'startbat', 'pick', 'Winterspring',
                 'Felwood', 'normal', 'heroic','replace_grey', 'travelpoint','presents_thing', 'free_battle',
@@ -74,9 +74,9 @@ def debug(*message):
         print("[DEBUG] ", message)
 
 
-""" window multi-platorms (Windows & Linux support)
-"""
 def windowMP() :
+    """ window multi-platorms (Windows & Linux support)
+    """
     if(myOS=='windows'):
         retour=win.rect
     elif(myOS=='linux'):
@@ -86,23 +86,26 @@ def windowMP() :
     return retour
 
 
-""" define function to use serveral mouse movements on Windows & Linux
-"""
 def mouse_random_movement():
+    """ define function to use serveral mouse movements on Windows & Linux
+    """
     return random.choices([pyautogui.easeInQuad, pyautogui.easeOutQuad, pyautogui.easeInOutQuad])[0]
 
 def readjson(jfile) :
+    """ ... just for reading json file and return data :)
+    """
     descriptor = open(jfile)
     data = json.load(descriptor)
     descriptor.close()
     return data
 
 
-""" Read settings.ini and put it in a table :
-        Setings - 0: MonitorResolution (1920x1080), 1: level (20), 2: location (The Barrens), 3: mode (Heroic), 4: GroupCreate (True), 5: heroSet (True),
-        6: monitor (1), 7: MouseSpeed (0.5), 8: WaitForEXP (3), 9: Zonelog (GameDir/Logs/Zone.log)
-"""
 def configread():
+    """ Read settings.ini and put it in a table :
+            Setings - 0: MonitorResolution (1920x1080), 1: level (20), 2: location (The Barrens), 3: mode (Heroic), 4: GroupCreate (True), 5: heroSet (True),
+            6: monitor (1), 7: MouseSpeed (0.5), 8: WaitForEXP (3), 9: Zonelog (GameDir/Logs/Zone.log)
+        Note :Should be replaced with a simple dictionnary to easily find settings (actually, you need to find/remember each settings in tab)
+    """
     global jthreshold
     global mercslist
 
@@ -127,8 +130,8 @@ def configread():
         # yeah it's bad coding but don't have time to change everything else
         exit(2)
         
-    jthreshold = readjson("js/thresholds.json")
-    mercslist = readjson("js/mercs.json")
+    jthreshold = readjson("conf/thresholds.json")
+    mercslist = readjson("conf/mercs.json")
 
     print(setings)
 
@@ -148,9 +151,10 @@ def parslist():
     filepp(chekers, "chekers")
 
 
-""" take screeenshot to find some part of the image
-"""
 def screen():
+    """ take screeenshot to find some part of the image
+        Note : should be replaced by "partscreen" function to check in Hearthstone Window but need to change some code (check coordinate)
+    """
     global screenImg
     sct = mss.mss()
     if debug_mode :
@@ -159,9 +163,9 @@ def screen():
     screenImg = np.array(sct.grab(sct.monitors[setings[6]]))
 
 
-""" like "screen()" function but only for a part of the screen
-"""
 def partscreen(x, y, top, left):
+    """ like "screen()" function but only for a part of the screen
+    """
     global partImg
     print("entered screenpart")
     import mss.tools
@@ -175,9 +179,9 @@ def partscreen(x, y, top, left):
             mss.tools.to_png(sct_img.rgb, sct_img.size, output='files/' + setings[0] + '/part.png')
         partImg = np.array(sct_img)
 
-""" look for Hearthstone window for Windows or Linux
-"""
 def findgame():
+    """ look for Hearthstone window for Windows or Linux
+    """
     global win
     retour = False
 
@@ -204,15 +208,15 @@ def findgame():
     return retour
 
 
-""" Used to move the mouse to an enmey (from a selected merc's ability)
-"""
 def move(index):
+    """ Used to move the mouse to an enmey (from a selected merc's ability)
+    """
     cardWidth=windowMP()[2] // 16
     cardHeight=windowMP()[3] // 6
     if index != (0, 0):
         time.sleep(0.1)
-        pyautogui.moveTo(index[0] + (cardWidth//3), index[1] - (cardHeight//3), 0.6, mouse_random_movement())
-        debug("Move index (index, x, y) : ",index, index[0] + (cardWidth//3), index[1] - (cardWidth//3))
+        pyautogui.moveTo(index[0] + (cardWidth//3), index[1] - (cardHeight//2), 0.6, mouse_random_movement())
+        debug("Move index (index, x, y) : ",index, index[0] + (cardWidth//2), index[1] - (cardWidth//3))
         time.sleep(0.1)
         pyautogui.click()
         return True
@@ -221,6 +225,8 @@ def move(index):
 
 
 def rand(enemyred, enemygreen, enemyblue, enemynoclass):
+    """ look for a random enemy (used when blue mercs can't find red enemy, green can't find blue or red can't find green
+    """
     debug("rand : attack random enemy")
 #    count = 0
     enemies = [enemyred, enemygreen, enemyblue, enemynoclass]
@@ -298,6 +304,7 @@ def collect():
 
     # quit the bounty
     while not find_ellement(buttons[23], 14):	# buttons 23: 'finishok'
+        time.sleep(1)
         pyautogui.click()
         time.sleep(0.5)
 
@@ -323,7 +330,7 @@ def nextlvl():
 
         elif find_ellement(buttons[25], 14):	# buttons 25: 'visit'
             y = windowMP()[1] + windowMP()[3] / 2.2
-            time.sleep(1.5)
+            time.sleep(7)
             while find_ellement(Ui_Ellements[19], 1): # Ui_Ellements 19: 'sombody'
                 temp = random.randint(0, 2)
                 if temp == 0:
@@ -359,7 +366,6 @@ def nextlvl():
         elif find_ellement(Ui_Ellements[4], 1): # Ui_Ellements 4: 'spirithealer'
             time.sleep(1)
             find_ellement(Ui_Ellements[4], 14) # Ui_Ellements 4: 'spirithealer'
-            time.sleep(10)
 
         #elif find_ellement(Ui_Ellements[8], 1): # Ui_Ellements 8: 'encounter_battle'
         #    time.sleep(1)
@@ -379,12 +385,15 @@ def nextlvl():
             debug("move mouse to (x, y) : ", x, y)
             pyautogui.moveTo(x, y, setings[7])
             time.sleep(0.1)
-            pyautogui.click()
+            pyautogui.doubleClick()
 
 #    threshold = tempthreshold
 
 
 def chooseTreasure():
+    """ used to choose a Treasure after a battle/fight
+        Note: should be updated to select "good" (passive ?) treasure instead of a random one
+    """
     y = windowMP()[3] / 2
     temp = random.randint(0, 2)
     if temp == 0:
@@ -410,14 +419,75 @@ def chooseTreasure():
 
 
 
-""" Select an ability for a mercenary. Depend on what is available and wich Round (battle)
-    Click only on the ability (doesnt move to an enemy)
-"""
 def abilities(localhero):
+    """ Select an ability for a mercenary. Depend on what is available and wich Round (battle)
+        Click only on the ability (doesnt move to an enemy)
+    """
+    #abilitiesWidth=135 #abilitiesHigth=150
+    abilitiesWidth=windowMP()[2]//14.2
+    abilitiesHeigth=windowMP()[3]//7.2
+    # abilitiesPosition=[(450,600), (715,850),(885,1020), (1065,1200), (1230, 1365)]
+    # abilitiesPositionY[(y1, y2)]
+    # abilitiesPositionX[(a1x1,a1x2),(a2x1,a2x2),(a3x1,a3x2),(a4x1,a4x2)]
+    abilitiesPositionY=windowMP()[3]//2.4
+    #abilitiesPositionY=[(windowMP()[3]//2.4,windowMP()[3]//1.8)]
+    abilitiesPositionX=[windowMP()[2]//2.68, windowMP()[2]//2.17, windowMP()[2]//1.8, windowMP()[2]//1.56]
+    #abilitiesPositionX=[(windowMP()[3]//2.4,windowMP()[3]//1.8), (windowMP()[2]//2.68,windowMP()[2]//2.26),(windowMP()[2]//2.17,windowMP()[2]//1.88), (windowMP()[2]//1.8,windowMP()[2]//1.6), (windowMP()[2]//1.56, windowMP()[2]//1.4)]
+    mercsAbilities=readjson('conf/attacks.json')
+    retour = False
+    if localhero in mercsAbilities :
+        config = configparser.ConfigParser()
+        config.read("js/combo.ini")
+        if config.has_option("Mercenaries",localhero) :
+            print(f"look in combo {localhero}")
+            round_abilities = config["Mercenaries"][localhero].split(',')
+            print(f"round abilities : {round_abilities}")
+            ability = raund % len(round_abilities)
+            if ability == 0 :
+                ability = len(round_abilities)
+            ability = int(round_abilities[ability - 1])
+        else : 
+            ability = 1
+        print(f"ability selected : {ability}")
+        if ability == 1 :
+            #attack1
+            print(f"abilities Y : {abilitiesPositionY} | abilities X : {abilitiesPositionX}")
+            partscreen(int(abilitiesWidth), int(abilitiesHeigth), int(windowMP()[1]+abilitiesPositionY), int(windowMP()[0]+abilitiesPositionX[0]))
+            if find_ellement(chekers[5], 12) == (0,0) : # chekers[5] : hourglass
+                pyautogui.moveTo(int(windowMP()[0] + abilitiesPositionX[0] + abilitiesWidth//2), int(windowMP()[1] + abilitiesPositionY + abilitiesHeigth//2), setings[7], mouse_random_movement())
+                pyautogui.click()
+                if mercsAbilities[localhero]["1"] == True or mercsAbilities[localhero]["1"] == False :
+                    retour = mercsAbilities[localhero]["1"]
+        elif ability == 2 :
+            #attack2
+            print(f"abilities Y : {abilitiesPositionY} | abilities X : {abilitiesPositionX}")
+            partscreen(int(abilitiesWidth), int(abilitiesHeigth), int(windowMP()[1]+abilitiesPositionY), int(windowMP()[0]+abilitiesPositionX[1]))
+            if find_ellement(chekers[5], 12) == (0,0) : # chekers[5] : hourglass
+                pyautogui.moveTo(int(windowMP()[0] + abilitiesPositionX[1] + abilitiesWidth//2), int(windowMP()[1] + abilitiesPositionY + abilitiesHeigth//2), setings[7], mouse_random_movement())
+                pyautogui.click()
+                if mercsAbilities[localhero]["2"] == True or mercsAbilities[localhero]["2"] == False :
+                    retour = mercsAbilities[localhero]["2"]
+        elif ability == 3 :
+            #attack3
+            print(f"abilities Y : {abilitiesPositionY} | abilities X : {abilitiesPositionX}")
+            partscreen(int(abilitiesWidth), int(abilitiesHeigth), int(windowMP()[1]+abilitiesPositionY), int(windowMP()[0]+abilitiesPositionX[2]))
+            if find_ellement(chekers[5], 12) == (0,0) : # chekers[5] : hourglass
+                pyautogui.moveTo(int(windowMP()[0] + abilitiesPositionX[2] + abilitiesWidth//2), int(windowMP()[1] + abilitiesPositionY + abilitiesHeigth//2), setings[7], mouse_random_movement())
+                pyautogui.click()
+                if mercsAbilities[localhero]["3"] == True or mercsAbilities[localhero]["3"] == False :
+                    retour = mercsAbilities[localhero]["3"]
+        else :
+            print("No ability selected for {localhero}")
+        
+    return retour
+    
+def Rabilities(localhero):
+    """ Note : not used. It's the previous "abilities" function (renamed as backup and to be replaced) which is complete garbage but was needed at first so the bot could be "finished" and "working" quickly without a lot of AI / Code
+    """
     #abilitiesWidth=135
     #abilitiesHigth=150
-    abilitiesWidth=windowMP()[0]//14.2
-    abilitiesHeigth=windowMP()[1]//7.2
+    abilitiesWidth=windowMP()[2]//14.2
+    abilitiesHeigth=windowMP()[3]//7.2
     #parts(135, 150, 450, 1065)
     #.moveTo(1065 + 135//2, 450 + 150//2, setings[7], mouse_random_movement())
     #parts(135, 150, 450, 885)
@@ -428,7 +498,15 @@ def abilities(localhero):
     #pyautogui.moveTo(1065 + 135//2, 450 + 150//2, setings[7], mouse_random_movement())
 
     obj='heroes/'+localhero
-    if localhero == 'Blademaster Samuro':
+
+    if localhero == 'Antonidas':
+        if find_ellement_trans(obj + '/abilics/2.png', 14):
+            return False
+        pyautogui.moveTo(int(windowMP()[0] + windowMP()[2] / 2.5), int(windowMP()[1] + windowMP()[2] / 4), setings[7], mouse_random_movement())
+        pyautogui.click()
+        return True
+
+    elif localhero == 'Blademaster Samuro':
         #if raund % 3 == 0:
         #    #attack 3
         #    partscreen(135, 150, 450, 1065)
@@ -462,9 +540,14 @@ def abilities(localhero):
         pyautogui.click()
         return True
 
-    elif localhero == 'Antonidas':
-        if find_ellement_trans(obj + '/abilics/2.png', 14):
-            return False
+    elif localhero == 'Cornelius Roame':
+        if raund % 2 == 0:
+            #attack 2
+            partscreen(135, 150, 450, 885)
+            if find_ellement(chekers[5], 12) == (0,0) : # chekers[5] : hourglass
+                pyautogui.moveTo(885 + 135//2, 450 + 150//2, setings[7], mouse_random_movement())
+                pyautogui.click()
+                return False
         pyautogui.moveTo(int(windowMP()[0] + windowMP()[2] / 2.5), int(windowMP()[1] + windowMP()[2] / 4), setings[7], mouse_random_movement())
         pyautogui.click()
         return True
@@ -495,13 +578,13 @@ def abilities(localhero):
         pyautogui.click()
         return True
 
-    elif localhero == 'Malfurion Stormrage':
-        if raund % 2 == 0:
-            if find_ellement_trans(obj + '/abilics/2.png', 14):
-                return True
-        pyautogui.moveTo(int(windowMP()[0] + windowMP()[2] / 2.5), int(windowMP()[1] + windowMP()[2] / 4), setings[7], mouse_random_movement())
-        pyautogui.click()
-        return True
+    #elif localhero == 'Malfurion Stormrage':
+    #    if raund % 2 == 0:
+    #        if find_ellement_trans(obj + '/abilics/2.png', 14):
+    #            return True
+    #    pyautogui.moveTo(int(windowMP()[0] + windowMP()[2] / 2.5), int(windowMP()[1] + windowMP()[2] / 4), setings[7], mouse_random_movement())
+    #    pyautogui.click()
+    #    return True
 
     elif localhero == 'Mannoroth':
         if raund % 3 == 1:
@@ -537,19 +620,19 @@ def abilities(localhero):
         return True
 
     elif localhero == 'Mutanus':
-        if raund % 3 == 0:
-            #attack 3
-            partscreen(135, 150, 450, 1065)
-            if find_ellement(chekers[5], 12) == (0,0) : # chekers[5] : hourglass
-                pyautogui.moveTo(1065 + 135//2, 450 + 150//2, setings[7], mouse_random_movement())
-                pyautogui.click()
-                return False
-        #if raund % 3 == 2:
-        #    partscreen(135, 150, 450, 885)
+        #if raund % 3 == 0:
+        #    #attack 3
+        #    partscreen(135, 150, 450, 1065)
         #    if find_ellement(chekers[5], 12) == (0,0) : # chekers[5] : hourglass
-        #        pyautogui.moveTo(885 + 135//2, 450 + 150//2, setings[7], mouse_random_movement())
+        #        pyautogui.moveTo(1065 + 135//2, 450 + 150//2, setings[7], mouse_random_movement())
         #        pyautogui.click()
         #        return False
+        if raund % 2 == 0:
+            partscreen(135, 150, 450, 885)
+            if find_ellement(chekers[5], 12) == (0,0) : # chekers[5] : hourglass
+                pyautogui.moveTo(885 + 135//2, 450 + 150//2, setings[7], mouse_random_movement())
+                pyautogui.click()
+                return False
         pyautogui.moveTo(int(windowMP()[0] + windowMP()[2] / 2.5), int(windowMP()[1] + windowMP()[2] / 4), setings[7], mouse_random_movement())
         pyautogui.click()
         return True
@@ -638,13 +721,13 @@ def abilities(localhero):
         return False
 
     elif localhero == 'Lady Anacondra' :
-        if raund % 2 == 0:
-            #attack 3
-            partscreen(135, 150, 450, 1065)
-            if find_ellement(chekers[5], 12) == (0,0) : # chekers[5] : hourglass
-                pyautogui.moveTo(1065 + 135//2, 450 + 150//2, setings[7], mouse_random_movement())
-                pyautogui.click()
-                return False
+        #if raund % 2 == 0:
+        #    #attack 3
+        #    partscreen(135, 150, 450, 1065)
+        #    if find_ellement(chekers[5], 12) == (0,0) : # chekers[5] : hourglass
+        #        pyautogui.moveTo(1065 + 135//2, 450 + 150//2, setings[7], mouse_random_movement())
+        #        pyautogui.click()
+        #        return False
         #if raund % 2 == 0:
         #    partscreen(135, 150, 450, 885)
         #    if find_ellement(chekers[5], 12) == (0,0) : # chekers[5] : hourglass
@@ -716,9 +799,29 @@ def abilities(localhero):
         if raund % 3 == 0 :
             if find_ellement(obj + '/abilics/3.png', 14):
                 return False
-#        if raund > 1:
-#            if find_ellement(obj + '/abilics/2.png', 14):
-#                return True
+        if raund % 3 == 2 :
+            partscreen(135, 150, 450, 885)
+            if find_ellement(chekers[5], 12) == (0,0) : # chekers[5] : hourglass
+                pyautogui.moveTo(885 + 135//2, 450 + 150//2, setings[7], mouse_random_movement())
+                pyautogui.click()
+                time.sleep(0.5)
+                pyautogui.moveTo(windowMP()[0]+windowMP()[2]/2, windowMP()[1]+windowMP()[3]*0.65, setings[7], mouse_random_movement())
+                pyautogui.click()
+                return False
+        pyautogui.moveTo(int(windowMP()[0] + windowMP()[2] / 2.5), int(windowMP()[1] + windowMP()[2] / 4), setings[7], mouse_random_movement())
+        pyautogui.click()
+        return True
+
+    elif localhero == 'Malfurion Stormrage':
+        if raund % 2 == 0:
+            #attack 3
+            partscreen(135, 150, 450, 1065)
+            if find_ellement(chekers[5], 12) == (0,0) : # chekers[5] : hourglass
+                pyautogui.moveTo(1065 + 135//2, 450 + 150//2, setings[7], mouse_random_movement())
+                pyautogui.click()
+                time.sleep(0.5)
+                pyautogui.click()
+                return False
         pyautogui.moveTo(int(windowMP()[0] + windowMP()[2] / 2.5), int(windowMP()[1] + windowMP()[2] / 4), setings[7], mouse_random_movement())
         pyautogui.click()
         return True
@@ -855,6 +958,7 @@ def battle():
     global zoneLog
     retour = True
 
+    # init the reading of Hearthstone filelog to detect your board / mercenaries
     zoneLog = LogHSMercs(setings[9]) # setings 9 : 'ZoneLog' (GameDir/Logs/Zone.log)
     zoneLog.start()
 
@@ -961,12 +1065,12 @@ def battle():
     return retour
 
 
-""" Select the cards to put on battlefield
-    and then, start the 'battle' function
-    Update : actually, the bot doesn't choose it anymore since we stopped to use image with mercenaries text (so we can easily support multi-language)
-            this feature will come back later using HS logs 
-"""
 def selectCardsInHand():
+    """ Select the cards to put on battlefield
+        and then, start the 'battle' function
+        Update : actually, the bot doesn't choose it anymore since we stopped to use image with mercenaries text (so we can easily support multi-language)
+                this feature will come back later using HS logs 
+    """
 
     debug("[ SETH - START]")
     retour = True
@@ -1061,6 +1165,12 @@ def travelpointSelection():
             pyautogui.moveTo(windowMP()[0] + windowMP()[2] / 3, windowMP()[1] + windowMP()[3] / 2, setings[7], mouse_random_movement())
             time.sleep(0.5)
             find_ellement(Ui_Ellements[21], 14)	# Ui_Ellements 25: 'Blackrock'
+
+        elif setings[2] == "Alterac":        # setings 2: 'location(ex:TheBarrens)'
+            pyautogui.scroll(-15)
+            pyautogui.moveTo(windowMP()[0] + windowMP()[2] / 3, windowMP()[1] + windowMP()[3] / 2, setings[7], mouse_random_movement())
+            time.sleep(0.5)
+            find_ellement(Ui_Ellements[7], 14)	# Ui_Ellements 25: 'Alterac'
 
         else :
             print("[INFO] Travel Point unknown. The bot won't change the one already selected.")
@@ -1267,9 +1377,7 @@ def where():
 def find_ellement_trans(file, index, threshold="-"):
     """ Find an object ('file') on the screen (UI, Button, ...) and do some actions ('index') 
         support PNG with transparency / alpha channel
-        - the old function 'find_ellement' should be deleted
-        - need to migrate to this one (find_ellement_trans) and find the right threshold for each image
-        - maybe the old find_ellement will be renamed "find_ellement_grey" and will be used for images which could be with different color (silver or gold like heroes cards)
+        Note : was used when we needed transparency for Mercenaries image but it's not used anymore so we can delete this function after "abilities" function is completly reworked
     """
     debug("DEBUG : find_ellement_trans START")
     global screenImg
@@ -1292,6 +1400,8 @@ def find_ellement_trans(file, index, threshold="-"):
         img = cv2.cvtColor(partImg, cv2.IMREAD_COLOR)
     else:
         screen()
+        #partscreen(windowMP()[2],windowMP()[3],windowMP()[1],windowMP()[0])
+        #screenImg = partImg
         img = cv2.cvtColor(screenImg, cv2.IMREAD_COLOR)
     
     template_alpha = cv2.imread('files/' + setings[0] + '/' + file, cv2.IMREAD_UNCHANGED)
@@ -1366,6 +1476,8 @@ def find_ellement(file, index, threshold="-"):
         img = partImg
     else:
         screen()
+        #partscreen(windowMP()[2],windowMP()[3],windowMP()[1],windowMP()[0])
+        #screenImg = partImg
         img = screenImg
 
     img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
