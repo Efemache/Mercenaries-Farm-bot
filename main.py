@@ -167,7 +167,7 @@ def partscreen(x, y, top, left):
     """ like "screen()" function but only for a part of the screen
     """
     global partImg
-    print("entered screenpart")
+    debug("entered screenpart")
     import mss.tools
     with mss.mss() as sct:
         monitor = {"top": top, "left": left, "width": x, "height": y}
@@ -235,6 +235,11 @@ def rand(enemyred, enemygreen, enemyblue, enemynoclass):
         toAttack=enemies.pop(random.randint(0,len(enemies)-1))
         if move(toAttack) :
             break
+
+    # right click added to avoid a problem when the bot detects no enemy (it can't select another ability and we can hope an AoE will selected at least)
+    # Update : add code to click in the middle of the enemy board when no enemy is detected
+    pyautogui.rightClick()
+    
 #    while True:
 #        a = random.randint(0, 2)
 #        if a == 0:
@@ -347,7 +352,7 @@ def nextlvl():
                 pyautogui.click()
                 time.sleep(0.2)
                 find_ellement(buttons[18], 14) # buttons 18: 'choose_task'
-                time.sleep(5)
+                time.sleep(8)
 
         elif find_ellement(Ui_Ellements[24], 14): # Ui_Ellements 24: 'pick'
             time.sleep(1)
@@ -423,35 +428,34 @@ def abilities(localhero):
     """ Select an ability for a mercenary. Depend on what is available and wich Round (battle)
         Click only on the ability (doesnt move to an enemy)
     """
-    #abilitiesWidth=135 #abilitiesHigth=150
     abilitiesWidth=windowMP()[2]//14.2
     abilitiesHeigth=windowMP()[3]//7.2
-    # abilitiesPosition=[(450,600), (715,850),(885,1020), (1065,1200), (1230, 1365)]
-    # abilitiesPositionY[(y1, y2)]
-    # abilitiesPositionX[(a1x1,a1x2),(a2x1,a2x2),(a3x1,a3x2),(a4x1,a4x2)]
+    
+    # abilitiesPositionY : Y coordinate to find "abilities" line during battle
     abilitiesPositionY=windowMP()[3]//2.4
-    #abilitiesPositionY=[(windowMP()[3]//2.4,windowMP()[3]//1.8)]
+    # abilitiesPositionX : X coordinates to find the 3 "abilities" during battle (4 because sometimes, Treasure give you a new abilities but the bot doesn't support it right now)
     abilitiesPositionX=[windowMP()[2]//2.68, windowMP()[2]//2.17, windowMP()[2]//1.8, windowMP()[2]//1.56]
-    #abilitiesPositionX=[(windowMP()[3]//2.4,windowMP()[3]//1.8), (windowMP()[2]//2.68,windowMP()[2]//2.26),(windowMP()[2]//2.17,windowMP()[2]//1.88), (windowMP()[2]//1.8,windowMP()[2]//1.6), (windowMP()[2]//1.56, windowMP()[2]//1.4)]
     mercsAbilities=readjson('conf/attacks.json')
     retour = False
     if localhero in mercsAbilities :
         config = configparser.ConfigParser()
-        config.read("js/combo.ini")
+        config.read("conf/combo.ini")
         if config.has_option("Mercenaries",localhero) :
-            print(f"look in combo {localhero}")
             round_abilities = config["Mercenaries"][localhero].split(',')
-            print(f"round abilities : {round_abilities}")
-            ability = raund % len(round_abilities)
-            if ability == 0 :
-                ability = len(round_abilities)
-            ability = int(round_abilities[ability - 1])
+            abilitiesNumber = len(round_abilities)
+            if abilitiesNumber != 0 :
+                ability = raund % abilitiesNumber
+                if ability == 0 :
+                    ability = len(round_abilities)
+                ability = int(round_abilities[ability - 1])
+            else :
+                ability = 1
         else : 
             ability = 1
         print(f"ability selected : {ability}")
         if ability == 1 :
             #attack1
-            print(f"abilities Y : {abilitiesPositionY} | abilities X : {abilitiesPositionX}")
+            debug(f"abilities Y : {abilitiesPositionY} | abilities X : {abilitiesPositionX}")
             partscreen(int(abilitiesWidth), int(abilitiesHeigth), int(windowMP()[1]+abilitiesPositionY), int(windowMP()[0]+abilitiesPositionX[0]))
             if find_ellement(chekers[5], 12) == (0,0) : # chekers[5] : hourglass
                 pyautogui.moveTo(int(windowMP()[0] + abilitiesPositionX[0] + abilitiesWidth//2), int(windowMP()[1] + abilitiesPositionY + abilitiesHeigth//2), setings[7], mouse_random_movement())
@@ -477,415 +481,10 @@ def abilities(localhero):
                 if mercsAbilities[localhero]["3"] == True or mercsAbilities[localhero]["3"] == False :
                     retour = mercsAbilities[localhero]["3"]
         else :
-            print("No ability selected for {localhero}")
+            print(f"No ability selected for {localhero}")
         
     return retour
     
-def Rabilities(localhero):
-    """ Note : not used. It's the previous "abilities" function (renamed as backup and to be replaced) which is complete garbage but was needed at first so the bot could be "finished" and "working" quickly without a lot of AI / Code
-    """
-    #abilitiesWidth=135
-    #abilitiesHigth=150
-    abilitiesWidth=windowMP()[2]//14.2
-    abilitiesHeigth=windowMP()[3]//7.2
-    #parts(135, 150, 450, 1065)
-    #.moveTo(1065 + 135//2, 450 + 150//2, setings[7], mouse_random_movement())
-    #parts(135, 150, 450, 885)
-    #.moveTo(885 + 135//2, 450 + 150//2, setings[7], mouse_random_movement())
-
-    # abilities[(y1, y2),(a1x1,a1x2),(a2x1,a2x2),(a3x1,a3x2),(a4x1,a4x2)]
-    #abilitiesPosition=[(450,600), (715,850),(885,1020), (1065,1200), (1230, 1365)]
-    #pyautogui.moveTo(1065 + 135//2, 450 + 150//2, setings[7], mouse_random_movement())
-
-    obj='heroes/'+localhero
-
-    if localhero == 'Antonidas':
-        if find_ellement_trans(obj + '/abilics/2.png', 14):
-            return False
-        pyautogui.moveTo(int(windowMP()[0] + windowMP()[2] / 2.5), int(windowMP()[1] + windowMP()[2] / 4), setings[7], mouse_random_movement())
-        pyautogui.click()
-        return True
-
-    elif localhero == 'Blademaster Samuro':
-        #if raund % 3 == 0:
-        #    #attack 3
-        #    partscreen(135, 150, 450, 1065)
-        #    if find_ellement(chekers[5], 12) == (0,0) : # chekers[5] : hourglass
-        #        pyautogui.moveTo(1065 + 135//2, 450 + 150//2, setings[7], mouse_random_movement())
-        #        pyautogui.click()
-        #        return False
-        if raund % 2 == 0:
-            partscreen(135, 150, 450, 885)
-            if find_ellement(chekers[5], 12) == (0,0) : # chekers[5] : hourglass
-                pyautogui.moveTo(885 + 135//2, 450 + 150//2, setings[7], mouse_random_movement())
-                pyautogui.click()
-                return True
-        pyautogui.moveTo(int(windowMP()[0] + windowMP()[2] / 2.5), int(windowMP()[1] + windowMP()[2] / 4), setings[7], mouse_random_movement())
-        pyautogui.click()
-        return True
-
-    elif localhero == 'Cariel Roame':
-        if raund % 2 == 0:
-            if find_ellement_trans(obj + '/abilics/2.png', 14):
-                return False
-        pyautogui.moveTo(int(windowMP()[0] + windowMP()[2] / 2.5), int(windowMP()[1] + windowMP()[2] / 4), setings[7], mouse_random_movement())
-        pyautogui.click()
-        return True
-
-    elif localhero == 'Cairne Bloodhoof':
-        if raund % 2 == 0:
-            if find_ellement_trans(obj + '/abilics/3.png', 14):
-                return False
-        pyautogui.moveTo(int(windowMP()[0] + windowMP()[2] / 2.5), int(windowMP()[1] + windowMP()[2] / 4), setings[7], mouse_random_movement())
-        pyautogui.click()
-        return True
-
-    elif localhero == 'Cornelius Roame':
-        if raund % 2 == 0:
-            #attack 2
-            partscreen(135, 150, 450, 885)
-            if find_ellement(chekers[5], 12) == (0,0) : # chekers[5] : hourglass
-                pyautogui.moveTo(885 + 135//2, 450 + 150//2, setings[7], mouse_random_movement())
-                pyautogui.click()
-                return False
-        pyautogui.moveTo(int(windowMP()[0] + windowMP()[2] / 2.5), int(windowMP()[1] + windowMP()[2] / 4), setings[7], mouse_random_movement())
-        pyautogui.click()
-        return True
-
-    elif localhero == 'Millhouse Manastorm':
-        if raund == 1:
-            if find_ellement_trans(obj + '/abilics/1.png', 14):
-                return False
-        if raund % 3 == 0:
-            if find_ellement_trans(obj + '/abilics/3.png', 14):
-                return False
-        if raund > 1:
-            if find_ellement_trans(obj + '/abilics/2.png', 14):
-                return True
-        pyautogui.moveTo(int(windowMP()[0] + windowMP()[2] / 2.5), int(windowMP()[1] + windowMP()[2] / 4), setings[7], mouse_random_movement())
-        pyautogui.click()
-        return False
-
-    elif localhero == 'Tyrande':
-        if raund % 2 == 1:
-            if find_ellement_trans(obj + '/abilics/1.png', 14):
-                return True
-#            if raund % 2 == 0:
-#                if find_ellement(obj + '/abilics/3.png', 14):
-#                if find_ellement_trans(obj + '/abilics/2.png', 14):
-#                    return False
-        pyautogui.moveTo(int(windowMP()[0] + windowMP()[2] / 2.5), int(windowMP()[1] + windowMP()[2] / 4), setings[7], mouse_random_movement())
-        pyautogui.click()
-        return True
-
-    #elif localhero == 'Malfurion Stormrage':
-    #    if raund % 2 == 0:
-    #        if find_ellement_trans(obj + '/abilics/2.png', 14):
-    #            return True
-    #    pyautogui.moveTo(int(windowMP()[0] + windowMP()[2] / 2.5), int(windowMP()[1] + windowMP()[2] / 4), setings[7], mouse_random_movement())
-    #    pyautogui.click()
-    #    return True
-
-    elif localhero == 'Mannoroth':
-        if raund % 3 == 1:
-            if find_ellement_trans(obj + '/abilics/1.png', 14):
-                return True
-        if raund % 3 == 0:
-            if find_ellement_trans(obj + '/abilics/2.png', 14):
-                return True
-        if raund % 3 == 2:
-            if find_ellement_trans(obj + '/abilics/3.png', 14):
-                return False
-        pyautogui.moveTo(int(windowMP()[0] + windowMP()[2] / 2.5), int(windowMP()[1] + windowMP()[2] / 4), setings[7], mouse_random_movement())
-        pyautogui.click()
-        return True
-
-    elif localhero == 'Morgl the Oracle':
-        #if raund % 3 == 0:
-        #    #attack 3
-        #    partscreen(135, 150, 450, 1065)
-        #    if find_ellement(chekers[5], 12) == (0,0) : # chekers[5] : hourglass
-        #        pyautogui.moveTo(1065 + 135//2, 450 + 150//2, setings[7], mouse_random_movement())
-        #        pyautogui.click()
-        #        return True
-        if raund % 2 == 0:
-            #attack 2
-            partscreen(135, 150, 450, 885)
-            if find_ellement(chekers[5], 12) == (0,0) : # chekers[5] : hourglass
-                pyautogui.moveTo(885 + 135//2, 450 + 150//2, setings[7], mouse_random_movement())
-                pyautogui.click()
-                return False
-        pyautogui.moveTo(int(windowMP()[0] + windowMP()[2] / 2.5), int(windowMP()[1] + windowMP()[2] / 4), setings[7], mouse_random_movement())
-        pyautogui.click()
-        return True
-
-    elif localhero == 'Mutanus':
-        #if raund % 3 == 0:
-        #    #attack 3
-        #    partscreen(135, 150, 450, 1065)
-        #    if find_ellement(chekers[5], 12) == (0,0) : # chekers[5] : hourglass
-        #        pyautogui.moveTo(1065 + 135//2, 450 + 150//2, setings[7], mouse_random_movement())
-        #        pyautogui.click()
-        #        return False
-        if raund % 2 == 0:
-            partscreen(135, 150, 450, 885)
-            if find_ellement(chekers[5], 12) == (0,0) : # chekers[5] : hourglass
-                pyautogui.moveTo(885 + 135//2, 450 + 150//2, setings[7], mouse_random_movement())
-                pyautogui.click()
-                return False
-        pyautogui.moveTo(int(windowMP()[0] + windowMP()[2] / 2.5), int(windowMP()[1] + windowMP()[2] / 4), setings[7], mouse_random_movement())
-        pyautogui.click()
-        return True
-
-    elif localhero == 'Old Murk-Eye':
-        if raund % 3 == 0:
-            #attack 3
-            partscreen(135, 150, 450, 1065)
-            if find_ellement(chekers[5], 12) == (0,0) : # chekers[5] : hourglass
-                pyautogui.moveTo(1065 + 135//2, 450 + 150//2, setings[7], mouse_random_movement())
-                pyautogui.click()
-                return False
-        if raund % 3 == 2:
-            partscreen(135, 150, 450, 885)
-            if find_ellement(chekers[5], 12) == (0,0) : # chekers[5] : hourglass
-                pyautogui.moveTo(885 + 135//2, 450 + 150//2, setings[7], mouse_random_movement())
-                pyautogui.click()
-                return False
-        pyautogui.moveTo(int(windowMP()[0] + windowMP()[2] / 2.5), int(windowMP()[1] + windowMP()[2] / 4), setings[7], mouse_random_movement())
-        pyautogui.click()
-        return True
-
-    elif localhero == 'Rathorian':
-        if raund == 1:
-            if find_ellement_trans(obj + '/abilics/1.png', 14):
-                return True
-        elif raund == 2:
-            if find_ellement_trans(obj + '/abilics/2.png', 14):
-                return False
-        elif raund % 3 == 1:
-            if find_ellement_trans(obj + '/abilics/2.png', 14):
-                return False
-        elif raund % 3 == 2:
-            if find_ellement_trans(obj + '/abilics/3.png', 14):
-                return True
-        elif raund % 3 == 0:
-            if find_ellement_trans(obj + '/abilics/1.png', 14):
-                return True
-        pyautogui.moveTo(int(windowMP()[0] + windowMP()[2] / 2.5), int(windowMP()[1] + windowMP()[2] / 4), setings[7], mouse_random_movement())
-        pyautogui.click()
-        return True
-
-    elif localhero == 'Rexxar':
-        if raund % 2 == 0:
-            if find_ellement_trans(obj + '/abilics/3.png', 14):
-                return True
-        pyautogui.moveTo(int(windowMP()[0] + windowMP()[2] / 2.5), int(windowMP()[1] + windowMP()[2] / 4), setings[7], mouse_random_movement())
-        pyautogui.click()
-        return True
-
-    elif localhero ==  'Rokara':
-        if raund % 2 == 0:
-        #if raund % 3 == 0:
-            #attack 3
-            partscreen(135, 150, 450, 1065)
-            if find_ellement(chekers[5], 12) == (0,0) : # chekers[5] : hourglass
-                pyautogui.moveTo(1065 + 135//2, 450 + 150//2, setings[7], mouse_random_movement())
-                pyautogui.click()
-                return True
-        #if raund % 3 == 2:
-        #    #attack 2
-        #    partscreen(135, 150, 450, 885)
-        #    if find_ellement(chekers[5], 12) == (0,0) : # chekers[5] : hourglass
-        #        pyautogui.moveTo(885 + 135//2, 450 + 150//2, setings[7], mouse_random_movement())
-        #        pyautogui.click()
-        #        return False
-        #attack 1
-        pyautogui.moveTo(int(windowMP()[0] + windowMP()[2] / 2.5), int(windowMP()[1] + windowMP()[2] / 4), setings[7], mouse_random_movement())
-        pyautogui.click()
-        return True
-
-    elif localhero ==  'Grommash Hellscream':
-        pyautogui.moveTo(885 + 135//2, 450 + 150//2, setings[7], mouse_random_movement())
-        pyautogui.click()
-        return True
-
-    elif localhero == 'King Krush' :
-        if raund % 3 == 2:
-            if find_ellement_trans(obj + '/abilics/2.png', 14):
-                return False
-        elif raund % 3 == 0:
-            if find_ellement_trans(obj + '/abilics/3.png', 14):
-                return False
-        pyautogui.moveTo(int(windowMP()[0] + windowMP()[2] / 2.5), int(windowMP()[1] + windowMP()[2] / 4), setings[7], mouse_random_movement())
-        pyautogui.click()
-        return False
-
-    elif localhero == 'Lady Anacondra' :
-        #if raund % 2 == 0:
-        #    #attack 3
-        #    partscreen(135, 150, 450, 1065)
-        #    if find_ellement(chekers[5], 12) == (0,0) : # chekers[5] : hourglass
-        #        pyautogui.moveTo(1065 + 135//2, 450 + 150//2, setings[7], mouse_random_movement())
-        #        pyautogui.click()
-        #        return False
-        #if raund % 2 == 0:
-        #    partscreen(135, 150, 450, 885)
-        #    if find_ellement(chekers[5], 12) == (0,0) : # chekers[5] : hourglass
-        #        pyautogui.moveTo(885 + 135//2, 450 + 150//2, setings[7], mouse_random_movement())
-        #        pyautogui.click()
-        #        return True
-        pyautogui.moveTo(int(windowMP()[0] + windowMP()[2] / 2.5), int(windowMP()[1] + windowMP()[2] / 4), setings[7], mouse_random_movement())
-        pyautogui.click()
-        return True
-
-#        if raund % 2 == 1:
-#            if find_ellement_trans(obj + '/abilics/1.png', 14):
-#                return True
-#        if raund % 2 == 0:
-#            if find_ellement_trans(obj + '/abilics/3.png', 14):
-#                return False
-#        pyautogui.moveTo(int(windowMP()[0] + windowMP()[2] / 2.5), int(windowMP()[1] + windowMP()[2] / 4), setings[7], mouse_random_movement())
-#        pyautogui.click()
-#        return True
-
-    elif localhero == 'War Master Voone':
-        if raund % 3 == 0:
-            #attack 3
-            partscreen(135, 150, 450, 1065)
-            if find_ellement(chekers[5], 12) == (0,0) : # chekers[5] : hourglass
-                pyautogui.moveTo(1065 + 135//2, 450 + 150//2, setings[7], mouse_random_movement())
-                pyautogui.click()
-                return False
-        if raund % 3 == 2:
-            partscreen(135, 150, 450, 885)
-            if find_ellement(chekers[5], 12) == (0,0) : # chekers[5] : hourglass
-                pyautogui.moveTo(885 + 135//2, 450 + 150//2, setings[7], mouse_random_movement())
-                pyautogui.click()
-                return True
-        pyautogui.moveTo(int(windowMP()[0] + windowMP()[2] / 2.5), int(windowMP()[1] + windowMP()[2] / 4), setings[7], mouse_random_movement())
-        pyautogui.click()
-        return True
-
-    elif localhero == 'Brightwing':
-        if raund % 4 == 0:
-            if find_ellement_trans(obj + '/abilics/3.png', 14):
-                return False
-        if raund % 2 == 0:
-            if find_ellement_trans(obj + '/abilics/2.png', 14):
-                return False
-        pyautogui.moveTo(int(windowMP()[0] + windowMP()[2] / 2.5), int(windowMP()[1] + windowMP()[2] / 4), setings[7], mouse_random_movement())
-        pyautogui.click()
-        return True
-    elif localhero == "Bru'Kan":
-        if raund % 3 == 0:
-            #attack 3
-            partscreen(135, 150, 450, 1065)
-            if find_ellement(chekers[5], 12) == (0,0) : # chekers[5] : hourglass
-                pyautogui.moveTo(1065 + 135//2, 450 + 150//2, setings[7], mouse_random_movement())
-                pyautogui.click()
-                return True
-        if rand %3 == 1 or raund % 3 == 2:
-            #attack 2
-            partscreen(135, 150, 450, 885)
-            if find_ellement(chekers[5], 12) == (0,0) : # chekers[5] : hourglass
-                pyautogui.moveTo(885 + 135//2, 450 + 150//2, setings[7], mouse_random_movement())
-                pyautogui.click()
-                return True
-        pyautogui.moveTo(int(windowMP()[0] + windowMP()[2] / 2.5), int(windowMP()[1] + windowMP()[2] / 4), setings[7], mouse_random_movement())
-        pyautogui.click()
-        return True
-
-    elif localhero == 'Natalie Seline':
-        if raund % 3 == 0 :
-            if find_ellement(obj + '/abilics/3.png', 14):
-                return False
-        if raund % 3 == 2 :
-            partscreen(135, 150, 450, 885)
-            if find_ellement(chekers[5], 12) == (0,0) : # chekers[5] : hourglass
-                pyautogui.moveTo(885 + 135//2, 450 + 150//2, setings[7], mouse_random_movement())
-                pyautogui.click()
-                time.sleep(0.5)
-                pyautogui.moveTo(windowMP()[0]+windowMP()[2]/2, windowMP()[1]+windowMP()[3]*0.65, setings[7], mouse_random_movement())
-                pyautogui.click()
-                return False
-        pyautogui.moveTo(int(windowMP()[0] + windowMP()[2] / 2.5), int(windowMP()[1] + windowMP()[2] / 4), setings[7], mouse_random_movement())
-        pyautogui.click()
-        return True
-
-    elif localhero == 'Malfurion Stormrage':
-        if raund % 2 == 0:
-            #attack 3
-            partscreen(135, 150, 450, 1065)
-            if find_ellement(chekers[5], 12) == (0,0) : # chekers[5] : hourglass
-                pyautogui.moveTo(1065 + 135//2, 450 + 150//2, setings[7], mouse_random_movement())
-                pyautogui.click()
-                time.sleep(0.5)
-                pyautogui.click()
-                return False
-        pyautogui.moveTo(int(windowMP()[0] + windowMP()[2] / 2.5), int(windowMP()[1] + windowMP()[2] / 4), setings[7], mouse_random_movement())
-        pyautogui.click()
-        return True
-
-    elif localhero == 'Tamsin Roame':
-        if raund % 2 == 0:
-            partscreen(135, 150, 450, 885)
-            if find_ellement(chekers[5], 12) == (0,0) : # chekers[5] : hourglass
-                pyautogui.moveTo(885 + 135//2, 450 + 150//2, setings[7], mouse_random_movement())
-                pyautogui.click()
-                return False
-        pyautogui.moveTo(int(windowMP()[0] + windowMP()[2] / 2.5), int(windowMP()[1] + windowMP()[2] / 4), setings[7], mouse_random_movement())
-        pyautogui.click()
-        return True
-
-#        if raund % 3 == 0:
-#            if find_ellement(obj + '/abilics/3.png', 14):
-#                return False
-#        if raund % 3 == 2:
-#            if find_ellement(obj + '/abilics/2.png', 14):
-#                return False
-#        pyautogui.moveTo(int(windowMP()[0] + windowMP()[2] / 2.5), int(windowMP()[1] + windowMP()[2] / 4), setings[7], mouse_random_movement())
-#        pyautogui.click()
-#        return True
-
-    elif localhero == "Vol'jin":
-        if raund == 1:
-            if find_ellement(obj + '/abilics/1.png', 14):
-                return True
-        if raund == 3:
-            if find_ellement(obj + '/abilics/3.png', 14):
-                return False
-        if raund > 1:
-            if find_ellement(obj + '/abilics/2.png', 14):
-                return False
-        pyautogui.moveTo(int(windowMP()[0] + windowMP()[2] / 2.5), int(windowMP()[1] + windowMP()[2] / 4), setings[7], mouse_random_movement())
-        pyautogui.click()
-        return True
-
-    elif localhero == "Gul'dan":
-        if find_ellement(obj + '/abilics/3.png', 14):
-            return True
-        pyautogui.moveTo(int(windowMP()[0] + windowMP()[2] / 2.5), int(windowMP()[1] + windowMP()[2] / 4), setings[7], mouse_random_movement())
-        pyautogui.click()
-        return True
-
-    elif localhero == "Mr Smite":
-        if raund %3 == 1:
-            if find_ellement_trans(obj + '/abilics/1.png', 14):
-                return True
-        if raund %3 == 2:
-            if find_ellement_trans(obj + '/abilics/2.png', 14):
-                return False
-        if raund %3 == 0:
-            if find_ellement_trans(obj + '/abilics/3.png', 14):
-                return False
-        pyautogui.moveTo(int(windowMP()[0] + windowMP()[2] / 2.5), int(windowMP()[1] + windowMP()[2] / 4), setings[7], mouse_random_movement())
-        pyautogui.click()
-        return True
-
-    pyautogui.moveTo(int(windowMP()[0] + windowMP()[2] / 2.5), int(windowMP()[1] + windowMP()[2] / 4), setings[7], mouse_random_movement())
-    pyautogui.click()
-    return True
-
 
 def attacks(position, mercName, number, enemyred, enemygreen, enemyblue, enemynoclass, mol):
     """ Function to attack an enemy (red, green or blue ideally) with the selected mercenary
@@ -1092,7 +691,7 @@ def selectCardsInHand():
     ### Here, find the part which - previously - was selecting cards/mercs in hand
     ## setings 5: 'heroSet(ex:True)'
     #if setings[5] == "True":
-    #    while not find_ellement_trans(buttons[14], 1): # buttons 14: 'allready'
+    #    while not find_ellement(buttons[14], 1): # buttons 14: 'allready'
     #        threshold = 0.75
     #        pyautogui.moveTo(x, y, setings[7])
     #        for n in range(3):
@@ -1101,7 +700,7 @@ def selectCardsInHand():
     #                pyautogui.dragTo(windowMP()[0] + (windowMP()[2] / 2), (windowMP()[1] + (windowMP()[3] * 0.92)) - windowMP()[3] / 3, 0.6, mouse_random_movement())
     #                heroesOnBattlefield += 1
     #                break
-    #            if find_ellement_trans(hero[n] + '/set.png', 1):
+    #            if find_ellement(hero[n] + '/set.png', 1):
     #                time.sleep(0.2)
     #                pyautogui.dragTo(x, y - windowMP()[3] / 3, 0.6, mouse_random_movement())
     #                heroesOnBattlefield += 1
@@ -1372,76 +971,6 @@ def where():
         selectCardsInHand()
 
     return True
-
-
-def find_ellement_trans(file, index, threshold="-"):
-    """ Find an object ('file') on the screen (UI, Button, ...) and do some actions ('index') 
-        support PNG with transparency / alpha channel
-        Note : was used when we needed transparency for Mercenaries image but it's not used anymore so we can delete this function after "abilities" function is completly reworked
-    """
-    debug("DEBUG : find_ellement_trans START")
-    global screenImg
-    global partImg
-    global jthreshold
-    retour = False
-    if threshold == "-" :
-        if file in jthreshold : 
-            if jthreshold[file] == "-" :
-                threshold = jthreshold['default']
-            else :
-                threshold = jthreshold[file]
-        else:
-            threshold = jthreshold['default']
-
-    time.sleep(speed)
-
-    # choose if the bot need to look into the screen or in a part of the screen
-    if index == 12:
-        img = cv2.cvtColor(partImg, cv2.IMREAD_COLOR)
-    else:
-        screen()
-        #partscreen(windowMP()[2],windowMP()[3],windowMP()[1],windowMP()[0])
-        #screenImg = partImg
-        img = cv2.cvtColor(screenImg, cv2.IMREAD_COLOR)
-    
-    template_alpha = cv2.imread('files/' + setings[0] + '/' + file, cv2.IMREAD_UNCHANGED)
-    template = cv2.cvtColor(template_alpha, cv2.IMREAD_COLOR)
-    channels = cv2.split(template_alpha)
-    # extract "transparency" channel from image
-    alpha_channel = np.array(channels[3])
-    # generate mask image, all black dots will be ignored during matching
-    mask = cv2.merge([alpha_channel,alpha_channel,alpha_channel])
-    result = cv2.matchTemplate(img, template, cv2.TM_CCORR_NORMED, None, mask)
-
-    h = template.shape[0]
-    w = template.shape[1]
-
-    loc = np.where(result >= threshold)
-    if len(loc[0]) != 0:
-        retour = True
-        j=0
-        for pt in zip(*loc[::-1]):
-            pt[0] + w
-            pt[1] + h
-        x = int((pt[0] * 2 + w) / 2)
-        y = int((pt[1] * 2 + h) / 2)
-        print("Found " + file, "(", threshold,")", x, y)
-        if index == 12 or index == 15:
-            retour = (x, y)
-        elif index == 2 :
-            pyautogui.moveTo(x, y, setings[7], mouse_random_movement())
-        elif index == 14 :
-            p = random.randint(-2, 2)
-            s = random.randint(-2, 2)
-            pyautogui.moveTo(x + p, y + s, setings[7], mouse_random_movement())  # Moves the mouse instantly to absolute screen position
-            time.sleep(0.1)
-            pyautogui.click()
-    else :
-        print("Looked for " + file, "(", threshold,")")
-        if index == 12 or index == 15:
-            retour = (0, 0)
-#    print("DEBUG : find_ellement_trans END")
-    return retour
 
 
 def find_ellement(file, index, threshold="-"):
