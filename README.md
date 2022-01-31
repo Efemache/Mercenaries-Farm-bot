@@ -44,7 +44,7 @@ To discuss with the community, go to discord [Mercenaries Farm server](https://d
 ## Supported game language & resolution
 |               |     English    |
 | :------------ | :-------------:| 
-|1920x1080 (screen resolution)  (with HS in windowed mode)   |        ✅      |
+|1920x1080 screen resolution (with HS in windowed mode)   |        ✅      |
 
 ## Battle limitation (will change in future releases)
 * bot doesn't work with ability like "choose one" (ex: Malfurion or Rexxar)
