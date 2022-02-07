@@ -55,7 +55,7 @@
  "Rexxar" : {"1" : true, "2" : "chooseone3", "3" : true},
  "Rokara" : {"1" : true, "2" : false, "3" : true},
  "Scabbs Cutterbutter" : {"1" : true, "2" : "chooseone3", "3" : true},
- "Sinestra" : {"1" : true, "2" : "friend", "3" : false},
+ "Sinestra" : {"1" : true, "2" : "friend:Dragon", "3" : false},
  "Sylvanas Windrunner" : {"1" : true, "2" : false, "3" : true},
  "Tavish Stormpike" : {"1" : true, "2" : false, "3" : false},
  "Tirion Fordring" : {"1" : true, "2" : "friend", "3" : true},
