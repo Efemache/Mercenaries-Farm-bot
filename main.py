@@ -743,7 +743,7 @@ def travelpointSelection():
 
         pyautogui.moveTo(windowMP()[0] + windowMP()[2] / 1.5, windowMP()[1] + windowMP()[3] / 2, setings[7], mouse_random_movement())
 
-        pyautogui.scroll(20)
+        pyautogui.scroll(50)
         time.sleep(0.5)
 
         if setings[2] == "The Barrens":         # setings 2: 'location(ex:TheBarrens)'
@@ -1004,10 +1004,10 @@ def find_ellement(file, index, threshold="-"):
     if index == 12:
         img = partImg
     else:
-        screen()
-        #partscreen(windowMP()[2],windowMP()[3],windowMP()[1],windowMP()[0])
-        #screenImg = partImg
-        img = screenImg
+        #screen()
+        #img = screenImg
+        partscreen(windowMP()[2],windowMP()[3],windowMP()[1],windowMP()[0])
+        img = partImg
 
     img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     template = cv2.imread('files/' + setings[0] + '/' + file, cv2.IMREAD_GRAYSCALE)
@@ -1028,11 +1028,11 @@ def find_ellement(file, index, threshold="-"):
         if index == 12 or index == 15:
             retour = (x, y)
         elif index == 2 :	
-            pyautogui.moveTo(x, y, setings[7], mouse_random_movement())
+            pyautogui.moveTo(windowMP()[0] + x, windowMP()[1] + y, setings[7], mouse_random_movement())
         elif index == 14 :
             p = random.randint(-2, 2)
             s = random.randint(-2, 2)
-            pyautogui.moveTo(x + p, y + s, setings[7], mouse_random_movement())  # Moves the mouse instantly to absolute screen position
+            pyautogui.moveTo(windowMP()[0] + x + p, windowMP()[1] + y + s, setings[7], mouse_random_movement())  # Moves the mouse instantly to absolute screen position
             time.sleep(0.1)
             pyautogui.click()
     else:
