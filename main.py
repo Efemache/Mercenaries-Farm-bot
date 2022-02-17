@@ -16,6 +16,7 @@ import sys
 import pyautogui
 import json
 from modules.log_board import *
+import re
  
 
 ## try to detect the OS (Windows, Linux, Mac, ...)
@@ -49,9 +50,11 @@ global zoneLog
 #threshold = 0.75
 global mercslist
 mercslist={}
+#global mercsAbilities
+mercsAbilities={}
 
 # Ui-ellements
-Ui_Ellements = ['battle', 'blue', 'green', 'group', 'spirithealer', 'one', 'page_1', 'Alterac', 'encounter_battle',
+Ui_Ellements = ['battle', 'blue', 'green', 'group', 'spirithealer', 'boss', 'page_1', 'Alterac', 'encounter_battle',
                 'red', 'prev', 'sob', 'noclass', 'bat1', 'bat2', 'bat3', 'bat4', 'bat5', 'take_grey',
                 'visitor', 'bounties', 'Blackrock', 'Barrens', 'startbat', 'pick', 'Winterspring',
                 'Felwood', 'normal', 'heroic','replace_grey', 'travelpoint','presents_thing', 'free_battle',
@@ -106,6 +109,7 @@ def configread():
             6: monitor (1), 7: MouseSpeed (0.5), 8: WaitForEXP (3), 9: Zonelog (GameDir/Logs/Zone.log)
         Note :Should be replaced with a simple dictionnary to easily find settings (actually, you need to find/remember each settings in tab)
     """
+    global mercsAbilities
     global jthreshold
     global mercslist
 
@@ -132,6 +136,7 @@ def configread():
         
     jthreshold = readjson("conf/thresholds.json")
     mercslist = readjson("conf/mercs.json")
+    mercsAbilities = readjson('conf/attacks.json')
 
     print(setings)
 
@@ -352,6 +357,8 @@ def nextlvl():
                 pyautogui.click()
                 time.sleep(0.2)
                 find_ellement(buttons[18], 14) # buttons 18: 'choose_task'
+                time.sleep(0.2)
+                pyautogui.click()
                 time.sleep(8)
 
         elif find_ellement(Ui_Ellements[24], 14): # Ui_Ellements 24: 'pick'
@@ -391,6 +398,12 @@ def nextlvl():
             pyautogui.moveTo(x, y, setings[7])
             time.sleep(0.1)
             pyautogui.doubleClick()
+    else :
+        if find_ellement(Ui_Ellements[5], 1): # Ui_Ellements 4: 'boss'
+            time.sleep(1)
+            exit(1)
+
+
 
 #    threshold = tempthreshold
 
@@ -428,6 +441,7 @@ def abilities(localhero):
     """ Select an ability for a mercenary. Depend on what is available and wich Round (battle)
         Click only on the ability (doesnt move to an enemy)
     """
+    global mercsAbilities
     abilitiesWidth=windowMP()[2]//14.2
     abilitiesHeigth=windowMP()[3]//7.2
     
@@ -435,33 +449,42 @@ def abilities(localhero):
     abilitiesPositionY=windowMP()[3]//2.4
     # abilitiesPositionX : X coordinates to find the 3 "abilities" during battle (4 because sometimes, Treasure give you a new abilities but the bot doesn't support it right now)
     abilitiesPositionX=[windowMP()[2]//2.68, windowMP()[2]//2.17, windowMP()[2]//1.8, windowMP()[2]//1.56]
-    mercsAbilities=readjson('conf/attacks.json')
+    #mercsAbilities=readjson('conf/attacks.json')
     retour = False
+
+    config = configparser.ConfigParser()
+    config.read("conf/combo.ini")
     if localhero in mercsAbilities :
-        config = configparser.ConfigParser()
-        config.read("conf/combo.ini")
-        if config.has_option("Mercenaries",localhero) :
-            round_abilities = config["Mercenaries"][localhero].split(',')
+        if config.has_option("Mercenary",localhero) :
+            round_abilities = config["Mercenary"][localhero].split(',')
             abilitiesNumber = len(round_abilities)
             if abilitiesNumber != 0 :
                 ability = raund % abilitiesNumber
                 if ability == 0 :
                     ability = len(round_abilities)
-                ability = int(round_abilities[ability - 1])
+                if ability != "-" :
+                    ability = int(round_abilities[ability - 1])
             else :
                 ability = 1
         else : 
             ability = 1
+
+
+        y=windowMP()[1] + windowMP()[3]/1.5
         print(f"ability selected : {ability}")
         if ability == 1 :
             #attack1
             debug(f"abilities Y : {abilitiesPositionY} | abilities X : {abilitiesPositionX}")
             partscreen(int(abilitiesWidth), int(abilitiesHeigth), int(windowMP()[1]+abilitiesPositionY), int(windowMP()[0]+abilitiesPositionX[0]))
             if find_ellement(chekers[5], 12) == (0,0) : # chekers[5] : hourglass
-                pyautogui.moveTo(int(windowMP()[0] + abilitiesPositionX[0] + abilitiesWidth//2), int(windowMP()[1] + abilitiesPositionY + abilitiesHeigth//2), setings[7], mouse_random_movement())
+                pyautogui.moveTo(int(windowMP()[0] + abilitiesPositionX[ability-1] + abilitiesWidth//2), int(windowMP()[1] + abilitiesPositionY + abilitiesHeigth//2), setings[7], mouse_random_movement())
                 pyautogui.click()
-                if mercsAbilities[localhero]["1"] == True or mercsAbilities[localhero]["1"] == False :
-                    retour = mercsAbilities[localhero]["1"]
+                if mercsAbilities[localhero][str(ability)] == True or mercsAbilities[localhero][str(ability)] == False :
+                    retour = mercsAbilities[localhero][str(ability)]
+                #elif mercsAbilities[localhero][str(ability)] == "friend:Dragon" :
+                #    pyautogui.moveTo(windowMP()[0] + int(windowMP()[2] // 2.08), y, setings[7], mouse_random_movement())
+                #    pyautogui.click()
+                #    retour = False
         elif ability == 2 :
             #attack2
             print(f"abilities Y : {abilitiesPositionY} | abilities X : {abilitiesPositionX}")
@@ -471,6 +494,10 @@ def abilities(localhero):
                 pyautogui.click()
                 if mercsAbilities[localhero]["2"] == True or mercsAbilities[localhero]["2"] == False :
                     retour = mercsAbilities[localhero]["2"]
+                #elif mercsAbilities[localhero][str(ability)] == "friend:Dragon" :
+                #    pyautogui.moveTo(windowMP()[0] + int(windowMP()[2] // 2.08), y, setings[7], mouse_random_movement())
+                #    pyautogui.click()
+                #    retour = False
         elif ability == 3 :
             #attack3
             print(f"abilities Y : {abilitiesPositionY} | abilities X : {abilitiesPositionX}")
@@ -480,8 +507,33 @@ def abilities(localhero):
                 pyautogui.click()
                 if mercsAbilities[localhero]["3"] == True or mercsAbilities[localhero]["3"] == False :
                     retour = mercsAbilities[localhero]["3"]
+                #elif mercsAbilities[localhero][str(ability)] == "friend:Dragon" :
+                #    pyautogui.moveTo(windowMP()[0] + int(windowMP()[2] // 2.08), y, setings[7], mouse_random_movement())
+                #    pyautogui.click()
+                #    retour = False
+        elif ability == "-" :
+            retour = False
         else :
             print(f"No ability selected for {localhero}")
+    else :
+        localhero=re.sub(r' [0-9]$', '', localhero)
+        if config.has_option("Neutral",localhero) :
+            round_abilities = config["Neutral"][localhero].split(',')
+            abilitiesNumber = len(round_abilities)
+            if abilitiesNumber != 0 :
+                ability = raund % abilitiesNumber
+                if ability == 0 :
+                    ability = len(round_abilities)
+                ability = int(round_abilities[ability - 1])
+            else :
+                ability = 1
+
+            print(f"ability selected : {ability}")
+            partscreen(int(abilitiesWidth), int(abilitiesHeigth), int(windowMP()[1]+abilitiesPositionY), int(windowMP()[0]+abilitiesPositionX[0]))
+            if find_ellement(chekers[5], 12) == (0,0) : # chekers[5] : hourglass
+                pyautogui.moveTo(int(windowMP()[0] + abilitiesPositionX[ability-1] + abilitiesWidth//2), int(windowMP()[1] + abilitiesPositionY + abilitiesHeigth//2), setings[7], mouse_random_movement())
+                pyautogui.click()
+                retour = True
         
     return retour
     
@@ -521,12 +573,11 @@ def attacks(position, mercName, number, enemyred, enemygreen, enemyblue, enemyno
     print("attack with : ", mercName, "( position :", position, "/", number, "=",x,")")
 
     #print("merclist", mercslist.keys())
+    pyautogui.moveTo(x, y, setings[7], mouse_random_movement())
+    pyautogui.click()
+    time.sleep(0.2)
+    pyautogui.moveTo(windowMP()[0] + windowMP()[2]/3, windowMP()[1] + windowMP()[3]/2, setings[7], mouse_random_movement())
     if mercName in mercslist :
-        debug("Fight with ",mercName)
-        pyautogui.moveTo(x, y, setings[7], mouse_random_movement())
-        pyautogui.click()
-        time.sleep(0.2)
-        pyautogui.moveTo(windowMP()[0] + windowMP()[2]/3, windowMP()[1] + windowMP()[3]/2, setings[7], mouse_random_movement())
         if mercslist[mercName]["type"] == "Protector" :
             if abilities(mercName):
                 if not move(enemygreen):
@@ -545,6 +596,9 @@ def attacks(position, mercName, number, enemyred, enemygreen, enemyblue, enemyno
                     if not move(mol):
                         if not move(enemynoclass):
                             rand(enemyred, enemygreen, enemyblue, enemynoclass)
+    else :
+        if abilities(mercName):
+            rand(enemyred, enemygreen, enemyblue, enemynoclass)
 
 
 def battle():
