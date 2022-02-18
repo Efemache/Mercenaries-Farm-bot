@@ -398,10 +398,10 @@ def nextlvl():
             pyautogui.moveTo(x, y, setings[7])
             time.sleep(0.1)
             pyautogui.doubleClick()
-    else :
-        if find_ellement(Ui_Ellements[5], 1): # Ui_Ellements 4: 'boss'
-            time.sleep(1)
-            exit(1)
+#    else :
+#        if find_ellement(Ui_Ellements[5], 1): # Ui_Ellements 4: 'boss'
+#            time.sleep(1)
+#            exit(1)
 
 
 
