@@ -54,13 +54,13 @@ mercslist={}
 mercsAbilities={}
 
 # Ui-ellements
-Ui_Ellements = ['battle', 'blue', 'green', 'group', 'spirithealer', 'boss', 'page_1', 'Alterac', 'encounter_battle',
+Ui_Ellements = ['battle', 'blue', 'green', 'group', 'spirithealer', 'boss', 'your_party', 'Alterac', 'encounter_battle',
                 'red', 'prev', 'sob', 'noclass', 'bat1', 'bat2', 'bat3', 'bat4', 'bat5', 'take_grey',
                 'visitor', 'bounties', 'Blackrock', 'Barrens', 'startbat', 'pick', 'Winterspring',
                 'Felwood', 'normal', 'heroic','replace_grey', 'travelpoint','presents_thing', 'free_battle',
                 'choose_team', 'view_party', 'surprise']  # noclass 12, bat5-17
 # buttons
-buttons = ['back', 'continue', 'create', 'del', 'join_button', 'num', 'ok', 'play', 'ready', 'sec', 'sta', 'start',
+buttons = ['back', 'continue', 'retire', 'view_party', 'join_button', 'num', 'ok', 'play', 'ready', 'sec', 'sta', 'start',
            'start1', 'lockin', 'allready', 'fight', 'startbattle1', 'take', 'choose_task', 'portal-warp', 'onedie', 'reveal',
            'done', 'finishok', 'confirm', 'visit','fir','replace', 'keep']  # last take -17
 # chekers
@@ -68,7 +68,7 @@ chekers = ['30lvl', 'empty_check', 'find', 'goto', 'group_find', 'hourglass', 'r
            'taken', 'text', 'win', 'ifrename', 'levelstarted', 'nextlvlcheck', 'cords-search', '303', '30lvl1',
            '30lvl2', 'menu', 'party','lose']
 
-# Settings - 0: MonitorResolution (1920x1080), 1: level (20), 2: location (The Barrens), 3: mode (Heroic), 4: GroupCreate (True), 5: heroSet (True), 6: GameDir (path)
+# Settings - 0: MonitorResolution (1920x1080), 1: level (20), 2: location (The Barrens), 3: mode (Heroic), 4: quitBeforeBossFight (True), 5: heroSet (True), 6: GameDir (path)
 setings = []
 
 debug_mode=False
@@ -105,7 +105,7 @@ def readjson(jfile) :
 
 def configread():
     """ Read settings.ini and put it in a table :
-            Setings - 0: MonitorResolution (1920x1080), 1: level (20), 2: location (The Barrens), 3: mode (Heroic), 4: GroupCreate (True), 5: heroSet (True),
+            Setings - 0: MonitorResolution (1920x1080), 1: level (20), 2: location (The Barrens), 3: mode (Heroic), 4: quitBeforeBossFight (True), 5: heroSet (True),
             6: monitor (1), 7: MouseSpeed (0.5), 8: WaitForEXP (3), 9: Zonelog (GameDir/Logs/Zone.log)
         Note :Should be replaced with a simple dictionnary to easily find settings (actually, you need to find/remember each settings in tab)
     """
@@ -122,7 +122,7 @@ def configread():
     n = 0
 
     setings.append(config["BotSettings"]["Monitor Resolution"].replace('*', 'x'))
-    for i in ["level", "location", "mode", "GroupCreate", "heroesSet"]:
+    for i in ["level", "location", "mode", "quitBeforeBossFight", "heroesSet"]:
         setings.append(config["BotSettings"][i])
     setings.append(int(config["BotSettings"]["monitor"]))
     setings.append(float(config["BotSettings"]["MouseSpeed"]))
@@ -318,17 +318,26 @@ def collect():
         pyautogui.click()
         time.sleep(0.5)
 
+def quitBounty() :
+    end=False
+    if find_ellement(buttons[3],14) : # buttons 3 : 'view_party'
+        while not find_ellement(Ui_Ellements[6],2) : # Ui_Ellements 6 : 'your_party' 
+            time.sleep(0.5)
+        while not find_ellement(buttons[2],14) : # buttons 2 : 'retire'
+            time.sleep(0.5)
+        while not find_ellement(buttons[13],14) : # buttons 13 : 'lockin' (used for "retire" button which look like "lockin" button)
+            time.sleep(0.5)
+        end=True
+    return end        
+    
 
 def nextlvl():
     """ Progress on the map (Boon, Portal, ...) to find the next battle
     """
     global speed
-#    global threshold
 
     time.sleep(1.5)
 
-#    tempthreshold = threshold
-#    threshold = 0.95
     if not find_ellement(buttons[7], 1) : # buttons 7: 'play'
 
         if find_ellement(buttons[21], 14):	# buttons 21: 'reveal'
@@ -398,14 +407,6 @@ def nextlvl():
             pyautogui.moveTo(x, y, setings[7])
             time.sleep(0.1)
             pyautogui.doubleClick()
-#    else :
-#        if find_ellement(Ui_Ellements[5], 1): # Ui_Ellements 4: 'boss'
-#            time.sleep(1)
-#            exit(1)
-
-
-
-#    threshold = tempthreshold
 
 
 def chooseTreasure():
@@ -858,7 +859,14 @@ def goToEncounter():
        # tempthreshold = threshold
         #threshold = 0.85
 
-        if find_ellement(buttons[7], 14): # buttons 7: 'play'
+        if find_ellement(buttons[7], 1): # buttons 7: 'play'
+            if setings[4] == "True" and find_ellement(Ui_Ellements[5], 1): # Ui_Ellements 4: 'boss'
+                time.sleep(1)
+                travelEnd=quitBounty()
+                break
+
+            find_ellement(buttons[7], 14) # buttons 7: 'play'
+
             time.sleep(0.5)
             #threshold = tempthreshold
             retour = selectCardsInHand() # Start the battle : the bot choose the cards and fight against the enemy
