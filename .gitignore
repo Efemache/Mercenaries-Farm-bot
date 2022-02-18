@@ -10,3 +10,8 @@ files/3840x2160/heroes/*/main.png
 files/1920x1080/heroes/*/group.png
 files/2560x1440/heroes/*/group.png
 files/3840x2160/heroes/*/group.png
+__pycache__/
+*.bck
+*.old
+backup/
+development/
