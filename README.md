@@ -49,7 +49,7 @@ To discuss with the community, go to discord [Mercenaries Farm server](https://d
 ## Battle limitation (will change in future releases)
 * bot doesn't work with ability like "choose one" (ex: Malfurion or Rexxar)
 * bot doesn't work with ability which need to point to one of your mercenaries (ex: impossible to use healing with Xyrella)
-* bot doesn't use minions on board which are not a mercenary 
+* ~~bot doesn't use minions on board which are not a mercenary~~ ✓ (since 0.4.0 release)
 
 ## PvE system work preview
 Watch the video : [![Watch the video](https://user-images.githubusercontent.com/68296704/137970053-fe49c896-d237-49f1-8658-46d1477340d7.png)](https://www.youtube.com/watch?v=znt1P3KkrNg&t)
@@ -65,7 +65,7 @@ Watch the video : [![Watch the video](https://user-images.githubusercontent.com/
 * Install [Python 3.9](https://www.python.org/ftp/python/3.9.0/python-3.9.0-amd64-webinstall.exe) (see the video below) 
 * Download and install AutoHotKey (AHK) : https://www.autohotkey.com/
 * Download the project
-* Open Settings.ini and set your settings
+* Open settings.ini and set your [settings](https://github.com/Efemache/Mercenaries-Farm-bot/wiki/Settings) (/!\ don't forget to set "GameDir" to your Hearthstone directory)
 * Start Hearthstone
 * Create a group of mercenaries named "Botwork" (and go back to main menu)
 * Run HSbotRunner.bat
@@ -74,7 +74,7 @@ Watch the video : [![Watch the video](https://user-images.githubusercontent.com/
 ### Linux
 * Install gir1.2-wnck-3.0 (sudo apt install gir1.2-wnck-3.0)
 * Download the project
-* Open Settings.ini and set your settings
+* Open settings.ini and set your [settings](https://github.com/Efemache/Mercenaries-Farm-bot/wiki/Settings) (/!\ don't forget to set "GameDir" to your Hearthstone directory)
 * Start Hearthstone
 * Create a group of mercenaries named "Botwork" (and go back to main menu)
 * Run HSbotRunner.sh
