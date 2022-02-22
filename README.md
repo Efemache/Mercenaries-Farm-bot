@@ -52,7 +52,7 @@ To discuss with the community, go to discord [Mercenaries Farm server](https://d
 * ~~bot doesn't use minions on board which are not a mercenary~~ ✓ (since 0.4.0 release)
 
 ## PvE system work preview
-Watch the video : [![Watch the video](https://user-images.githubusercontent.com/68296704/137970053-fe49c896-d237-49f1-8658-46d1477340d7.png)](https://www.youtube.com/watch?v=znt1P3KkrNg&t)
+Watch the video : (removed due to google reference problem; I'll post a new video later)
 
 ## When the bot is running
 * don't move the Hearthstone window
@@ -80,6 +80,5 @@ Watch the video : [![Watch the video](https://user-images.githubusercontent.com/
 * Run HSbotRunner.sh
 
 ### Demo
-[![Watch the video](https://user-images.githubusercontent.com/68296704/138687982-0f6d971d-783d-4f35-a3a5-4f5d5a3e59af.png)](https://www.youtube.com/watch?v=nOZXCkrQ5fk)
-
+(removed due to google reference problem; I'll post a new video later)
 
