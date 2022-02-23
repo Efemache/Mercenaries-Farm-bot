@@ -471,10 +471,11 @@ def abilities(localhero):
             ability = 1
 
 
+        # chooseone3=[640, 960, 1280]
+        chooseone3=[windowMP()[2]//3, windowMP()[2]//2, windowMP()[2]//1.5]
         y=windowMP()[1] + windowMP()[3]/1.5
         print(f"ability selected : {ability}")
-        if ability == 1 :
-            #attack1
+        if ability >= 1 and ability <= 3:
             debug(f"abilities Y : {abilitiesPositionY} | abilities X : {abilitiesPositionX}")
             partscreen(int(abilitiesWidth), int(abilitiesHeigth), int(windowMP()[1]+abilitiesPositionY), int(windowMP()[0]+abilitiesPositionX[0]))
             if find_ellement(chekers[5], 12) == (0,0) : # chekers[5] : hourglass
@@ -486,32 +487,11 @@ def abilities(localhero):
                 #    pyautogui.moveTo(windowMP()[0] + int(windowMP()[2] // 2.08), y, setings[7], mouse_random_movement())
                 #    pyautogui.click()
                 #    retour = False
-        elif ability == 2 :
-            #attack2
-            print(f"abilities Y : {abilitiesPositionY} | abilities X : {abilitiesPositionX}")
-            partscreen(int(abilitiesWidth), int(abilitiesHeigth), int(windowMP()[1]+abilitiesPositionY), int(windowMP()[0]+abilitiesPositionX[1]))
-            if find_ellement(chekers[5], 12) == (0,0) : # chekers[5] : hourglass
-                pyautogui.moveTo(int(windowMP()[0] + abilitiesPositionX[1] + abilitiesWidth//2), int(windowMP()[1] + abilitiesPositionY + abilitiesHeigth//2), setings[7], mouse_random_movement())
-                pyautogui.click()
-                if mercsAbilities[localhero]["2"] == True or mercsAbilities[localhero]["2"] == False :
-                    retour = mercsAbilities[localhero]["2"]
-                #elif mercsAbilities[localhero][str(ability)] == "friend:Dragon" :
-                #    pyautogui.moveTo(windowMP()[0] + int(windowMP()[2] // 2.08), y, setings[7], mouse_random_movement())
-                #    pyautogui.click()
-                #    retour = False
-        elif ability == 3 :
-            #attack3
-            print(f"abilities Y : {abilitiesPositionY} | abilities X : {abilitiesPositionX}")
-            partscreen(int(abilitiesWidth), int(abilitiesHeigth), int(windowMP()[1]+abilitiesPositionY), int(windowMP()[0]+abilitiesPositionX[2]))
-            if find_ellement(chekers[5], 12) == (0,0) : # chekers[5] : hourglass
-                pyautogui.moveTo(int(windowMP()[0] + abilitiesPositionX[2] + abilitiesWidth//2), int(windowMP()[1] + abilitiesPositionY + abilitiesHeigth//2), setings[7], mouse_random_movement())
-                pyautogui.click()
-                if mercsAbilities[localhero]["3"] == True or mercsAbilities[localhero]["3"] == False :
-                    retour = mercsAbilities[localhero]["3"]
-                #elif mercsAbilities[localhero][str(ability)] == "friend:Dragon" :
-                #    pyautogui.moveTo(windowMP()[0] + int(windowMP()[2] // 2.08), y, setings[7], mouse_random_movement())
-                #    pyautogui.click()
-                #    retour = False
+                elif mercsAbilities[localhero][str(ability)] == "chooseone3" :
+                    time.sleep(0.2)
+                    pyautogui.moveTo(windowMP()[0] + chooseone3[0], windowMP()[1] + windowMP()[3]//2, setings[7], mouse_random_movement())
+                    pyautogui.click()
+                    retour = False
         elif ability == "-" :
             retour = False
         else :
