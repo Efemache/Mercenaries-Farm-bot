@@ -2,6 +2,13 @@
 ```diff
 Bot is on a development stage but it already works to do some "Tasks" and run low level bounties
 ```
+```diff
+In the last version (0.4.0), you need to modify your Hearthstone log.config :
+C:\Users\YOURUSER\AppData\Local\Blizzard\Hearthstone\log.config
+and add :
+[Zone]
+LogLevel=1
+```
 ## Purpose
 The purpose of this bot is to automatically pass the levels to level up your heros, win somes coins and do some campfire tasks 
 
@@ -49,7 +56,7 @@ To discuss with the community, go to discord [Mercenaries Farm server](https://d
 ## Battle limitation (will change in future releases)
 * bot doesn't work with ability like "choose one" (ex: Malfurion or Rexxar)
 * bot doesn't work with ability which need to point to one of your mercenaries (ex: impossible to use healing with Xyrella)
-* ~~bot doesn't use minions on board which are not a mercenary~~ ✓ (since 0.4.0 release)
+* ~~bot doesn't use minions on board which are not a mercenary~~ ✓ (ok since 0.4.0 release)
 
 ## PvE system work preview
 Watch the video : (removed due to google reference problem; I'll post a new video later)
