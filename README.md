@@ -54,7 +54,7 @@ To discuss with the community, go to discord [Mercenaries Farm server](https://d
 |1920x1080 screen resolution (with HS in windowed mode)   |        ✅      |
 
 ## Battle limitation (will change in future releases)
-* bot doesn't work with ability like "choose one" (ex: Malfurion or Rexxar)
+* bot doesn't work with ability like "choose one" with 2 choices (ex: Malfurion, but works for Rexxar)
 * bot doesn't work with ability which need to point to one of your mercenaries (ex: impossible to use healing with Xyrella)
 * ~~bot doesn't use minions on board which are not a mercenary~~ ✓ (ok since 0.4.0 release)
 
