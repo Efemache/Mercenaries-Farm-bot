@@ -462,9 +462,12 @@ def abilities(localhero):
             if abilitiesNumber != 0 :
                 ability = raund % abilitiesNumber
                 if ability == 0 :
-                    ability = len(round_abilities)
-                if ability != "-" :
-                    ability = int(round_abilities[ability - 1])
+                    ability = int(round_abilities[len(round_abilities) - 1])
+                else :
+                    if round_abilities[ability - 1] != "-" :
+                        ability = int(round_abilities[ability - 1])
+                    else : 
+                        ability = "-"
             else :
                 ability = 1
         else : 
@@ -475,7 +478,10 @@ def abilities(localhero):
         chooseone3=[windowMP()[2]//3, windowMP()[2]//2, windowMP()[2]//1.5]
         y=windowMP()[1] + windowMP()[3]/1.5
         print(f"ability selected : {ability}")
-        if ability >= 1 and ability <= 3:
+        if ability == "-" :
+            debug("No ability selected (-)")
+            retour = False
+        elif ability >= 1 and ability <= 3:
             debug(f"abilities Y : {abilitiesPositionY} | abilities X : {abilitiesPositionX}")
             partscreen(int(abilitiesWidth), int(abilitiesHeigth), int(windowMP()[1]+abilitiesPositionY), int(windowMP()[0]+abilitiesPositionX[0]))
             if find_ellement(chekers[5], 12) == (0,0) : # chekers[5] : hourglass
@@ -492,8 +498,6 @@ def abilities(localhero):
                     pyautogui.moveTo(windowMP()[0] + chooseone3[0], windowMP()[1] + windowMP()[3]//2, setings[7], mouse_random_movement())
                     pyautogui.click()
                     retour = False
-        elif ability == "-" :
-            retour = False
         else :
             print(f"No ability selected for {localhero}")
     else :
