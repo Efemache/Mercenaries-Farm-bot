@@ -1097,11 +1097,11 @@ def main():
         if(myOS=="windows"):
             ahk.show_info_traytip("started", "all files loaded successfully", slient=False, blocking=True)
             win.show()
-            win.restore()
-            win.maximize()
+#            win.restore()
+#            win.maximize()
             win.to_top()
-            win.maximize()
-            win.to_top()
+#            win.maximize()
+#            win.to_top()
             win.activate()
         while True:
             print("Loop")
