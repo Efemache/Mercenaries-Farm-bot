@@ -21,12 +21,12 @@
 "UI_ellements/pick.png" : 0.95,
 "UI_ellements/presents_thing.png" : 0.65,
 "UI_ellements/red.png" : 0.7,
-"UI_ellements/replace_grey.png" : 0.92,
+"UI_ellements/replace_grey.png" : 0.9,
 "UI_ellements/sob.png" : 0.8,
 "UI_ellements/visitor.png" : 0.95,
 "UI_ellements/spirithealer.png" : 0.92,
 "UI_ellements/surprise.png" : 0.95,
-"UI_ellements/take_grey.png" : 0.92,
+"UI_ellements/take_grey.png" : 0.9,
 "UI_ellements/view_party.png" : 0.8,
 "lastOne": "dont touch"
 }

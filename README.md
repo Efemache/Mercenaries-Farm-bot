@@ -8,6 +8,7 @@ C:\Users\YOURUSER\AppData\Local\Blizzard\Hearthstone\log.config
 and add :
 [Zone]
 LogLevel=1
+FilePrinting=true
 ```
 ## Purpose
 The purpose of this bot is to automatically pass the levels to level up your heros, win somes coins and do some campfire tasks 
