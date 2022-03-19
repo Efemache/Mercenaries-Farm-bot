@@ -64,7 +64,7 @@ buttons = ['back', 'continue', 'retire', 'view_party', 'join_button', 'num', 'ok
            'start1', 'lockin', 'allready', 'fight', 'startbattle1', 'take', 'choose_task', 'portal-warp', 'onedie', 'reveal',
            'done', 'finishok', 'confirm', 'visit','fir','replace', 'keep']  # last take -17
 # chekers
-chekers = ['30lvl', 'empty_check', 'find', 'goto', 'group_find', 'hourglass', 'rename', 'shab', 'drop', '301', '302',
+chekers = ['win_final', 'empty_check', 'find', 'goto', 'group_find', 'hourglass', 'rename', 'shab', 'drop', '301', '302',
            'taken', 'text', 'win', 'ifrename', 'levelstarted', 'nextlvlcheck', 'cords-search', '303', '30lvl1',
            '30lvl2', 'menu', 'party','lose']
 
@@ -653,7 +653,7 @@ def battle():
 
         find_ellement(buttons[20], 14) # buttons 20: 'onedie'
 
-        if find_ellement(chekers[13], 1): # chekers 13: 'win'
+        if find_ellement(chekers[13], 1) or find_ellement(chekers[0], 1): # chekers 0: 'win_final' - chekers 13: 'win'
             retour = 'win'
             pyautogui.moveTo(windowMP()[0] + windowMP()[2] / 2, windowMP()[1] + windowMP()[3] - windowMP()[3] / 4.6, setings[7], mouse_random_movement())
             pyautogui.click()
