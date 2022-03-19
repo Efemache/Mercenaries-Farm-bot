@@ -64,12 +64,13 @@ buttons = ['back', 'continue', 'retire', 'view_party', 'join_button', 'num', 'ok
            'start1', 'lockin', 'allready', 'fight', 'startbattle1', 'take', 'choose_task', 'portal-warp', 'onedie', 'reveal',
            'done', 'finishok', 'confirm', 'visit','fir','replace', 'keep']  # last take -17
 # chekers
-chekers = ['30lvl', 'empty_check', 'find', 'goto', 'group_find', 'hourglass', 'rename', 'shab', 'drop', '301', '302',
+chekers = ['win_final', 'empty_check', 'find', 'goto', 'group_find', 'hourglass', 'rename', 'shab', 'drop', '301', '302',
            'taken', 'text', 'win', 'ifrename', 'levelstarted', 'nextlvlcheck', 'cords-search', '303', '30lvl1',
            '30lvl2', 'menu', 'party','lose']
 
-# Settings - 0: MonitorResolution (1920x1080), 1: level (20), 2: location (The Barrens), 3: mode (Heroic), 4: quitBeforeBossFight (True), 5: heroSet (True), 6: GameDir (path)
+# Settings - 0: MonitorResolution (1920x1080), 1: level (20), 2: location (The Barrens), 3: mode (Heroic), 4: quitBeforeBossFight (True), 5: stopAtStranger (True), 6: GameDir (path)
 setings = []
+settings = {} 
 
 debug_mode=False
 def debug(*message):
@@ -102,19 +103,46 @@ def readjson(jfile) :
     descriptor.close()
     return data
 
+def readINI(inifile, section) :
+    """ ... just for reading .ini file and return data
+    """
+    config = configparser.ConfigParser()
+    config.read(inifile)
+    
+    return config[section]
+
+def parseINI(inidict) :
+    """ ... just for transform value into right type
+    """
+
+    initype={}
+    for k in inidict.keys() :
+        i = inidict[k].split("#")[0]
+        if i=="True" or i=="False" :
+            initype[k]=bool(i)
+        elif re.match("^[0-9]+$",i):
+            initype[k]=int(i)
+        elif re.match("^[0-9]+\.[0-9]+$",i):
+        #elif re.match("^([0-9]+(?:\.[0-9]+))(?:\s)$",i):
+            initype[k]=float(i)
+        else :
+            initype[k]=str(i)
+
+    return initype
 
 def configread():
     """ Read settings.ini and put it in a table :
-            Setings - 0: MonitorResolution (1920x1080), 1: level (20), 2: location (The Barrens), 3: mode (Heroic), 4: quitBeforeBossFight (True), 5: heroSet (True),
+            Setings - 0: MonitorResolution (1920x1080), 1: level (20), 2: location (The Barrens), 3: mode (Heroic), 4: quitBeforeBossFight (True), 5: stopAtStranger (True),
             6: monitor (1), 7: MouseSpeed (0.5), 8: WaitForEXP (3), 9: Zonelog (GameDir/Logs/Zone.log)
         Note :Should be replaced with a simple dictionnary to easily find settings (actually, you need to find/remember each settings in tab)
     """
     global mercsAbilities
     global jthreshold
     global mercslist
+    global settings
 
-    global Resolution
     global speed
+
 
     config = configparser.ConfigParser()
     config.read("settings.ini")
@@ -122,7 +150,7 @@ def configread():
     n = 0
 
     setings.append(config["BotSettings"]["Monitor Resolution"].replace('*', 'x'))
-    for i in ["level", "location", "mode", "quitBeforeBossFight", "heroesSet"]:
+    for i in ["level", "location", "mode", "quitBeforeBossFight", "stopAtStranger"]:
         setings.append(config["BotSettings"][i])
     setings.append(int(config["BotSettings"]["monitor"]))
     setings.append(float(config["BotSettings"]["MouseSpeed"]))
@@ -133,12 +161,14 @@ def configread():
         print("[ERROR] Set the correct Hearthstone Game Directory in settings.ini ('GameDir' var)")
         # yeah it's bad coding but don't have time to change everything else
         exit(2)
-        
+
+    settings = parseINI(readINI("settings.ini","BotSettings"))
     jthreshold = readjson("conf/thresholds.json")
     mercslist = readjson("conf/mercs.json")
     mercsAbilities = readjson('conf/attacks.json')
 
     print(setings)
+    print(settings)
 
 
 def filepp(name, strname):
@@ -205,6 +235,9 @@ def findgame():
                     retour = True
         elif(myOS=='windows'):
             win = ahk.win_get(title='Hearthstone')
+            win.show()
+            win.to_top()
+            win.activate()
             retour = True
         else:
             print("OS not supported.")
@@ -230,7 +263,7 @@ def move(index):
 
 
 def rand(enemyred, enemygreen, enemyblue, enemynoclass):
-    """ look for a random enemy (used when blue mercs can't find red enemy, green can't find blue or red can't find green
+    """ look for a random enemy (used when blue mercs can't find red enemy, green can't find blue or red can't find green)
     """
     debug("rand : attack random enemy")
 #    count = 0
@@ -242,7 +275,7 @@ def rand(enemyred, enemygreen, enemyblue, enemynoclass):
             break
 
     # right click added to avoid a problem when the bot detects no enemy (it can't select another ability and we can hope an AoE will selected at least)
-    # Update : add code to click in the middle of the enemy board when no enemy is detected
+    # To Do : add code to click in the middle of the enemy board when no enemy is detected
     pyautogui.rightClick()
     
 #    while True:
@@ -351,6 +384,8 @@ def nextlvl():
             y = windowMP()[1] + windowMP()[3] / 2.2
             time.sleep(7)
             while find_ellement(Ui_Ellements[19], 1): # Ui_Ellements 19: 'visitor'
+                if setings[5] == "True" :
+                    exit(1)
                 temp = random.randint(0, 2)
                 if temp == 0:
                     x = windowMP()[2] // 3
@@ -438,7 +473,7 @@ def chooseTreasure():
 
 
 
-def abilities(localhero):
+def select_ability(localhero):
     """ Select an ability for a mercenary. Depend on what is available and wich Round (battle)
         Click only on the ability (doesnt move to an enemy)
     """
@@ -464,10 +499,7 @@ def abilities(localhero):
                 if ability == 0 :
                     ability = int(round_abilities[len(round_abilities) - 1])
                 else :
-                    if round_abilities[ability - 1] != "-" :
-                        ability = int(round_abilities[ability - 1])
-                    else : 
-                        ability = "-"
+                    ability = int(round_abilities[ability - 1])
             else :
                 ability = 1
         else : 
@@ -478,7 +510,7 @@ def abilities(localhero):
         chooseone3=[windowMP()[2]//3, windowMP()[2]//2, windowMP()[2]//1.5]
         y=windowMP()[1] + windowMP()[3]/1.5
         print(f"ability selected : {ability}")
-        if ability == "-" :
+        if ability == 0 :
             debug("No ability selected (-)")
             retour = False
         elif ability >= 1 and ability <= 3:
@@ -489,6 +521,7 @@ def abilities(localhero):
                 pyautogui.click()
                 if mercsAbilities[localhero][str(ability)] == True or mercsAbilities[localhero][str(ability)] == False :
                     retour = mercsAbilities[localhero][str(ability)]
+                ###added localy only for  a Dragon/Heal task
                 #elif mercsAbilities[localhero][str(ability)] == "friend:Dragon" :
                 #    pyautogui.moveTo(windowMP()[0] + int(windowMP()[2] // 2.08), y, setings[7], mouse_random_movement())
                 #    pyautogui.click()
@@ -498,6 +531,11 @@ def abilities(localhero):
                     pyautogui.moveTo(windowMP()[0] + chooseone3[0], windowMP()[1] + windowMP()[3]//2, setings[7], mouse_random_movement())
                     pyautogui.click()
                     retour = False
+                ###added localy only for Natalie for MY task
+                #if localhero == "Natalie Seline" :
+                #    pyautogui.moveTo(int(windowMP()[0] + windowMP()[2]//2), int(windowMP()[1] + windowMP()[3]//1.5), setings[7], mouse_random_movement())
+                #    pyautogui.click()
+                #    retour = False
         else :
             print(f"No ability selected for {localhero}")
     else :
@@ -564,25 +602,25 @@ def attacks(position, mercName, number, enemyred, enemygreen, enemyblue, enemyno
     pyautogui.moveTo(windowMP()[0] + windowMP()[2]/3, windowMP()[1] + windowMP()[3]/2, setings[7], mouse_random_movement())
     if mercName in mercslist :
         if mercslist[mercName]["type"] == "Protector" :
-            if abilities(mercName):
+            if select_ability(mercName):
                 if not move(enemygreen):
                     if not move(mol):
                         if not move(enemynoclass):
                             rand(enemyred, enemygreen, enemyblue, enemynoclass)
         elif mercslist[mercName]["type"] == "Fighter" :
-            if abilities(mercName):
+            if select_ability(mercName):
                 if not move(enemyblue):
                     if not move(mol):
                         if not move(enemynoclass):
                             rand(enemyred, enemygreen, enemyblue, enemynoclass)
         elif mercslist[mercName]["type"] == "Caster" :
-            if abilities(mercName):
+            if select_ability(mercName):
                 if not move(enemyred):
                     if not move(mol):
                         if not move(enemynoclass):
                             rand(enemyred, enemygreen, enemyblue, enemynoclass)
     else :
-        if abilities(mercName):
+        if select_ability(mercName):
             rand(enemyred, enemygreen, enemyblue, enemynoclass)
 
 
@@ -615,7 +653,7 @@ def battle():
 
         find_ellement(buttons[20], 14) # buttons 20: 'onedie'
 
-        if find_ellement(chekers[13], 1): # chekers 13: 'win'
+        if find_ellement(chekers[13], 1) or find_ellement(chekers[0], 1): # chekers 0: 'win_final' - chekers 13: 'win'
             retour = 'win'
             pyautogui.moveTo(windowMP()[0] + windowMP()[2] / 2, windowMP()[1] + windowMP()[3] - windowMP()[3] / 4.6, setings[7], mouse_random_movement())
             pyautogui.click()
@@ -906,7 +944,7 @@ def travelToLevel(page="next"):
     retour = False
 
     if find_ellement(Ui_Ellements[20], 1): # Ui_Ellements 20: 'bounties'
-        if find_ellement("levels/" + setings[2] + "_" + setings[3] + "_" + setings[1] + ".png", 14, 0.6): # setings 1: 'level(ex:20)'
+        if find_ellement("levels/" + setings[2] + "_" + setings[3] + "_" + str(setings[1]) + ".png", 14, 0.6): # setings 1: 'level(ex:20)'
             waitForItOrPass(buttons[11], 6) # buttons 11: 'start'
             find_ellement(buttons[11], 14) # buttons 11: 'start'
             retour = True
@@ -1021,12 +1059,12 @@ def where():
 
 def find_ellement(file, index, threshold="-"):
     """ Find an object ('file') on the screen (UI, Button, ...) and do some actions ('index') 
-                  FullScreenshot | PartOfTheScreen(shot) |  Actions   | Return
-      index = 1 :       x        |                       |     -      | True / False      
-      index = 2 :       x        |                       |    move    | True / False
-      index = 14:       x        |                       | move+click | True / False
-      index = 12:                |           x           |     -      |  x,y / 0,0
-      index = 15:       x        |                       |     -      |  x,y / 0,0
+                  Screenshot Here |   Screenshot before   |  Actions   | Return
+      index = 1 :       x         |                       |     -      | True / False      
+      index = 2 :       x         |                       |    move    | True / False
+      index = 14:       x         |                       | move+click | True / False
+      index = 12:                 |           x           |     -      |  x,y / 0,0
+      index = 15:       x         |                       |     -      |  x,y / 0,0
         (new index needed to return a tab of object/coordinates)
     """
     debug("DEBUG : find_ellement_grey START")
@@ -1094,15 +1132,8 @@ def main():
         configread()
         findgame()
         parslist()
-        if(myOS=="windows"):
-            ahk.show_info_traytip("started", "all files loaded successfully", slient=False, blocking=True)
-            win.show()
-#            win.restore()
-#            win.maximize()
-            win.to_top()
-#            win.maximize()
-#            win.to_top()
-            win.activate()
+#        if(myOS=="windows"):
+#            ahk.show_info_traytip("started", "all files loaded successfully", slient=False, blocking=True)
         while True:
             print("Loop")
             if findgame():
