@@ -76,11 +76,13 @@ To discuss with the community, go to discord [Mercenaries Farm server](https://d
 * Download and install AutoHotKey (AHK) : https://www.autohotkey.com/
 * Download the project
 * Edit your Hearthstone log.config file (C:\Users\YOURUSER\AppData\Local\Blizzard\Hearthstone\log.config) and add these lines :
+```
 [Zone]
 LogLevel=1
 FilePrinting=true
 ConsolePrinting=false
 ScreenPrinting=false
+```
 * Open settings.ini and set your [settings](https://github.com/Efemache/Mercenaries-Farm-bot/wiki/Settings) (/!\ don't forget to set "GameDir" to your Hearthstone directory)
 * Start Hearthstone
 * Create a group of mercenaries named "Botwork" (and go back to main menu)
@@ -92,11 +94,13 @@ ScreenPrinting=false
 * Download the project
 * Open settings.ini and set your [settings](https://github.com/Efemache/Mercenaries-Farm-bot/wiki/Settings) (/!\ don't forget to set "GameDir" to your Hearthstone directory)
 * Edit your Hearthstone log.config file ([...]/drive_c/users/YOURUSER/Local Settings/Application Data/Blizzard/Hearthstone/log.config) and add these lines :
+```
 [Zone]
 LogLevel=1
 FilePrinting=true
 ConsolePrinting=false
 ScreenPrinting=false
+```
 * Start Hearthstone
 * Create a group of mercenaries named "Botwork" (and go back to main menu)
 * Run HSbotRunner.sh
@@ -104,3 +108,5 @@ ScreenPrinting=false
 ### Python Installation
 (removed due to google reference problem; I'll post a new video later)
 
+### FAQ
+A new [FAQ](https://github.com/Efemache/Mercenaries-Farm-bot/wiki/FAQ) is created and will be filled
