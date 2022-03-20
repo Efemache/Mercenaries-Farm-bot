@@ -70,7 +70,7 @@ To discuss with the community, go to discord [Mercenaries Farm server](https://d
 
 ## Installation
 ### Windows
-* Install [Python 3.9](https://www.python.org/ftp/python/3.9.0/python-3.9.0-amd64-webinstall.exe) (see the video below) 
+* Install [Python 3.9](https://www.python.org/ftp/python/3.9.0/python-3.9.0-amd64-webinstall.exe) (/!\ select the "Add Python 3.9 to PATH" during installation) 
 * Download and install AutoHotKey (AHK) : https://www.autohotkey.com/
 * Download the project
 * Open settings.ini and set your [settings](https://github.com/Efemache/Mercenaries-Farm-bot/wiki/Settings) (/!\ don't forget to set "GameDir" to your Hearthstone directory)
