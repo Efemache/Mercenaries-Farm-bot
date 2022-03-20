@@ -61,7 +61,7 @@ To discuss with the community, go to discord [Mercenaries Farm server](https://d
 * bot doesn't work with ability which need to point to one of your mercenaries (ex: impossible to use healing with Xyrella)
 * ~~bot doesn't use minions on board which are not a mercenary~~ ✓ (ok since 0.4.0 release)
 
-## PvE system work preview
+## PvE system work preview (demo)
 [![Watch the video](https://user-images.githubusercontent.com/56414438/156830161-924cf85c-64a2-4215-870d-d0d005d28adc.jpg)](https://youtu.be/ZQ3xCL9_4Yo)
 
 ## When the bot is running
@@ -75,6 +75,12 @@ To discuss with the community, go to discord [Mercenaries Farm server](https://d
 * Install [Python 3.9](https://www.python.org/ftp/python/3.9.0/python-3.9.0-amd64-webinstall.exe) (/!\ select the "Add Python 3.9 to PATH" during installation) 
 * Download and install AutoHotKey (AHK) : https://www.autohotkey.com/
 * Download the project
+* Edit your Hearthstone log.config file (C:\Users\YOURUSER\AppData\Local\Blizzard\Hearthstone\log.config) and add these lines :
+[Zone]
+LogLevel=1
+FilePrinting=true
+ConsolePrinting=false
+ScreenPrinting=false
 * Open settings.ini and set your [settings](https://github.com/Efemache/Mercenaries-Farm-bot/wiki/Settings) (/!\ don't forget to set "GameDir" to your Hearthstone directory)
 * Start Hearthstone
 * Create a group of mercenaries named "Botwork" (and go back to main menu)
@@ -85,10 +91,16 @@ To discuss with the community, go to discord [Mercenaries Farm server](https://d
 * Install gir1.2-wnck-3.0 (sudo apt install gir1.2-wnck-3.0)
 * Download the project
 * Open settings.ini and set your [settings](https://github.com/Efemache/Mercenaries-Farm-bot/wiki/Settings) (/!\ don't forget to set "GameDir" to your Hearthstone directory)
+* Edit your Hearthstone log.config file ([...]/drive_c/users/YOURUSER/Local Settings/Application Data/Blizzard/Hearthstone/log.config) and add these lines :
+[Zone]
+LogLevel=1
+FilePrinting=true
+ConsolePrinting=false
+ScreenPrinting=false
 * Start Hearthstone
 * Create a group of mercenaries named "Botwork" (and go back to main menu)
 * Run HSbotRunner.sh
 
-### Demo
+### Python Installation
 (removed due to google reference problem; I'll post a new video later)
 
