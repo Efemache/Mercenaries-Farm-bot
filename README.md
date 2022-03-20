@@ -9,6 +9,8 @@ and add :
 [Zone]
 LogLevel=1
 FilePrinting=true
+ConsolePrinting=false
+ScreenPrinting=false
 ```
 ## Purpose
 The purpose of this bot is to automatically pass the levels to level up your heros, win somes coins and do some campfire tasks 
