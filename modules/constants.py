@@ -116,6 +116,7 @@ class Checker(ImageFragment):
     lvl1_30 = "30lvl1"
     lvl2_30 = "30lvl2"
     lvl30 = "30lvl"
+    win_final = "win_final"
     menu = "menu"
     nextlvlcheck = "nextlvlcheck"
     party = "party"

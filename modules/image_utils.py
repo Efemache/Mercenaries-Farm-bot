@@ -14,12 +14,12 @@ from .constants import Action
 def find_ellement(file, action, threshold="-", speed=1):
     """Find an object ('file') on the screen (UI, Button, ...)
         and do some actions ('action')
-                FullScreenshot | PartOfTheScreen(shot) |  Actions   | Return
-    action = 1 :       x        |                       |     -      | True / False
-    action = 2 :       x        |                       |    move    | True / False
-    action = 14:       x        |                       | move+click | True / False
-    action = 12:                |           x           |     -      |  x,y / 0,0
-    action = 15:       x        |                       |     -      |  x,y / 0,0
+                Screenshot Here  |    Screenshot Before  |  Actions   | Return
+    action = 1 :       x         |                       |     -      | True / False
+    action = 2 :       x         |                       |    move    | True / False
+    action = 14:       x         |                       | move+click | True / False
+    action = 12:                 |           x           |     -      |  x,y / 0,0
+    action = 15:       x         |                       |     -      |  x,y / 0,0
       (new action needed to return a tab of object/coordinates)
     """
     debug("DEBUG : find_ellement_grey START")

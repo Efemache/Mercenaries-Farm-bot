@@ -329,13 +329,7 @@ def travelToLevel(page="next"):
 
     if find_ellement(UIElement.bounties.filename, Action.screenshot):
         if find_ellement(
-            "levels/"
-            + settings["location"]
-            + "_"
-            + settings["mode"]
-            + "_"
-            + settings["level"]
-            + ".png",
+            f"levels/{settings['location']}_{settings['mode']}_{settings['level']}.png",
             Action.move_and_click,
             0.4,
         ):

@@ -34,24 +34,7 @@ def main():
     try:
         myOS = find_os()
         configread()
-        win = findgame(myOS)
-        if myOS == "windows":
-            try:
-                from ahk import AHK
-
-                ahk = AHK()
-            except ImportError:
-                print("ahk not installed")
-            ahk.show_info_traytip(
-                "started", "all files loaded successfully", slient=False, blocking=True
-            )
-            win.show()
-            #            win.restore()
-            #            win.maximize()
-            win.to_top()
-            #            win.maximize()
-            #            win.to_top()
-            win.activate()
+        findgame(myOS)
         while True:
             print("Loop")
             if findgame(myOS):
