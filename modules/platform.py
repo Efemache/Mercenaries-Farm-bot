@@ -71,7 +71,11 @@ def find_game_on_windows():
         ahk = AHK()
     except ImportError:
         print("ahk not installed")
-    return ahk.win_get(title="Hearthstone")
+    win = ahk.win_get(title="Hearthstone")
+    win.show()
+    win.to_top()
+    win.activate()
+    return win
 
 
 myOS = find_os()

@@ -1,18 +1,5 @@
-"""
-Read settings.ini and put it in a table :
-Setings -
-    0: MonitorResolution (1920x1080),
-    1: level (20),
-    2: location (The Barrens),
-    3: mode (Heroic),
-    4: quitBeforeBossFight (True),
-    5: heroSet (True),
-    6: monitor (1),
-    7: MouseSpeed (0.5),
-    8: WaitForEXP (3),
-    9: Zonelog (GameDir/Logs/Zone.log)
-"""
 import os
+import re
 import json
 import configparser
 
@@ -23,12 +10,38 @@ settings = {
     "location,": "",
     "mode": "",
     "quitBeforeBossFight": "",
-    "heroSet": "",
     "monitor": "",
     "MouseSpeed": "",
     "WaitForEXP": "",
     "Zonelog": "",
+    "stopAtStranger": "",
 }
+
+
+def readINI(inifile, section):
+    """... just for reading .ini file and return data"""
+    config = configparser.ConfigParser()
+    config.read(inifile)
+
+    return config[section]
+
+
+def parseINI(inidict):
+    """... just for transform value into right type"""
+    initype = {}
+    for k in inidict.keys():
+        i = inidict[k].split("#")[0]
+        if i in ["True", "False"]:
+            initype[k] = bool(i)
+        elif re.match("^[0-9]+$", i):
+            initype[k] = int(i)
+        elif re.match("^[0-9]+\.[0-9]+$", i):
+            # elif re.match("^([0-9]+(?:\.[0-9]+))(?:\s)$",i):
+            initype[k] = float(i)
+        else:
+            initype[k] = str(i)
+
+    return initype
 
 
 def configread():
@@ -57,7 +70,7 @@ def configread():
     settings["Monitor Resolution"] = config["BotSettings"][
         "Monitor Resolution"
     ].replace("*", "x")
-    for i in ["level", "location", "mode", "quitBeforeBossFight", "heroesSet"]:
+    for i in ["level", "location", "mode", "quitBeforeBossFight", "stopAtStranger"]:
         settings[i] = config["BotSettings"][i]
 
     settings["monitor"] = int(config["BotSettings"]["monitor"])
@@ -85,7 +98,7 @@ def readjson(jfile):
     return data
 
 
-configread()
+settings = parseINI(readINI("settings.ini", "BotSettings"))
 
 jthreshold = readjson("conf/thresholds.json")
 mercslist = readjson("conf/mercs.json")
