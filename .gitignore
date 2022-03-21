@@ -15,3 +15,5 @@ __pycache__/
 *.old
 backup/
 development/
+
+.vscode/
