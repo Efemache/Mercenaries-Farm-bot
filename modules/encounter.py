@@ -348,7 +348,7 @@ def battle():
         find_ellement(Button.onedie.filename, Action.move_and_click)
 
         if find_ellement(Checker.win.filename, Action.screenshot) or find_ellement(
-            Checker.win_final, Action.screenshot
+            Checker.win_final.filename, Action.screenshot
         ):
             retour = "win"
             move_mouse_and_click(
