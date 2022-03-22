@@ -312,10 +312,6 @@ def find_noclass_enemy():
 def find_noclass2_enemy():
     return find_enemy("noclass2")
 
-def find_noclass2_enemy():
-    return find_enemy("noclass2")
-
-
 def find_mol_enemy():
     return find_enemy("sob")
 
