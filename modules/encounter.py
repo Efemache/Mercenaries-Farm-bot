@@ -44,7 +44,8 @@ def move(index):
         return False
 
 
-def rand(enemyred, enemygreen, enemyblue, enemynoclass):
+def rand(enemies=[]):
+#def rand(enemyred, enemygreen, enemyblue, enemynoclass, enemyclass2):
     """look for a random enemy
     (used when blue mercs can't find red enemy,
     green can't find blue or
@@ -52,7 +53,7 @@ def rand(enemyred, enemygreen, enemyblue, enemynoclass):
     """
     debug("rand : attack random enemy")
     #    count = 0
-    enemies = [enemyred, enemygreen, enemyblue, enemynoclass]
+    #enemies = [enemyred, enemygreen, enemyblue, enemynoclass, enemynoclass2]
     debug(enemies, "len=", len(enemies))
     while enemies:
         toAttack = enemies.pop(random.randint(0, len(enemies) - 1))
@@ -186,7 +187,7 @@ def select_ability(localhero):
 
 
 def attacks(
-    position, mercName, number, enemyred, enemygreen, enemyblue, enemynoclass, mol
+    position, mercName, number, enemyred, enemygreen, enemyblue, enemynoclass, enemynoclass2, mol
 ):
     """Function to attack an enemy (red, green or blue ideally) with the selected mercenary
     red attacks green (if exists)
@@ -236,26 +237,29 @@ def attacks(
             and not move(enemygreen)
             and not move(mol)
             and not move(enemynoclass)
+            and not move(enemynoclass2)
         ):
-            rand(enemyred, enemygreen, enemyblue, enemynoclass)
+            rand([enemyred, enemyblue])
         elif (
             mercslist[mercName]["type"] == "Fighter"
             and select_ability(mercName)
             and not move(enemyblue)
             and not move(mol)
             and not move(enemynoclass)
+            and not move(enemynoclass2)
         ):
-            rand(enemyred, enemygreen, enemyblue, enemynoclass)
+            rand([enemyred, enemygreen])
         elif (
             mercslist[mercName]["type"] == "Caster"
             and select_ability(mercName)
             and not move(enemyred)
             and not move(mol)
             and not move(enemynoclass)
+            and not move(enemynoclass2)
         ):
-            rand(enemyred, enemygreen, enemyblue, enemynoclass)
+            rand([enemygreen, enemyblue])
     elif select_ability(mercName):
-        rand(enemyred, enemygreen, enemyblue, enemynoclass)
+        rand([enemyred, enemygreen, enemyblue, enemynoclass, enemynoclass2])
 
 
 # Look for enemies
@@ -264,6 +268,7 @@ def find_enemies():
     enemygreen = find_green_enemy()
     enemyblue = find_blue_enemy()
     enemynoclass = find_noclass_enemy()
+    enemynoclass2 = find_noclass2_enemy()
     enemymol = find_mol_enemy()
 
     print(
@@ -275,10 +280,12 @@ def find_enemies():
         enemyblue,
         " - noclass",
         enemynoclass,
+        " - noclass2",
+        enemynoclass2,
         " - mol",
         enemymol,
     )
-    return enemyred, enemygreen, enemyblue, enemynoclass, enemymol
+    return enemyred, enemygreen, enemyblue, enemynoclass, enemynoclass2, enemymol
 
 
 def find_red_enemy():
@@ -296,6 +303,8 @@ def find_blue_enemy():
 def find_noclass_enemy():
     return find_enemy("noclass")
 
+def find_noclass2_enemy():
+    return find_enemy("noclass2")
 
 def find_mol_enemy():
     return find_enemy("sob")
@@ -318,16 +327,14 @@ def battle():
     and make them battle until one of yours die
     """
     global raund
-    #    global threshold
-    global speed
-    global zoneLog
+#    global speed
+#    global zoneLog
     retour = True
 
     # init the reading of Hearthstone filelog to detect your board / mercenaries
     zoneLog = LogHSMercs(settings["Zonelog"])
     zoneLog.start()
 
-    #    tempthreshold = threshold
     raund = 1
     while True:
         pyautogui.moveTo(
@@ -337,7 +344,6 @@ def battle():
             mouse_random_movement(),
         )
         speed = 0
-        #        threshold = 0.85
 
         # we look for the (green) "ready" button because :
         # - sometimes, the bot click on it but it doesn't work very well
@@ -394,10 +400,9 @@ def battle():
                 windowMP()[2], windowMP()[3] // 2, windowMP()[1], windowMP()[0]
             )
 
-            temp = speed
-            # threshold = 0.8
+            #temp = speed
 
-            enemyred, enemygreen, enemyblue, enemynoclass, mol = find_enemies()
+            enemyred, enemygreen, enemyblue, enemynoclass, enemynoclass2, mol = find_enemies()
             # Go (mouse) to "central zone" and click on an empty space
             pyautogui.moveTo(
                 windowMP()[0] + windowMP()[2] / 2,
@@ -426,12 +431,12 @@ def battle():
                     enemygreen,
                     enemyblue,
                     enemynoclass,
+                    enemynoclass2,
                     mol,
                 )
                 time.sleep(0.1)
 
-            # threshold = 0.75
-            speed = temp
+            #speed = temp
             i = 0
             while True:
                 if find_ellement(Button.allready.filename, Action.move_and_click):
@@ -445,7 +450,6 @@ def battle():
             time.sleep(3)
             raund += 1
 
-    # threshold = tempthreshold
     zoneLog.stop()
     return retour
 
@@ -462,8 +466,7 @@ def selectCardsInHand():
     debug("[ SETH - START]")
     retour = True
 
-    global speed
-    #    global threshold
+    #global speed
 
     while not find_ellement(Button.num.filename, Action.move):
         time.sleep(0.5)
@@ -471,8 +474,7 @@ def selectCardsInHand():
     debug("windowsMP() : ", windowMP())
     x = windowMP()[0] + (windowMP()[2] / 2.6)
     y = windowMP()[1] + (windowMP()[3] * 0.92)
-    speed = 0
-    # threshold = 0.85
+    #speed = 0
 
     while not find_ellement(Button.num.filename, Action.move_and_click):
         pyautogui.moveTo(x, y, settings["MouseSpeed"])
