@@ -11,7 +11,7 @@ from .settings import settings, jthreshold
 from .constants import Action
 
 
-def find_ellement(file, action, threshold="-", speed=1):
+def find_ellement(file, action, threshold="-", speed=settings["bot_speed"]):
     """Find an object ('file') on the screen (UI, Button, ...)
         and do some actions ('action')
                 Screenshot Here  |    Screenshot Before  |  Actions   | Return
