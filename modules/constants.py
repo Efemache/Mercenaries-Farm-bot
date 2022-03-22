@@ -45,6 +45,7 @@ class UIElement(ImageFragment):
     group = "group"
     heroic = "heroic"
     noclass = "noclass"
+    noclass2 = "noclass2"
     normal = "normal"
     pick = "pick"
     presents_thing = "presents_thing"
