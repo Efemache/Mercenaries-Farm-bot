@@ -11,10 +11,10 @@ from modules.platform import find_os, findgame
 # global threshold
 global zoneLog
 # threshold = 0.75
-global mercslist
-mercslist = {}
+#global mercslist
+#mercslist = {}
 # global mercsAbilities
-mercsAbilities = {}
+#mercsAbilities = {}
 
 
 # Settings -

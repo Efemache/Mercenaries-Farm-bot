@@ -71,7 +71,8 @@ def select_ability(localhero):
         Depend on what is available and wich Round (battle)
     Click only on the ability (doesnt move to an enemy)
     """
-    global mercsAbilities
+    global raund
+#    global mercsAbilities
     abilitiesWidth = windowMP()[2] // 14.2
     abilitiesHeigth = windowMP()[3] // 7.2
 
@@ -193,7 +194,8 @@ def attacks(
     blue attacks red (if exists)
     else merc attacks minion with special abilities or neutral
     """
-    global mercslist
+    #global mercslist
+    global raund
 
     debug("[DEBUG] Attacks function")
 
@@ -370,33 +372,43 @@ def battle():
             Button.fight.filename, Action.screenshot
         ):  # or find_ellement(Button.startbattle1.filename, Action.screenshot):
 
-            def round_fight(speed, raund=1):
-                # wait 'WaitForEXP' (float) in minutes, to make the battle longer and
-                # win more EXP (for the Hearthstone reward track)
-                print("WaitForEXP - wait (second(s)) :", settings["WaitForEXP"])
-                time.sleep(settings["WaitForEXP"])
+            # wait 'WaitForEXP' (float) in minutes, to make the battle longer and
+            # win more EXP (for the Hearthstone reward track)
+            print("WaitForEXP - wait (second(s)) :", settings["WaitForEXP"])
+            time.sleep(settings["WaitForEXP"])
 
-                # looks for your Mercenaries on board thanks to log file
-                mercenaries = zoneLog.getBoard()
-                print("ROUND", raund, " : your board", mercenaries)
+            # looks for your Mercenaries on board thanks to log file
+            mercenaries = zoneLog.getBoard()
+            print("ROUND", raund, " : your board", mercenaries)
 
-                # click on neutral zone to avoid problem with screenshot
-                # when you're looking for red/green/blue enemies
-                move_mouse_and_click(
-                    windowMP(), windowMP()[2] / 2, windowMP()[3] - windowMP()[3] / 4.6
-                )
+            # click on neutral zone to avoid problem with screenshot
+            # when you're looking for red/green/blue enemies
+            move_mouse_and_click(
+                windowMP(), windowMP()[2] / 2, windowMP()[3] - windowMP()[3] / 4.6
+            )
 
-                time.sleep(0.2)
+            time.sleep(0.2)
 
-                # tmp = int(windowMP()[3] / 2)
-                partscreen(
-                    windowMP()[2], windowMP()[3] // 2, windowMP()[1], windowMP()[0]
-                )
+            # tmp = int(windowMP()[3] / 2)
+            partscreen(
+                windowMP()[2], windowMP()[3] // 2, windowMP()[1], windowMP()[0]
+            )
 
-                temp = speed
-                # threshold = 0.8
+            temp = speed
+            # threshold = 0.8
 
-                enemyred, enemygreen, enemyblue, enemynoclass, mol = find_enemies()
+            enemyred, enemygreen, enemyblue, enemynoclass, mol = find_enemies()
+            # Go (mouse) to "central zone" and click on an empty space
+            pyautogui.moveTo(
+                windowMP()[0] + windowMP()[2] / 2,
+                windowMP()[1] + windowMP()[3] - windowMP()[3] / 4.8,
+                settings["MouseSpeed"],
+                mouse_random_movement(),
+            )
+            pyautogui.click()
+            time.sleep(1)
+
+            for i in mercenaries:
                 # Go (mouse) to "central zone" and click on an empty space
                 pyautogui.moveTo(
                     windowMP()[0] + windowMP()[2] / 2,
@@ -405,46 +417,34 @@ def battle():
                     mouse_random_movement(),
                 )
                 pyautogui.click()
-                time.sleep(1)
 
-                for i in mercenaries:
-                    # Go (mouse) to "central zone" and click on an empty space
-                    pyautogui.moveTo(
-                        windowMP()[0] + windowMP()[2] / 2,
-                        windowMP()[1] + windowMP()[3] - windowMP()[3] / 4.8,
-                        settings["MouseSpeed"],
-                        mouse_random_movement(),
-                    )
-                    pyautogui.click()
+                attacks(
+                    int(i),
+                    mercenaries[i],
+                    int(sorted(mercenaries)[-1]),
+                    enemyred,
+                    enemygreen,
+                    enemyblue,
+                    enemynoclass,
+                    mol,
+                )
+                time.sleep(0.1)
 
-                    attacks(
-                        int(i),
-                        mercenaries[i],
-                        int(sorted(mercenaries)[-1]),
-                        enemyred,
-                        enemygreen,
-                        enemyblue,
-                        enemynoclass,
-                        mol,
-                    )
-                    time.sleep(0.1)
+            # threshold = 0.75
+            speed = temp
+            i = 0
+            while True:
+                if find_ellement(Button.allready.filename, Action.move_and_click):
+                    break
+                if i > 10:
+                    pyautogui.rightClick()
+                    find_ellement(Button.fight.filename, Action.move_and_click)
+                    break
+                time.sleep(0.2)
+                i += 1
+            time.sleep(3)
+            raund += 1
 
-                # threshold = 0.75
-                speed = temp
-                i = 0
-                while True:
-                    if find_ellement(Button.allready.filename, Action.move_and_click):
-                        break
-                    if i > 10:
-                        pyautogui.rightClick()
-                        find_ellement(Button.fight.filename, Action.move_and_click)
-                        break
-                    time.sleep(0.2)
-                    i += 1
-                time.sleep(3)
-                raund += 1
-
-            round_fight(speed, raund)
     # threshold = tempthreshold
     zoneLog.stop()
     return retour
