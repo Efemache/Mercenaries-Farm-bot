@@ -331,7 +331,7 @@ def travelToLevel(page="next"):
         if find_ellement(
             f"levels/{settings['location']}_{settings['mode']}_{settings['level']}.png",
             Action.move_and_click,
-            0.4,
+            0.6,
         ):
             waitForItOrPass(Button.start, 6)
             find_ellement(Button.start.filename, Action.move_and_click)
