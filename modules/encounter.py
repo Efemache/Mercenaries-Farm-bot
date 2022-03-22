@@ -12,7 +12,7 @@ from .debug import debug
 from .image_utils import partscreen, find_ellement
 from .constants import UIElement, Checker, Button, Action
 from .log_board import LogHSMercs
-from .settings import settings
+from .settings import settings, mercslist, mercsAbilities
 
 
 config = configparser.ConfigParser()
