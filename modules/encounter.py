@@ -45,7 +45,6 @@ def move(index):
 
 
 def rand(enemies=[]):
-    # def rand(enemyred, enemygreen, enemyblue, enemynoclass, enemyclass2):
     """look for a random enemy
     (used when blue mercs can't find red enemy,
     green can't find blue or
@@ -53,7 +52,6 @@ def rand(enemies=[]):
     """
     debug("rand : attack random enemy")
     #    count = 0
-    # enemies = [enemyred, enemygreen, enemyblue, enemynoclass, enemynoclass2]
     debug(enemies, "len=", len(enemies))
     while enemies:
         toAttack = enemies.pop(random.randint(0, len(enemies) - 1))
@@ -195,7 +193,7 @@ def attacks(
     enemyblue,
     enemynoclass,
     enemynoclass2,
-    mol,
+    mol
 ):
     """Function to attack an enemy (red, green or blue ideally) with the selected mercenary
     red attacks green (if exists)
@@ -311,6 +309,8 @@ def find_blue_enemy():
 def find_noclass_enemy():
     return find_enemy("noclass")
 
+def find_noclass2_enemy():
+    return find_enemy("noclass2")
 
 def find_noclass2_enemy():
     return find_enemy("noclass2")
@@ -337,8 +337,6 @@ def battle():
     and make them battle until one of yours die
     """
     global raund
-    #    global speed
-    #    global zoneLog
     retour = True
 
     # init the reading of Hearthstone filelog to detect your board / mercenaries
@@ -408,8 +406,6 @@ def battle():
             # tmp = int(windowMP()[3] / 2)
             partscreen(windowMP()[2], windowMP()[3] // 2, windowMP()[1], windowMP()[0])
 
-            # temp = speed
-
             (
                 enemyred,
                 enemygreen,
@@ -418,6 +414,7 @@ def battle():
                 enemynoclass2,
                 mol,
             ) = find_enemies()
+
             # Go (mouse) to "central zone" and click on an empty space
             pyautogui.moveTo(
                 windowMP()[0] + windowMP()[2] / 2,
@@ -451,7 +448,6 @@ def battle():
                 )
                 time.sleep(0.1)
 
-            # speed = temp
             i = 0
             while True:
                 if find_ellement(Button.allready.filename, Action.move_and_click):
@@ -481,15 +477,12 @@ def selectCardsInHand():
     debug("[ SETH - START]")
     retour = True
 
-    # global speed
-
     while not find_ellement(Button.num.filename, Action.move):
         time.sleep(0.5)
 
     debug("windowsMP() : ", windowMP())
     x = windowMP()[0] + (windowMP()[2] / 2.6)
     y = windowMP()[1] + (windowMP()[3] * 0.92)
-    # speed = 0
 
     while not find_ellement(Button.num.filename, Action.move_and_click):
         pyautogui.moveTo(x, y, settings_dict["mousespeed"])
