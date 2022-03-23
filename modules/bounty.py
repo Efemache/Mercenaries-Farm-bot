@@ -9,7 +9,7 @@ from .mouse_utils import mouse_random_movement, move_mouse_and_click, move_mouse
 from .debug import debug
 from .constants import UIElement, Button, Action
 from .image_utils import find_ellement
-from .settings import settings
+from .settings import settings_dict
 from .game import waitForItOrPass
 from .encounter import selectCardsInHand
 
@@ -82,7 +82,9 @@ def nextlvl():
                 temp = random.choice([3, 2, 1.7])
                 x = windowMP()[2] // temp
 
-                pyautogui.moveTo(x, y, settings["MouseSpeed"], mouse_random_movement())
+                pyautogui.moveTo(
+                    x, y, settings_dict["MouseSpeed"], mouse_random_movement()
+                )
                 time.sleep(0.1)
                 pyautogui.click()
                 time.sleep(0.2)
@@ -117,7 +119,7 @@ def nextlvl():
                 x = windowMP()[0] + windowMP()[2] // 3.7
                 y = windowMP()[1] + windowMP()[3] // 2.2
             debug("move mouse to (x, y) : ", x, y)
-            pyautogui.moveTo(x, y, settings["MouseSpeed"])
+            pyautogui.moveTo(x, y, settings_dict["MouseSpeed"])
             time.sleep(0.1)
             pyautogui.doubleClick()
 
@@ -130,13 +132,13 @@ def chooseTreasure():
     temp = random.randint(0, 2)
     if temp == 0:
         x = windowMP()[2] / 2.3
-        pyautogui.moveTo(x, y, settings["MouseSpeed"], mouse_random_movement())
+        pyautogui.moveTo(x, y, settings_dict["MouseSpeed"], mouse_random_movement())
     if temp == 1:
         x = windowMP()[2] / 1.7
-        pyautogui.moveTo(x, y, settings["MouseSpeed"], mouse_random_movement())
+        pyautogui.moveTo(x, y, settings_dict["MouseSpeed"], mouse_random_movement())
     if temp == 2:
         x = windowMP()[2] / 1.4
-        pyautogui.moveTo(x, y, settings["MouseSpeed"], mouse_random_movement())
+        pyautogui.moveTo(x, y, settings_dict["MouseSpeed"], mouse_random_movement())
     pyautogui.click()
     while True:
         if find_ellement(Button.take.filename, Action.move_and_click):
@@ -163,47 +165,47 @@ def travelpointSelection():
         pyautogui.moveTo(
             windowMP()[0] + windowMP()[2] / 1.5,
             windowMP()[1] + windowMP()[3] / 2,
-            settings["MouseSpeed"],
+            settings_dict["MouseSpeed"],
             mouse_random_movement(),
         )
 
         pyautogui.scroll(50)
         time.sleep(0.5)
 
-        if settings["location"] == "The Barrens":
+        if settings_dict["location"] == "The Barrens":
             find_ellement(UIElement.Barrens.filename, Action.move_and_click)
 
-        elif settings["location"] == "Felwood":
+        elif settings_dict["location"] == "Felwood":
             find_ellement(UIElement.Felwood.filename, Action.move_and_click)
 
-        elif settings["location"] == "Winterspring":
+        elif settings_dict["location"] == "Winterspring":
             pyautogui.scroll(-2)
             pyautogui.moveTo(
                 windowMP()[0] + windowMP()[2] / 3,
                 windowMP()[1] + windowMP()[3] / 2,
-                settings["MouseSpeed"],
+                settings_dict["MouseSpeed"],
                 mouse_random_movement(),
             )
             time.sleep(0.5)
             find_ellement(UIElement.Winterspring.filename, Action.move_and_click)
 
-        elif settings["location"] == "Blackrock":
+        elif settings_dict["location"] == "Blackrock":
             pyautogui.scroll(-10)
             pyautogui.moveTo(
                 windowMP()[0] + windowMP()[2] / 3,
                 windowMP()[1] + windowMP()[3] / 2,
-                settings["MouseSpeed"],
+                settings_dict["MouseSpeed"],
                 mouse_random_movement(),
             )
             time.sleep(0.5)
             find_ellement(UIElement.Blackrock.filename, Action.move_and_click)
 
-        elif settings["location"] == "Alterac":
+        elif settings_dict["location"] == "Alterac":
             pyautogui.scroll(-15)
             pyautogui.moveTo(
                 windowMP()[0] + windowMP()[2] / 3,
                 windowMP()[1] + windowMP()[3] / 2,
-                settings["MouseSpeed"],
+                settings_dict["MouseSpeed"],
                 mouse_random_movement(),
             )
             time.sleep(0.5)
@@ -218,14 +220,14 @@ def travelpointSelection():
         pyautogui.moveTo(
             windowMP()[0] + windowMP()[2] / 2,
             windowMP()[1] + windowMP()[3] / 2,
-            settings["MouseSpeed"],
+            settings_dict["MouseSpeed"],
             mouse_random_movement(),
         )
         time.sleep(0.5)
 
-        if settings["mode"] == "Normal":
+        if settings_dict["mode"] == "Normal":
             find_ellement(UIElement.normal.filename, Action.move_and_click)
-        elif settings["mode"] == "Heroic":
+        elif settings_dict["mode"] == "Heroic":
             find_ellement(UIElement.heroic.filename, Action.move_and_click)
         else:
             print("[INFO] Settings (for Heroic/Normal) unrecognized.")
@@ -246,14 +248,14 @@ def goToEncounter():
     time.sleep(2)
     travelEnd = False
 
-    # zoneLog = LogHSMercs(settings["Zonelog"])
+    # zoneLog = LogHSMercs(settings_dict["Zonelog"])
     # zoneLog.start()
     while not travelEnd:
         # tempthreshold = threshold
         # threshold = 0.85
 
         if find_ellement(Button.play.filename, Action.screenshot):
-            if settings["quitBeforeBossFight"] == "True" and find_ellement(
+            if settings_dict["quitBeforeBossFight"] == "True" and find_ellement(
                 UIElement.boss.filename, Action.screenshot
             ):
                 time.sleep(1)
@@ -329,7 +331,7 @@ def travelToLevel(page="next"):
 
     if find_ellement(UIElement.bounties.filename, Action.screenshot):
         if find_ellement(
-            f"levels/{settings['location']}_{settings['mode']}_{settings['level']}.png",
+            f"levels/{settings_dict['location']}_{settings_dict['mode']}_{settings_dict['level']}.png",
             Action.move_and_click,
             0.6,
         ):

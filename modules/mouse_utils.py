@@ -3,7 +3,7 @@ import time
 
 import pyautogui
 
-from .settings import settings
+from .settings import settings_dict
 
 
 def move_mouse_and_click(window, x, y):
@@ -19,7 +19,7 @@ def move_mouse(window, x, y, with_random=False):
     pyautogui.moveTo(
         window[0] + x + p,
         window[1] + y + s,
-        settings["MouseSpeed"],
+        settings_dict["MouseSpeed"],
         mouse_random_movement(),
     )
 
