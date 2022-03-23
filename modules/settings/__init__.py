@@ -32,9 +32,12 @@ for file in personalized_files:
         9: Zonelog (GameDir/Logs/Zone.log)
 """
 settings_dict = parseINI(readINI(settings_filename, "BotSettings"))
+settings_dict["zonelog"] = f"{settings_dict['gamedir']}/Logs/Zone.log"
 
 jthreshold = readjson(image_threshold_filename)
 mercslist = readjson(mercslist_filename)
 mercsAbilities = readjson(attacks_filename)
 
-print(settings_dict)
+print("Settings")
+for setting, value in settings_dict.items():
+    print(f" - {setting}: {value}")
