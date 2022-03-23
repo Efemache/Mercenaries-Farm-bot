@@ -40,7 +40,7 @@ def find_ellement(file, action, threshold="-", speed=settings_dict["bot_speed"])
         partscreen(windowMP()[2], windowMP()[3], windowMP()[1], windowMP()[0])
 
     img = cv2.cvtColor(partImg, cv2.COLOR_BGR2GRAY)
-    monitor_resolution = settings_dict["Monitor Resolution"]
+    monitor_resolution = settings_dict["monitor resolution"]
     template = cv2.imread(f"files/{monitor_resolution}/{file}", cv2.IMREAD_GRAYSCALE)
     result = cv2.matchTemplate(img, template, cv2.TM_CCOEFF_NORMED)
 
@@ -88,7 +88,7 @@ def partscreen(x, y, top, left, debug_mode=False, monitor_resolution=None):
         # mss.tools.to_png(
         #   sct_img.rgb,
         #   sct_img.size,
-        #   output='files/' + settings_dict['Monitor Resolution'] + '/part.png'
+        #   output='files/' + settings_dict['monitor resolution'] + '/part.png'
         # )
         if debug_mode:
             output_file = f"files/{ monitor_resolution}/part.png"

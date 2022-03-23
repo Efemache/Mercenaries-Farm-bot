@@ -137,7 +137,7 @@ def select_ability(localhero):
                         + abilitiesWidth // 2
                     ),
                     int(windowMP()[1] + abilitiesPositionY + abilitiesHeigth // 2),
-                    settings["MouseSpeed"],
+                    settings_dict["mousespeed"],
                     mouse_random_movement(),
                 )
                 pyautogui.click()
@@ -234,7 +234,7 @@ def attacks(
     )
 
     # print("merclist", mercslist.keys())
-    pyautogui.moveTo(x, y, settings["MouseSpeed"], mouse_random_movement())
+    pyautogui.moveTo(x, y, settings_dict["mousespeed"], mouse_random_movement())
     pyautogui.click()
     time.sleep(0.2)
     move_mouse(windowMP(), windowMP()[2] / 3, windowMP()[3] / 2)
@@ -342,7 +342,7 @@ def battle():
     retour = True
 
     # init the reading of Hearthstone filelog to detect your board / mercenaries
-    zoneLog = LogHSMercs(settings["Zonelog"])
+    zoneLog = LogHSMercs(settings_dict["zonelog"])
     zoneLog.start()
 
     raund = 1
@@ -350,7 +350,7 @@ def battle():
         pyautogui.moveTo(
             windowMP()[0] + (windowMP()[2] / 2.6),
             windowMP()[1] + (windowMP()[3] * 0.92),
-            settings["MouseSpeed"],
+            settings_dict["mousespeed"],
             mouse_random_movement(),
         )
         speed = 0
@@ -390,8 +390,8 @@ def battle():
 
             # wait 'WaitForEXP' (float) in minutes, to make the battle longer and
             # win more EXP (for the Hearthstone reward track)
-            print("WaitForEXP - wait (second(s)) :", settings["WaitForEXP"])
-            time.sleep(settings["WaitForEXP"])
+            print("WaitForEXP - wait (second(s)) :", settings_dict["waitforexp"])
+            time.sleep(settings_dict["waitforexp"])
 
             # looks for your Mercenaries on board thanks to log file
             mercenaries = zoneLog.getBoard()
@@ -422,7 +422,7 @@ def battle():
             pyautogui.moveTo(
                 windowMP()[0] + windowMP()[2] / 2,
                 windowMP()[1] + windowMP()[3] - windowMP()[3] / 4.8,
-                settings["MouseSpeed"],
+                settings_dict["mousespeed"],
                 mouse_random_movement(),
             )
             pyautogui.click()
@@ -433,7 +433,7 @@ def battle():
                 pyautogui.moveTo(
                     windowMP()[0] + windowMP()[2] / 2,
                     windowMP()[1] + windowMP()[3] - windowMP()[3] / 4.8,
-                    settings["MouseSpeed"],
+                    settings_dict["mousespeed"],
                     mouse_random_movement(),
                 )
                 pyautogui.click()
@@ -492,12 +492,12 @@ def selectCardsInHand():
     # speed = 0
 
     while not find_ellement(Button.num.filename, Action.move_and_click):
-        pyautogui.moveTo(x, y, settings["MouseSpeed"])
+        pyautogui.moveTo(x, y, settings_dict["mousespeed"])
         # time.sleep(1)
         pyautogui.moveTo(
             windowMP()[0] + (windowMP()[2] * 0.1),
             windowMP()[1] + (windowMP()[3] * 0.1),
-            settings["MouseSpeed"],
+            settings_dict["mousespeed"],
             mouse_random_movement(),
         )
 

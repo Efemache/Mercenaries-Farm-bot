@@ -83,7 +83,7 @@ def nextlvl():
                 x = windowMP()[2] // temp
 
                 pyautogui.moveTo(
-                    x, y, settings_dict["MouseSpeed"], mouse_random_movement()
+                    x, y, settings_dict["mousespeed"], mouse_random_movement()
                 )
                 time.sleep(0.1)
                 pyautogui.click()
@@ -119,7 +119,7 @@ def nextlvl():
                 x = windowMP()[0] + windowMP()[2] // 3.7
                 y = windowMP()[1] + windowMP()[3] // 2.2
             debug("move mouse to (x, y) : ", x, y)
-            pyautogui.moveTo(x, y, settings_dict["MouseSpeed"])
+            pyautogui.moveTo(x, y, settings_dict["mousespeed"])
             time.sleep(0.1)
             pyautogui.doubleClick()
 
@@ -132,13 +132,13 @@ def chooseTreasure():
     temp = random.randint(0, 2)
     if temp == 0:
         x = windowMP()[2] / 2.3
-        pyautogui.moveTo(x, y, settings_dict["MouseSpeed"], mouse_random_movement())
+        pyautogui.moveTo(x, y, settings_dict["mousespeed"], mouse_random_movement())
     if temp == 1:
         x = windowMP()[2] / 1.7
-        pyautogui.moveTo(x, y, settings_dict["MouseSpeed"], mouse_random_movement())
+        pyautogui.moveTo(x, y, settings_dict["mousespeed"], mouse_random_movement())
     if temp == 2:
         x = windowMP()[2] / 1.4
-        pyautogui.moveTo(x, y, settings_dict["MouseSpeed"], mouse_random_movement())
+        pyautogui.moveTo(x, y, settings_dict["mousespeed"], mouse_random_movement())
     pyautogui.click()
     while True:
         if find_ellement(Button.take.filename, Action.move_and_click):
@@ -165,7 +165,7 @@ def travelpointSelection():
         pyautogui.moveTo(
             windowMP()[0] + windowMP()[2] / 1.5,
             windowMP()[1] + windowMP()[3] / 2,
-            settings_dict["MouseSpeed"],
+            settings_dict["mousespeed"],
             mouse_random_movement(),
         )
 
@@ -183,7 +183,7 @@ def travelpointSelection():
             pyautogui.moveTo(
                 windowMP()[0] + windowMP()[2] / 3,
                 windowMP()[1] + windowMP()[3] / 2,
-                settings_dict["MouseSpeed"],
+                settings_dict["mousespeed"],
                 mouse_random_movement(),
             )
             time.sleep(0.5)
@@ -194,7 +194,7 @@ def travelpointSelection():
             pyautogui.moveTo(
                 windowMP()[0] + windowMP()[2] / 3,
                 windowMP()[1] + windowMP()[3] / 2,
-                settings_dict["MouseSpeed"],
+                settings_dict["mousespeed"],
                 mouse_random_movement(),
             )
             time.sleep(0.5)
@@ -205,7 +205,7 @@ def travelpointSelection():
             pyautogui.moveTo(
                 windowMP()[0] + windowMP()[2] / 3,
                 windowMP()[1] + windowMP()[3] / 2,
-                settings_dict["MouseSpeed"],
+                settings_dict["mousespeed"],
                 mouse_random_movement(),
             )
             time.sleep(0.5)
@@ -220,7 +220,7 @@ def travelpointSelection():
         pyautogui.moveTo(
             windowMP()[0] + windowMP()[2] / 2,
             windowMP()[1] + windowMP()[3] / 2,
-            settings_dict["MouseSpeed"],
+            settings_dict["mousespeed"],
             mouse_random_movement(),
         )
         time.sleep(0.5)
@@ -248,14 +248,14 @@ def goToEncounter():
     time.sleep(2)
     travelEnd = False
 
-    # zoneLog = LogHSMercs(settings_dict["Zonelog"])
+    # zoneLog = LogHSMercs(settings_dict["zonelog"])
     # zoneLog.start()
     while not travelEnd:
         # tempthreshold = threshold
         # threshold = 0.85
 
         if find_ellement(Button.play.filename, Action.screenshot):
-            if settings_dict["quitBeforeBossFight"] == "True" and find_ellement(
+            if settings_dict["quitbeforebossfight"] == "True" and find_ellement(
                 UIElement.boss.filename, Action.screenshot
             ):
                 time.sleep(1)
@@ -333,7 +333,7 @@ def travelToLevel(page="next"):
         if find_ellement(
             f"levels/{settings_dict['location']}_{settings_dict['mode']}_{settings_dict['level']}.png",
             Action.move_and_click,
-            0.6,
+            0.5,
         ):
             waitForItOrPass(Button.start, 6)
             find_ellement(Button.start.filename, Action.move_and_click)

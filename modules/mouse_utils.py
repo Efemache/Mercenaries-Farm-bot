@@ -19,7 +19,7 @@ def move_mouse(window, x, y, with_random=False):
     pyautogui.moveTo(
         window[0] + x + p,
         window[1] + y + s,
-        settings_dict["MouseSpeed"],
+        settings_dict["mousespeed"],
         mouse_random_movement(),
     )
 
