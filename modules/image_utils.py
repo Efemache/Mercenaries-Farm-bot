@@ -7,11 +7,11 @@ import numpy as np
 from .platform import windowMP
 from .mouse_utils import move_mouse_and_click, move_mouse
 from .debug import debug
-from .settings import settings, jthreshold
+from .settings import settings_dict, jthreshold
 from .constants import Action
 
 
-def find_ellement(file, action, threshold="-", speed=settings["bot_speed"]):
+def find_ellement(file, action, threshold="-", speed=settings_dict["bot_speed"]):
     """Find an object ('file') on the screen (UI, Button, ...)
         and do some actions ('action')
                 Screenshot Here  |    Screenshot Before  |  Actions   | Return
@@ -40,7 +40,7 @@ def find_ellement(file, action, threshold="-", speed=settings["bot_speed"]):
         partscreen(windowMP()[2], windowMP()[3], windowMP()[1], windowMP()[0])
 
     img = cv2.cvtColor(partImg, cv2.COLOR_BGR2GRAY)
-    monitor_resolution = settings["Monitor Resolution"]
+    monitor_resolution = settings_dict["Monitor Resolution"]
     template = cv2.imread(f"files/{monitor_resolution}/{file}", cv2.IMREAD_GRAYSCALE)
     result = cv2.matchTemplate(img, template, cv2.TM_CCOEFF_NORMED)
 
@@ -88,7 +88,7 @@ def partscreen(x, y, top, left, debug_mode=False, monitor_resolution=None):
         # mss.tools.to_png(
         #   sct_img.rgb,
         #   sct_img.size,
-        #   output='files/' + settings['Monitor Resolution'] + '/part.png'
+        #   output='files/' + settings_dict['Monitor Resolution'] + '/part.png'
         # )
         if debug_mode:
             output_file = f"files/{ monitor_resolution}/part.png"
