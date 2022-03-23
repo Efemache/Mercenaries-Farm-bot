@@ -16,4 +16,10 @@ __pycache__/
 backup/
 development/
 
+# IDE Settings
 .vscode/
+
+# Personal Settings Files
+settings.ini
+conf/combo.ini
+conf/thresholds.json
