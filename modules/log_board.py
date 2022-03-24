@@ -10,8 +10,15 @@ class LogHSMercs:
         # go to the end of the file
         self.logfile.seek(0, os.SEEK_END)
 
-        regexBoard = ".+? tag=ZONE_POSITION .+?entityName=(.+?) id=(.+?) .+?zonePos=(.) cardId=.+? player=1\] .+? dstPos=(.)"
-        # processing index=6 change=powerTask=[power=[type=TAG_CHANGE entity=[id=18 cardId=LETL_016H_01 name=Rokara] tag=ZONE_POSITION value=5 ] complete=False] entity=[entityName=Rokara id=18 zone=DECK zonePos=0 cardId=LETL_016H_01 player=1] srcZoneTag=INVALID srcPos= dstZoneTag=INVALID dstPos=5
+        regexBoard = (
+            ".+? tag=ZONE_POSITION "
+            ".+?entityName=(.+?) "
+            "id=(.+?) "
+            ".+?zonePos=(.) "
+            "cardId=.+? "
+            "player=1\] .+? "
+            "dstPos=(.)"
+        )
 
         # start infinite loop to read log file
         while self.__running:

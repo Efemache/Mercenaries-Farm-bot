@@ -193,7 +193,7 @@ def attacks(
     enemyblue,
     enemynoclass,
     enemynoclass2,
-    mol
+    mol,
 ):
     """Function to attack an enemy (red, green or blue ideally) with the selected mercenary
     red attacks green (if exists)
@@ -309,8 +309,10 @@ def find_blue_enemy():
 def find_noclass_enemy():
     return find_enemy("noclass")
 
+
 def find_noclass2_enemy():
     return find_enemy("noclass2")
+
 
 def find_mol_enemy():
     return find_enemy("sob")
@@ -347,7 +349,6 @@ def battle():
             settings_dict["mousespeed"],
             mouse_random_movement(),
         )
-        speed = 0
 
         # we look for the (green) "ready" button because :
         # - sometimes, the bot click on it but it doesn't work very well
