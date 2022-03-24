@@ -331,7 +331,8 @@ def travelToLevel(page="next"):
 
     if find_ellement(UIElement.bounties.filename, Action.screenshot):
         if find_ellement(
-            f"levels/{settings_dict['location']}_{settings_dict['mode']}_{settings_dict['level']}.png",
+            f"levels/{settings_dict['location']}"
+            f"_{settings_dict['mode']}_{settings_dict['level']}.png",
             Action.move_and_click,
             0.5,
         ):
