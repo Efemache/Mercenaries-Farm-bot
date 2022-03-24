@@ -52,4 +52,4 @@ def copy_config_from_sample_if_not_exists(filename):
         if samplepath.is_file():
             shutil.copy(samplepath, filepath)
 
-    return filename
+    return filepath.as_posix()

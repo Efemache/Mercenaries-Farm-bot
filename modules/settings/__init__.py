@@ -1,4 +1,5 @@
-from .settings import copy_config_from_sample_if_not_exists, readjson, parseINI, readINI
+from .settings import copy_config_from_sample_if_not_exists, get_settings
+from modules.file_utils import readjson
 
 # Personalized Settings files
 settings_filename = "settings.ini"
@@ -31,13 +32,16 @@ for file in personalized_files:
         8: WaitForEXP (3),
         9: Zonelog (GameDir/Logs/Zone.log)
 """
-settings_dict = parseINI(readINI(settings_filename, "BotSettings"))
-settings_dict["zonelog"] = f"{settings_dict['gamedir']}/Logs/Zone.log"
+try:
+    settings_dict = get_settings(settings_filename)
+
+    print("Settings")
+    for setting, value in settings_dict.items():
+        print(f" - {setting}: {value}")
+
+except Exception:
+    print("Running without settings")
 
 jthreshold = readjson(image_threshold_filename)
 mercslist = readjson(mercslist_filename)
 mercsAbilities = readjson(attacks_filename)
-
-print("Settings")
-for setting, value in settings_dict.items():
-    print(f" - {setting}: {value}")
