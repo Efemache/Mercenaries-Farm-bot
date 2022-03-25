@@ -10,6 +10,18 @@ from .debug import debug
 from .settings import settings_dict, jthreshold
 from .constants import Action
 
+imagesInMemory={}
+
+def load_grey_image(file, width=1920, height=1040) :
+    """ load an OpenCV version of an image in memory and/or return it
+    """
+    # To Do : to resize the image so we can support other resolutions
+    # screenshots was made on a 1920x1080 screen resolution but with Hearthstone in windowed mode so it's like : 1920x1040
+    # need to resize the image in memory
+    if not file in imagesInMemory :
+        imagesInMemory[file] = cv2.imread(file, cv2.IMREAD_GRAYSCALE)
+
+    return imagesInMemory[file]
 
 def find_ellement(file, action, threshold="-", speed=settings_dict["bot_speed"]):
     """Find an object ('file') on the screen (UI, Button, ...)
@@ -23,8 +35,6 @@ def find_ellement(file, action, threshold="-", speed=settings_dict["bot_speed"])
       (new action needed to return a tab of object/coordinates)
     """
     debug("DEBUG : find_ellement_grey START")
-    #    global threshold
-    global screenImg
     global partImg
     time.sleep(speed)
     retour = False
@@ -41,7 +51,7 @@ def find_ellement(file, action, threshold="-", speed=settings_dict["bot_speed"])
 
     img = cv2.cvtColor(partImg, cv2.COLOR_BGR2GRAY)
     monitor_resolution = settings_dict["monitor resolution"]
-    template = cv2.imread(f"files/{monitor_resolution}/{file}", cv2.IMREAD_GRAYSCALE)
+    template = load_opencv_image(f"files/{monitor_resolution}/{file}")
     result = cv2.matchTemplate(img, template, cv2.TM_CCOEFF_NORMED)
 
     h = template.shape[0]
@@ -83,13 +93,8 @@ def partscreen(x, y, top, left, debug_mode=False, monitor_resolution=None):
 
     with mss.mss() as sct:
         monitor = {"top": top, "left": left, "width": x, "height": y}
-        # output = "sct-{top}x{left}_{width}x{height}.png".format(**monitor)
         sct_img = sct.grab(monitor)
-        # mss.tools.to_png(
-        #   sct_img.rgb,
-        #   sct_img.size,
-        #   output='files/' + settings_dict['monitor resolution'] + '/part.png'
-        # )
+
         if debug_mode:
             output_file = f"files/{ monitor_resolution}/part.png"
             mss.tools.to_png(sct_img.rgb, sct_img.size, output=output_file)
