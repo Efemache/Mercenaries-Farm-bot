@@ -12,7 +12,7 @@ from .constants import Action
 
 imagesInMemory={}
 
-def load_grey_image(file, width=1920, height=1040) :
+def get_gray_image(file, width=1920, height=1040) :
     """ load an OpenCV version of an image in memory and/or return it
     """
     # To Do : to resize the image so we can support other resolutions
@@ -51,7 +51,7 @@ def find_ellement(file, action, threshold="-", speed=settings_dict["bot_speed"])
 
     img = cv2.cvtColor(partImg, cv2.COLOR_BGR2GRAY)
     monitor_resolution = settings_dict["monitor resolution"]
-    template = load_opencv_image(f"files/{monitor_resolution}/{file}")
+    template = get_gray_image(f"files/{monitor_resolution}/{file}")
     result = cv2.matchTemplate(img, template, cv2.TM_CCOEFF_NORMED)
 
     h = template.shape[0]
