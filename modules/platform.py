@@ -19,11 +19,19 @@ def find_os():
 def windowMP():
     """window multi-platorms (Windows & Linux support)"""
     if myOS == "linux":
-        return win.get_client_window_geometry()
+        return get_window_geometry_on_linux()
     elif myOS == "windows":
-        return win.rect
+        return get_window_geometry_on_windows()
     else:
         return None
+
+
+def get_window_geometry_on_linux():
+    return win.get_client_window_geometry()
+
+
+def get_window_geometry_on_windows():
+    return win.rect
 
 
 def findgame(myOS):
