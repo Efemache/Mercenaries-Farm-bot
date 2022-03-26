@@ -3,11 +3,11 @@ import time
 import random
 import configparser
 
-import pyautogui
+#import pyautogui
 
 
 from .platform import windowMP
-from .mouse_utils import mouse_random_movement, move_mouse_and_click, move_mouse
+from .mouse_utils import move_mouse_and_click, move_mouse, mouse_click, mouse_scroll
 from .debug import debug
 from .image_utils import partscreen, find_ellement
 from .constants import UIElement, Checker, Button, Action
@@ -23,27 +23,22 @@ def select_enemy_to_attack(index):
     """Used to move the mouse over an enemy to attack it (after selecting a merc's ability)"""
     cardWidth = windowMP()[2] // 16
     cardHeight = windowMP()[3] // 6
+    retour = False
     # find_element: Can be changed to return None or bool type
     if index:
         time.sleep(0.1)
-        pyautogui.moveTo(
-            index[0] + (cardWidth // 3),
-            index[1] - (cardHeight // 2),
-            0.6,
-            mouse_random_movement(),
-        )
         debug(
             "Move index (index, x, y) : ",
             index,
             index[0] + (cardWidth // 2),
             index[1] - (cardWidth // 3),
         )
-        time.sleep(0.1)
-        pyautogui.click()
-        return True
-    else:
-        return False
+        move_mouse_and_click(windowMP(), 
+            index[0] + (cardWidth // 3),
+            index[1] - (cardHeight // 2) )
+        retour = True
 
+    return retour
 
 def rand(enemies=[]):
     """look for a random enemy
@@ -63,7 +58,7 @@ def rand(enemies=[]):
     # (it can't select another ability and we can hope an AoE will selected at least)
     # Update : add code to click in the middle of the enemy board
     #   when no enemy is detected
-    pyautogui.rightClick()
+    mouse_click("right")
 
 
 def select_ability(localhero):
@@ -128,17 +123,13 @@ def select_ability(localhero):
                 find_ellement(Checker.hourglass.filename, Action.get_coords_part_screen)
                 is None
             ):
-                pyautogui.moveTo(
+                move_mouse_and_click( windowMP(),
                     int(
-                        windowMP()[0]
-                        + abilitiesPositionX[ability - 1]
+                        abilitiesPositionX[ability - 1]
                         + abilitiesWidth // 2
                     ),
-                    int(windowMP()[1] + abilitiesPositionY + abilitiesHeigth // 2),
-                    settings_dict["mousespeed"],
-                    mouse_random_movement(),
+                    int(abilitiesPositionY + abilitiesHeigth // 2),
                 )
-                pyautogui.click()
                 if isinstance(mercsAbilities[localhero][str(ability)], bool):
                     retour = mercsAbilities[localhero][str(ability)]
                 elif mercsAbilities[localhero][str(ability)] == "chooseone3":
@@ -224,15 +215,15 @@ def attacks(
     else:  # if mercenaries number is odd
         pos = int(2 - (number - 1) / 2 + (position - 1))
         x = positionOdd[pos]
-    y = windowMP()[1] + windowMP()[3] / 1.5
+    y = windowMP()[3] / 1.5
+    #y = windowMP()[1] + windowMP()[3] / 1.5
 
     print(
         "attack with : ", mercName, "( position :", position, "/", number, "=", x, ")"
     )
 
     # print("merclist", mercslist.keys())
-    pyautogui.moveTo(x, y, settings_dict["mousespeed"], mouse_random_movement())
-    pyautogui.click()
+    move_mouse_and_click(windowMP(),x, y)
     time.sleep(0.2)
     move_mouse(windowMP(), windowMP()[2] / 3, windowMP()[3] / 2)
     if mercName in mercslist:
@@ -343,13 +334,7 @@ def battle():
 
     raund = 1
     while True:
-        pyautogui.moveTo(
-            windowMP()[0] + (windowMP()[2] / 2.6),
-            windowMP()[1] + (windowMP()[3] / 1.09),
-            #windowMP()[1] + (windowMP()[3] * 0.92),
-            settings_dict["mousespeed"],
-            mouse_random_movement(),
-        )
+        move_mouse(windowMP(), windowMP()[2] // 2.6, windowMP()[3] // 1.09,)
 
         # we look for the (green) "ready" button because :
         # - sometimes, the bot click on it but it doesn't work very well
@@ -396,7 +381,7 @@ def battle():
             # click on neutral zone to avoid problem with screenshot
             # when you're looking for red/green/blue enemies
             move_mouse_and_click(
-                windowMP(), windowMP()[2] / 2, windowMP()[3] / 1.3
+                windowMP(), windowMP()[2] // 2, windowMP()[3] // 1.2
             )
 
             time.sleep(0.2)
@@ -414,24 +399,15 @@ def battle():
             ) = find_enemies()
 
             # Go (mouse) to "central zone" and click on an empty space
-            pyautogui.moveTo(
-                windowMP()[0] + windowMP()[2] / 2,
-                windowMP()[1] + windowMP()[3] / 1.26,
-                settings_dict["mousespeed"],
-                mouse_random_movement(),
-            )
-            pyautogui.click()
-            time.sleep(1)
+            #move_mouse_and_click(windowMP(), windowMP()[2] // 2, windowMP()[3] // 1.2)
+            #time.sleep(1)
 
             for i in mercenaries:
                 # Go (mouse) to "central zone" and click on an empty space
-                pyautogui.moveTo(
-                    windowMP()[0] + windowMP()[2] / 2,
-                    windowMP()[1] + windowMP()[3] / 1.26,
-                    settings_dict["mousespeed"],
-                    mouse_random_movement(),
-                )
-                pyautogui.click()
+                move_mouse_and_click(
+                    windowMP(),
+                    windowMP()[2] // 2,
+                    windowMP()[3] // 1.2)
 
                 attacks(
                     int(i),
@@ -444,11 +420,11 @@ def battle():
                     enemynoclass2,
                     mol,
                 )
-                # in rare case, the bot detects an enemy ("noclass" most of the times) outside the battlezone. 
-                # the second click (to select the enemy) on an empty space doesnt work
-                # next move : instead of selecting the next mercenaries (to select its ability),
-                # the mercenary is clicked on to be the target of the previous ability. Need a "rightclick" to cancel this action 
-                pyautogui.rightClick()
+                # in rare case, the bot detects an enemy ("noclass" most of the times) outside of the battlezone. 
+                # the second click (to select the enemy), which is on an empty space, doesnt work.
+                # next move : instead of selecting the next mercenaries (to choose an ability),
+                # the mercenary is clicked on to be targeted (from previous abilitay). Need a "rightclick" to cancel this action 
+                mouse_click("right")
                 time.sleep(0.1)
 
             i = 0
@@ -456,7 +432,7 @@ def battle():
                 if find_ellement(Button.allready.filename, Action.move_and_click):
                     break
                 if i > 10:
-                    pyautogui.rightClick()
+                    mouse_click("right")
                     find_ellement(Button.fight.filename, Action.move_and_click)
                     break
                 time.sleep(0.2)
@@ -484,15 +460,14 @@ def selectCardsInHand():
         time.sleep(0.5)
 
     debug("windowsMP() : ", windowMP())
-    x1 = windowMP()[0] + (windowMP()[2] / 2.6)
-    y1 = windowMP()[1] + (windowMP()[3] / 1.09)
-    #y = windowMP()[1] + (windowMP()[3] * 0.92)
-    x2 = windowMP()[0] + (windowMP()[2] / 10),
-    y2 = windowMP()[1] + (windowMP()[3] / 10),
+    x1 = windowMP()[2] // 2.6
+    y1 = windowMP()[3] // 1.09
+    x2 = windowMP()[2] // 10
+    y2 = windowMP()[3] // 10
 
     while not find_ellement(Button.num.filename, Action.move_and_click):
-        pyautogui.moveTo(x1, y1, settings_dict["mousespeed"], mouse_random_movement())
-        pyautogui.moveTo(x2, y2, settings_dict["mousespeed"], mouse_random_movement())
+        move_mouse(windowMP(), x1, y1)
+        move_mouse(windowMP(), x2, y2)
 
     retour = battle()
     debug("[ SETH - END]")
