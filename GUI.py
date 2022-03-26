@@ -10,7 +10,7 @@ def main():
     window.attributes("-topmost",True)
     window.resizable(width=False, height=False)
     label = tk.Label(
-        text="HsBot v1.0",
+        text="MFB",
         bg="white",
         fg="black",
         width=20,
@@ -22,9 +22,9 @@ def main():
     combo = Combobox(
         state="readonly"
     )
-    window.title("HsBot v1.0")
-    combo['values'] = ("1920x1080", "2560x1440", "not ready")
-    combo.current(1)  # set the selected item
+    window.title("MFB v0.5.0")
+    combo['values'] = ("1920x1080 windowed", "not ready")
+    combo.current(0)  # set the selected item
     combo.grid(column=0, row=2)
 
     def download_clicked():
@@ -33,7 +33,7 @@ def main():
             message='The bot has started'
         )
 
-    download_icon = tk.PhotoImage(file='./files/play.png')
+    download_icon = tk.PhotoImage(file='files/gui/play.png')
     Button(window,image=download_icon,command=download_clicked).grid(column=0, row=1)
     window.mainloop()
 
