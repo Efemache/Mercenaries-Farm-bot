@@ -69,6 +69,7 @@ def find_game_on_linux():
             win = w
             win.activate(int(time.time()))
             win.make_above()
+            win.unmake_above()
     return win
 
 
