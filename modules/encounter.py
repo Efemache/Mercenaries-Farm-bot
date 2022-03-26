@@ -19,8 +19,8 @@ config = configparser.ConfigParser()
 config.read("conf/combo.ini")
 
 
-def move(index):
-    """Used to move the mouse to an enemy (from a selected merc's ability)"""
+def select_enemy_to_attack(index):
+    """Used to move the mouse over an enemy to attack it (after selecting a merc's ability)"""
     cardWidth = windowMP()[2] // 16
     cardHeight = windowMP()[3] // 6
     # find_element: Can be changed to return None or bool type
@@ -56,7 +56,7 @@ def rand(enemies=[]):
     debug(enemies, "len=", len(enemies))
     while enemies:
         toAttack = enemies.pop(random.randint(0, len(enemies) - 1))
-        if move(toAttack):
+        if select_enemy_to_attack(toAttack):
             break
 
     # right click added to avoid a problem when the bot detects no enemy
@@ -239,28 +239,28 @@ def attacks(
         if (
             mercslist[mercName]["type"] == "Protector"
             and select_ability(mercName)
-            and not move(enemygreen)
-            and not move(mol)
-            and not move(enemynoclass)
-            and not move(enemynoclass2)
+            and not select_enemy_to_attack(enemygreen)
+            and not select_enemy_to_attack(mol)
+            and not select_enemy_to_attack(enemynoclass)
+            and not select_enemy_to_attack(enemynoclass2)
         ):
             rand([enemyred, enemyblue])
         elif (
             mercslist[mercName]["type"] == "Fighter"
             and select_ability(mercName)
-            and not move(enemyblue)
-            and not move(mol)
-            and not move(enemynoclass)
-            and not move(enemynoclass2)
+            and not select_enemy_to_attack(enemyblue)
+            and not select_enemy_to_attack(mol)
+            and not select_enemy_to_attack(enemynoclass)
+            and not select_enemy_to_attack(enemynoclass2)
         ):
             rand([enemyred, enemygreen])
         elif (
             mercslist[mercName]["type"] == "Caster"
             and select_ability(mercName)
-            and not move(enemyred)
-            and not move(mol)
-            and not move(enemynoclass)
-            and not move(enemynoclass2)
+            and not select_enemy_to_attack(enemyred)
+            and not select_enemy_to_attack(mol)
+            and not select_enemy_to_attack(enemynoclass)
+            and not select_enemy_to_attack(enemynoclass2)
         ):
             rand([enemygreen, enemyblue])
     elif select_ability(mercName):
