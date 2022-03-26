@@ -10,13 +10,27 @@ from .debug import debug
 from .settings import settings_dict, jthreshold
 from .constants import Action
 
-imagesInMemory = {}
-
 # This is a guess since the window.rect function returns (-8, -8, 1936, 1056) for me
 default_rect = (-8, -8, 1936, 1056)
 
 default_width = default_rect[2] - default_rect[0]
 default_height = default_rect[3] - default_rect[1]
+#imagesInMemory={}
+
+def get_gray_image(file, width=1920, height=1040) :
+    """ load an OpenCV version of an image in memory and/or return it
+    """
+    if not hasattr(get_gray_image, "imagesInMemory"):
+        get_gray_image.imagesInMemory = {}
+
+    # To Do : to resize the image so we can support other resolutions
+    # screenshots was made on a 1920x1080 screen resolution but with Hearthstone in windowed mode so it's like : 1920x1040
+    # need to resize the image in memory
+    if not file in get_gray_image.imagesInMemory :
+        get_gray_image.imagesInMemory[file] = cv2.imread(file, cv2.IMREAD_GRAYSCALE)
+
+    debug("images in memory : ", len(get_gray_image.imagesInMemory))
+    return get_gray_image.imagesInMemory[file]
 
 
 def find_ellement(file, action, threshold="-", speed=settings_dict["bot_speed"]):
@@ -120,16 +134,16 @@ def partscreen(x, y, top, left, debug_mode=False, monitor_resolution=None):
     return partImg
 
 
-def get_gray_image(file, width=default_width, height=default_height):
-    """load an OpenCV version of an image in memory and/or return it"""
-    # To Do : to resize the image so we can support other resolutions
-    # screenshots was made on a 1920x1080 screen resolution
-    # but with Hearthstone in windowed mode so it's like : 1920x1040
-    # need to resize the image in memory
-    if file not in imagesInMemory:
-        imagesInMemory[file] = cv2.imread(file, cv2.IMREAD_GRAYSCALE)
-
-    return imagesInMemory[file]
+#def get_gray_image(file, width=default_width, height=default_height):
+#    """load an OpenCV version of an image in memory and/or return it"""
+#    # To Do : to resize the image so we can support other resolutions
+#    # screenshots was made on a 1920x1080 screen resolution
+#    # but with Hearthstone in windowed mode so it's like : 1920x1040
+#    # need to resize the image in memory
+#    if file not in imagesInMemory:
+#        imagesInMemory[file] = cv2.imread(file, cv2.IMREAD_GRAYSCALE)
+#
+#    return imagesInMemory[file]
 
 
 def find_element_center_on_screen(img, template, threshold=0):
