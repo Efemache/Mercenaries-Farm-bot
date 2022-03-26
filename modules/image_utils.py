@@ -10,18 +10,26 @@ from .debug import debug
 from .settings import settings_dict, jthreshold
 from .constants import Action
 
-imagesInMemory={}
+imagesInMemory = {}
 
-def get_gray_image(file, width=1920, height=1040) :
-    """ load an OpenCV version of an image in memory and/or return it
-    """
+# This is a guess since the window.rect function returns (-8, -8, 1936, 1056) for me
+default_rect = (-8, -8, 1936, 1056)
+
+default_width = default_rect[2] - default_rect[0]
+default_height = default_rect[3] - default_rect[1]
+
+
+def get_gray_image(file, width=default_width, height=default_height):
+    """load an OpenCV version of an image in memory and/or return it"""
     # To Do : to resize the image so we can support other resolutions
-    # screenshots was made on a 1920x1080 screen resolution but with Hearthstone in windowed mode so it's like : 1920x1040
+    # screenshots was made on a 1920x1080 screen resolution
+    # but with Hearthstone in windowed mode so it's like : 1920x1040
     # need to resize the image in memory
-    if not file in imagesInMemory :
+    if file not in imagesInMemory:
         imagesInMemory[file] = cv2.imread(file, cv2.IMREAD_GRAYSCALE)
 
     return imagesInMemory[file]
+
 
 def find_ellement(file, action, threshold="-", speed=settings_dict["bot_speed"]):
     """Find an object ('file') on the screen (UI, Button, ...)
@@ -52,19 +60,10 @@ def find_ellement(file, action, threshold="-", speed=settings_dict["bot_speed"])
     img = cv2.cvtColor(partImg, cv2.COLOR_BGR2GRAY)
     monitor_resolution = settings_dict["monitor resolution"]
     template = get_gray_image(f"files/{monitor_resolution}/{file}")
-    result = cv2.matchTemplate(img, template, cv2.TM_CCOEFF_NORMED)
 
-    h = template.shape[0]
-    w = template.shape[1]
-
-    loc = np.where(result >= threshold)
-    if len(loc[0]) != 0:
-        retour = True
-        for pt in zip(*loc[::-1]):
-            pt[0] + w
-            pt[1] + h
-        x = int((pt[0] * 2 + w) / 2)
-        y = int((pt[1] * 2 + h) / 2)
+    click_coords = find_element_center_on_screen(img, template, threshold=threshold)
+    if click_coords is not None:
+        x, y = click_coords
         print(f"Found {file}", "(", threshold, ")", x, y)
         if action in [Action.get_coords_part_screen, Action.get_coords]:
             retour = (x, y)
@@ -75,7 +74,6 @@ def find_ellement(file, action, threshold="-", speed=settings_dict["bot_speed"])
             # move mouse and click
             window = windowMP()
             move_mouse_and_click(window, x, y)
-
     else:
         print(f"Looked for {file}", "(", threshold, ")")
         if action in [Action.get_coords_part_screen, Action.get_coords]:
@@ -100,3 +98,22 @@ def partscreen(x, y, top, left, debug_mode=False, monitor_resolution=None):
             mss.tools.to_png(sct_img.rgb, sct_img.size, output=output_file)
         partImg = np.array(sct_img)
     return partImg
+
+
+def find_element_center_on_screen(img, template, threshold=0):
+    """Finds Element if on screen and returns center
+
+    Args:
+        img (numpy.ndarray): full image of window
+        template (numpy.ndarray): smaller image we are looking for
+        threshold (int, optional): threshold to determine if match meets our standards. Defaults to 0.
+
+    Returns:
+        center_coords: center coordinates of the best match found
+    """
+    result = cv2.matchTemplate(img, template, cv2.TM_CCOEFF_NORMED)
+    h = template.shape[0] // 2
+    w = template.shape[1] // 2
+    _, max_val, _, max_loc = cv2.minMaxLoc(result)
+
+    return (max_loc[0] + w, max_loc[1] + h) if max_val > threshold else None
