@@ -23,7 +23,8 @@ def move(index):
     """Used to move the mouse to an enemy (from a selected merc's ability)"""
     cardWidth = windowMP()[2] // 16
     cardHeight = windowMP()[3] // 6
-    if index != (0, 0):
+    # find_element: Can be changed to return None or bool type
+    if index:
         time.sleep(0.1)
         pyautogui.moveTo(
             index[0] + (cardWidth // 3),
@@ -122,12 +123,11 @@ def select_ability(localhero):
                 int(windowMP()[1] + abilitiesPositionY),
                 int(windowMP()[0] + abilitiesPositionX[0]),
             )
-            if find_ellement(
-                Checker.hourglass.filename, Action.get_coords_part_screen
-            ) == (
-                0,
-                0,
-            ):  # Checker.hourglass : hourglass
+            # find_element: Can be changed to return None or bool type
+            if (
+                find_ellement(Checker.hourglass.filename, Action.get_coords_part_screen)
+                is None
+            ):
                 pyautogui.moveTo(
                     int(
                         windowMP()[0]
@@ -167,11 +167,10 @@ def select_ability(localhero):
                 int(windowMP()[1] + abilitiesPositionY),
                 int(windowMP()[0] + abilitiesPositionX[0]),
             )
-            if find_ellement(
-                Checker.hourglass.filename, Action.get_coords_part_screen
-            ) == (
-                0,
-                0,
+            # find_element: Can be changed to return None or bool type
+            if (
+                find_ellement(Checker.hourglass.filename, Action.get_coords_part_screen)
+                is None
             ):
                 move_mouse_and_click(
                     windowMP(),
@@ -322,7 +321,8 @@ def find_enemy(enemy_type):
     enemy = find_ellement(
         getattr(UIElement, enemy_type).filename, Action.get_coords_part_screen
     )
-    if enemy != (0, 0):
+    # find_element: Can be changed to return None or actual coords if exists
+    if enemy:
         enemy = (
             enemy[0] + windowMP()[0],
             enemy[1] + windowMP()[1],
