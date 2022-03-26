@@ -110,7 +110,7 @@ def select_ability(localhero):
         chooseone3 = [windowMP()[2] // 3, windowMP()[2] // 2, windowMP()[2] // 1.5]
         print(f"ability selected : {ability}")
         if ability == 0:
-            debug("No ability selected (-)")
+            debug("No ability selected (0)")
             retour = False
         elif ability >= 1 and ability <= 3:
             debug(
@@ -345,7 +345,8 @@ def battle():
     while True:
         pyautogui.moveTo(
             windowMP()[0] + (windowMP()[2] / 2.6),
-            windowMP()[1] + (windowMP()[3] * 0.92),
+            windowMP()[1] + (windowMP()[3] / 1.09),
+            #windowMP()[1] + (windowMP()[3] * 0.92),
             settings_dict["mousespeed"],
             mouse_random_movement(),
         )
@@ -365,7 +366,7 @@ def battle():
         ):
             retour = "win"
             move_mouse_and_click(
-                windowMP(), windowMP()[2] / 2, windowMP()[3] - windowMP()[3] / 4.6
+                windowMP(), windowMP()[2] / 2, windowMP()[3] / 1.3
             )
             zoneLog.cleanBoard()
 
@@ -375,7 +376,7 @@ def battle():
             move_mouse_and_click(
                 windowMP(),
                 windowMP()[2] / 2,
-                windowMP()[3] - windowMP()[3] / 4.6,
+                windowMP()[3] / 1.3,
             )
             zoneLog.cleanBoard()
             break
@@ -395,7 +396,7 @@ def battle():
             # click on neutral zone to avoid problem with screenshot
             # when you're looking for red/green/blue enemies
             move_mouse_and_click(
-                windowMP(), windowMP()[2] / 2, windowMP()[3] - windowMP()[3] / 4.6
+                windowMP(), windowMP()[2] / 2, windowMP()[3] / 1.3
             )
 
             time.sleep(0.2)
@@ -415,7 +416,7 @@ def battle():
             # Go (mouse) to "central zone" and click on an empty space
             pyautogui.moveTo(
                 windowMP()[0] + windowMP()[2] / 2,
-                windowMP()[1] + windowMP()[3] - windowMP()[3] / 4.8,
+                windowMP()[1] + windowMP()[3] / 1.26,
                 settings_dict["mousespeed"],
                 mouse_random_movement(),
             )
@@ -426,7 +427,7 @@ def battle():
                 # Go (mouse) to "central zone" and click on an empty space
                 pyautogui.moveTo(
                     windowMP()[0] + windowMP()[2] / 2,
-                    windowMP()[1] + windowMP()[3] - windowMP()[3] / 4.8,
+                    windowMP()[1] + windowMP()[3] / 1.26,
                     settings_dict["mousespeed"],
                     mouse_random_movement(),
                 )
@@ -443,6 +444,11 @@ def battle():
                     enemynoclass2,
                     mol,
                 )
+                # in rare case, the bot detects an enemy ("noclass" most of the times) outside the battlezone. 
+                # the second click (to select the enemy) on an empty space doesnt work
+                # next move : instead of selecting the next mercenaries (to select its ability),
+                # the mercenary is clicked on to be the target of the previous ability. Need a "rightclick" to cancel this action 
+                pyautogui.rightClick()
                 time.sleep(0.1)
 
             i = 0
@@ -478,18 +484,15 @@ def selectCardsInHand():
         time.sleep(0.5)
 
     debug("windowsMP() : ", windowMP())
-    x = windowMP()[0] + (windowMP()[2] / 2.6)
-    y = windowMP()[1] + (windowMP()[3] * 0.92)
+    x1 = windowMP()[0] + (windowMP()[2] / 2.6)
+    y1 = windowMP()[1] + (windowMP()[3] / 1.09)
+    #y = windowMP()[1] + (windowMP()[3] * 0.92)
+    x2 = windowMP()[0] + (windowMP()[2] / 10),
+    y2 = windowMP()[1] + (windowMP()[3] / 10),
 
     while not find_ellement(Button.num.filename, Action.move_and_click):
-        pyautogui.moveTo(x, y, settings_dict["mousespeed"])
-        # time.sleep(1)
-        pyautogui.moveTo(
-            windowMP()[0] + (windowMP()[2] * 0.1),
-            windowMP()[1] + (windowMP()[3] * 0.1),
-            settings_dict["mousespeed"],
-            mouse_random_movement(),
-        )
+        pyautogui.moveTo(x1, y1, settings_dict["mousespeed"], mouse_random_movement())
+        pyautogui.moveTo(x2, y2, settings_dict["mousespeed"], mouse_random_movement())
 
     retour = battle()
     debug("[ SETH - END]")
