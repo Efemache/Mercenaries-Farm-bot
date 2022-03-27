@@ -8,6 +8,7 @@ from .mouse_utils import (
     mouse_position,
     mouse_click,
     mouse_scroll,
+    mouse_range,
 )
 from .debug import debug
 from .constants import UIElement, Button, Action
@@ -104,13 +105,15 @@ def nextlvl():
         else:
             x, y = mouse_position(windowMP())
             debug("Mouse (x, y) : ", x, y)
-            if y == windowMP()[3] // 2.2:
+            if y >= (windowMP()[3] // 2.2 - mouse_range) and y <= (
+                windowMP()[3] // 2.2 + mouse_range) :
+
                 x += windowMP()[2] // 25
                 if x > windowMP()[2] // 1.5:
                     x = windowMP()[2] // 3.7
             else:
                 x = windowMP()[2] // 3.7
-                y = windowMP()[3] // 2.2
+            y = windowMP()[3] // 2.2
             debug("move mouse to (x, y) : ", x, y)
             move_mouse_and_click(windowMP(), x, y)
 

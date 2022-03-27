@@ -5,6 +5,7 @@ import pyautogui
 
 from .settings import settings_dict
 
+mouse_range = 2
 
 def mouse_click(btn="left"):
     pyautogui.click(button=btn)
@@ -26,8 +27,8 @@ def move_mouse_and_click(window, x, y):
 
 
 def move_mouse(window, x, y, with_random=False):
-    p = random.randint(-2, 2) if with_random else 0
-    s = random.randint(-2, 2) if with_random else 0
+    p = random.randint(-mouse_range, mouse_range) if with_random else 0
+    s = random.randint(-mouse_range, mouse_range) if with_random else 0
 
     pyautogui.moveTo(
         window[0] + x + p,
