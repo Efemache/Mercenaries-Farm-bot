@@ -5,15 +5,19 @@ import pyautogui
 
 from .settings import settings_dict
 
+
 def mouse_click(btn="left"):
     pyautogui.click(button=btn)
-    
+
+
 def mouse_scroll(s):
     pyautogui.scroll(s)
+
 
 def mouse_position(window):
     x, y = pyautogui.position()
     return (x - window[0], y - window[1])
+
 
 def move_mouse_and_click(window, x, y):
     move_mouse(window, x, y, with_random=True)
