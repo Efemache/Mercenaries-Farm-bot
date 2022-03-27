@@ -10,23 +10,22 @@ from .debug import debug
 from .settings import settings_dict, jthreshold
 from .constants import Action
 
-# This is a guess since the window.rect function returns (-8, -8, 1936, 1056) for me
 default_rect = (-8, -8, 1936, 1056)
 
 default_width = default_rect[2] - default_rect[0]
 default_height = default_rect[3] - default_rect[1]
-#imagesInMemory={}
 
-def get_gray_image(file, width=1920, height=1040) :
-    """ load an OpenCV version of an image in memory and/or return it
-    """
+
+def get_gray_image(file, width=default_width, height=default_height):
+    """load an OpenCV version of an image in memory and/or return it"""
     if not hasattr(get_gray_image, "imagesInMemory"):
         get_gray_image.imagesInMemory = {}
 
     # To Do : to resize the image so we can support other resolutions
-    # screenshots was made on a 1920x1080 screen resolution but with Hearthstone in windowed mode so it's like : 1920x1040
+    # screenshots was made on a 1920x1080 screen resolution
+    # but with Hearthstone in windowed mode so it's like : 1920x1040
     # need to resize the image in memory
-    if not file in get_gray_image.imagesInMemory :
+    if file not in get_gray_image.imagesInMemory:
         get_gray_image.imagesInMemory[file] = cv2.imread(file, cv2.IMREAD_GRAYSCALE)
 
     debug("images in memory : ", len(get_gray_image.imagesInMemory))
@@ -54,7 +53,11 @@ def find_ellement(file, action, threshold="-", speed=settings_dict["bot_speed"])
     )
     if click_coords is not None:
         x, y = click_coords
-        if action in [Action.get_coords_part_screen, Action.get_coords]:
+        if action in [
+            Action.get_coords_part_screen,
+            Action.get_coords,
+            Action.screenshot,
+        ]:
             return click_coords
         elif action == Action.move:
             window = windowMP()
@@ -71,7 +74,10 @@ def find_ellement(file, action, threshold="-", speed=settings_dict["bot_speed"])
 
 
 def find_element_from_file(
-    file, new_screenshot=True, threshold="-", speed=settings_dict["bot_speed"]
+    file,
+    new_screenshot=True,
+    threshold="-",
+    speed=settings_dict["bot_speed"],
 ):
     """Find Element Center from template filename
 
@@ -103,6 +109,7 @@ def find_element_from_file(
 
     img = cv2.cvtColor(partImg, cv2.COLOR_BGR2GRAY)
     monitor_resolution = settings_dict["monitor resolution"]
+
     template = get_gray_image(f"files/{monitor_resolution}/{file}")
 
     click_coords = find_element_center_on_screen(img, template, threshold=threshold)
@@ -112,7 +119,7 @@ def find_element_from_file(
     else:
         print(f"Looked for {file}", "(", threshold, ")")
 
-    return find_element_center_on_screen(img, template, threshold=threshold)
+    return click_coords
 
 
 def partscreen(x, y, top, left, debug_mode=False, monitor_resolution=None):
@@ -132,18 +139,6 @@ def partscreen(x, y, top, left, debug_mode=False, monitor_resolution=None):
             mss.tools.to_png(sct_img.rgb, sct_img.size, output=output_file)
         partImg = np.array(sct_img)
     return partImg
-
-
-#def get_gray_image(file, width=default_width, height=default_height):
-#    """load an OpenCV version of an image in memory and/or return it"""
-#    # To Do : to resize the image so we can support other resolutions
-#    # screenshots was made on a 1920x1080 screen resolution
-#    # but with Hearthstone in windowed mode so it's like : 1920x1040
-#    # need to resize the image in memory
-#    if file not in imagesInMemory:
-#        imagesInMemory[file] = cv2.imread(file, cv2.IMREAD_GRAYSCALE)
-#
-#    return imagesInMemory[file]
 
 
 def find_element_center_on_screen(img, template, threshold=0):

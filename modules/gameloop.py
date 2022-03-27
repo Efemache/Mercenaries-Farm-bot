@@ -15,7 +15,7 @@ def where():
 
     find_ellement(Button.join_button.filename, Action.move_and_click)
 
-    if find_ellement(Checker.menu.filename, Action.screenshot):  # chekers 21: 'menu'
+    if find_ellement(Checker.menu.filename, Action.screenshot):
         time.sleep(4)
         # Find PVE adventure payed and free
         find_ellement(

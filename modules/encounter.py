@@ -3,7 +3,7 @@ import time
 import random
 import configparser
 
-#import pyautogui
+# import pyautogui
 
 
 from .platform import windowMP
@@ -33,12 +33,13 @@ def select_enemy_to_attack(index):
             index[0] + (cardWidth // 2),
             index[1] - (cardWidth // 3),
         )
-        move_mouse_and_click(windowMP(), 
-            index[0] + (cardWidth // 3),
-            index[1] - (cardHeight // 2) )
+        move_mouse_and_click(
+            windowMP(), index[0] + (cardWidth // 3), index[1] - (cardHeight // 2)
+        )
         retour = True
 
     return retour
+
 
 def rand(enemies=[]):
     """look for a random enemy
@@ -123,11 +124,9 @@ def select_ability(localhero):
                 find_ellement(Checker.hourglass.filename, Action.get_coords_part_screen)
                 is None
             ):
-                move_mouse_and_click( windowMP(),
-                    int(
-                        abilitiesPositionX[ability - 1]
-                        + abilitiesWidth // 2
-                    ),
+                move_mouse_and_click(
+                    windowMP(),
+                    int(abilitiesPositionX[ability - 1] + abilitiesWidth // 2),
                     int(abilitiesPositionY + abilitiesHeigth // 2),
                 )
                 if isinstance(mercsAbilities[localhero][str(ability)], bool):
@@ -216,14 +215,14 @@ def attacks(
         pos = int(2 - (number - 1) / 2 + (position - 1))
         x = positionOdd[pos]
     y = windowMP()[3] / 1.5
-    #y = windowMP()[1] + windowMP()[3] / 1.5
+    # y = windowMP()[1] + windowMP()[3] / 1.5
 
     print(
         "attack with : ", mercName, "( position :", position, "/", number, "=", x, ")"
     )
 
     # print("merclist", mercslist.keys())
-    move_mouse_and_click(windowMP(),x, y)
+    move_mouse_and_click(windowMP(), x, y)
     time.sleep(0.2)
     move_mouse(windowMP(), windowMP()[2] / 3, windowMP()[3] / 2)
     if mercName in mercslist:
@@ -334,7 +333,11 @@ def battle():
 
     raund = 1
     while True:
-        move_mouse(windowMP(), windowMP()[2] // 2.6, windowMP()[3] // 1.09,)
+        move_mouse(
+            windowMP(),
+            windowMP()[2] // 2.6,
+            windowMP()[3] // 1.09,
+        )
 
         # we look for the (green) "ready" button because :
         # - sometimes, the bot click on it but it doesn't work very well
@@ -350,9 +353,7 @@ def battle():
             Checker.win_final.filename, Action.screenshot
         ):
             retour = "win"
-            move_mouse_and_click(
-                windowMP(), windowMP()[2] / 2, windowMP()[3] / 1.3
-            )
+            move_mouse_and_click(windowMP(), windowMP()[2] / 2, windowMP()[3] / 1.3)
             zoneLog.cleanBoard()
 
             break
@@ -380,9 +381,7 @@ def battle():
 
             # click on neutral zone to avoid problem with screenshot
             # when you're looking for red/green/blue enemies
-            move_mouse_and_click(
-                windowMP(), windowMP()[2] // 2, windowMP()[3] // 1.2
-            )
+            move_mouse_and_click(windowMP(), windowMP()[2] // 2, windowMP()[3] // 1.2)
 
             time.sleep(0.2)
 
@@ -399,15 +398,14 @@ def battle():
             ) = find_enemies()
 
             # Go (mouse) to "central zone" and click on an empty space
-            #move_mouse_and_click(windowMP(), windowMP()[2] // 2, windowMP()[3] // 1.2)
-            #time.sleep(1)
+            # move_mouse_and_click(windowMP(), windowMP()[2] // 2, windowMP()[3] // 1.2)
+            # time.sleep(1)
 
             for i in mercenaries:
                 # Go (mouse) to "central zone" and click on an empty space
                 move_mouse_and_click(
-                    windowMP(),
-                    windowMP()[2] // 2,
-                    windowMP()[3] // 1.2)
+                    windowMP(), windowMP()[2] // 2, windowMP()[3] // 1.2
+                )
 
                 attacks(
                     int(i),
@@ -420,10 +418,10 @@ def battle():
                     enemynoclass2,
                     mol,
                 )
-                # in rare case, the bot detects an enemy ("noclass" most of the times) outside of the battlezone. 
+                # in rare case, the bot detects an enemy ("noclass" most of the times) outside of the battlezone.
                 # the second click (to select the enemy), which is on an empty space, doesnt work.
                 # next move : instead of selecting the next mercenaries (to choose an ability),
-                # the mercenary is clicked on to be targeted (from previous abilitay). Need a "rightclick" to cancel this action 
+                # the mercenary is clicked on to be targeted (from previous abilitay). Need a "rightclick" to cancel this action
                 mouse_click("right")
                 time.sleep(0.1)
 
