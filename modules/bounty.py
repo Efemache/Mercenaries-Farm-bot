@@ -2,7 +2,13 @@ import random
 import time
 
 from .platform import windowMP
-from .mouse_utils import move_mouse_and_click, move_mouse, mouse_position, mouse_click, mouse_scroll
+from .mouse_utils import (
+    move_mouse_and_click,
+    move_mouse,
+    mouse_position,
+    mouse_click,
+    mouse_scroll,
+)
 from .debug import debug
 from .constants import UIElement, Button, Action
 from .image_utils import find_ellement
@@ -33,7 +39,7 @@ def collect():
 
     # move the mouse to avoid a bug where the it is over a card/hero (at the end)
     # hiding the "OK" button
-    move_mouse(windowMP(), windowMP()[2] // 1.25 , windowMP()[3] // 1.25)
+    move_mouse(windowMP(), windowMP()[2] // 1.25, windowMP()[3] // 1.25)
     # quit the bounty
     while not find_ellement(Button.finishok.filename, Action.move_and_click):
         time.sleep(1)
@@ -62,9 +68,7 @@ def nextlvl():
 
         if find_ellement(Button.reveal.filename, Action.move_and_click):
             time.sleep(1)
-            move_mouse_and_click(
-                windowMP(), windowMP()[2] / 2, windowMP()[3] // 1.25
-            )
+            move_mouse_and_click(windowMP(), windowMP()[2] / 2, windowMP()[3] // 1.25)
             time.sleep(1.5)
 
         elif find_ellement(Button.visit.filename, Action.move_and_click):
@@ -102,7 +106,7 @@ def nextlvl():
             debug("Mouse (x, y) : ", x, y)
             if y == windowMP()[3] // 2.2:
                 x += windowMP()[2] // 25
-                if x > windowMP()[2] // 1.5 :
+                if x > windowMP()[2] // 1.5:
                     x = windowMP()[2] // 3.7
             else:
                 x = windowMP()[2] // 3.7
@@ -202,7 +206,6 @@ def goToEncounter():
         # if find (task completed) :
         #   time.sleep(2)
 
-
         if find_ellement(Button.play.filename, Action.screenshot):
             if settings_dict["quitbeforebossfight"] == "True" and find_ellement(
                 UIElement.boss.filename, Action.screenshot
@@ -243,10 +246,7 @@ def goToEncounter():
                     if find_ellement(
                         UIElement.presents_thing.filename, Action.screenshot
                     ):
-                        print(
-                            "goToEncounter : "
-                            "Boss defeated. Time for REWARDS !!!"
-                        )
+                        print("goToEncounter : " "Boss defeated. Time for REWARDS !!!")
                         collect()
                         travelEnd = True
                         break
@@ -270,31 +270,30 @@ def travelToLevel(page="next"):
 
     retour = False
 
-    if find_ellement(UIElement.bounties.filename, Action.screenshot):
-        if find_ellement(
-            f"levels/{settings_dict['location']}"
-            f"_{settings_dict['mode']}_{settings_dict['level']}.png",
-            Action.move_and_click,
-            0.5,
+    if find_ellement(
+        f"levels/{settings_dict['location']}"
+        f"_{settings_dict['mode']}_{settings_dict['level']}.png",
+        Action.move_and_click,
+        0.5,
+    ):
+        waitForItOrPass(Button.start, 6)
+        find_ellement(Button.start.filename, Action.move_and_click)
+        retour = True
+    elif page == "next":
+        if find_ellement(Button.sec.filename, Action.move_and_click):
+            time.sleep(1)
+            retour = travelToLevel("next")
+        if retour is False and find_ellement(
+            Button.fir.filename, Action.move_and_click
         ):
-            waitForItOrPass(Button.start, 6)
-            find_ellement(Button.start.filename, Action.move_and_click)
-            retour = True
-        elif page == "next":
-            if find_ellement(Button.sec.filename, Action.move_and_click):
-                time.sleep(1)
-                retour = travelToLevel("next")
-            if retour is False and find_ellement(
-                Button.fir.filename, Action.move_and_click
-            ):
-                time.sleep(1)
-                retour = travelToLevel("previous")
-            elif retour is False:
-                find_ellement(Button.back.filename, Action.move_and_click)
-        elif page == "previous":
-            if find_ellement(Button.fir.filename, Action.move_and_click):
-                time.sleep(1)
-                retour = travelToLevel("previous")
-            else:
-                find_ellement(Button.back.filename, Action.move_and_click)
+            time.sleep(1)
+            retour = travelToLevel("previous")
+        elif retour is False:
+            find_ellement(Button.back.filename, Action.move_and_click)
+    elif page == "previous":
+        if find_ellement(Button.fir.filename, Action.move_and_click):
+            time.sleep(1)
+            retour = travelToLevel("previous")
+        else:
+            find_ellement(Button.back.filename, Action.move_and_click)
     return retour
