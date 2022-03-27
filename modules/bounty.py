@@ -13,7 +13,7 @@ from .mouse_utils import (
 from .debug import debug
 from .constants import UIElement, Button, Action
 from .image_utils import find_ellement
-from .settings import settings_dict
+from .settings import settings_dict, jposition
 from .game import waitForItOrPass
 from .encounter import selectCardsInHand
 
@@ -148,9 +148,11 @@ def travelpointSelection():
 
         move_mouse(windowMP(), windowMP()[2] // 1.5, windowMP()[3] // 2)
 
-        mouse_scroll(50)
+        mouse_scroll(jposition["travelpoint.scroll.top"])
         time.sleep(0.5)
 
+        location = settings_dict["location"]
+        tag=f"travelpoint.{location}.scroll"
         if settings_dict["location"] == "The Barrens":
             find_ellement(UIElement.Barrens.filename, Action.move_and_click)
 
@@ -158,22 +160,28 @@ def travelpointSelection():
             find_ellement(UIElement.Felwood.filename, Action.move_and_click)
 
         elif settings_dict["location"] == "Winterspring":
-            mouse_scroll(-2)
+            mouse_scroll(jposition[tag])
             move_mouse(windowMP(), windowMP()[2] // 3, windowMP()[3] // 2)
             time.sleep(0.5)
             find_ellement(UIElement.Winterspring.filename, Action.move_and_click)
 
         elif settings_dict["location"] == "Blackrock":
-            mouse_scroll(-10)
+            mouse_scroll(jposition[tag])
             move_mouse(windowMP(), windowMP()[2] // 3, windowMP()[3] // 2)
             time.sleep(0.5)
             find_ellement(UIElement.Blackrock.filename, Action.move_and_click)
 
         elif settings_dict["location"] == "Alterac":
-            mouse_scroll(-15)
+            mouse_scroll(jposition[tag])
             move_mouse(windowMP(), windowMP()[2] // 3, windowMP()[3] // 2)
             time.sleep(0.5)
             find_ellement(UIElement.Alterac.filename, Action.move_and_click)
+
+        elif settings_dict["location"] == "Onyxia":
+            mouse_scroll(jposition[tag])
+            move_mouse(windowMP(), windowMP()[2] // 3, windowMP()[3] // 2)
+            time.sleep(0.5)
+            find_ellement(UIElement.Onyxia.filename, Action.move_and_click)
 
         else:
             print(

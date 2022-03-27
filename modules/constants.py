@@ -47,6 +47,7 @@ class UIElement(ImageFragment):
     noclass = "noclass"
     noclass2 = "noclass2"
     normal = "normal"
+    Onyxia = "Onyxia"
     pick = "pick"
     presents_thing = "presents_thing"
     prev = "prev"

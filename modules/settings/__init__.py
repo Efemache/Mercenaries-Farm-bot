@@ -9,6 +9,7 @@ combo_filename = "conf/combo.ini"
 # Standard Files
 mercslist_filename = "conf/mercs.json"
 attacks_filename = "conf/attacks.json"
+item_position_filename = "conf/positions.json"
 
 personalized_files = [
     settings_filename,
@@ -26,7 +27,7 @@ for file in personalized_files:
         2: location (The Barrens),
         3: mode (Heroic),
         4: quitBeforeBossFight (True),
-        5: heroSet (True),
+        5: stopAtStranger (True),
         6: monitor (1),
         7: MouseSpeed (0.5),
         8: WaitForEXP (3),
@@ -43,5 +44,6 @@ except Exception:
     print("Running without settings")
 
 jthreshold = readjson(image_threshold_filename)
+jposition = readjson(item_position_filename)
 mercslist = readjson(mercslist_filename)
 mercsAbilities = readjson(attacks_filename)
