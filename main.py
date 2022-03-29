@@ -2,19 +2,18 @@
 import time
 
 from modules.gameloop import where
-from modules.platform import find_os, findgame
+from modules.platform import win
 
 
 def main():
     print("start")
     try:
-        myOS = find_os()
-        findgame(myOS)
         while True:
             print("Loop")
-            if findgame(myOS):
-                where()
-            else:
+            try:
+                if win.find_game():
+                    where()
+            except:
                 print("Game window not found.")
                 time.sleep(1)
     except Exception as E:
