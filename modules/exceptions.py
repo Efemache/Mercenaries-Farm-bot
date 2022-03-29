@@ -12,3 +12,7 @@ class MissingGameDirectory(SettingsError):
 
 class UnsetGameDirectory(SettingsError):
     pass
+
+
+class AHKNotInstalled(MercenariesFarmBaseException):
+    pass
