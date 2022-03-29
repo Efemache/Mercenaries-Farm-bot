@@ -41,13 +41,13 @@ def select_enemy_to_attack(index):
     return retour
 
 
-def rand(enemies=[]):
+def select_random_enemy_to_attack(enemies=[]):
     """look for a random enemy
     (used when blue mercs can't find red enemy,
     green can't find blue or
     red can't find green
     """
-    debug("rand : attack random enemy")
+    debug("select_random_enemy_to_attack : attack random enemy")
     #    count = 0
     debug(enemies, "len=", len(enemies))
     while enemies:
@@ -234,7 +234,7 @@ def attacks(
             and not select_enemy_to_attack(enemynoclass)
             and not select_enemy_to_attack(enemynoclass2)
         ):
-            rand([enemyred, enemyblue])
+            select_random_enemy_to_attack([enemyred, enemyblue])
         elif (
             mercslist[mercName]["type"] == "Fighter"
             and select_ability(mercName)
@@ -243,7 +243,7 @@ def attacks(
             and not select_enemy_to_attack(enemynoclass)
             and not select_enemy_to_attack(enemynoclass2)
         ):
-            rand([enemyred, enemygreen])
+            select_random_enemy_to_attack([enemyred, enemygreen])
         elif (
             mercslist[mercName]["type"] == "Caster"
             and select_ability(mercName)
@@ -252,9 +252,10 @@ def attacks(
             and not select_enemy_to_attack(enemynoclass)
             and not select_enemy_to_attack(enemynoclass2)
         ):
-            rand([enemygreen, enemyblue])
+            select_random_enemy_to_attack([enemygreen, enemyblue])
     elif select_ability(mercName):
-        rand([enemyred, enemygreen, enemyblue, enemynoclass, enemynoclass2])
+        select_random_enemy_to_attack(
+            [enemyred, enemygreen, enemyblue, enemynoclass, enemynoclass2])
 
 
 # Look for enemies
@@ -333,7 +334,7 @@ def battle():
 
     raund = 1
     while True:
-        move_mouse(
+        move_mouse_and_click(
             windowMP(),
             windowMP()[2] // 2.6,
             windowMP()[3] // 1.09,
