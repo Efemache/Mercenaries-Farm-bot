@@ -1,7 +1,7 @@
 try:
     import win32gui
 
-    HAS_WIN32GUI = False
+    HAS_WIN32GUI = True
 except ImportError:
     HAS_WIN32GUI = False
     print("win32gui not installed")
@@ -14,7 +14,9 @@ except ImportError:
     HAS_AHK = False
     print("AHK Not Installed")
 
+from modules.exceptions import NoWindowManagerFound
 from .base import WindowMgr
+
 
 HEARHTSTONE_WINDOW_NAME_WINDOWS = "Hearthstone"
 SW_SHOW = 5
@@ -74,3 +76,5 @@ def get_window_mgr_on_windows():
         return WindowMgrWindows
     elif HAS_AHK:
         return WindowMgrWindowsAHK
+    else:
+        raise NoWindowManagerFound("No Window Manager found for Windows")
