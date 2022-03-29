@@ -77,4 +77,4 @@ def get_window_mgr_on_windows():
     elif HAS_AHK:
         return WindowMgrWindowsAHK
     else:
-        raise NoWindowManagerFound("No Window Manager found for Windows")
+        print("No Window Manager found for Windows")

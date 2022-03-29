@@ -10,9 +10,10 @@ def main():
     try:
         while True:
             print("Loop")
-            if win.find_game():
-                where()
-            else:
+            try:
+                if win.find_game():
+                    where()
+            except:
                 print("Game window not found.")
                 time.sleep(1)
     except Exception as E:
