@@ -156,39 +156,16 @@ def travelpointSelection():
         if settings_dict["location"] == "The Barrens":
             find_ellement(UIElement.Barrens.filename, Action.move_and_click)
 
-        elif settings_dict["location"] == "Felwood":
-            find_ellement(UIElement.Felwood.filename, Action.move_and_click)
-
-        elif settings_dict["location"] == "Winterspring":
-            mouse_scroll(jposition[tag])
-            move_mouse(windowMP(), windowMP()[2] // 3, windowMP()[3] // 2)
-            time.sleep(0.5)
-            find_ellement(UIElement.Winterspring.filename, Action.move_and_click)
-
-        elif settings_dict["location"] == "Blackrock":
-            mouse_scroll(jposition[tag])
-            move_mouse(windowMP(), windowMP()[2] // 3, windowMP()[3] // 2)
-            time.sleep(0.5)
-            find_ellement(UIElement.Blackrock.filename, Action.move_and_click)
-
-        elif settings_dict["location"] == "Alterac":
-            mouse_scroll(jposition[tag])
-            move_mouse(windowMP(), windowMP()[2] // 3, windowMP()[3] // 2)
-            time.sleep(0.5)
-            find_ellement(UIElement.Alterac.filename, Action.move_and_click)
-
-        elif settings_dict["location"] == "Onyxia":
-            mouse_scroll(jposition[tag])
-            move_mouse(windowMP(), windowMP()[2] // 3, windowMP()[3] // 2)
-            time.sleep(0.5)
-            find_ellement(UIElement.Onyxia.filename, Action.move_and_click)
-
-        else:
-            print(
-                "[INFO] Travel Point unknown. "
-                "The bot won't change the selected travel point."
-            )
-
+        else :
+            try :
+                mouse_scroll(jposition[tag])
+                move_mouse(windowMP(), windowMP()[2] // 3, windowMP()[3] // 2)
+                time.sleep(0.5)
+                find_ellement(getattr(UIElement, location).filename,
+                    Action.move_and_click)
+            except Exception as e :
+                print(f"[Error] Travel Point unknown : {location}")
+            
         move_mouse(windowMP(), windowMP()[2] // 2, windowMP()[3] // 2)
         time.sleep(0.5)
 
@@ -197,10 +174,10 @@ def travelpointSelection():
         elif settings_dict["mode"] == "Heroic":
             find_ellement(UIElement.heroic.filename, Action.move_and_click)
         else:
-            print("[INFO] Settings (for Heroic/Normal) unrecognized.")
+            print("[Error] Settings (for Heroic/Normal) unrecognized.")
 
-    waitForItOrPass(Button.sta, 2)
-    find_ellement(Button.sta.filename, Action.move_and_click)
+    waitForItOrPass(Button.choose_travel, 2)
+    find_ellement(Button.choose_travel.filename, Action.move_and_click)
 
 
 def goToEncounter():

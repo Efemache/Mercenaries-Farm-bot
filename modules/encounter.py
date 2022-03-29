@@ -68,7 +68,6 @@ def select_ability(localhero):
     Click only on the ability (doesnt move to an enemy)
     """
     global raund
-    #    global mercsAbilities
     abilitiesWidth = windowMP()[2] // 14.2
     abilitiesHeigth = windowMP()[3] // 7.2
 
@@ -84,7 +83,6 @@ def select_ability(localhero):
         windowMP()[2] // 1.8,
         windowMP()[2] // 1.56,
     ]
-    # mercsAbilities=readjson('conf/attacks.json')
     retour = False
 
     if localhero in mercsAbilities:
@@ -102,7 +100,6 @@ def select_ability(localhero):
         else:
             ability = 1
 
-        # chooseone3=[640, 960, 1280]
         chooseone3 = [windowMP()[2] // 3, windowMP()[2] // 2, windowMP()[2] // 1.5]
         print(f"ability selected : {ability}")
         if ability == 0:
@@ -190,7 +187,6 @@ def attacks(
     blue attacks red (if exists)
     else merc attacks minion with special abilities or neutral
     """
-    # global mercslist
     global raund
 
     debug("[DEBUG] Attacks function")
@@ -215,13 +211,11 @@ def attacks(
         pos = int(2 - (number - 1) / 2 + (position - 1))
         x = positionOdd[pos]
     y = windowMP()[3] / 1.5
-    # y = windowMP()[1] + windowMP()[3] / 1.5
 
     print(
         "attack with : ", mercName, "( position :", position, "/", number, "=", x, ")"
     )
 
-    # print("merclist", mercslist.keys())
     move_mouse_and_click(windowMP(), x, y)
     time.sleep(0.2)
     move_mouse(windowMP(), windowMP()[2] / 3, windowMP()[3] / 2)
@@ -334,7 +328,7 @@ def battle():
 
     raund = 1
     while True:
-        move_mouse_and_click(
+        move_mouse(
             windowMP(),
             windowMP()[2] // 2.6,
             windowMP()[3] // 1.09,
