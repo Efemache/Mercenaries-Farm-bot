@@ -189,7 +189,7 @@ def attacks(
     """
     global raund
 
-    log.debug("[DEBUG] Attacks function")
+    log.debug("Attacks function")
 
     cardSize = int(windowMP()[2] / 12)
     firstOdd = int(windowMP()[0] + (windowMP()[2] / 3))
@@ -361,7 +361,7 @@ def battle():
             # wait 'WaitForEXP' (float) in minutes, to make the battle longer and
             # win more EXP (for the Hearthstone reward track)
             wait_for_exp = settings_dict["waitforexp"]
-            log.info("WaitForEXP - wait (second(s)) : {wait_for_exp}")
+            log.info(f"WaitForEXP - wait (second(s)) : {wait_for_exp}")
             time.sleep(wait_for_exp)
 
             # looks for your Mercenaries on board thanks to log file
@@ -446,7 +446,7 @@ def selectCardsInHand():
     while not find_ellement(Button.num.filename, Action.move):
         time.sleep(0.5)
 
-    log.debug("windowMP = {windowMP()}")
+    log.debug(f"windowMP = {windowMP()}")
     x1 = windowMP()[2] // 2.6
     y1 = windowMP()[3] // 1.09
     x2 = windowMP()[2] // 10

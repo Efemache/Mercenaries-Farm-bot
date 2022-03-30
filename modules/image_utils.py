@@ -32,7 +32,7 @@ def get_gray_image(file, width=default_width, height=default_height):
     if file not in get_gray_image.imagesInMemory:
         get_gray_image.imagesInMemory[file] = cv2.imread(file, cv2.IMREAD_GRAYSCALE)
 
-    log.debug("images in memory : {len(get_gray_image.imagesInMemory)}")
+    log.debug(f"images in memory : {len(get_gray_image.imagesInMemory)}")
     return get_gray_image.imagesInMemory[file]
 
 
@@ -47,7 +47,7 @@ def find_ellement(file, action, threshold="-", speed=settings_dict["bot_speed"])
     action = 15:       x         |                       |     -      |  x,y / 0,0
       (new action needed to return a tab of object/coordinates)
     """
-    log.debug("DEBUG : find_ellement_grey START")
+    log.debug("find_ellement_grey START")
 
     click_coords = find_element_from_file(
         file,
