@@ -1,4 +1,7 @@
 import sys
+import logging
+
+log = logging.getLogger(__name__)
 
 
 def find_os():
@@ -10,6 +13,6 @@ def find_os():
         myOS = "linux"
     else:
         myOS = "unknown"
-        print("sys.platform='{platform}' is unknown.".format(platform=sys.platform))
+        log.info(f"sys.platform='{sys.platform}' is unknown.")
         exit(1)
     return myOS

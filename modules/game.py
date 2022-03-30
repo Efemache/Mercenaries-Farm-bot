@@ -2,9 +2,13 @@ import time
 
 from .image_utils import find_ellement
 from .constants import Checker, Button, Action
-from .debug import debug
+
 from .mouse_utils import move_mouse
 from .platform import windowMP
+
+import logging
+
+log = logging.getLogger(__name__)
 
 
 def waitForItOrPass(image, duration):
@@ -16,7 +20,7 @@ def waitForItOrPass(image, duration):
     """
     retour = False
 
-    print(f"Waiting ({str(duration)}s max) for : ", image)
+    log.info(f"Waiting ({str(duration)}s max) for : {image}")
     for _ in range(duration * 2):
         time.sleep(0.5)
         if find_ellement(image.filename, Action.screenshot):
@@ -31,7 +35,7 @@ def selectGroup():
     (click on 'LockIn' if necessary)"""
     # global threshold
     # tempthreshold = threshold
-    print("selectGroup : entering")
+    log.info("selectGroup : entering")
     # threshold = 0.8
 
     if find_ellement(Checker.find.filename, Action.move_and_click):
@@ -41,5 +45,5 @@ def selectGroup():
         find_ellement(Button.lockin.filename, Action.move_and_click)
 
     # threshold = tempthreshold
-    debug("selectGroup : ended")
+    log.debug("selectGroup : ended")
     return

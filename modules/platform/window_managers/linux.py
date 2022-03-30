@@ -1,15 +1,16 @@
 import time
+import logging
 
+from .base import WindowMgr
+
+log = logging.getLogger(__name__)
 try:
     import gi
 
     gi.require_version("Wnck", "3.0")
     from gi.repository import Wnck, Gtk
 except ImportError:
-    print("gi.repository not installed")
-
-
-from .base import WindowMgr
+    log.info("gi.repository not installed")
 
 
 class WindowMgrLinux(WindowMgr):

@@ -1,5 +1,8 @@
 from .settings import copy_config_from_sample_if_not_exists, get_settings
 from modules.file_utils import readjson
+import logging
+
+log = logging.getLogger(__name__)
 
 # Personalized Settings files
 settings_filename = "settings.ini"
@@ -36,12 +39,12 @@ for file in personalized_files:
 try:
     settings_dict = get_settings(settings_filename)
 
-    print("Settings")
+    log.info("Settings")
     for setting, value in settings_dict.items():
-        print(f" - {setting}: {value}")
+        log.info(f" - {setting}: {value}")
 
 except Exception:
-    print("Running without settings")
+    log.error("Running without settings")
 
 jthreshold = readjson(image_threshold_filename)
 jposition = readjson(item_position_filename)
