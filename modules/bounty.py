@@ -108,7 +108,7 @@ def nextlvl():
             find_ellement(UIElement.spirithealer.filename, Action.move_and_click)
         else:
             x, y = mouse_position(windowMP())
-            log.debug("Mouse (x, y) : ({x}, {y})")
+            log.debug(f"Mouse (x, y) : ({x}, {y})")
             if y >= (windowMP()[3] // 2.2 - mouse_range) and y <= (
                 windowMP()[3] // 2.2 + mouse_range
             ):
@@ -119,7 +119,7 @@ def nextlvl():
             else:
                 x = windowMP()[2] // 3.7
             y = windowMP()[3] // 2.2
-            log.debug("move mouse to (x, y) : ({x}, {y})")
+            log.debug(f"move mouse to (x, y) : ({x}, {y})")
             move_mouse_and_click(windowMP(), x, y)
 
 
@@ -170,7 +170,7 @@ def travelpointSelection():
                     getattr(UIElement, location).filename, Action.move_and_click
                 )
             except Exception:
-                log.error(f"[Error] Travel Point unknown : {location}")
+                log.error(f"Travel Point unknown : {location}")
 
         move_mouse(windowMP(), windowMP()[2] // 2, windowMP()[3] // 2)
         time.sleep(0.5)
@@ -180,7 +180,7 @@ def travelpointSelection():
         elif settings_dict["mode"] == "Heroic":
             find_ellement(UIElement.heroic.filename, Action.move_and_click)
         else:
-            log.error("[Error] Settings (for Heroic/Normal) unrecognized.")
+            log.error("Settings (for Heroic/Normal) unrecognized.")
 
     waitForItOrPass(Button.choose_travel, 2)
     find_ellement(Button.choose_travel.filename, Action.move_and_click)
@@ -214,7 +214,7 @@ def goToEncounter():
             retour = (
                 selectCardsInHand()
             )  # Start the battle : the bot choose the cards and fight against the enemy
-            log.info("goToEncounter - retour = {retour}")
+            log.info(f"goToEncounter - retour = {retour}")
             time.sleep(1)
             if retour == "win":
                 log.info("goToEncounter : battle won")
