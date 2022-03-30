@@ -4,10 +4,7 @@ import logging.config
 log_config = {
     "version": 1,
     "root": {
-        "handlers": [
-            "console",
-            # "file"
-        ],
+        "handlers": ["console", "file"],
         "level": "DEBUG",
     },
     "handlers": {
