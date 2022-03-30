@@ -2,13 +2,14 @@ import re
 import time
 import random
 import configparser
+import logging
 
 # import pyautogui
 
 
 from .platform import windowMP
 from .mouse_utils import move_mouse_and_click, move_mouse, mouse_click, mouse_scroll
-from .debug import debug
+
 from .image_utils import partscreen, find_ellement
 from .constants import UIElement, Checker, Button, Action
 from .log_board import LogHSMercs
@@ -17,6 +18,7 @@ from .settings import settings_dict, mercslist, mercsAbilities
 
 config = configparser.ConfigParser()
 config.read("conf/combo.ini")
+log = logging.getLogger(__name__)
 
 
 def select_enemy_to_attack(index):
@@ -27,11 +29,9 @@ def select_enemy_to_attack(index):
     # find_element: Can be changed to return None or bool type
     if index:
         time.sleep(0.1)
-        debug(
-            "Move index (index, x, y) : ",
-            index,
-            index[0] + (cardWidth // 2),
-            index[1] - (cardWidth // 3),
+        log.debug(
+            f"Move index (index, x, y) : {index}"
+            f" {index[0] + (cardWidth // 2)} {index[1] - (cardWidth // 3)}",
         )
         move_mouse_and_click(
             windowMP(), index[0] + (cardWidth // 3), index[1] - (cardHeight // 2)
@@ -47,9 +47,9 @@ def select_random_enemy_to_attack(enemies=[]):
     green can't find blue or
     red can't find green
     """
-    debug("select_random_enemy_to_attack : attack random enemy")
+    log.debug("select_random_enemy_to_attack : attack random enemy")
     #    count = 0
-    debug(enemies, "len=", len(enemies))
+    log.debug(f"{enemies} len={len(enemies)}")
     while enemies:
         toAttack = enemies.pop(random.randint(0, len(enemies) - 1))
         if select_enemy_to_attack(toAttack):
@@ -101,12 +101,12 @@ def select_ability(localhero):
             ability = 1
 
         chooseone3 = [windowMP()[2] // 3, windowMP()[2] // 2, windowMP()[2] // 1.5]
-        print(f"ability selected : {ability}")
+        log.info(f"ability selected : {ability}")
         if ability == 0:
-            debug("No ability selected (0)")
+            log.debug("No ability selected (0)")
             retour = False
         elif ability >= 1 and ability <= 3:
-            debug(
+            log.debug(
                 f"abilities Y : {abilitiesPositionY} |"
                 f" abilities X : {abilitiesPositionX}"
             )
@@ -133,7 +133,7 @@ def select_ability(localhero):
                     move_mouse_and_click(windowMP(), chooseone3[0], windowMP()[3] // 2)
                     retour = False
         else:
-            print(f"No ability selected for {localhero}")
+            log.info(f"No ability selected for {localhero}")
     else:
         localhero = re.sub(r" [0-9]$", "", localhero)
         if config.has_option("Neutral", localhero):
@@ -147,7 +147,7 @@ def select_ability(localhero):
             else:
                 ability = 1
 
-            print(f"ability selected : {ability}")
+            log.info(f"ability selected : {ability}")
             partscreen(
                 int(abilitiesWidth),
                 int(abilitiesHeigth),
@@ -189,7 +189,7 @@ def attacks(
     """
     global raund
 
-    debug("[DEBUG] Attacks function")
+    log.debug("[DEBUG] Attacks function")
 
     cardSize = int(windowMP()[2] / 12)
     firstOdd = int(windowMP()[0] + (windowMP()[2] / 3))
@@ -212,9 +212,7 @@ def attacks(
         x = positionOdd[pos]
     y = windowMP()[3] / 1.5
 
-    print(
-        "attack with : ", mercName, "( position :", position, "/", number, "=", x, ")"
-    )
+    log.info(f"attack with : {mercName} ( position : {position}/{number} ={x})")
 
     move_mouse_and_click(windowMP(), x, y)
     time.sleep(0.2)
@@ -249,7 +247,8 @@ def attacks(
             select_random_enemy_to_attack([enemygreen, enemyblue])
     elif select_ability(mercName):
         select_random_enemy_to_attack(
-            [enemyred, enemygreen, enemyblue, enemynoclass, enemynoclass2])
+            [enemyred, enemygreen, enemyblue, enemynoclass, enemynoclass2]
+        )
 
 
 # Look for enemies
@@ -261,19 +260,13 @@ def find_enemies():
     enemynoclass2 = find_noclass2_enemy()
     enemymol = find_mol_enemy()
 
-    print(
-        "Enemies : red",
-        enemyred,
-        " - green",
-        enemygreen,
-        " - blue",
-        enemyblue,
-        " - noclass",
-        enemynoclass,
-        " - noclass2",
-        enemynoclass2,
-        " - mol",
-        enemymol,
+    log.info(
+        f"Enemies : red {enemyred}"
+        f" - green {enemygreen}"
+        f" - blue {enemyblue}"
+        f" - noclass {enemynoclass}"
+        f" - noclass2 {enemynoclass2}"
+        f" - mol {enemymol}"
     )
     return enemyred, enemygreen, enemyblue, enemynoclass, enemynoclass2, enemymol
 
@@ -367,12 +360,13 @@ def battle():
 
             # wait 'WaitForEXP' (float) in minutes, to make the battle longer and
             # win more EXP (for the Hearthstone reward track)
-            print("WaitForEXP - wait (second(s)) :", settings_dict["waitforexp"])
-            time.sleep(settings_dict["waitforexp"])
+            wait_for_exp = settings_dict["waitforexp"]
+            log.info("WaitForEXP - wait (second(s)) : {wait_for_exp}")
+            time.sleep(wait_for_exp)
 
             # looks for your Mercenaries on board thanks to log file
             mercenaries = zoneLog.getBoard()
-            print("ROUND", raund, " : your board", mercenaries)
+            log.info(f"ROUND {raund} : your board {mercenaries}")
 
             # click on neutral zone to avoid problem with screenshot
             # when you're looking for red/green/blue enemies
@@ -446,13 +440,13 @@ def selectCardsInHand():
         this feature will come back later using HS logs
     """
 
-    debug("[ SETH - START]")
+    log.debug("[ SETH - START]")
     retour = True
 
     while not find_ellement(Button.num.filename, Action.move):
         time.sleep(0.5)
 
-    debug("windowsMP() : ", windowMP())
+    log.debug("windowMP = {windowMP()}")
     x1 = windowMP()[2] // 2.6
     y1 = windowMP()[3] // 1.09
     x2 = windowMP()[2] // 10
@@ -463,6 +457,6 @@ def selectCardsInHand():
         move_mouse(windowMP(), x2, y2)
 
     retour = battle()
-    debug("[ SETH - END]")
+    log.debug("[ SETH - END]")
 
     return retour

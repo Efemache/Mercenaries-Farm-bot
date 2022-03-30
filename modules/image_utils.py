@@ -6,9 +6,13 @@ import numpy as np
 
 from .platform import windowMP
 from .mouse_utils import move_mouse_and_click, move_mouse
-from .debug import debug
+
 from .settings import settings_dict, jthreshold
 from .constants import Action
+
+import logging
+
+log = logging.getLogger(__name__)
 
 default_rect = (-8, -8, 1936, 1056)
 
@@ -28,7 +32,7 @@ def get_gray_image(file, width=default_width, height=default_height):
     if file not in get_gray_image.imagesInMemory:
         get_gray_image.imagesInMemory[file] = cv2.imread(file, cv2.IMREAD_GRAYSCALE)
 
-    debug("images in memory : ", len(get_gray_image.imagesInMemory))
+    log.debug("images in memory : {len(get_gray_image.imagesInMemory)}")
     return get_gray_image.imagesInMemory[file]
 
 
@@ -43,7 +47,7 @@ def find_ellement(file, action, threshold="-", speed=settings_dict["bot_speed"])
     action = 15:       x         |                       |     -      |  x,y / 0,0
       (new action needed to return a tab of object/coordinates)
     """
-    debug("DEBUG : find_ellement_grey START")
+    log.debug("DEBUG : find_ellement_grey START")
 
     click_coords = find_element_from_file(
         file,
@@ -93,7 +97,6 @@ def find_element_from_file(
     Returns:
         (int, int): coordinates of center of element
     """
-    debug("DEBUG : find_element_grey START")
     global partImg
     time.sleep(speed)
 
@@ -115,9 +118,11 @@ def find_element_from_file(
     click_coords = find_element_center_on_screen(img, template, threshold=threshold)
 
     if click_coords is not None:
-        print(f"Found {file}", "(", threshold, ")", *click_coords)
+        log.info(
+            f"Found {file} ( {threshold} ) { click_coords[0] } { click_coords[1] }",
+        )
     else:
-        print(f"Looked for {file}", "(", threshold, ")")
+        log.info(f"Looked for {file} ( {threshold} )")
 
     return click_coords
 
@@ -127,7 +132,7 @@ def partscreen(x, y, top, left, debug_mode=False, monitor_resolution=None):
     take screeenshot for a part of the screen to find some part of the image
     """
     global partImg
-    debug("entered screenpart")
+    log.debug("entered screenpart")
     import mss.tools
 
     with mss.mss() as sct:

@@ -4,20 +4,25 @@ import time
 from modules.gameloop import where
 from modules.platform import win
 
+import logging
+
+log = logging.getLogger(__name__)
+
 
 def main():
-    print("start")
+    log.info("start")
     try:
         while True:
-            print("Loop")
+            log.info("Loop")
             try:
                 if win.find_game():
                     where()
-            except:
-                print("Game window not found.")
+            except Exception as error:
+                log.error("Game window not found.")
+                log.debug(f"Error: {error}")
                 time.sleep(1)
     except Exception as E:
-        print("Error", E)
+        log.error(f"Error: {E}")
 
 
 if __name__ == "__main__":

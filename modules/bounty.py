@@ -10,12 +10,16 @@ from .mouse_utils import (
     mouse_scroll,
     mouse_range,
 )
-from .debug import debug
+
 from .constants import UIElement, Button, Action
 from .image_utils import find_ellement
 from .settings import settings_dict, jposition
 from .game import waitForItOrPass
 from .encounter import selectCardsInHand
+
+import logging
+
+log = logging.getLogger(__name__)
 
 
 def collect():
@@ -104,9 +108,10 @@ def nextlvl():
             find_ellement(UIElement.spirithealer.filename, Action.move_and_click)
         else:
             x, y = mouse_position(windowMP())
-            debug("Mouse (x, y) : ", x, y)
+            log.debug("Mouse (x, y) : ({x}, {y})")
             if y >= (windowMP()[3] // 2.2 - mouse_range) and y <= (
-                windowMP()[3] // 2.2 + mouse_range) :
+                windowMP()[3] // 2.2 + mouse_range
+            ):
 
                 x += windowMP()[2] // 25
                 if x > windowMP()[2] // 1.5:
@@ -114,7 +119,7 @@ def nextlvl():
             else:
                 x = windowMP()[2] // 3.7
             y = windowMP()[3] // 2.2
-            debug("move mouse to (x, y) : ", x, y)
+            log.debug("move mouse to (x, y) : ({x}, {y})")
             move_mouse_and_click(windowMP(), x, y)
 
 
@@ -152,20 +157,21 @@ def travelpointSelection():
         time.sleep(0.5)
 
         location = settings_dict["location"]
-        tag=f"travelpoint.{location}.scroll"
-        if settings_dict["location"] == "The Barrens":
+        tag = f"travelpoint.{location}.scroll"
+        if location == "The Barrens":
             find_ellement(UIElement.Barrens.filename, Action.move_and_click)
 
-        else :
-            try :
+        else:
+            try:
                 mouse_scroll(jposition[tag])
                 move_mouse(windowMP(), windowMP()[2] // 3, windowMP()[3] // 2)
                 time.sleep(0.5)
-                find_ellement(getattr(UIElement, location).filename,
-                    Action.move_and_click)
-            except Exception as e :
-                print(f"[Error] Travel Point unknown : {location}")
-            
+                find_ellement(
+                    getattr(UIElement, location).filename, Action.move_and_click
+                )
+            except Exception:
+                log.error(f"[Error] Travel Point unknown : {location}")
+
         move_mouse(windowMP(), windowMP()[2] // 2, windowMP()[3] // 2)
         time.sleep(0.5)
 
@@ -174,7 +180,7 @@ def travelpointSelection():
         elif settings_dict["mode"] == "Heroic":
             find_ellement(UIElement.heroic.filename, Action.move_and_click)
         else:
-            print("[Error] Settings (for Heroic/Normal) unrecognized.")
+            log.error("[Error] Settings (for Heroic/Normal) unrecognized.")
 
     waitForItOrPass(Button.choose_travel, 2)
     find_ellement(Button.choose_travel.filename, Action.move_and_click)
@@ -185,7 +191,7 @@ def goToEncounter():
     Start new fight,
     continue on the road and collect everything (treasure, rewards, ...)
     """
-    print("goToEncounter : entering")
+    log.info("goToEncounter : entering")
     time.sleep(2)
     travelEnd = False
 
@@ -208,10 +214,10 @@ def goToEncounter():
             retour = (
                 selectCardsInHand()
             )  # Start the battle : the bot choose the cards and fight against the enemy
-            print("goToEncounter - retour = ", retour)
+            log.info("goToEncounter - retour = {retour}")
             time.sleep(1)
             if retour == "win":
-                print("goToEncounter : battle won")
+                log.info("goToEncounter : battle won")
                 while True:
                     if not find_ellement(
                         UIElement.take_grey.filename, Action.screenshot
@@ -234,16 +240,18 @@ def goToEncounter():
                     if find_ellement(
                         UIElement.presents_thing.filename, Action.screenshot
                     ):
-                        print("goToEncounter : " "Boss defeated. Time for REWARDS !!!")
+                        log.info(
+                            "goToEncounter : " "Boss defeated. Time for REWARDS !!!"
+                        )
                         collect()
                         travelEnd = True
                         break
             elif retour == "loose":
                 travelEnd = True
-                print("goToEncounter : Battle lost")
+                log.info("goToEncounter : Battle lost")
             else:
                 travelEnd = True
-                print("goToEncounter : don't know what happened !")
+                log.info("goToEncounter : don't know what happened !")
         else:
             nextlvl()
     while not find_ellement(Button.back.filename, Action.screenshot):

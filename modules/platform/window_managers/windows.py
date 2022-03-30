@@ -1,10 +1,16 @@
+import logging
+
+from .base import WindowMgr
+
+log = logging.getLogger(__name__)
+
 try:
     import win32gui
 
     HAS_WIN32GUI = True
 except ImportError:
     HAS_WIN32GUI = False
-    print("win32gui not installed")
+    log.warning("win32gui not installed")
 
 try:
     from ahk import AHK
@@ -12,10 +18,7 @@ try:
     HAS_AHK = True
 except ImportError:
     HAS_AHK = False
-    print("AHK Not Installed")
-
-from modules.exceptions import NoWindowManagerFound
-from .base import WindowMgr
+    log.warning("AHK Not Installed")
 
 
 HEARHTSTONE_WINDOW_NAME_WINDOWS = "Hearthstone"
@@ -77,4 +80,4 @@ def get_window_mgr_on_windows():
     elif HAS_AHK:
         return WindowMgrWindowsAHK
     else:
-        print("No Window Manager found for Windows")
+        log.error("No Window Manager found for Windows")
