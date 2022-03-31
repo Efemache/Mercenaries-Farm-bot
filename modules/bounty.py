@@ -87,7 +87,7 @@ def nextlvl():
 
                 time.sleep(0.2)
                 find_ellement(Button.choose_task.filename, Action.move_and_click)
-                time.sleep(0.2)
+                time.sleep(3)
                 mouse_click()
                 time.sleep(8)
 
@@ -112,15 +112,17 @@ def nextlvl():
             if y >= (windowMP()[3] // 2.2 - mouse_range) and y <= (
                 windowMP()[3] // 2.2 + mouse_range
             ):
-
                 x += windowMP()[2] // 25
-                if x > windowMP()[2] // 1.5:
-                    x = windowMP()[2] // 3.7
             else:
                 x = windowMP()[2] // 3.7
-            y = windowMP()[3] // 2.2
-            log.debug(f"move mouse to (x, y) : ({x}, {y})")
-            move_mouse_and_click(windowMP(), x, y)
+
+            if x > windowMP()[2] // 1.5:
+                log.debug("Didnt find a battle. Try to go 'back'")
+                find_ellement(Button.back.filename, Action.move_and_click)
+            else :
+                y = windowMP()[3] // 2.2
+                log.debug(f"move mouse to (x, y) : ({x}, {y})")
+                move_mouse_and_click(windowMP(), x, y)
 
 
 def chooseTreasure():
@@ -254,6 +256,7 @@ def goToEncounter():
                 log.info("goToEncounter : don't know what happened !")
         else:
             nextlvl()
+
     while not find_ellement(Button.back.filename, Action.screenshot):
         mouse_click()
         time.sleep(1)
