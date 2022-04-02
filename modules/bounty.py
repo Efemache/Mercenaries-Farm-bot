@@ -80,6 +80,10 @@ def nextlvl():
             y = windowMP()[3] // 2.2
             time.sleep(7)
             while find_ellement(UIElement.visitor.filename, Action.screenshot):
+                if settings_dict["stopatstranger"]:
+                    log.info("Stopping after meeting Mysterious Stranger")
+                    exit(1)
+
                 temp = random.choice([3, 2, 1.7])
                 x = windowMP()[2] // temp
 
@@ -203,7 +207,7 @@ def goToEncounter():
         #   time.sleep(2)
 
         if find_ellement(Button.play.filename, Action.screenshot):
-            if settings_dict["quitbeforebossfight"] == "True" and find_ellement(
+            if settings_dict["quitbeforebossfight"] == True and find_ellement(
                 UIElement.boss.filename, Action.screenshot
             ):
                 time.sleep(1)
