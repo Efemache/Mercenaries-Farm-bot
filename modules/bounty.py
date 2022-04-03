@@ -68,6 +68,7 @@ def quitBounty():
 def nextlvl():
     """Progress on the map (Boon, Portal, ...) to find the next battle"""
     time.sleep(1.5)
+    retour = True
 
     if not find_ellement(Button.play.filename, Action.screenshot):
 
@@ -123,10 +124,13 @@ def nextlvl():
             if x > windowMP()[2] // 1.5:
                 log.debug("Didnt find a battle. Try to go 'back'")
                 find_ellement(Button.back.filename, Action.move_and_click)
+                retour = False
             else :
                 y = windowMP()[3] // 2.2
                 log.debug(f"move mouse to (x, y) : ({x}, {y})")
                 move_mouse_and_click(windowMP(), x, y)
+
+    return retour
 
 
 def chooseTreasure():
@@ -259,7 +263,8 @@ def goToEncounter():
                 travelEnd = True
                 log.info("goToEncounter : don't know what happened !")
         else:
-            nextlvl()
+            if not nextlvl():
+                break
 
     while not find_ellement(Button.back.filename, Action.screenshot):
         mouse_click()
