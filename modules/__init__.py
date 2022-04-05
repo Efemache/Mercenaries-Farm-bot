@@ -22,7 +22,7 @@ log_config = {
     },
     "formatters": {
         "std_out": {
-            "format": "%(asctime)s : %(levelname)s : %(module)s : %(funcName)s : %(message)s",
+            "format": "%(asctime)s [%(levelname)-8s] %(module)s : %(message)s",
             "datefmt": "%d-%m-%Y %I:%M:%S",
         },
         "old_out": {"format": "%(message)s"},
