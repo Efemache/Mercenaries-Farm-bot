@@ -25,8 +25,8 @@ class TestSettings(unittest.TestCase):
             "monitor": 1,
             "monitor resolution": "1920x1080",
             "mousespeed": 0.3,
-            "quitbeforebossfight": True,
-            "stopatstranger": True,
+            "quitbeforebossfight": False,
+            "stopatstranger": False,
             "waitforexp": 0,
             "zonelog": "C:/Test/Location/Hearthstone/Logs/Zone.log",
         }
@@ -34,27 +34,29 @@ class TestSettings(unittest.TestCase):
         self.assertEqual(actual_settings_dict, expected_settings_dict)
 
     def test_get_settings_no_gamedir(self):
-        test_settings_filename = "tests/unit/settings/test_settings_no_gamedir.ini"
-
-        with self.assertRaises(UnsetGameDirectory) as context:
-            get_settings(test_settings_filename)
-
-        self.assertEqual("Game Dir setting is not set", str(context.exception))
+        self._extracted_from_test_get_settings_missing_gamedir_2(
+            "tests/unit/settings/test_settings_no_gamedir.ini",
+            UnsetGameDirectory,
+            "Game Dir setting is not set",
+        )
 
     def test_get_settings_missing_gamedir(self):
         """
         Test to check if correct exception is raised
         if gamedir doesn't exist in filesystem
         """
-        test_settings_filename = "tests/unit/settings/test_settings_missing_gamedir.ini"
-
-        with self.assertRaises(MissingGameDirectory) as context:
-            get_settings(test_settings_filename)
-
-        self.assertEqual(
+        self._extracted_from_test_get_settings_missing_gamedir_2(
+            "tests/unit/settings/test_settings_missing_gamedir.ini",
+            MissingGameDirectory,
             "Game directory (c:\\location\\that\\doesnt\\exist) does not exist",
-            str(context.exception),
         )
+
+    # TODO Rename this here and in `test_get_settings_no_gamedir` and `test_get_settings_missing_gamedir`
+    def _extracted_from_test_get_settings_missing_gamedir_2(self, arg0, arg1, arg2):
+        test_settings_filename = arg0
+        with self.assertRaises(arg1) as context:
+            get_settings(test_settings_filename)
+        self.assertEqual(arg2, str(context.exception))
 
     @patch("pathlib.Path.is_file")
     def test_copy_config_from_sample_if_not_exists(self, mock_is_file):

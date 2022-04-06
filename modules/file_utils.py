@@ -2,7 +2,7 @@ import json
 import configparser
 import re
 import logging
-
+from modules.exceptions import SettingsError
 
 log = logging.getLogger(__name__)
 
@@ -41,6 +41,10 @@ def parseINI(inidict):
 def readINI(inifile):
     """... just for reading .ini file and return data"""
     config = configparser.ConfigParser()
-    config.read(inifile)
+    try:
+        config.read(inifile)
+    except configparser.DuplicateOptionError as err:
+        log.error(err)
+        raise SettingsError(f"Duplicate Option in Settings File: {err}") from err
 
     return config._sections
