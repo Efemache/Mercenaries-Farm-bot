@@ -10,12 +10,17 @@ def readjson(jfile):
     return data
 
 
+def read_ini_to_dict(inifile):
+    """read ini file to parsed dictionary"""
+    return parseINI(readINI(inifile))
+
+
 def parseINI(inidict):
     """... just for transform value into right type"""
     initype = {}
     for k in inidict.keys():
         i = inidict[k].split("#")[0]
-        if i in ["True","False"]:
+        if i in ["True", "False"]:
             initype[k] = i == "True"
         elif re.match("^[0-9]+$", i):
             initype[k] = int(i)
