@@ -16,6 +16,7 @@ from .image_utils import find_ellement
 from .settings import settings_dict, jposition
 from .game import waitForItOrPass
 from .encounter import selectCardsInHand
+from .campfire import look_at_campfire_completed_tasks
 
 import logging
 
@@ -262,6 +263,10 @@ def goToEncounter():
             else:
                 travelEnd = True
                 log.info("goToEncounter : don't know what happened !")
+
+            waitForItOrPass(UIElement.campfire.filename, 5)
+            look_at_campfire_completed_tasks()
+                
         else:
             if not nextlvl():
                 break

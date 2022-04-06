@@ -37,6 +37,7 @@ class UIElement(ImageFragment):
     blue = "blue"
     boss = "boss"
     bounties = "bounties"
+    campfire = "campfire"
     choose_team = "choose_team"
     encounter_battle = "encounter_battle"
     Felwood = "Felwood"
@@ -70,6 +71,8 @@ class Button(ImageFragment):
 
     allready = "allready"
     back = "back"
+    campfire_claim = "campfire_claim"
+    campfire_completed_task = "campfire_completed_task"
     choose_task = "choose_task"
     choose_travel = "choose_travel"
     confirm = "confirm"
