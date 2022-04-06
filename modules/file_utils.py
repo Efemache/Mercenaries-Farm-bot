@@ -1,17 +1,23 @@
 import json
 import configparser
 import re
+import logging
+
+
+log = logging.getLogger(__name__)
 
 
 def readjson(jfile):
     """... just for reading json file and return data :)"""
     with open(jfile) as descriptor:
         data = json.load(descriptor)
+
     return data
 
 
 def read_ini_to_dict(inifile):
     """read ini file to parsed dictionary"""
+    log.debug(f"Reading {inifile}")
     return parseINI(readINI(inifile))
 
 
@@ -37,4 +43,4 @@ def readINI(inifile):
     config = configparser.ConfigParser()
     config.read(inifile)
 
-    return config
+    return config._sections
