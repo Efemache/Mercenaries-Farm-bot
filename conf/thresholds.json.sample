@@ -1,6 +1,7 @@
 {
 "default_grey" : 0.75, 
 "buttons/back.png" : 0.8,
+"buttons/campfire_claim.png" : 0.85,
 "buttons/choose_task.png" : 0.75,
 "buttons/finishok.png" : 0.85,
 "buttons/done.png" : 0.65,

@@ -104,14 +104,21 @@ def nextlvl():
             mouse_click()
             time.sleep(5)
         elif find_ellement(UIElement.surprise.filename, Action.screenshot):
-            # type A
             time.sleep(1)
             find_ellement(UIElement.surprise.filename, Action.move_and_click)
 
         elif find_ellement(UIElement.spirithealer.filename, Action.screenshot):
-            # type A
             time.sleep(1)
             find_ellement(UIElement.spirithealer.filename, Action.move_and_click)
+
+        elif find_ellement(UIElement.campfire.filename, Action.screenshot):
+            look_at_campfire_completed_tasks()
+            time.sleep(3)
+
+        elif find_ellement(Checker.task_completed.filename, Action.screenshot):
+            waitForItOrPass(UIElement.campfire, 8)
+            look_at_campfire_completed_tasks()
+
         else:
             x, y = mouse_position(windowMP())
             log.debug(f"Mouse (x, y) : ({x}, {y})")
@@ -264,8 +271,8 @@ def goToEncounter():
                 travelEnd = True
                 log.info("goToEncounter : don't know what happened !")
 
-            waitForItOrPass(UIElement.campfire.filename, 5)
-            look_at_campfire_completed_tasks()
+#            waitForItOrPass(UIElement.campfire, 5)
+#            look_at_campfire_completed_tasks()
                 
         else:
             if not nextlvl():

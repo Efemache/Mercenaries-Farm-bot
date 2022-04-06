@@ -46,7 +46,7 @@ def where():
         nextlvl()
 
     if find_ellement(UIElement.campfire.filename, Action.screenshot):
-        time.sleep(3)
+        time.sleep(2)
         look_at_campfire_completed_tasks()
         time.sleep(3)
 
