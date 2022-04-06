@@ -1,8 +1,12 @@
+import logging
 import pathlib
 import shutil
 
-from modules.exceptions import MissingGameDirectory, UnsetGameDirectory
+from modules.exceptions import MissingGameDirectory, UnsetGameDirectory, SettingsError
 from modules.file_utils import parseINI, readINI
+
+
+log = logging.getLogger(__name__)
 
 
 def get_settings(settings_filename):
@@ -19,19 +23,25 @@ def get_settings(settings_filename):
         8: WaitForEXP (3),
         9: Zonelog (GameDir/Logs/Zone.log)
     """
-    settings_dict = parseINI(readINI(settings_filename)["BotSettings"])
+    raw_settings = readINI(settings_filename)
 
-    if not settings_dict["gamedir"]:
-        raise UnsetGameDirectory("Game Dir setting is not set")
+    try:
+        settings_dict = parseINI(raw_settings["BotSettings"])
 
-    game_dir = pathlib.Path(settings_dict["gamedir"])
+        if not settings_dict["gamedir"]:
+            raise UnsetGameDirectory("Game Dir setting is not set")
 
-    if not game_dir.is_dir():
-        raise MissingGameDirectory(f"Game directory ({game_dir}) does not exist")
-    else:
-        settings_dict["zonelog"] = pathlib.PurePath(
-            game_dir, "Logs/Zone.log"
-        ).as_posix()
+        game_dir = pathlib.Path(settings_dict["gamedir"])
+
+        if not game_dir.is_dir():
+            raise MissingGameDirectory(f"Game directory ({game_dir}) does not exist")
+        else:
+            settings_dict["zonelog"] = pathlib.PurePath(
+                game_dir, "Logs/Zone.log"
+            ).as_posix()
+    except KeyError as kerr:
+        log.error(f"Settings file is missing section {kerr}")
+        raise SettingsError(f"Settings file is missing section {kerr}") from kerr
 
     return settings_dict
 
