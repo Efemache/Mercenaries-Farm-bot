@@ -32,8 +32,8 @@ def get_gray_image(file, width=default_width, height=default_height):
     # need to resize the image in memory
     if file not in get_gray_image.imagesInMemory:
         get_gray_image.imagesInMemory[file] = cv2.imread(file, cv2.IMREAD_GRAYSCALE)
+        log.debug(f"images in memory : {len(get_gray_image.imagesInMemory)}")
 
-    log.debug(f"images in memory : {len(get_gray_image.imagesInMemory)}")
     return get_gray_image.imagesInMemory[file]
 
 
