@@ -1,6 +1,12 @@
+import logging
+
 from .conf import get_config as _get_config
 
+_log = logging.getLogger(__name__)
+
 _root_settings_dict = _get_config()
+
+_log.debug("Read in conf/ settings")
 
 jthreshold = _root_settings_dict["thresholds.json"]
 jposition = _root_settings_dict["positions.json"]
