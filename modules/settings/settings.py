@@ -13,7 +13,7 @@ def get_settings(settings_filename):
         2: location (The Barrens),
         3: mode (Heroic),
         4: quitBeforeBossFight (True),
-        5: heroSet (True),
+        5: stopAtStranger (True),
         6: monitor (1),
         7: MouseSpeed (0.5),
         8: WaitForEXP (3),

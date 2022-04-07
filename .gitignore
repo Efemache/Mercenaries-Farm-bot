@@ -23,3 +23,6 @@ development/
 settings.ini
 conf/combo.ini
 conf/thresholds.json
+
+# Log file
+mfb.log

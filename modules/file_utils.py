@@ -15,8 +15,8 @@ def parseINI(inidict):
     initype = {}
     for k in inidict.keys():
         i = inidict[k].split("#")[0]
-        if i in ["True", "False"]:
-            initype[k] = bool(i)
+        if i in ["True","False"]:
+            initype[k] = i == "True"
         elif re.match("^[0-9]+$", i):
             initype[k] = int(i)
         elif re.match("^[0-9]+\.[0-9]+$", i):

@@ -2,23 +2,27 @@
 import time
 
 from modules.gameloop import where
-from modules.platform import find_os, findgame
+from modules.platform import win
+
+import logging
+
+log = logging.getLogger(__name__)
 
 
 def main():
-    print("start")
+    log.info("start")
     try:
-        myOS = find_os()
-        findgame(myOS)
         while True:
-            print("Loop")
-            if findgame(myOS):
-                where()
-            else:
-                print("Game window not found.")
+            log.info("Loop")
+            try:
+                if win.find_game():
+                    where()
+            except Exception as error:
+                log.error("Game window not found.")
+                log.debug(f"Error: {error}")
                 time.sleep(1)
     except Exception as E:
-        print("Error", E)
+        log.error(f"Error: {E}")
 
 
 if __name__ == "__main__":

@@ -36,8 +36,8 @@ To discuss with the community, go to discord [Mercenaries Farm server](https://d
 |9. choosing abilities :  | ✓|
 |    * for each mercenary (using configuration in conf/combo.ini) | ✓|
 |    * or the first abilities by default (if no configuration exists) | ✓|
-|    * /!\ the bot doesn't recognize abilities like "Choose One"  | x|
-|    * /!\ the bot can't point an ability to your mercs (like Healing)  | x|
+|    * ⚠️ the bot doesn't recognize abilities like "Choose One"  | x|
+|    * ⚠️ the bot can't point an ability to your mercs (like Healing)  | x|
 |10. attacking opponents (if ability requires it) | ✓|
 |11. collecting rewards for reaching the last level|  ✓|
 |12. repeat from 1 point | ✓|
@@ -63,8 +63,8 @@ To discuss with the community, go to discord [Mercenaries Farm server](https://d
 
 ## Installation
 ### Windows
-* Install [Python 3.9](https://www.python.org/ftp/python/3.9.0/python-3.9.0-amd64-webinstall.exe) (/!\ select the "Add Python 3.9 to PATH" during installation) 
-* Download and install AutoHotKey (AHK) : https://www.autohotkey.com/
+* Install [Python 3.9](https://www.python.org/ftp/python/3.9.0/python-3.9.0-amd64-webinstall.exe) (⚠️ select the "Add Python 3.9 to PATH" during installation) 
+* ~~Download and install AutoHotKey (AHK) : https://www.autohotkey.com/~~ (Skip this step. We switched to win32gui)
 * Download the project
 * Edit your Hearthstone log.config file (C:\Users\YOURUSER\AppData\Local\Blizzard\Hearthstone\log.config) and add these lines :
 ```
@@ -74,7 +74,7 @@ FilePrinting=true
 ConsolePrinting=false
 ScreenPrinting=false
 ```
-* Open settings.ini and set your [settings](https://github.com/Efemache/Mercenaries-Farm-bot/wiki/Settings) (/!\ don't forget to set "GameDir" to your Hearthstone directory)
+* Open settings.ini and set your [settings](https://github.com/Efemache/Mercenaries-Farm-bot/wiki/Settings) (⚠️ don't forget to set "GameDir" to your Hearthstone directory)
 * Start Hearthstone
 * Create a group of mercenaries named "Botwork" (and go back to main menu)
 * Run HSbotRunner.bat
@@ -83,7 +83,7 @@ ScreenPrinting=false
 ### Linux
 * Install gir1.2-wnck-3.0 (sudo apt install gir1.2-wnck-3.0)
 * Download the project
-* Open settings.ini and set your [settings](https://github.com/Efemache/Mercenaries-Farm-bot/wiki/Settings) (/!\ don't forget to set "GameDir" to your Hearthstone directory)
+* Open settings.ini and set your [settings](https://github.com/Efemache/Mercenaries-Farm-bot/wiki/Settings) (⚠️ don't forget to set "GameDir" to your Hearthstone directory)
 * Edit your Hearthstone log.config file ([...]/drive_c/users/YOURUSER/Local Settings/Application Data/Blizzard/Hearthstone/log.config) and add these lines :
 ```
 [Zone]

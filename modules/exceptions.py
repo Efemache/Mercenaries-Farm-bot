@@ -12,3 +12,15 @@ class MissingGameDirectory(SettingsError):
 
 class UnsetGameDirectory(SettingsError):
     pass
+
+
+class WindowManagerError(MercenariesFarmBaseException):
+    pass
+
+
+class AHKNotInstalled(WindowManagerError):
+    pass
+
+
+class NoWindowManagerFound(WindowManagerError):
+    pass

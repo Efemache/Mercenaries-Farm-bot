@@ -1,6 +1,7 @@
 {
 "default_grey" : 0.75, 
 "buttons/back.png" : 0.8,
+"buttons/campfire_claim.png" : 0.85,
 "buttons/choose_task.png" : 0.75,
 "buttons/finishok.png" : 0.85,
 "buttons/done.png" : 0.65,
@@ -27,6 +28,7 @@
 "UI_ellements/spirithealer.png" : 0.92,
 "UI_ellements/surprise.png" : 0.95,
 "UI_ellements/take_grey.png" : 0.9,
+"UI_ellements/task_completed.png" : 0.8,
 "UI_ellements/view_party.png" : 0.8,
 "lastOne": "dont touch"
 }
