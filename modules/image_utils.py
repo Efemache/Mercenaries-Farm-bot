@@ -15,7 +15,7 @@ import logging
 log = logging.getLogger(__name__)
 
 default_rect = (0, 69, 1920, 1011)
-#default_rect = (-8, -8, 1936, 1056) => 1936 - (-8) = 1944 pixel ... (?)
+# default_rect = (-8, -8, 1936, 1056) => 1936 - (-8) = 1944 pixel ... (?)
 
 default_width = default_rect[2] - default_rect[0]
 default_height = default_rect[3] - default_rect[1]

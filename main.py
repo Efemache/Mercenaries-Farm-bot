@@ -11,18 +11,14 @@ log = logging.getLogger(__name__)
 
 def main():
     log.info("start")
-    try:
-        while True:
-            log.info("Loop")
-            try:
-                if win.find_game():
-                    where()
-            except Exception as error:
-                log.error("Game window not found.")
-                log.debug(f"Error: {error}")
-                time.sleep(1)
-    except Exception as E:
-        log.error(f"Error: {E}")
+    while True:
+        log.info("Loop")
+        try:
+            if win.find_game():
+                where()
+        except Exception as error:
+            log.error(f"Error: {error}")
+            time.sleep(1)
 
 
 if __name__ == "__main__":

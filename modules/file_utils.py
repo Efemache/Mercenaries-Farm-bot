@@ -1,13 +1,24 @@
 import json
 import configparser
 import re
+import logging
+from modules.exceptions import SettingsError
+
+log = logging.getLogger(__name__)
 
 
 def readjson(jfile):
     """... just for reading json file and return data :)"""
     with open(jfile) as descriptor:
         data = json.load(descriptor)
+
     return data
+
+
+def read_ini_to_dict(inifile):
+    """read ini file to parsed dictionary"""
+    log.debug(f"Reading {inifile}")
+    return parseINI(readINI(inifile))
 
 
 def parseINI(inidict):
@@ -15,7 +26,7 @@ def parseINI(inidict):
     initype = {}
     for k in inidict.keys():
         i = inidict[k].split("#")[0]
-        if i in ["True","False"]:
+        if i in ["True", "False"]:
             initype[k] = i == "True"
         elif re.match("^[0-9]+$", i):
             initype[k] = int(i)
@@ -30,6 +41,10 @@ def parseINI(inidict):
 def readINI(inifile):
     """... just for reading .ini file and return data"""
     config = configparser.ConfigParser()
-    config.read(inifile)
+    try:
+        config.read(inifile)
+    except configparser.DuplicateOptionError as err:
+        log.error(err)
+        raise SettingsError(f"Duplicate Option in Settings File: {err}") from err
 
-    return config
+    return config._sections

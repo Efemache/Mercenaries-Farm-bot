@@ -13,11 +13,9 @@ from .mouse_utils import move_mouse_and_click, move_mouse, mouse_click, mouse_sc
 from .image_utils import partscreen, find_ellement
 from .constants import UIElement, Checker, Button, Action
 from .log_board import LogHSMercs
-from .settings import settings_dict, mercslist, mercsAbilities
+from .settings import settings_dict, mercslist, mercsAbilities, ability_order
 
 
-config = configparser.ConfigParser()
-config.read("conf/combo.ini")
 log = logging.getLogger(__name__)
 
 
@@ -86,8 +84,8 @@ def select_ability(localhero):
     retour = False
 
     if localhero in mercsAbilities:
-        if config.has_option("Mercenary", localhero):
-            round_abilities = config["Mercenary"][localhero].split(",")
+        if "Mercenary" in ability_order and localhero in ability_order["Mercenary"]:
+            round_abilities = ability_order["Mercenary"][localhero].split(",")
             abilitiesNumber = len(round_abilities)
             if abilitiesNumber != 0:
                 ability = raund % abilitiesNumber
@@ -136,8 +134,8 @@ def select_ability(localhero):
             log.info(f"No ability selected for {localhero}")
     else:
         localhero = re.sub(r" [0-9]$", "", localhero)
-        if config.has_option("Neutral", localhero):
-            round_abilities = config["Neutral"][localhero].split(",")
+        if "Neutral" in ability_order and localhero in ability_order["Neutral"]:
+            round_abilities = ability_order["Neutral"][localhero].split(",")
             abilitiesNumber = len(round_abilities)
             if abilitiesNumber != 0:
                 ability = raund % abilitiesNumber
