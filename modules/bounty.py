@@ -11,7 +11,7 @@ from .mouse_utils import (
     mouse_range,
 )
 
-from .constants import UIElement, Button, Action
+from .constants import UIElement, Button, Action, Checker
 from .image_utils import find_ellement
 from .settings import settings_dict, jposition
 from .game import waitForItOrPass
