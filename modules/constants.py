@@ -59,6 +59,7 @@ class UIElement(ImageFragment):
     startbat = "startbat"
     surprise = "surprise"
     take_grey = "take_grey"
+    task_completed = "task_completed"
     travelpoint = "travelpoint"
     view_party = "view_party"
     visitor = "visitor"
