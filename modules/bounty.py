@@ -11,7 +11,7 @@ from .mouse_utils import (
     mouse_range,
 )
 
-from .constants import UIElement, Button, Action, Checker
+from .constants import UIElement, Button, Action
 from .image_utils import find_ellement
 from .settings import settings_dict, jposition
 from .game import waitForItOrPass
@@ -115,7 +115,7 @@ def nextlvl():
             look_at_campfire_completed_tasks()
             time.sleep(3)
 
-        elif find_ellement(Checker.task_completed.filename, Action.screenshot):
+        elif find_ellement(UIElement.task_completed.filename, Action.screenshot):
             waitForItOrPass(UIElement.campfire, 8)
             look_at_campfire_completed_tasks()
 

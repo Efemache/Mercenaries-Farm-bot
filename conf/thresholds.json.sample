@@ -28,6 +28,7 @@
 "UI_ellements/spirithealer.png" : 0.92,
 "UI_ellements/surprise.png" : 0.95,
 "UI_ellements/take_grey.png" : 0.9,
+"UI_ellements/task_completed.png" : 0.8,
 "UI_ellements/view_party.png" : 0.8,
 "lastOne": "dont touch"
 }
