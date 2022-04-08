@@ -269,6 +269,11 @@
         "minion_type": "Night Elf",
         "img_full": "https://d15f34w2p8l1cc.cloudfront.net/hearthstone/addc030880a017cb3163fa712d7a94479860c8e39c40ef8cf9455447f3f884e2.png"
     },
+    "Murky": {
+        "type": "Fighter",
+        "minion_type": "Murloc",
+        "img_full": ".png"
+    },
     "Mutanus": {
         "type": "Fighter",
         "minion_type": "Murloc",
