@@ -1,7 +1,7 @@
 from copy import deepcopy
 
 
-def update(d, u):
+def update(base_dictionary, updated_dictionary):
     """Return dictionary updated with values u
 
     Args:
@@ -11,13 +11,13 @@ def update(d, u):
     Returns:
         dict: dictionary with updated values
     """
-    r = deepcopy(d)
-    for k, v in u.items():
-        if type(v) is dict:
-            for _k, _v in v.items():
-                if _k in u:
-                    r[k][_k] = u[_k]
-        elif k in u:
-            r[k] = u[k]
+    copied_dictionary = deepcopy(base_dictionary)
+    for updated_k, updated_v in updated_dictionary.items():
+        if isinstance(updated_v, dict):
+            copied_dictionary[updated_k] = update(
+                copied_dictionary.get(updated_k, {}), updated_v
+            )
+        elif updated_k in updated_dictionary:
+            copied_dictionary[updated_k] = updated_dictionary[updated_k]
 
-    return r
+    return copied_dictionary

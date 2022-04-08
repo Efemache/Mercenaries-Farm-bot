@@ -442,7 +442,7 @@ def selectCardsInHand():
     retour = True
 
     while not find_ellement(Button.num.filename, Action.move):
-        time.sleep(0.5)
+        time.sleep(6)
 
     log.debug(f"windowMP = {windowMP()}")
     x1 = windowMP()[2] // 2.6

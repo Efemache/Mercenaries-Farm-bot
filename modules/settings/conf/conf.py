@@ -35,7 +35,10 @@ def get_config():
             user_settings_file = os.path.join(base_config_folder, user_folder, setting)
             setting_data = update_settings_with_file(setting_data, user_settings_file)
         except MissingSettingsFile:
-            log.debug(f"No User Settings found for: {setting}")
+            log.debug("No User Settings found for: %s", setting)
+
+        if not setting_data:
+            log.info("No Settings found for: %s", setting)
 
         root_settings_dict[setting] = setting_data
 
