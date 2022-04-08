@@ -299,6 +299,11 @@
         "2": false,
         "3": false
     },
+    "Murky": {
+        "1": true,
+        "2": "friend:Murloc",
+        "3": false
+    },
     "Mutanus": {
         "1": true,
         "2": false,
