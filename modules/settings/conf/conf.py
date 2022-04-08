@@ -22,7 +22,12 @@ conf_setting_files = [
 ]
 
 
-def get_config():
+def get_config(
+    base_config_folder=base_config_folder,
+    user_folder=user_folder,
+    system_folder=system_folder,
+    conf_setting_files=conf_setting_files,
+):
     root_settings_dict = {}
 
     for setting in conf_setting_files:
