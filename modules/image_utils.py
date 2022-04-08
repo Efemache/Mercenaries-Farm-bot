@@ -48,8 +48,6 @@ def find_ellement(file, action, threshold="-", speed=settings_dict["bot_speed"])
     action = 15:       x         |                       |     -      |  x,y / 0,0
       (new action needed to return a tab of object/coordinates)
     """
-    log.debug("find_ellement_grey START")
-
     click_coords = find_element_from_file(
         file,
         new_screenshot=action != Action.get_coords_part_screen,
@@ -133,7 +131,6 @@ def partscreen(x, y, top, left, debug_mode=False, monitor_resolution=None):
     take screeenshot for a part of the screen to find some part of the image
     """
     global partImg
-    log.debug("entered screenpart")
     import mss.tools
 
     with mss.mss() as sct:
