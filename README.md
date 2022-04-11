@@ -26,7 +26,10 @@ To discuss with the community, go to discord [Mercenaries Farm server](https://d
 
 |    Patreon    | Bitcoin (BTC) | Ethereum (ETH) | Binance Smart Chain (BNB/BUSD/...) | Thank you |
 | :------------ | :-------------:|  :-------------:|  :-------------:|   :-------------:| 
-|[mercenaries_farm](https://www.patreon.com/mercenaries_farm) | ![BTC](https://user-images.githubusercontent.com/56414438/162740117-eeebb1ef-2971-40d3-8e8f-a39fa51e8c6e.png|width=100px) 3L4MJh6JVrnHyDDrvrkZQNtUytYNjop18f | ![ETH](https://user-images.githubusercontent.com/56414438/162740147-39c72409-94f3-4871-b9e5-a782ab9c2522.png|width=100px) 0x6Db162daDe8385608867A3B19CF1465e0ed7c0e2 | ![BSC](https://user-images.githubusercontent.com/56414438/162740147-39c72409-94f3-4871-b9e5-a782ab9c2522.png|width=100px) 0x6Db162daDe8385608867A3B19CF1465e0ed7c0e2 |[Twitter](https://twitter.com/MercenariesFarm) [Youtube](https://www.youtube.com/channel/UCye37bX5PJnPgChWvzjTqKg) [Discord](https://discord.gg/ePghxaUBEK)|
+|[mercenaries_farm](https://www.patreon.com/mercenaries_farm) | ![BTC](https://user-images.githubusercontent.com/56414438/162740117-eeebb1ef-2971-40d3-8e8f-a39fa51e8c6e.png)
+3L4MJh6JVrnHyDDrvrkZQNtUytYNjop18f | ![ETH](https://user-images.githubusercontent.com/56414438/162740147-39c72409-94f3-4871-b9e5-a782ab9c2522.png)
+0x6Db162daDe8385608867A3B19CF1465e0ed7c0e2 | ![BSC](https://user-images.githubusercontent.com/56414438/162740147-39c72409-94f3-4871-b9e5-a782ab9c2522.png)
+0x6Db162daDe8385608867A3B19CF1465e0ed7c0e2 |[Twitter](https://twitter.com/MercenariesFarm) [Youtube](https://www.youtube.com/channel/UCye37bX5PJnPgChWvzjTqKg) [Discord](https://discord.gg/ePghxaUBEK)|
 
 ## Dev progress
 |               |  1920x1080 (windowed mode) |
