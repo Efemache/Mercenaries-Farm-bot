@@ -1,5 +1,5 @@
-import random
-import time
+#import random
+#import time
 
 from .platform import windowMP
 from .mouse_utils import (
@@ -30,11 +30,15 @@ def look_at_campfire_completed_tasks():
         while find_ellement(UIElement.campfire.filename, Action.move):
             waitForItOrPass(Button.campfire_completed_task, 5)
             if find_ellement(Button.campfire_completed_task.filename, Action.move_and_click):
-                time.sleep(2)
-                while not find_ellement(Button.campfire_claim.filename, Action.move_and_click):
+                #time.sleep(2)
+                while not find_ellement(Button.campfire_claim.filename, Action.screenshot):
                     time.sleep(0.5)
             
-                move_mouse(windowMP(), windowMP()[2] / 2, windowMP()[3] / 1.25)
+                # Loop added beause sometimes the bot find the button but Hearthstone is not ready,
+                # so the bot click too soon. Need to make a loop to try several time to click
+                while find_ellement(Button.campfire_claim.filename, Action.move_and_click):
+                    time.sleep(0.5)
+                    move_mouse(windowMP(), windowMP()[2] / 2, windowMP()[3] / 1.25)
                    
                 time.sleep(2)
                 while not find_ellement(UIElement.campfire.filename, Action.screenshot):

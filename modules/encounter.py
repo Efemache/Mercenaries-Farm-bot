@@ -4,9 +4,6 @@ import random
 import configparser
 import logging
 
-# import pyautogui
-
-
 from .platform import windowMP
 from .mouse_utils import move_mouse_and_click, move_mouse, mouse_click, mouse_scroll
 
@@ -442,7 +439,7 @@ def selectCardsInHand():
     retour = True
 
     while not find_ellement(Button.num.filename, Action.move):
-        time.sleep(6)
+        time.sleep(2)
 
     log.debug(f"windowMP = {windowMP()}")
     x1 = windowMP()[2] // 2.6
