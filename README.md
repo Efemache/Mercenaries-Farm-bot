@@ -6,7 +6,7 @@ Bot is on a development stage but it already works to do some "Tasks" and run lo
 ## Purpose
 The purpose of this bot is to automatically pass the bounty levels to level up your heros, win somes coins and complete campfire tasks.
 
-There is a branch [```main```](https://github.com/Efemache/Mercenaries-Farm-bot) to use daily and a branch [```dev2```](https://github.com/Efemache/Mercenaries-Farm-bot/tree/dev2) with new features but not well tested (and can be broke somtimes).
+There is a branch [```main```](https://github.com/Efemache/Mercenaries-Farm-bot) to use daily and a branch [```dev2```](https://github.com/Efemache/Mercenaries-Farm-bot/tree/dev2) with new features but not well tested (and can be broke sometimes).
 
 If you only want a version working with the last Hearthstone patch, I recommend to use the [last tagged version](https://github.com/Efemache/Mercenaries-Farm-bot/tags).
 
@@ -18,20 +18,23 @@ For contact, open an [issue](https://github.com/Efemache/Mercenaries-Farm-Bot/is
 
 For news, follow us on Twitter : [@MercenariesFarm](https://twitter.com/MercenariesFarm)
 
-For videos (news, settings, ...), subscribe to [YouTube MercenariesFarm Channel](https://www.youtube.com/channel/UCye37bX5PJnPgChWvzjTqKg)
+For videos (news, settings, ...), subscribe on YouTube : [MercenariesFarm Channel](https://www.youtube.com/channel/UCye37bX5PJnPgChWvzjTqKg)
 
-To discuss with the community, go to discord [Mercenaries Farm server](https://discord.gg/ePghxaUBEK)
+To discuss with the community, go to discord : [Mercenaries Farm server](https://discord.gg/ePghxaUBEK)
 
-## To support us (if you want)
+## If you want to support or thank us
 
 |    Platform    | Address | QR Code | 
 | :------------ | :-------------:|  :-------------:|  
 |    Patreon    | [mercenaries_farm](https://www.patreon.com/mercenaries_farm) | |
 | Bitcoin (BTC) | 3L4MJh6JVrnHyDDrvrkZQNtUytYNjop18f | <img src="https://user-images.githubusercontent.com/56414438/162740117-eeebb1ef-2971-40d3-8e8f-a39fa51e8c6e.png" width="200" /> |
 |Ethereum (ETH) | 0x6Db162daDe8385608867A3B19CF1465e0ed7c0e2 | <img src="https://user-images.githubusercontent.com/56414438/162740147-39c72409-94f3-4871-b9e5-a782ab9c2522.png" width="200" /> |
-| Binance Smart Chain (BNB/BUSD/...) | 0x6Db162daDe8385608867A3B19CF1465e0ed7c0e2 | <img src="https://user-images.githubusercontent.com/56414438/162740147-39c72409-94f3-4871-b9e5-a782ab9c2522.png" width="200" /> | 
+| Binance Smart Chain (BNB/BUSD) | 0x6Db162daDe8385608867A3B19CF1465e0ed7c0e2 | <img src="https://user-images.githubusercontent.com/56414438/162740147-39c72409-94f3-4871-b9e5-a782ab9c2522.png" width="200" /> | 
 | Thank you | [Twitter](https://twitter.com/MercenariesFarm) [Youtube](https://www.youtube.com/channel/UCye37bX5PJnPgChWvzjTqKg) [Discord](https://discord.gg/ePghxaUBEK)| |
 
+ (*) on Ethereum blockchain you can send any ERC-20 token (let us know if you send token other than ETH)
+ (*) on BSC blockchain you can send any BEP-20 token (let us know if you send another token than BNB or BUSD)
+ (*) We use BSC and ETH in Metamask, so yes, it's the same address
 
 ## Dev progress
 |               |  1920x1080 (windowed mode) |

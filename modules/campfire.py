@@ -1,5 +1,5 @@
 #import random
-#import time
+import time
 
 from .platform import windowMP
 from .mouse_utils import (

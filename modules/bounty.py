@@ -73,7 +73,15 @@ def nextlvl():
 
     if not find_ellement(Button.play.filename, Action.screenshot):
 
-        if find_ellement(Button.reveal.filename, Action.move_and_click):
+        if find_ellement(UIElement.task_completed.filename, Action.screenshot):
+            waitForItOrPass(UIElement.campfire, 10)
+            look_at_campfire_completed_tasks()
+
+        elif find_ellement(UIElement.campfire.filename, Action.screenshot):
+            look_at_campfire_completed_tasks()
+            time.sleep(3)
+
+        elif find_ellement(Button.reveal.filename, Action.move_and_click):
             time.sleep(1)
             move_mouse_and_click(windowMP(), windowMP()[2] / 2, windowMP()[3] // 1.25)
             time.sleep(1.5)
@@ -110,14 +118,6 @@ def nextlvl():
         elif find_ellement(UIElement.spirithealer.filename, Action.screenshot):
             time.sleep(1)
             find_ellement(UIElement.spirithealer.filename, Action.move_and_click)
-
-        elif find_ellement(UIElement.campfire.filename, Action.screenshot):
-            look_at_campfire_completed_tasks()
-            time.sleep(3)
-
-        elif find_ellement(UIElement.task_completed.filename, Action.screenshot):
-            waitForItOrPass(UIElement.campfire, 8)
-            look_at_campfire_completed_tasks()
 
         else:
             x, y = mouse_position(windowMP())
@@ -177,7 +177,7 @@ def travelpointSelection():
         location = settings_dict["location"]
         tag = f"travelpoint.{location}.scroll"
         if location == "The Barrens":
-            find_ellement(UIElement.Barrens.filename, Action.move_and_click)
+            find_ellement(UIElement.Barrens.filename, Action.move_and_click, 0.9)
 
         else:
             try:
@@ -185,7 +185,7 @@ def travelpointSelection():
                 move_mouse(windowMP(), windowMP()[2] // 3, windowMP()[3] // 2)
                 time.sleep(0.5)
                 find_ellement(
-                    getattr(UIElement, location).filename, Action.move_and_click
+                    getattr(UIElement, location).filename, Action.move_and_click, 0.9
                 )
             except Exception:
                 log.error(f"Travel Point unknown : {location}")
@@ -294,7 +294,7 @@ def travelToLevel(page="next"):
         f"levels/{settings_dict['location']}"
         f"_{settings_dict['mode']}_{settings_dict['level']}.png",
         Action.move_and_click,
-        0.5,
+        0.6,
     ):
         waitForItOrPass(Button.start, 6)
         find_ellement(Button.start.filename, Action.move_and_click)

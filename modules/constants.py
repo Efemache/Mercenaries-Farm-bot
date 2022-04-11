@@ -87,7 +87,7 @@ class Button(ImageFragment):
     lockin = "lockin"
     num = "num"
     ok = "ok"
-    onedie = "onedie"
+    onedie = "num"
     play = "play"
     portal_warp = "portal-warp"
     ready = "ready"
