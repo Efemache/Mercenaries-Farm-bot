@@ -32,19 +32,19 @@ def select_enemy_to_attack(index):
             windowMP(), index[0] + (cardWidth // 3), index[1] - (cardHeight // 2)
         )
         retour = True
-
     return retour
 
 
-def select_random_enemy_to_attack(enemies=[]):
+def select_random_enemy_to_attack(enemies=None):
     """look for a random enemy
     (used when blue mercs can't find red enemy,
     green can't find blue or
     red can't find green
     """
+    enemies = enemies or []
     log.debug("select_random_enemy_to_attack : attack random enemy")
     #    count = 0
-    log.debug(f"{enemies} len={len(enemies)}")
+    log.debug("%s len=%s", enemies, len(enemies))
     while enemies:
         toAttack = enemies.pop(random.randint(0, len(enemies) - 1))
         if select_enemy_to_attack(toAttack):
@@ -96,7 +96,7 @@ def select_ability(localhero):
             ability = 1
 
         chooseone3 = [windowMP()[2] // 3, windowMP()[2] // 2, windowMP()[2] // 1.5]
-        log.info(f"ability selected : {ability}")
+        log.info("Mercenary Ability Selected : %s", ability)
         if ability == 0:
             log.debug("No ability selected (0)")
             retour = False
@@ -142,7 +142,7 @@ def select_ability(localhero):
             else:
                 ability = 1
 
-            log.info(f"ability selected : {ability}")
+            log.info("Neutral Minion ability selected : %s", ability)
             partscreen(
                 int(abilitiesWidth),
                 int(abilitiesHeigth),
@@ -176,7 +176,9 @@ def attacks(
     enemynoclass2,
     mol,
 ):
-    """Function to attack an enemy (red, green or blue ideally) with the selected mercenary
+    """
+    Function to attack an enemy (red, green or blue ideally)
+    with the selected mercenary
     red attacks green (if exists)
     green attacks blue (if exists)
     blue attacks red (if exists)
@@ -207,7 +209,7 @@ def attacks(
         x = positionOdd[pos]
     y = windowMP()[3] / 1.5
 
-    log.info(f"attack with : {mercName} ( position : {position}/{number} ={x})")
+    log.info("attack with : %s ( position : %s/%s =%s)", mercName, position, number, x)
 
     move_mouse_and_click(windowMP(), x, y)
     time.sleep(0.2)
@@ -410,9 +412,7 @@ def battle():
                 time.sleep(0.1)
 
             i = 0
-            while True:
-                if find_ellement(Button.allready.filename, Action.move_and_click):
-                    break
+            while not find_ellement(Button.allready.filename, Action.move_and_click):
                 if i > 10:
                     mouse_click("right")
                     find_ellement(Button.fight.filename, Action.move_and_click)
