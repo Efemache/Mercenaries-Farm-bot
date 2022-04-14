@@ -1,5 +1,4 @@
 {
-<<<<<<< HEAD
     "travelpoint.scroll.top": 50,
     "travelpoint.The Barrens.scroll": 0,
     "travelpoint.Felwood.scroll": 0,
@@ -9,14 +8,3 @@
     "travelpoint.Onyxia.scroll": -4,
     "lastOne": "dont touch"
 }
-=======
-"travelpoint.scroll.top" : 50,
-"travelpoint.The Barrens.scroll" : 0,
-"travelpoint.Felwood.scroll" : 0,
-"travelpoint.Winterspring.scroll" : -1,
-"travelpoint.Blackrock.scroll" : -2,
-"travelpoint.Alterac.scroll" : -3,
-"travelpoint.Onyxia.scroll" : -4,
-"lastOne": "dont touch"
-}
->>>>>>> 3e56bfe (Add new settings structure)
