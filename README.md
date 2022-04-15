@@ -37,7 +37,7 @@ To discuss with the community, go to discord : [Mercenaries Farm server](https:/
  (*) We use BSC and ETH in Metamask, so yes, it's the same address
 
 ## Dev progress
-|               |  1920x1080 (windowed mode) |
+|               |  1920x1080 |
 | :------------ | :-------------:| 
 |1. transition to Travel point selection | ✓|
 |2. transition to Level/Bounty selection | ✓|
@@ -59,7 +59,7 @@ To discuss with the community, go to discord : [Mercenaries Farm server](https:/
 ## Supported game language & resolution
 |               |     English    |
 | :------------ | :-------------:| 
-|1920x1080 screen resolution (with HS in windowed mode)   |        ✅      |
+|1920x1080 |        ✅      |
 
 ## Battle limitation (will change in future releases)
 * bot doesn't work with ability like "choose one" with 2 choices (ex: Malfurion, but works for Rexxar)

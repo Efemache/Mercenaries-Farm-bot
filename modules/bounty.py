@@ -106,7 +106,7 @@ def nextlvl():
                 time.sleep(8)
 
         elif find_ellement(
-            UIElement.pick.filename, Action.move_and_click
+            Button.pick.filename, Action.move_and_click
         ) or find_ellement(Button.portal_warp.filename, Action.move_and_click):
             time.sleep(1)
             mouse_click()
