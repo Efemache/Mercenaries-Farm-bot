@@ -1,7 +1,7 @@
 import time
 
 from .image_utils import find_ellement
-from .constants import UIElement, Button, Action
+from .constants import Button, Action
 
 from .mouse_utils import move_mouse
 from .platform import windowMP
@@ -38,7 +38,7 @@ def selectGroup():
     log.info("selectGroup : entering")
     # threshold = 0.8
 
-    if find_ellement(UIElement.group_name.filename, Action.move_and_click):
+    if find_ellement(Button.group_name.filename, Action.move_and_click):
         find_ellement(Button.choose_team.filename, Action.move_and_click)
         move_mouse(windowMP(), windowMP()[2] / 1.5, windowMP()[3] / 2)
         waitForItOrPass(Button.lockin, 3)
