@@ -23,7 +23,7 @@ class ImageFragment(StrEnum):
 
 
 class UIElement(ImageFragment):
-    _dir_name = "UI_ellements"
+    _dir_name = "UI_elements"
 
     Alterac = "Alterac"
     Barrens = "Barrens"
