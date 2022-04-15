@@ -39,7 +39,7 @@ def selectGroup():
     # threshold = 0.8
 
     if find_ellement(UIElement.group_name.filename, Action.move_and_click):
-        find_ellement(Button.start1.filename, Action.move_and_click)
+        find_ellement(Button.choose_team.filename, Action.move_and_click)
         move_mouse(windowMP(), windowMP()[2] / 1.5, windowMP()[3] / 2)
         waitForItOrPass(Button.lockin, 3)
         find_ellement(Button.lockin.filename, Action.move_and_click)

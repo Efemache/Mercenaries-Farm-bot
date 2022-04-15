@@ -32,7 +32,7 @@ def where():
         travelToLevel()
         time.sleep(3)
 
-    if find_ellement(UIElement.choose_team.filename, Action.screenshot):
+    if find_ellement(UIElement.team_selection.filename, Action.screenshot):
         time.sleep(3)
         selectGroup()
         time.sleep(3)

@@ -111,9 +111,9 @@ def nextlvl():
             time.sleep(1)
             mouse_click()
             time.sleep(5)
-        elif find_ellement(UIElement.surprise.filename, Action.screenshot):
+        elif find_ellement(UIElement.mystery.filename, Action.screenshot):
             time.sleep(1)
-            find_ellement(UIElement.surprise.filename, Action.move_and_click)
+            find_ellement(UIElement.mystery.filename, Action.move_and_click)
 
         elif find_ellement(UIElement.spirithealer.filename, Action.screenshot):
             time.sleep(1)
@@ -256,7 +256,7 @@ def goToEncounter():
                         break
 
                     if find_ellement(
-                        UIElement.presents_thing.filename, Action.screenshot
+                        UIElement.reward_chest.filename, Action.screenshot
                     ):
                         log.info(
                             "goToEncounter : " "Boss defeated. Time for REWARDS !!!"
@@ -296,8 +296,8 @@ def travelToLevel(page="next"):
         Action.move_and_click,
         0.6,
     ):
-        waitForItOrPass(Button.start, 6)
-        find_ellement(Button.start.filename, Action.move_and_click)
+        waitForItOrPass(Button.choose_level, 6)
+        find_ellement(Button.choose_level.filename, Action.move_and_click)
         retour = True
     elif page == "next":
         if find_ellement(Button.sec.filename, Action.move_and_click):
