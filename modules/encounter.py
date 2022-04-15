@@ -367,7 +367,7 @@ def battle():
             # when you're looking for red/green/blue enemies
             move_mouse_and_click(windowMP(), windowMP()[2] // 2, windowMP()[3] // 1.2)
 
-            time.sleep(0.2)
+            time.sleep(0.5)
 
             # tmp = int(windowMP()[3] / 2)
             partscreen(windowMP()[2], windowMP()[3] // 2, windowMP()[1], windowMP()[0])

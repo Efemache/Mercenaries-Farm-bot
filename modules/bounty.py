@@ -13,7 +13,7 @@ from .mouse_utils import (
 
 from .constants import UIElement, Button, Action
 from .image_utils import find_ellement
-from .settings import settings_dict, jposition
+from .settings import settings_dict, jposition, jthreshold
 from .game import waitForItOrPass
 from .encounter import selectCardsInHand
 from .campfire import look_at_campfire_completed_tasks
@@ -177,7 +177,11 @@ def travelpointSelection():
         location = settings_dict["location"]
         tag = f"travelpoint.{location}.scroll"
         if location == "The Barrens":
-            find_ellement(UIElement.Barrens.filename, Action.move_and_click, 0.9)
+            find_ellement(
+                UIElement.Barrens.filename, 
+                Action.move_and_click, 
+                jthreshold["travelpoints"]
+            )
 
         else:
             try:
@@ -185,7 +189,9 @@ def travelpointSelection():
                 move_mouse(windowMP(), windowMP()[2] // 3, windowMP()[3] // 2)
                 time.sleep(0.5)
                 find_ellement(
-                    getattr(UIElement, location).filename, Action.move_and_click, 0.9
+                    getattr(UIElement, location).filename, 
+                    Action.move_and_click, 
+                    jthreshold["travelpoints"]
                 )
             except Exception:
                 log.error(f"Travel Point unknown : {location}")
@@ -294,7 +300,7 @@ def travelToLevel(page="next"):
         f"levels/{settings_dict['location']}"
         f"_{settings_dict['mode']}_{settings_dict['level']}.png",
         Action.move_and_click,
-        0.6,
+        jthreshold["levels"],
     ):
         waitForItOrPass(Button.choose_level, 6)
         find_ellement(Button.choose_level.filename, Action.move_and_click)

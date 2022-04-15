@@ -1,6 +1,11 @@
 {
     "default_grey": 0.85,
-    "UI_ellements/blue.png": 0.78,
-    "UI_ellements/reward_chest.png": 0.5,
+    "levels": 0.85,
+    "travelpoints": 0.9,
+    "buttons/campfire_completed_task.png": 0.8,
+    "UI_elements/blue.png": 0.78,
+    "UI_elements/green.png": 0.8,
+    "UI_elements/red.png": 0.8,
+    "UI_elements/reward_chest.png": 0.5,
     "lastOne": "dont touch"
 }
