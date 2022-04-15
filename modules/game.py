@@ -1,7 +1,7 @@
 import time
 
 from .image_utils import find_ellement
-from .constants import Button, Action
+from .constants import UIElement, Button, Action
 
 from .mouse_utils import move_mouse
 from .platform import windowMP

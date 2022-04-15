@@ -15,3 +15,5 @@ Ragnaros=2
 ```
 
 This will override any existing values for those specific mercenaries in `conf/system/combo.ini` while keeping all the other values the same.
+
+(you can copy combo.ini.sample into combo.ini to modify it)
