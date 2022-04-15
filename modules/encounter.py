@@ -8,7 +8,7 @@ from .platform import windowMP
 from .mouse_utils import move_mouse_and_click, move_mouse, mouse_click, mouse_scroll
 
 from .image_utils import partscreen, find_ellement
-from .constants import UIElement, Checker, Button, Action
+from .constants import UIElement, Button, Action
 from .log_board import LogHSMercs
 from .settings import settings_dict, mercslist, mercsAbilities, ability_order
 
@@ -113,7 +113,7 @@ def select_ability(localhero):
             )
             # find_element: Can be changed to return None or bool type
             if (
-                find_ellement(Checker.hourglass.filename, Action.get_coords_part_screen)
+                find_ellement(UI_elements.hourglass.filename, Action.get_coords_part_screen)
                 is None
             ):
                 move_mouse_and_click(
@@ -151,7 +151,7 @@ def select_ability(localhero):
             )
             # find_element: Can be changed to return None or bool type
             if (
-                find_ellement(Checker.hourglass.filename, Action.get_coords_part_screen)
+                find_ellement(UI_elements.hourglass.filename, Action.get_coords_part_screen)
                 is None
             ):
                 move_mouse_and_click(
@@ -332,15 +332,15 @@ def battle():
 
         find_ellement(Button.onedie.filename, Action.move_and_click)
 
-        if find_ellement(Checker.win.filename, Action.screenshot) or find_ellement(
-            Checker.win_final.filename, Action.screenshot
+        if find_ellement(UI_elements.win.filename, Action.screenshot) or find_ellement(
+            UI_elements.win_final.filename, Action.screenshot
         ):
             retour = "win"
             move_mouse_and_click(windowMP(), windowMP()[2] / 2, windowMP()[3] / 1.3)
             zoneLog.cleanBoard()
 
             break
-        elif find_ellement(Checker.lose.filename, Action.screenshot):
+        elif find_ellement(UI_elements.lose.filename, Action.screenshot):
             retour = "loose"
             move_mouse_and_click(
                 windowMP(),

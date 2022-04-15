@@ -2,7 +2,7 @@ import time
 
 from .bounty import travelpointSelection, travelToLevel, goToEncounter, nextlvl
 from .encounter import selectCardsInHand
-from .constants import UIElement, Button, Checker, Action
+from .constants import UIElement, Button, Action
 from .image_utils import find_ellement
 from .game import selectGroup
 from .campfire import look_at_campfire_completed_tasks
@@ -14,7 +14,7 @@ def where():
 
     find_ellement(Button.join_button.filename, Action.move_and_click)
 
-    if find_ellement(Checker.menu.filename, Action.screenshot):
+    if find_ellement(Button.tavern.filename, Action.screenshot):
         time.sleep(4)
         # Find PVE adventure payed and free
         find_ellement(
