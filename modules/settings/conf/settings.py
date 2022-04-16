@@ -4,9 +4,32 @@ import shutil
 
 from modules.exceptions import MissingGameDirectory, UnsetGameDirectory, SettingsError
 from modules.file_utils import parseINI, readINI
-
+from modules.utils import update
 
 log = logging.getLogger(__name__)
+
+
+# Personalized Settings files
+SETTINGS_FILENAME = "conf/system/settings.ini"
+USER_SETTINGS_FILENAME = "conf/user/settings.ini"
+
+
+def get_updated_settings(
+    system_settings_file=SETTINGS_FILENAME, user_settings_file=USER_SETTINGS_FILENAME
+):
+    try:
+        settings_ini_dict = get_settings(system_settings_file)
+        user_settings_ini_dict = get_settings(user_settings_file)
+        settings_ini_dict = update(settings_ini_dict, user_settings_ini_dict)
+        log.info("Settings")
+        for setting, value in settings_ini_dict.items():
+            log.info(" - %s: %s", setting, value)
+
+        return settings_ini_dict
+    except Exception as e:
+        log.error("Running without settings. Error: %s", e)
+
+    return {}
 
 
 def get_settings(settings_filename):
