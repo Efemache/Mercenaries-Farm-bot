@@ -17,7 +17,7 @@ def readjson(jfile):
 
 def read_ini_to_dict(inifile):
     """read ini file to parsed dictionary"""
-    log.debug(f"Reading {inifile}")
+    log.debug("Reading %s", inifile)
     return parseINI(readINI(inifile))
 
 

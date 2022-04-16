@@ -8,25 +8,25 @@ from modules.exceptions import MissingSettingsFile
 log = logging.getLogger(__name__)
 
 
-base_config_folder = "conf"
-user_folder = "user"
-system_folder = "system"
+BASE_CONFIG_FOLDER = "conf"
+USER_CONFIG_FOLDER = "user"
+SYSTEM_CONFIG_FOLDER = "system"
 
-conf_setting_files = [
+config_files = [
     "attacks.json",
     "combo.ini",
     "mercs.json",
-    # "position.ini",
+    "settings.ini",
     "positions.json",
     "thresholds.json",
 ]
 
 
 def get_config(
-    base_config_folder=base_config_folder,
-    user_folder=user_folder,
-    system_folder=system_folder,
-    conf_setting_files=conf_setting_files,
+    base_config_folder=BASE_CONFIG_FOLDER,
+    user_folder=USER_CONFIG_FOLDER,
+    system_folder=SYSTEM_CONFIG_FOLDER,
+    conf_setting_files=config_files,
 ):
     root_settings_dict = {}
 
