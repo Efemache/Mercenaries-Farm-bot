@@ -25,6 +25,17 @@ def get_updated_settings(
         for setting, value in settings_ini_dict.items():
             log.info(" - %s: %s", setting, value)
 
+        if not settings_ini_dict["gamedir"]:
+            raise UnsetGameDirectory("Game Dir setting is not set")
+
+        game_dir = pathlib.Path(settings_ini_dict["gamedir"])
+
+        if not game_dir.is_dir():
+            raise MissingGameDirectory(f"Game directory ({game_dir}) does not exist")
+        else:
+            settings_ini_dict["zonelog"] = pathlib.PurePath(
+                game_dir, "Logs/Zone.log"
+            ).as_posix()
         return settings_ini_dict
     except Exception as e:
         log.error("Running without settings. Error: %s", e)
@@ -50,18 +61,6 @@ def get_settings(settings_filename):
 
     try:
         settings_dict = parseINI(raw_settings["BotSettings"])
-
-        if not settings_dict["gamedir"]:
-            raise UnsetGameDirectory("Game Dir setting is not set")
-
-        game_dir = pathlib.Path(settings_dict["gamedir"])
-
-        if not game_dir.is_dir():
-            raise MissingGameDirectory(f"Game directory ({game_dir}) does not exist")
-        else:
-            settings_dict["zonelog"] = pathlib.PurePath(
-                game_dir, "Logs/Zone.log"
-            ).as_posix()
     except KeyError as kerr:
         log.error(f"Settings file is missing section {kerr}")
         raise SettingsError(f"Settings file is missing section {kerr}") from kerr
