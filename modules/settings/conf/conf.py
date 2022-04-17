@@ -46,6 +46,9 @@ def get_config(
             log.info("No Settings found for: %s", setting)
 
         root_settings_dict[setting] = setting_data
+        log.debug("%s", setting)
+        for setting, value in setting_data.items():
+            log.debug(f" - {setting}: {value}")
 
     return root_settings_dict
 
