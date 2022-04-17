@@ -9,38 +9,25 @@ from modules.utils import update
 log = logging.getLogger(__name__)
 
 
-# Personalized Settings files
-SETTINGS_FILENAME = "conf/system/settings.ini"
-USER_SETTINGS_FILENAME = "conf/user/settings.ini"
-
-
-def get_updated_settings(
-    system_settings_file=SETTINGS_FILENAME, user_settings_file=USER_SETTINGS_FILENAME
-):
+def get_system_user_settings(system_settings_filename, user_settings_filename):
     try:
-        settings_ini_dict = get_settings(system_settings_file)
-        user_settings_ini_dict = get_settings(user_settings_file)
-        settings_ini_dict = update(settings_ini_dict, user_settings_ini_dict)
-        log.info("Settings")
-        for setting, value in settings_ini_dict.items():
-            log.info(" - %s: %s", setting, value)
-
-        if not settings_ini_dict["gamedir"]:
+        system_settings_dict = get_settings(system_settings_filename)
+        user_settings_dict = get_settings(user_settings_filename)
+        settings_dict = update(system_settings_dict, user_settings_dict)
+        if not settings_dict["gamedir"]:
             raise UnsetGameDirectory("Game Dir setting is not set")
 
-        game_dir = pathlib.Path(settings_ini_dict["gamedir"])
-
+        game_dir = pathlib.Path(settings_dict["gamedir"])
         if not game_dir.is_dir():
             raise MissingGameDirectory(f"Game directory ({game_dir}) does not exist")
-        else:
-            settings_ini_dict["zonelog"] = pathlib.PurePath(
-                game_dir, "Logs/Zone.log"
-            ).as_posix()
-        return settings_ini_dict
-    except Exception as e:
-        log.error("Running without settings. Error: %s", e)
 
-    return {}
+        log.info("Settings")
+        for setting, value in settings_dict.items():
+            log.info(f" - {setting}: {value}")
+    except Exception as e:
+        log.error("Running without settings")
+
+    return settings_dict
 
 
 def get_settings(settings_filename):
