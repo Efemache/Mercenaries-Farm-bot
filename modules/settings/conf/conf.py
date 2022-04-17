@@ -47,6 +47,9 @@ def get_config(
 
         root_settings_dict[setting] = setting_data
 
+        if setting in ["combo.ini"]:
+            log_setting_dict(setting, setting_data)
+
     return root_settings_dict
 
 
@@ -57,3 +60,16 @@ def update_settings_with_file(setting_data, new_file):
     new_setting_data = readjson(new_file) if new_file[-1] == "n" else readINI(new_file)
 
     return update(setting_data, new_setting_data)
+
+
+def log_setting_dict(setting_name, setting_dict):
+    log.debug("%s", setting_name)
+    log_setting_dict_helper(setting_name, setting_dict)
+
+
+def log_setting_dict_helper(setting_name, setting_dict, indent=""):
+    for setting, value in setting_dict.items():
+        if isinstance(value, dict):
+            log_setting_dict_helper(setting, value, indent * 4)
+        else:
+            log.debug(" - %s: %s", setting, value)

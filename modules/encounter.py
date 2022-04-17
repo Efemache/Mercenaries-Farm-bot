@@ -81,8 +81,11 @@ def select_ability(localhero):
     retour = False
 
     if localhero in mercsAbilities:
-        if "Mercenary" in ability_order and localhero in ability_order["Mercenary"]:
-            round_abilities = ability_order["Mercenary"][localhero].split(",")
+        if (
+            "Mercenary" in ability_order
+            and localhero.lower() in ability_order["Mercenary"]
+        ):
+            round_abilities = ability_order["Mercenary"][localhero.lower()].split(",")
             abilitiesNumber = len(round_abilities)
             if abilitiesNumber != 0:
                 ability = raund % abilitiesNumber
@@ -113,7 +116,9 @@ def select_ability(localhero):
             )
             # find_element: Can be changed to return None or bool type
             if (
-                find_ellement(UIElement.hourglass.filename, Action.get_coords_part_screen)
+                find_ellement(
+                    UIElement.hourglass.filename, Action.get_coords_part_screen
+                )
                 is None
             ):
                 move_mouse_and_click(
@@ -131,8 +136,8 @@ def select_ability(localhero):
             log.info(f"No ability selected for {localhero}")
     else:
         localhero = re.sub(r" [0-9]$", "", localhero)
-        if "Neutral" in ability_order and localhero in ability_order["Neutral"]:
-            round_abilities = ability_order["Neutral"][localhero].split(",")
+        if "Neutral" in ability_order and localhero.lower() in ability_order["Neutral"]:
+            round_abilities = ability_order["Neutral"][localhero.lower()].split(",")
             abilitiesNumber = len(round_abilities)
             if abilitiesNumber != 0:
                 ability = raund % abilitiesNumber
@@ -151,7 +156,9 @@ def select_ability(localhero):
             )
             # find_element: Can be changed to return None or bool type
             if (
-                find_ellement(UIElement.hourglass.filename, Action.get_coords_part_screen)
+                find_ellement(
+                    UIElement.hourglass.filename, Action.get_coords_part_screen
+                )
                 is None
             ):
                 move_mouse_and_click(

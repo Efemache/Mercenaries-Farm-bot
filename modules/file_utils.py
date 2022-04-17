@@ -44,7 +44,7 @@ def readINI(inifile):
     try:
         config.read(inifile)
     except configparser.DuplicateOptionError as err:
-        log.error(err)
+        log.error("Error while reading ini file %s", err)
         raise SettingsError(f"Duplicate Option in Settings File: {err}") from err
 
     return config._sections
