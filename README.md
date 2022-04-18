@@ -1,7 +1,7 @@
 # Mercenaries Farm Bot (for Hearthstone)
 MFB official URL : https://github.com/Efemache/Mercenaries-Farm-bot/
 ```
-Bot is on a development stage but it already works to do a lot of "Tasks" and complete some bounties.
+Bot is on a development stage but it already works to complete a lot of "Tasks" and some bounties.
 ```
 
 
@@ -35,7 +35,7 @@ To discuss with the community, go to discord : [Mercenaries Farm server](https:/
 |Ethereum (ETH) or <br />Binance Smart Chain (BNB/BUSD)| 0x6Db162daDe8385608867A3B19CF1465e0ed7c0e2 | <img src="https://user-images.githubusercontent.com/56414438/162740147-39c72409-94f3-4871-b9e5-a782ab9c2522.png" alt="ETH-BSC" width="200" /> |
 | "Thank you" | [<img src="https://user-images.githubusercontent.com/56414438/163575703-d249c687-1fd4-4c4d-b549-e27b01bb022b.png" alt="twitter" width="35rem">](https://twitter.com/MercenariesFarm) [<img src="https://user-images.githubusercontent.com/56414438/163575713-a5b96683-f788-4d48-b598-a838e7e97b8b.png" alt="youtube" width="35rem">](https://www.youtube.com/channel/UCye37bX5PJnPgChWvzjTqKg) [<img src="https://user-images.githubusercontent.com/56414438/163575692-c6d78ec2-ae37-46e9-84ca-fd650d3835c2.png" alt="discord" width="35rem">](https://discord.gg/ePghxaUBEK)| |
 
- (\*) we use BSC and ETH in Metamask, so yes, it's the same address
+ (\*) yes, BSC and ETH addresses are the same
 
  (\*) on Ethereum blockchain you can send any ERC-20 token (let us know if you send token other than ETH)
 
