@@ -286,7 +286,7 @@ def goToEncounter():
 
     while not find_ellement(Button.back.filename, Action.screenshot):
         mouse_click()
-        time.sleep(1)
+        time.sleep(2)
 
 
 def travelToLevel(page="next"):
@@ -306,18 +306,18 @@ def travelToLevel(page="next"):
         find_ellement(Button.choose_level.filename, Action.move_and_click)
         retour = True
     elif page == "next":
-        if find_ellement(Button.sec.filename, Action.move_and_click):
+        if find_ellement(Button.arrow_next.filename, Action.move_and_click):
             time.sleep(1)
             retour = travelToLevel("next")
         if retour is False and find_ellement(
-            Button.fir.filename, Action.move_and_click
+            Button.arrow_prev.filename, Action.move_and_click
         ):
             time.sleep(1)
             retour = travelToLevel("previous")
         elif retour is False:
             find_ellement(Button.back.filename, Action.move_and_click)
     elif page == "previous":
-        if find_ellement(Button.fir.filename, Action.move_and_click):
+        if find_ellement(Button.arrow_prev.filename, Action.move_and_click):
             time.sleep(1)
             retour = travelToLevel("previous")
         else:
