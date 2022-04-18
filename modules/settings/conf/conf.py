@@ -5,6 +5,8 @@ from modules.file_utils import readjson, readINI
 from modules.utils import update
 from modules.exceptions import MissingSettingsFile
 
+from .settings import get_system_user_settings
+
 log = logging.getLogger(__name__)
 
 
@@ -49,6 +51,14 @@ def get_config(
 
         if setting in ["combo.ini"]:
             log_setting_dict(setting, setting_data)
+
+    system_settings_file = os.path.join(
+        base_config_folder, system_folder, "settings.ini"
+    )
+    user_settings_file = os.path.join(base_config_folder, user_folder, "settings.ini")
+    root_settings_dict["settings.ini"] = get_system_user_settings(
+        system_settings_file, user_settings_file
+    )
 
     return root_settings_dict
 
