@@ -8,18 +8,13 @@ from both system and user setting folders
 import logging
 
 from .conf import get_config as _get_config
-from .settings import get_updated_settings
 
 
 _log = logging.getLogger(__name__)
 
+_log.debug("Read in conf/ settings")
 _root_settings_dict = _get_config()
 
-
-_root_settings_dict["settings.ini"] = get_updated_settings()
-
-
-_log.debug("Read in conf/ settings")
 
 jthreshold = _root_settings_dict["thresholds.json"]
 jposition = _root_settings_dict["positions.json"]

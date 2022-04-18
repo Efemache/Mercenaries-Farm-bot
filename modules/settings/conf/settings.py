@@ -20,6 +20,10 @@ def get_system_user_settings(system_settings_filename, user_settings_filename):
         game_dir = pathlib.Path(settings_dict["gamedir"])
         if not game_dir.is_dir():
             raise MissingGameDirectory(f"Game directory ({game_dir}) does not exist")
+        else:
+            settings_dict["zonelog"] = pathlib.PurePath(
+                game_dir, "Logs/Zone.log"
+            ).as_posix()
 
         log.info("Settings")
         for setting, value in settings_dict.items():
