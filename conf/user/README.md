@@ -7,7 +7,7 @@ Create a file matching the settings file you want to change and add just the set
 For example:
 
 ```ini
-# conf/users/combo.ini
+# conf/user/combo.ini
 [Mercenary]
 Chi-Ji=1,1,3
 Baron Geddon=2

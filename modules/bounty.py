@@ -77,10 +77,6 @@ def nextlvl():
             waitForItOrPass(UIElement.campfire, 10)
             look_at_campfire_completed_tasks()
 
-        elif find_ellement(UIElement.campfire.filename, Action.screenshot):
-            look_at_campfire_completed_tasks()
-            time.sleep(3)
-
         elif find_ellement(Button.reveal.filename, Action.move_and_click):
             time.sleep(1)
             move_mouse_and_click(windowMP(), windowMP()[2] / 2, windowMP()[3] // 1.25)
@@ -118,6 +114,10 @@ def nextlvl():
         elif find_ellement(UIElement.spirithealer.filename, Action.screenshot):
             time.sleep(1)
             find_ellement(UIElement.spirithealer.filename, Action.move_and_click)
+
+        elif find_ellement(UIElement.campfire.filename, Action.screenshot):
+            look_at_campfire_completed_tasks()
+            time.sleep(3)
 
         else:
             x, y = mouse_position(windowMP())
