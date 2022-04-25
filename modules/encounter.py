@@ -420,7 +420,8 @@ def battle():
 
             i = 0
             while not find_ellement(Button.allready.filename, Action.move_and_click):
-                if i > 10:
+                if i > 5:
+                    move_mouse(windowMP(), windowMP()[2] // 1.2, windowMP()[3] // 3)
                     mouse_click("right")
                     find_ellement(Button.fight.filename, Action.move_and_click)
                     break

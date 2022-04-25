@@ -28,7 +28,7 @@ def collect():
 
     # it's difficult to find every boxes with lib CV2 so,
     # we try to detect just one and then we click on all known positions
-    while not find_ellement(Button.done.filename, Action.move_and_click):
+    while True:
         move_mouse_and_click(windowMP(), windowMP()[2] / 2.5, windowMP()[3] / 3.5)
         move_mouse_and_click(windowMP(), windowMP()[2] / 2, windowMP()[3] / 3.5)
         move_mouse_and_click(windowMP(), windowMP()[2] / 1.5, windowMP()[3] / 3.5)
@@ -36,12 +36,14 @@ def collect():
         move_mouse_and_click(windowMP(), windowMP()[2] / 2.7, windowMP()[3] / 1.4)
 
         move_mouse_and_click(windowMP(), windowMP()[2] / 3, windowMP()[3] / 2.7)
-        move_mouse_and_click(windowMP(), windowMP()[2] / 1.7, windowMP()[3] / 1.3)
+        move_mouse_and_click(windowMP(), windowMP()[2] / 1.4, windowMP()[3] / 1.3)
         move_mouse_and_click(windowMP(), windowMP()[2] / 1.6, windowMP()[3] / 1.3)
+        move_mouse_and_click(windowMP(), windowMP()[2] / 1.7, windowMP()[3] / 1.3)
         move_mouse_and_click(windowMP(), windowMP()[2] / 1.8, windowMP()[3] / 1.3)
         move_mouse_and_click(windowMP(), windowMP()[2] / 1.9, windowMP()[3] / 1.3)
-        move_mouse_and_click(windowMP(), windowMP()[2] / 1.4, windowMP()[3] / 1.3)
-        time.sleep(1)
+        time.sleep(3)
+        if find_ellement(Button.done.filename, Action.move_and_click):
+            break
 
     # move the mouse to avoid a bug where the it is over a card/hero (at the end)
     # hiding the "OK" button
@@ -50,7 +52,7 @@ def collect():
     while not find_ellement(Button.finishok.filename, Action.move_and_click):
         time.sleep(1)
         mouse_click()
-        time.sleep(0.5)
+        time.sleep(2)
 
 
 def quitBounty():
@@ -120,23 +122,25 @@ def nextlvl():
             time.sleep(3)
 
         else:
-            x, y = mouse_position(windowMP())
-            log.debug(f"Mouse (x, y) : ({x}, {y})")
-            if y >= (windowMP()[3] // 2.2 - mouse_range) and y <= (
-                windowMP()[3] // 2.2 + mouse_range
-            ):
-                x += windowMP()[2] // 25
-            else:
-                x = windowMP()[2] // 3.7
+            # we add this test because, maybe we are not in "Encounter Map" anymore (like after the final boss)
+            if find_ellement(UIElement.view_party.filename, Action.screenshot):
+                x, y = mouse_position(windowMP())
+                log.debug(f"Mouse (x, y) : ({x}, {y})")
+                if y >= (windowMP()[3] // 2.2 - mouse_range) and y <= (
+                    windowMP()[3] // 2.2 + mouse_range
+                ):
+                    x += windowMP()[2] // 25
+                else:
+                    x = windowMP()[2] // 3.7
 
-            if x > windowMP()[2] // 1.5:
-                log.debug("Didnt find a battle. Try to go 'back'")
-                find_ellement(Button.back.filename, Action.move_and_click)
-                retour = False
-            else :
-                y = windowMP()[3] // 2.2
-                log.debug(f"move mouse to (x, y) : ({x}, {y})")
-                move_mouse_and_click(windowMP(), x, y)
+                if x > windowMP()[2] // 1.5:
+                    log.debug("Didnt find a battle. Try to go 'back'")
+                    find_ellement(Button.back.filename, Action.move_and_click)
+                    retour = False
+                else:
+                    y = windowMP()[3] // 2.2
+                    log.debug(f"move mouse to (x, y) : ({x}, {y})")
+                    move_mouse_and_click(windowMP(), x, y)
 
     return retour
 
@@ -178,9 +182,9 @@ def travelpointSelection():
         tag = f"travelpoint.{location}.scroll"
         if location == "The Barrens":
             find_ellement(
-                UIElement.Barrens.filename, 
-                Action.move_and_click, 
-                jthreshold["travelpoints"]
+                UIElement.Barrens.filename,
+                Action.move_and_click,
+                jthreshold["travelpoints"],
             )
 
         else:
@@ -189,9 +193,9 @@ def travelpointSelection():
                 move_mouse(windowMP(), windowMP()[2] // 3, windowMP()[3] // 2)
                 time.sleep(0.5)
                 find_ellement(
-                    getattr(UIElement, location).filename, 
-                    Action.move_and_click, 
-                    jthreshold["travelpoints"]
+                    getattr(UIElement, location).filename,
+                    Action.move_and_click,
+                    jthreshold["travelpoints"],
                 )
             except Exception:
                 log.error(f"Travel Point unknown : {location}")
@@ -225,7 +229,7 @@ def goToEncounter():
         #   time.sleep(2)
 
         if find_ellement(Button.play.filename, Action.screenshot):
-            if settings_dict["quitbeforebossfight"] == True and find_ellement(
+            if settings_dict["quitbeforebossfight"] is True and find_ellement(
                 UIElement.boss.filename, Action.screenshot
             ):
                 time.sleep(1)
@@ -277,15 +281,15 @@ def goToEncounter():
                 travelEnd = True
                 log.info("goToEncounter : don't know what happened !")
 
-#            waitForItOrPass(UIElement.campfire, 5)
-#            look_at_campfire_completed_tasks()
-                
+        #            waitForItOrPass(UIElement.campfire, 5)
+        #            look_at_campfire_completed_tasks()
+
         else:
             if not nextlvl():
                 break
 
     while not find_ellement(Button.back.filename, Action.screenshot):
-        mouse_click()
+        move_mouse_and_click(windowMP(), windowMP()[2] / 2, windowMP()[3] / 1.25)
         time.sleep(2)
 
 
