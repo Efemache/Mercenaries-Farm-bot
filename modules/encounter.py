@@ -4,20 +4,15 @@ import random
 import configparser
 import logging
 
-# import pyautogui
-
-
 from .platform import windowMP
 from .mouse_utils import move_mouse_and_click, move_mouse, mouse_click, mouse_scroll
 
 from .image_utils import partscreen, find_ellement
-from .constants import UIElement, Checker, Button, Action
+from .constants import UIElement, Button, Action
 from .log_board import LogHSMercs
-from .settings import settings_dict, mercslist, mercsAbilities
+from .settings import settings_dict, mercslist, mercsAbilities, ability_order
 
 
-config = configparser.ConfigParser()
-config.read("conf/combo.ini")
 log = logging.getLogger(__name__)
 
 
@@ -37,19 +32,19 @@ def select_enemy_to_attack(index):
             windowMP(), index[0] + (cardWidth // 3), index[1] - (cardHeight // 2)
         )
         retour = True
-
     return retour
 
 
-def select_random_enemy_to_attack(enemies=[]):
+def select_random_enemy_to_attack(enemies=None):
     """look for a random enemy
     (used when blue mercs can't find red enemy,
     green can't find blue or
     red can't find green
     """
+    enemies = enemies or []
     log.debug("select_random_enemy_to_attack : attack random enemy")
     #    count = 0
-    log.debug(f"{enemies} len={len(enemies)}")
+    log.debug("%s len=%s", enemies, len(enemies))
     while enemies:
         toAttack = enemies.pop(random.randint(0, len(enemies) - 1))
         if select_enemy_to_attack(toAttack):
@@ -86,8 +81,11 @@ def select_ability(localhero):
     retour = False
 
     if localhero in mercsAbilities:
-        if config.has_option("Mercenary", localhero):
-            round_abilities = config["Mercenary"][localhero].split(",")
+        if (
+            "Mercenary" in ability_order
+            and localhero.lower() in ability_order["Mercenary"]
+        ):
+            round_abilities = ability_order["Mercenary"][localhero.lower()].split(",")
             abilitiesNumber = len(round_abilities)
             if abilitiesNumber != 0:
                 ability = raund % abilitiesNumber
@@ -101,7 +99,7 @@ def select_ability(localhero):
             ability = 1
 
         chooseone3 = [windowMP()[2] // 3, windowMP()[2] // 2, windowMP()[2] // 1.5]
-        log.info(f"ability selected : {ability}")
+        log.info("Mercenary Ability Selected : %s", ability)
         if ability == 0:
             log.debug("No ability selected (0)")
             retour = False
@@ -118,7 +116,9 @@ def select_ability(localhero):
             )
             # find_element: Can be changed to return None or bool type
             if (
-                find_ellement(Checker.hourglass.filename, Action.get_coords_part_screen)
+                find_ellement(
+                    UIElement.hourglass.filename, Action.get_coords_part_screen
+                )
                 is None
             ):
                 move_mouse_and_click(
@@ -136,8 +136,8 @@ def select_ability(localhero):
             log.info(f"No ability selected for {localhero}")
     else:
         localhero = re.sub(r" [0-9]$", "", localhero)
-        if config.has_option("Neutral", localhero):
-            round_abilities = config["Neutral"][localhero].split(",")
+        if "Neutral" in ability_order and localhero.lower() in ability_order["Neutral"]:
+            round_abilities = ability_order["Neutral"][localhero.lower()].split(",")
             abilitiesNumber = len(round_abilities)
             if abilitiesNumber != 0:
                 ability = raund % abilitiesNumber
@@ -147,7 +147,7 @@ def select_ability(localhero):
             else:
                 ability = 1
 
-            log.info(f"ability selected : {ability}")
+            log.info("Neutral Minion ability selected : %s", ability)
             partscreen(
                 int(abilitiesWidth),
                 int(abilitiesHeigth),
@@ -156,7 +156,9 @@ def select_ability(localhero):
             )
             # find_element: Can be changed to return None or bool type
             if (
-                find_ellement(Checker.hourglass.filename, Action.get_coords_part_screen)
+                find_ellement(
+                    UIElement.hourglass.filename, Action.get_coords_part_screen
+                )
                 is None
             ):
                 move_mouse_and_click(
@@ -181,7 +183,9 @@ def attacks(
     enemynoclass2,
     mol,
 ):
-    """Function to attack an enemy (red, green or blue ideally) with the selected mercenary
+    """
+    Function to attack an enemy (red, green or blue ideally)
+    with the selected mercenary
     red attacks green (if exists)
     green attacks blue (if exists)
     blue attacks red (if exists)
@@ -212,7 +216,7 @@ def attacks(
         x = positionOdd[pos]
     y = windowMP()[3] / 1.5
 
-    log.info(f"attack with : {mercName} ( position : {position}/{number} ={x})")
+    log.info("attack with : %s ( position : %s/%s =%s)", mercName, position, number, x)
 
     move_mouse_and_click(windowMP(), x, y)
     time.sleep(0.2)
@@ -337,15 +341,15 @@ def battle():
 
         find_ellement(Button.onedie.filename, Action.move_and_click)
 
-        if find_ellement(Checker.win.filename, Action.screenshot) or find_ellement(
-            Checker.win_final.filename, Action.screenshot
+        if find_ellement(UIElement.win.filename, Action.screenshot) or find_ellement(
+            UIElement.win_final.filename, Action.screenshot
         ):
             retour = "win"
             move_mouse_and_click(windowMP(), windowMP()[2] / 2, windowMP()[3] / 1.3)
             zoneLog.cleanBoard()
 
             break
-        elif find_ellement(Checker.lose.filename, Action.screenshot):
+        elif find_ellement(UIElement.lose.filename, Action.screenshot):
             retour = "loose"
             move_mouse_and_click(
                 windowMP(),
@@ -372,7 +376,7 @@ def battle():
             # when you're looking for red/green/blue enemies
             move_mouse_and_click(windowMP(), windowMP()[2] // 2, windowMP()[3] // 1.2)
 
-            time.sleep(0.2)
+            time.sleep(0.5)
 
             # tmp = int(windowMP()[3] / 2)
             partscreen(windowMP()[2], windowMP()[3] // 2, windowMP()[1], windowMP()[0])
@@ -415,10 +419,9 @@ def battle():
                 time.sleep(0.1)
 
             i = 0
-            while True:
-                if find_ellement(Button.allready.filename, Action.move_and_click):
-                    break
-                if i > 10:
+            while not find_ellement(Button.allready.filename, Action.move_and_click):
+                if i > 5:
+                    move_mouse(windowMP(), windowMP()[2] // 1.2, windowMP()[3] // 3)
                     mouse_click("right")
                     find_ellement(Button.fight.filename, Action.move_and_click)
                     break
@@ -444,7 +447,7 @@ def selectCardsInHand():
     retour = True
 
     while not find_ellement(Button.num.filename, Action.move):
-        time.sleep(0.5)
+        time.sleep(2)
 
     log.debug(f"windowMP = {windowMP()}")
     x1 = windowMP()[2] // 2.6

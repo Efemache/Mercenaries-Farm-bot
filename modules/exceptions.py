@@ -6,6 +6,10 @@ class SettingsError(MercenariesFarmBaseException):
     pass
 
 
+class MissingSettingsFile(SettingsError):
+    pass
+
+
 class MissingGameDirectory(SettingsError):
     pass
 
