@@ -31,6 +31,7 @@ To discuss with the community, go to discord : [Mercenaries Farm server](https:/
 |    Platform    | Address | QR Code | 
 | :------------ | :-------------:|  :-------------:|  
 |    Patreon    | [mercenaries_farm](https://www.patreon.com/mercenaries_farm) | |
+|     Ko-Fi     | [mercenariesfarm](https://ko-fi.com/mercenariesfarm) | |
 | Bitcoin (BTC) | 3L4MJh6JVrnHyDDrvrkZQNtUytYNjop18f | <img src="https://user-images.githubusercontent.com/56414438/162740117-eeebb1ef-2971-40d3-8e8f-a39fa51e8c6e.png" alt="BTC" width="200" /> |
 |Ethereum (ETH) or <br />Binance Smart Chain (BNB/BUSD)| 0x6Db162daDe8385608867A3B19CF1465e0ed7c0e2 | <img src="https://user-images.githubusercontent.com/56414438/162740147-39c72409-94f3-4871-b9e5-a782ab9c2522.png" alt="ETH-BSC" width="200" /> |
 | "Thank you" | [<img src="https://user-images.githubusercontent.com/56414438/163575703-d249c687-1fd4-4c4d-b549-e27b01bb022b.png" alt="twitter" width="35rem">](https://twitter.com/MercenariesFarm) [<img src="https://user-images.githubusercontent.com/56414438/163575713-a5b96683-f788-4d48-b598-a838e7e97b8b.png" alt="youtube" width="35rem">](https://www.youtube.com/channel/UCye37bX5PJnPgChWvzjTqKg) [<img src="https://user-images.githubusercontent.com/56414438/163575692-c6d78ec2-ae37-46e9-84ca-fd650d3835c2.png" alt="discord" width="35rem">](https://discord.gg/ePghxaUBEK)| |
