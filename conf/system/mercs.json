@@ -189,6 +189,11 @@
         "minion_type": "Human",
         "img_full": "https://d15f34w2p8l1cc.cloudfront.net/hearthstone/dd20b96459e8949e42db36b676089309e777a826786b00139d9704d06a1c2831.png"
     },
+    "N'Zoth": {
+        "type": "Caster",
+        "minion_type": "Old God",
+        "img_full": "Not_on_hs_website_yet"
+    },
     "Prophet Velen": {
         "type": "Caster",
         "minion_type": "Draenei",
