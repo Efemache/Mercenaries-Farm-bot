@@ -362,12 +362,6 @@ def battle():
             Button.fight.filename, Action.screenshot
         ):  # or find_ellement(Button.startbattle1.filename, Action.screenshot):
 
-            # wait 'WaitForEXP' (float) in minutes, to make the battle longer and
-            # win more EXP (for the Hearthstone reward track)
-            wait_for_exp = settings_dict["waitforexp"]
-            log.info(f"WaitForEXP - wait (second(s)) : {wait_for_exp}")
-            time.sleep(wait_for_exp)
-
             # looks for your Mercenaries on board thanks to log file
             mercenaries = zoneLog.getBoard()
             log.info(f"ROUND {raund} : your board {mercenaries}")
@@ -446,8 +440,14 @@ def selectCardsInHand():
     log.debug("[ SETH - START]")
     retour = True
 
-    while not find_ellement(Button.num.filename, Action.move):
+    while not find_ellement(Button.num.filename, Action.screenshot):
         time.sleep(2)
+
+    # wait 'WaitForEXP' (float) in minutes, to make the battle last longer
+    # and win more XP (for the Hearthstone reward track)
+    wait_for_exp = settings_dict["waitforexp"]
+    log.info(f"WaitForEXP - wait (second(s)) : {wait_for_exp}")
+    time.sleep(wait_for_exp)
 
     log.debug(f"windowMP = {windowMP()}")
     x1 = windowMP()[2] // 2.6
