@@ -32,12 +32,12 @@ def look_at_campfire_completed_tasks():
             if find_ellement(Button.campfire_completed_task.filename, Action.move_and_click):
                 #time.sleep(2)
                 while not find_ellement(Button.campfire_claim.filename, Action.screenshot):
-                    time.sleep(0.5)
+                    time.sleep(2)
             
                 # Loop added beause sometimes the bot find the button but Hearthstone is not ready,
                 # so the bot click too soon. Need to make a loop to try several time to click
                 while find_ellement(Button.campfire_claim.filename, Action.move_and_click):
-                    time.sleep(0.5)
+                    time.sleep(2)
                     move_mouse(windowMP(), windowMP()[2] / 2, windowMP()[3] / 1.25)
                    
                 time.sleep(2)
