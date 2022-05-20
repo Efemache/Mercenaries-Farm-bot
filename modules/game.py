@@ -49,6 +49,7 @@ def selectGroup():
     return
     
 def defaultCase():
+    """Clicking on the right edge of the screen to click away popups"""
     log.info("Nothing found")
     move_mouse_and_click(windowMP(), windowMP()[2] / 1.05, windowMP()[3] / 2)
     return
