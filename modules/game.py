@@ -3,7 +3,7 @@ import time
 from .image_utils import find_ellement
 from .constants import Button, Action
 
-from .mouse_utils import move_mouse
+from .mouse_utils import move_mouse, move_mouse_and_click
 from .platform import windowMP
 
 import logging
@@ -46,4 +46,9 @@ def selectGroup():
 
     # threshold = tempthreshold
     log.debug("selectGroup : ended")
+    return
+    
+def defaultCase():
+    log.info("Nothing found")
+    move_mouse_and_click(windowMP(), windowMP()[2] / 1.05, windowMP()[3] / 2)
     return
