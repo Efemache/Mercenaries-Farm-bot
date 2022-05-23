@@ -45,7 +45,7 @@ If you only want a version working with the last Hearthstone patch, and are not 
 * Download the project
 * Open settings.ini and set your [settings](https://github.com/Efemache/Mercenaries-Farm-bot/wiki/Settings#settingsini) (⚠️ don't forget to set "GameDir" to your Hearthstone directory)
 * Edit your Hearthstone [log.config file](https://github.com/Efemache/Mercenaries-Farm-bot/wiki/Settings#logconfig)
-* Start Hearthstone
+* Start Hearthstone (in 1920x1080)
 * Create a group of mercenaries named "Botwork" (and go back to main menu)
 * Run HSbotRunner.bat
 
@@ -55,13 +55,27 @@ If you only want a version working with the last Hearthstone patch, and are not 
 * Download the project
 * Open settings.ini and set your [settings](https://github.com/Efemache/Mercenaries-Farm-bot/wiki/Settings#settingsini) (⚠️ don't forget to set "GameDir" to your Hearthstone directory)
 * Edit your Hearthstone [log.config file](https://github.com/Efemache/Mercenaries-Farm-bot/wiki/Settings#logconfig)
-* Start Hearthstone
+* Start Hearthstone (in 1920x1080)
 * Create a group of mercenaries named "Botwork" (and go back to main menu)
 * Run HSbotRunner.sh
 
 
 ### Bot Installation Video
 (removed due to google reference problem; I'll post a new video later)
+
+
+## News & contact 
+More informations in [Wiki](https://github.com/Efemache/Mercenaries-Farm-Bot/wiki)
+
+For bugs, open an [issue](https://github.com/Efemache/Mercenaries-Farm-Bot/issues)
+
+For news, follow us on Twitter : [@MercenariesFarm](https://twitter.com/MercenariesFarm)
+
+For videos (news, settings, ...), subscribe on YouTube : [MercenariesFarm Channel](https://www.youtube.com/channel/UCye37bX5PJnPgChWvzjTqKg)
+
+To discuss with the community, go to discord : [Mercenaries Farm server](https://discord.gg/ePghxaUBEK)
+
+If you have an issue with the bot, please, read the [FAQ](https://github.com/Efemache/Mercenaries-Farm-bot/wiki/FAQ) before posting any question on discord.
 
 
 ## Dev progress
@@ -97,19 +111,5 @@ If you only want a version working with the last Hearthstone patch, and are not 
 * ~~bot doesn't work with ability which need to point to one of your mercenaries (ex: impossible to use healing with Xyrella)~~ ✓ (ok since May 23, 2022)
   * bot doesn't work with ability targeting a specific mercenary like Dragon, Beast, ...
 * ~~bot doesn't use minions on board which are not a mercenary~~ ✓ (ok since 0.4.0 release)
-
-
-## News & contact 
-More informations in [Wiki](https://github.com/Efemache/Mercenaries-Farm-Bot/wiki)
-
-For bugs, open an [issue](https://github.com/Efemache/Mercenaries-Farm-Bot/issues)
-
-For news, follow us on Twitter : [@MercenariesFarm](https://twitter.com/MercenariesFarm)
-
-For videos (news, settings, ...), subscribe on YouTube : [MercenariesFarm Channel](https://www.youtube.com/channel/UCye37bX5PJnPgChWvzjTqKg)
-
-To discuss with the community, go to discord : [Mercenaries Farm server](https://discord.gg/ePghxaUBEK)
-
-If you have an issue with the bot, please, read the [FAQ](https://github.com/Efemache/Mercenaries-Farm-bot/wiki/FAQ) before posting any question on discord.
 
 
