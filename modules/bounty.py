@@ -70,7 +70,7 @@ def quitBounty():
 
 def nextlvl():
     """Progress on the map (Boon, Portal, ...) to find the next battle"""
-    time.sleep(1.5)
+    time.sleep(3)
     retour = True
 
     if not find_ellement(Button.play.filename, Action.screenshot):
@@ -281,14 +281,15 @@ def goToEncounter():
                 travelEnd = True
                 log.info("goToEncounter : don't know what happened !")
 
-        #            waitForItOrPass(UIElement.campfire, 5)
-        #            look_at_campfire_completed_tasks()
+
 
         else:
             if not nextlvl():
                 break
 
     while not find_ellement(Button.back.filename, Action.screenshot):
+        waitForItOrPass(UIElement.campfire, 5)
+        look_at_campfire_completed_tasks()
         move_mouse_and_click(windowMP(), windowMP()[2] / 2, windowMP()[3] / 1.25)
         time.sleep(2)
 
