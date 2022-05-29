@@ -10,6 +10,7 @@ from .mouse_utils import move_mouse_and_click, move_mouse, mouse_click  # , mous
 
 from .image_utils import partscreen, find_ellement
 from .constants import UIElement, Button, Action
+from .game import countdown
 from .log_board import LogHSMercs
 from .settings import settings_dict, mercslist, mercsAbilities, ability_order
 
@@ -487,7 +488,8 @@ def selectCardsInHand():
     # and win more XP (for the Hearthstone reward track)
     wait_for_exp = settings_dict["waitforexp"]
     log.info(f"WaitForEXP - wait (second(s)) : {wait_for_exp}")
-    time.sleep(wait_for_exp)
+    # time.sleep(wait_for_exp)
+    countdown(wait_for_exp, 10, "Wait for XP : sleeping")
 
     log.debug(f"windowMP = {windowMP()}")
     x1 = windowMP()[2] // 2.6
