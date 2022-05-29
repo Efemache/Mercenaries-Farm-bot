@@ -4,7 +4,7 @@ import time
 from .image_utils import find_ellement
 from .constants import Button, Action
 
-from .mouse_utils import move_mouse, move_mouse_and_click
+from .mouse_utils import move_mouse, move_mouse_and_click, mouse_position
 from .platform import windowMP
 
 import logging
@@ -62,6 +62,11 @@ def selectGroup():
 
 def defaultCase():
     """Clicking on the right edge of the screen to click away popups"""
+    """Saving x,y to move back into previous position"""
+    x, y = mouse_position(windowMP())
     log.debug("Nothing found")
     move_mouse_and_click(windowMP(), windowMP()[2] / 1.05, windowMP()[3] / 2)
+    time.sleep(0.1)
+    move_mouse(windowMP(), x, y)
+
     return
