@@ -4,7 +4,7 @@ from .bounty import travelpointSelection, travelToLevel, goToEncounter, nextlvl
 from .encounter import selectCardsInHand
 from .constants import UIElement, Button, Action
 from .image_utils import find_ellement
-from .game import selectGroup
+from .game import selectGroup, defaultCase
 from .campfire import look_at_campfire_completed_tasks
 
 
@@ -20,6 +20,7 @@ def where():
         find_ellement(
             UIElement.battle.filename, Action.move_and_click
         ) or find_ellement(UIElement.free_battle.filename, Action.move_and_click)
+        time.sleep(3)
 
     if find_ellement(UIElement.travelpoint.filename, Action.screenshot):
         time.sleep(3)
@@ -52,5 +53,10 @@ def where():
 
     if find_ellement(Button.num.filename, Action.screenshot):
         selectCardsInHand()
+        
+    else :
+        defaultCase()
+        time.sleep(3)
+        
 
     return True

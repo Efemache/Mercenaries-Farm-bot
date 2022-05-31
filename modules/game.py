@@ -1,14 +1,25 @@
+import sys
 import time
 
 from .image_utils import find_ellement
 from .constants import Button, Action
 
-from .mouse_utils import move_mouse
+from .mouse_utils import move_mouse, move_mouse_and_click, mouse_position
 from .platform import windowMP
 
 import logging
 
 log = logging.getLogger(__name__)
+
+
+def countdown(t, step=1, msg="Sleeping"):
+    """Wait and show how many seconds til the end"""
+    pad_str = " " * len("%d" % step)
+    for i in range(t, 0, -step):
+        sys.stdout.write(
+            "%s for the next %d seconds %s\r" % (msg, i, pad_str),
+        )
+        time.sleep(step)
 
 
 def waitForItOrPass(image, duration):
@@ -46,4 +57,16 @@ def selectGroup():
 
     # threshold = tempthreshold
     log.debug("selectGroup : ended")
+    return
+
+
+def defaultCase():
+    """Clicking on the right edge of the screen to click away popups"""
+    """Saving x,y to move back into previous position"""
+    x, y = mouse_position(windowMP())
+    log.debug("Nothing found")
+    move_mouse_and_click(windowMP(), windowMP()[2] / 1.05, windowMP()[3] / 2)
+    time.sleep(0.1)
+    move_mouse(windowMP(), x, y)
+
     return

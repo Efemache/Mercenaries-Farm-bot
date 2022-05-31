@@ -1,14 +1,16 @@
 import re
 import time
 import random
-import configparser
+
+# import configparser
 import logging
 
 from .platform import windowMP
-from .mouse_utils import move_mouse_and_click, move_mouse, mouse_click, mouse_scroll
+from .mouse_utils import move_mouse_and_click, move_mouse, mouse_click  # , mouse_scroll
 
 from .image_utils import partscreen, find_ellement
 from .constants import UIElement, Button, Action
+from .game import countdown
 from .log_board import LogHSMercs
 from .settings import settings_dict, mercslist, mercsAbilities, ability_order
 
@@ -57,7 +59,32 @@ def select_random_enemy_to_attack(enemies=None):
     mouse_click("right")
 
 
-def select_ability(localhero):
+def ability_target_merc(targettype, myMercs):
+    number = int(sorted(myMercs)[-1])
+
+    cardSize = int(windowMP()[2] / 12)
+    firstOdd = int(windowMP()[0] + (windowMP()[2] / 3))
+    firstEven = int(windowMP()[0] + (windowMP()[2] / 3.6))
+    positionOdd = []  # positionOdd=[640,800,960,1120,1280]
+    positionEven = []  # positionEven=[560,720,880,1040,1200,1360]
+    for i in range(6):
+        positionEven.append(int(firstEven + (i * cardSize)))
+        if i != 5:
+            positionOdd.append(int(firstOdd + (i * cardSize)))
+
+    position = random.randint(1, number)
+
+    if number % 2 == 0:  # if mercenaries number is even
+        pos = int(2 - (number / 2 - 1) + (position - 1))
+        x = positionEven[pos]
+    else:  # if mercenaries number is odd
+        pos = int(2 - (number - 1) / 2 + (position - 1))
+        x = positionOdd[pos]
+
+    return x
+
+
+def select_ability(localhero, myBoard):
     """Select an ability for a mercenary.
         Depend on what is available and wich Round (battle)
     Click only on the ability (doesnt move to an enemy)
@@ -98,6 +125,7 @@ def select_ability(localhero):
         else:
             ability = 1
 
+        chooseone2 = [windowMP()[2] // 2.4, windowMP()[2] // 1.7]
         chooseone3 = [windowMP()[2] // 3, windowMP()[2] // 2, windowMP()[2] // 1.5]
         log.info("Mercenary Ability Selected : %s", ability)
         if ability == 0:
@@ -131,6 +159,18 @@ def select_ability(localhero):
                 elif mercsAbilities[localhero][str(ability)] == "chooseone3":
                     time.sleep(0.2)
                     move_mouse_and_click(windowMP(), chooseone3[0], windowMP()[3] // 2)
+                    retour = False
+                elif mercsAbilities[localhero][str(ability)] == "chooseone2":
+                    time.sleep(0.2)
+                    move_mouse_and_click(windowMP(), chooseone2[0], windowMP()[3] // 2)
+                    retour = False
+                elif mercsAbilities[localhero][str(ability)] == "friend":
+                    time.sleep(0.2)
+                    move_mouse_and_click(
+                        windowMP(),
+                        ability_target_merc("friend", myBoard),
+                        windowMP()[3] / 1.5,
+                    )
                     retour = False
         else:
             log.info(f"No ability selected for {localhero}")
@@ -175,7 +215,8 @@ def select_ability(localhero):
 def attacks(
     position,
     mercName,
-    number,
+    # number,
+    myMercs,
     enemyred,
     enemygreen,
     enemyblue,
@@ -195,14 +236,13 @@ def attacks(
 
     log.debug("Attacks function")
 
+    number = int(sorted(myMercs)[-1])
+
     cardSize = int(windowMP()[2] / 12)
     firstOdd = int(windowMP()[0] + (windowMP()[2] / 3))
     firstEven = int(windowMP()[0] + (windowMP()[2] / 3.6))
-
-    # positionEven=[560,720,880,1040,1200,1360]
-    # positionOdd=[640,800,960,1120,1280]
-    positionOdd = []
-    positionEven = []
+    positionOdd = []  # positionOdd=[640,800,960,1120,1280]
+    positionEven = []  # positionEven=[560,720,880,1040,1200,1360]
     for i in range(6):
         positionEven.append(int(firstEven + (i * cardSize)))
         if i != 5:
@@ -224,7 +264,7 @@ def attacks(
     if mercName in mercslist:
         if (
             mercslist[mercName]["type"] == "Protector"
-            and select_ability(mercName)
+            and select_ability(mercName, myMercs)
             and not select_enemy_to_attack(enemygreen)
             and not select_enemy_to_attack(mol)
             and not select_enemy_to_attack(enemynoclass)
@@ -233,7 +273,7 @@ def attacks(
             select_random_enemy_to_attack([enemyred, enemyblue])
         elif (
             mercslist[mercName]["type"] == "Fighter"
-            and select_ability(mercName)
+            and select_ability(mercName, myMercs)
             and not select_enemy_to_attack(enemyblue)
             and not select_enemy_to_attack(mol)
             and not select_enemy_to_attack(enemynoclass)
@@ -242,14 +282,14 @@ def attacks(
             select_random_enemy_to_attack([enemyred, enemygreen])
         elif (
             mercslist[mercName]["type"] == "Caster"
-            and select_ability(mercName)
+            and select_ability(mercName, myMercs)
             and not select_enemy_to_attack(enemyred)
             and not select_enemy_to_attack(mol)
             and not select_enemy_to_attack(enemynoclass)
             and not select_enemy_to_attack(enemynoclass2)
         ):
             select_random_enemy_to_attack([enemygreen, enemyblue])
-    elif select_ability(mercName):
+    elif select_ability(mercName, myMercs):
         select_random_enemy_to_attack(
             [enemyred, enemygreen, enemyblue, enemynoclass, enemynoclass2]
         )
@@ -397,7 +437,8 @@ def battle():
                 attacks(
                     int(i),
                     mercenaries[i],
-                    int(sorted(mercenaries)[-1]),
+                    # int(sorted(mercenaries)[-1]),
+                    mercenaries,
                     enemyred,
                     enemygreen,
                     enemyblue,
@@ -447,7 +488,8 @@ def selectCardsInHand():
     # and win more XP (for the Hearthstone reward track)
     wait_for_exp = settings_dict["waitforexp"]
     log.info(f"WaitForEXP - wait (second(s)) : {wait_for_exp}")
-    time.sleep(wait_for_exp)
+    # time.sleep(wait_for_exp)
+    countdown(wait_for_exp, 10, "Wait for XP : sleeping")
 
     log.debug(f"windowMP = {windowMP()}")
     x1 = windowMP()[2] // 2.6

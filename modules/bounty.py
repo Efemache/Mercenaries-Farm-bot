@@ -14,7 +14,7 @@ from .mouse_utils import (
 from .constants import UIElement, Button, Action
 from .image_utils import find_ellement
 from .settings import settings_dict, jposition, jthreshold
-from .game import waitForItOrPass
+from .game import waitForItOrPass, defaultCase
 from .encounter import selectCardsInHand
 from .campfire import look_at_campfire_completed_tasks
 
@@ -41,7 +41,7 @@ def collect():
         move_mouse_and_click(windowMP(), windowMP()[2] / 1.7, windowMP()[3] / 1.3)
         move_mouse_and_click(windowMP(), windowMP()[2] / 1.8, windowMP()[3] / 1.3)
         move_mouse_and_click(windowMP(), windowMP()[2] / 1.9, windowMP()[3] / 1.3)
-        time.sleep(3)
+        time.sleep(5)
         if find_ellement(Button.done.filename, Action.move_and_click):
             break
 
@@ -70,7 +70,7 @@ def quitBounty():
 
 def nextlvl():
     """Progress on the map (Boon, Portal, ...) to find the next battle"""
-    time.sleep(1.5)
+    time.sleep(3)
     retour = True
 
     if not find_ellement(Button.play.filename, Action.screenshot):
@@ -121,9 +121,8 @@ def nextlvl():
             look_at_campfire_completed_tasks()
             time.sleep(3)
 
-        else:
-            # we add this test because, maybe we are not in "Encounter Map" anymore (like after the final boss)
-            if find_ellement(UIElement.view_party.filename, Action.screenshot):
+        # we add this test because, maybe we are not in "Encounter Map" anymore (like after the final boss)  
+        elif find_ellement(UIElement.view_party.filename, Action.screenshot):
                 x, y = mouse_position(windowMP())
                 log.debug(f"Mouse (x, y) : ({x}, {y})")
                 if y >= (windowMP()[3] // 2.2 - mouse_range) and y <= (
@@ -141,6 +140,9 @@ def nextlvl():
                     y = windowMP()[3] // 2.2
                     log.debug(f"move mouse to (x, y) : ({x}, {y})")
                     move_mouse_and_click(windowMP(), x, y)
+
+        else: 
+            defaultCase()
 
     return retour
 
@@ -281,14 +283,15 @@ def goToEncounter():
                 travelEnd = True
                 log.info("goToEncounter : don't know what happened !")
 
-        #            waitForItOrPass(UIElement.campfire, 5)
-        #            look_at_campfire_completed_tasks()
+
 
         else:
             if not nextlvl():
                 break
 
     while not find_ellement(Button.back.filename, Action.screenshot):
+        waitForItOrPass(UIElement.campfire, 5)
+        look_at_campfire_completed_tasks()
         move_mouse_and_click(windowMP(), windowMP()[2] / 2, windowMP()[3] / 1.25)
         time.sleep(2)
 

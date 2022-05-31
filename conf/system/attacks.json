@@ -296,7 +296,7 @@
     },
     "Lady Anacondra": {
         "1": true,
-        "2": true,
+        "2": "friend",
         "3": false
     },
     "Leeroy Jenkins": {
@@ -306,7 +306,7 @@
     },
     "Murky": {
         "1": true,
-        "2": "friend:Murloc",
+        "2": "chooseone2",
         "3": false
     },
     "Mutanus": {
