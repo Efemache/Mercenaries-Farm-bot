@@ -11,7 +11,7 @@ log = logging.getLogger(__name__)
 
 
 def main():
-    log.info("start")
+    log.info(f"Python version: {sys.version}")
     while True:
         log.info("Loop")
         try:
