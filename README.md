@@ -12,7 +12,7 @@ There is a [```main```](https://github.com/Efemache/Mercenaries-Farm-bot) branch
 If you only want a version working with the last Hearthstone patch, and are not interested in new feature, I recommend to use the [last tagged version](https://github.com/Efemache/Mercenaries-Farm-bot/tags).
 
 
-## PvE working bot preview (demo)
+## PvE preview (video)
 [![Watch the video](https://user-images.githubusercontent.com/56414438/156830161-924cf85c-64a2-4215-870d-d0d005d28adc.jpg)](https://youtu.be/ZQ3xCL9_4Yo)
 
 
@@ -60,8 +60,8 @@ If you only want a version working with the last Hearthstone patch, and are not 
 * Run HSbotRunner.sh
 
 
-### Bot Installation Video
-(removed due to google reference problem; I'll post a new video later)
+### Bot Installation/Configuration Video
+[![Watch the video](https://user-images.githubusercontent.com/56414438/171742740-ef583e7a-e773-46f8-8baf-7100d84ced87.png)](https://youtu.be/azOptPolsIM)
 
 
 ## News & contact 
