@@ -4,6 +4,16 @@
         "2": true,
         "3": true
     },
+    "Baine Bloodhoof": {
+        "1": true,
+        "2": "friend",
+        "3": false
+    },
+    "Brann Bronzebeard": {
+        "1": true,
+        "2": false,
+        "3": "friend"
+    },
     "Cairne Bloodhoof": {
         "1": true,
         "2": false,
@@ -20,6 +30,11 @@
         "3": "friend"
     },
     "Deathwing": {
+        "1": true,
+        "2": false,
+        "3": false
+    },
+    "Fathom-Lord Karathress": {
         "1": true,
         "2": false,
         "3": false
@@ -57,6 +72,11 @@
     "Lord Jaraxxus": {
         "1": true,
         "2": false,
+        "3": true
+    },
+    "Maiev Shadowsong": {
+        "1": true,
+        "2": true,
         "3": true
     },
     "Malfurion Stormrage": {
@@ -99,6 +119,11 @@
         "2": false,
         "3": true
     },
+    "Tidemistress Athissa": {
+        "1": true,
+        "2": true,
+        "3": false
+    },
     "Trigore the Lasher": {
         "1": true,
         "2": false,
@@ -117,6 +142,11 @@
     "Varian Wrynn": {
         "1": true,
         "2": true,
+        "3": false
+    },
+    "Y'Shaarj": {
+        "1": true,
+        "2": false,
         "3": false
     },
     "Yu'lon": {
@@ -150,6 +180,11 @@
         "3": false
     },
     "Bru'kan": {
+        "1": true,
+        "2": true,
+        "3": true
+    },
+    "Captain Hooktusk": {
         "1": true,
         "2": true,
         "3": true
@@ -194,6 +229,16 @@
         "2": false,
         "3": "friend"
     },
+    "Lorewalker Cho": {
+        "1": "chooseone3",
+        "2": false,
+        "3": false
+    },
+    "Maestra": {
+        "1": false,
+        "2": false,
+        "3": true
+    },
     "Millhouse Manastorm": {
         "1": false,
         "2": true,
@@ -219,8 +264,23 @@
         "2": false,
         "3": false
     },
+    "Patches the Pirate": {
+        "1": true,
+        "2": false,
+        "3": false
+    },
     "Prophet Velen": {
         "1": true,
+        "2": true,
+        "3": false
+    },
+    "Queen Azshara": {
+        "1": true,
+        "2": false,
+        "3": false
+    },
+    "Reno Jackson": {
+        "1": false,
         "2": true,
         "3": false
     },
@@ -254,6 +314,11 @@
         "2": "friend",
         "3": true
     },
+    "Zar'jira, the Sea Witch": {
+        "1": true,
+        "2": "friend",
+        "3": false
+    },
     "Balinda Stonehearth": {
         "1": true,
         "2": true,
@@ -279,6 +344,11 @@
         "2": false,
         "3": true
     },
+    "Elise Starseeker": {
+        "1": true,
+        "2": false,
+        "3": false
+    },
     "Eudora": {
         "1": true,
         "2": false,
@@ -299,10 +369,20 @@
         "2": "friend",
         "3": false
     },
+    "Lady Vashj": {
+        "1": true,
+        "2": true,
+        "3": false
+    },
     "Leeroy Jenkins": {
         "1": false,
         "2": false,
         "3": false
+    },
+    "Lord Slitherspear": {
+        "1": true,
+        "2": true,
+        "3": true
     },
     "Murky": {
         "1": true,
@@ -364,6 +444,11 @@
         "2": "friend",
         "3": true
     },
+    "Tyrael": {
+        "1": true,
+        "2": true,
+        "3": false
+    },
     "Tyrande Whisperwind": {
         "1": true,
         "2": false,
@@ -392,6 +477,11 @@
     "Xuen": {
         "1": true,
         "2": true,
+        "3": false
+    },
+    "Yrel": {
+        "1": true,
+        "2": false,
         "3": false
     }
 }
