@@ -1,15 +1,4 @@
-files/1920x1080/screen.png
-files/2560x1440/screen.png
-files/3840x2160/screen.png
 files/1920x1080/part.png
-files/2560x1440/part.png
-files/3840x2160/part.png
-files/1920x1080/heroes/*/main.png
-files/2560x1440/heroes/*/main.png
-files/3840x2160/heroes/*/main.png
-files/1920x1080/heroes/*/group.png
-files/2560x1440/heroes/*/group.png
-files/3840x2160/heroes/*/group.png
 __pycache__/
 *.bck
 *.old
@@ -20,11 +9,10 @@ development/
 .vscode/
 
 # Personal Settings Files
-conf/combo.ini
-conf/thresholds.json
 conf/user/*.ini
 conf/user/*.json
-conf/*.*
+!conf/user/*.sample.ini
+!conf/user/*.sample.json
 
 # Log file
 mfb.log
