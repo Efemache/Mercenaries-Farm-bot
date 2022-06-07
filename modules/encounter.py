@@ -47,10 +47,15 @@ def select_random_enemy_to_attack(enemies=None):
     log.debug("select_random_enemy_to_attack : attack random enemy")
     #    count = 0
     log.debug("%s len=%s", enemies, len(enemies))
+    retour = False
     while enemies:
         toAttack = enemies.pop(random.randint(0, len(enemies) - 1))
         if select_enemy_to_attack(toAttack):
+            retour = True
             break
+
+    if not retour:
+        select_enemy_to_attack(windowMP()[2] / 2.1, windowMP()[3] / 3.6)
 
     # right click added to avoid a problem when the bot detects no enemy
     # (it can't select another ability and we can hope an AoE will selected at least)
