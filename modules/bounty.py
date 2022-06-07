@@ -121,27 +121,27 @@ def nextlvl():
             look_at_campfire_completed_tasks()
             time.sleep(3)
 
-        # we add this test because, maybe we are not in "Encounter Map" anymore (like after the final boss)  
+        # we add this test because, maybe we are not in "Encounter Map" anymore (like after the final boss)
         elif find_ellement(UIElement.view_party.filename, Action.screenshot):
-                x, y = mouse_position(windowMP())
-                log.debug(f"Mouse (x, y) : ({x}, {y})")
-                if y >= (windowMP()[3] // 2.2 - mouse_range) and y <= (
-                    windowMP()[3] // 2.2 + mouse_range
-                ):
-                    x += windowMP()[2] // 25
-                else:
-                    x = windowMP()[2] // 3.7
+            x, y = mouse_position(windowMP())
+            log.debug(f"Mouse (x, y) : ({x}, {y})")
+            if y >= (windowMP()[3] // 2.2 - mouse_range) and y <= (
+                windowMP()[3] // 2.2 + mouse_range
+            ):
+                x += windowMP()[2] // 25
+            else:
+                x = windowMP()[2] // 3.7
 
-                if x > windowMP()[2] // 1.5:
-                    log.debug("Didnt find a battle. Try to go 'back'")
-                    find_ellement(Button.back.filename, Action.move_and_click)
-                    retour = False
-                else:
-                    y = windowMP()[3] // 2.2
-                    log.debug(f"move mouse to (x, y) : ({x}, {y})")
-                    move_mouse_and_click(windowMP(), x, y)
+            if x > windowMP()[2] // 1.5:
+                log.debug("Didnt find a battle. Try to go 'back'")
+                find_ellement(Button.back.filename, Action.move_and_click)
+                retour = False
+            else:
+                y = windowMP()[3] // 2.2
+                log.debug(f"move mouse to (x, y) : ({x}, {y})")
+                move_mouse_and_click(windowMP(), x, y)
 
-        else: 
+        else:
             defaultCase()
 
     return retour
@@ -282,8 +282,6 @@ def goToEncounter():
             else:
                 travelEnd = True
                 log.info("goToEncounter : don't know what happened !")
-
-
 
         else:
             if not nextlvl():
