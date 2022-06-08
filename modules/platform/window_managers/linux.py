@@ -2,6 +2,7 @@ import time
 import logging
 
 from .base import WindowMgr
+from ..platform import find_os
 
 log = logging.getLogger(__name__)
 try:
@@ -10,7 +11,8 @@ try:
     gi.require_version("Wnck", "3.0")
     from gi.repository import Wnck, Gtk
 except ImportError:
-    log.info("gi.repository not installed")
+    if find_os()=="linux":
+        log.error("gi.repository not installed")
 
 
 class WindowMgrLinux(WindowMgr):

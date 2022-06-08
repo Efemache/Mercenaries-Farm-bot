@@ -1,6 +1,7 @@
 import logging
 
 from ..base import WindowMgr
+from ...platform import find_os
 
 log = logging.getLogger(__name__)
 
@@ -10,7 +11,8 @@ try:
     HAS_AHK = True
 except ImportError:
     HAS_AHK = False
-    log.warning("AHK Not Installed")
+    if find_os()=="windows":
+        log.warning("AHK Not Installed")
 
 
 HEARHTSTONE_WINDOW_NAME_WINDOWS = "Hearthstone"

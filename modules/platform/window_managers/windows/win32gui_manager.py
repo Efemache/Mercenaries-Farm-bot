@@ -1,6 +1,7 @@
 import logging
 
 from ..base import WindowMgr
+from ...platform import find_os
 
 log = logging.getLogger(__name__)
 
@@ -10,7 +11,8 @@ try:
     HAS_WIN32GUI = True
 except ImportError:
     HAS_WIN32GUI = False
-    log.warning("win32gui not installed")
+    if find_os()=="windows":
+        log.warning("win32gui not installed")
 
 
 HEARHTSTONE_WINDOW_NAME_WINDOWS = "Hearthstone"
