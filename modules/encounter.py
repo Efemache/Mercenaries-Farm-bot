@@ -2,7 +2,6 @@ import re
 import time
 import random
 
-# import configparser
 import logging
 
 from .platform import windowMP
@@ -19,11 +18,13 @@ log = logging.getLogger(__name__)
 
 
 def select_enemy_to_attack(index):
-    """Used to move the mouse over an enemy to attack it (after selecting a merc's ability)"""
+    """Used to move the mouse over an enemy to attack it
+    (after selecting a merc's ability)
+    """
     cardWidth = windowMP()[2] // 16
     cardHeight = windowMP()[3] // 6
     retour = False
-    # find_element: Can be changed to return None or bool type
+
     if index:
         time.sleep(0.1)
         log.debug(
@@ -44,22 +45,24 @@ def select_random_enemy_to_attack(enemies=None):
     red can't find green
     """
     enemies = enemies or []
-    log.debug("select_random_enemy_to_attack : attack random enemy")
-    #    count = 0
-    log.debug("%s len=%s", enemies, len(enemies))
+    log.debug("select_random_enemy_to_attack : %s len=%s", enemies, len(enemies))
+    retour = False
     while enemies:
         toAttack = enemies.pop(random.randint(0, len(enemies) - 1))
         if select_enemy_to_attack(toAttack):
+            retour = True
             break
 
-    # right click added to avoid a problem when the bot detects no enemy
-    # (it can't select another ability and we can hope an AoE will selected at least)
-    # Update : add code to click in the middle of the enemy board
-    #   when no enemy is detected
+    # attacks the middle enemy minion if you don't find any enemy
+    if not retour:
+        select_enemy_to_attack(windowMP()[2] / 2.1, windowMP()[3] / 3.6)
+
+    # right click added to avoid some problem (if enemy wasn't clickable)
     mouse_click("right")
 
 
 def ability_target_merc(targettype, myMercs):
+    """Return the X coord of one of our mercenaries"""
     number = int(sorted(myMercs)[-1])
 
     cardSize = int(windowMP()[2] / 12)
@@ -84,12 +87,54 @@ def ability_target_merc(targettype, myMercs):
     return x
 
 
-def select_ability(localhero, myBoard):
-    """Select an ability for a mercenary.
-        Depend on what is available and wich Round (battle)
-    Click only on the ability (doesnt move to an enemy)
-    """
-    global raund
+def get_ability_for_this_turn(name, minionSection, turn, defaultAbility=0):
+    """Get the ability (configured) for this turned for the selected Merc/minion"""
+
+    if minionSection in ability_order and name.lower() in ability_order[minionSection]:
+        # in combo.ini, split (with ",") to find the ability to use this turn
+        # use first ability if not found
+        round_abilities = ability_order[minionSection][name.lower()].split(",")
+        abilitiesNumber = len(round_abilities)
+        if abilitiesNumber != 0:
+            ability = turn % abilitiesNumber
+            if ability == 0:
+                ability = len(round_abilities)
+            ability = round_abilities[ability - 1]
+        else:
+            ability = defaultAbility
+    else:
+        ability = defaultAbility
+
+    log.info("%s Ability Selected : %s", name, ability)
+
+    return str(ability)
+
+
+def parse_ability_setting(ability):
+    retour = {"chooseone": 0, "ai": "byColor", "name": None, "miniontype": None}
+
+    if not ":" in ability:
+        retour["ability"] = int(ability)
+    else:
+        retour["ability"] = int(ability.split(":")[0])
+        retour["config"] = ability.split(":")[1]
+        for i in retour["config"].split("&"):
+            key, value = i.split("=")
+            if key == "chooseone":
+                retour["chooseone"] = int(value) - 1
+            elif key == "ai":
+                retour["ai"] = value
+            elif key == "name":
+                retour["name"] = value
+            elif key == "miniontype":
+                retour["miniontype"] = value
+            else:
+                log.warning("Unknown parameter")
+
+    return retour
+
+
+def didnt_find_a_name_for_this_one(name, minionSection, turn, defaultAbility=0):
     abilitiesWidth = windowMP()[2] // 14.2
     abilitiesHeigth = windowMP()[3] // 7.2
 
@@ -105,109 +150,87 @@ def select_ability(localhero, myBoard):
         windowMP()[2] // 1.8,
         windowMP()[2] // 1.56,
     ]
-    retour = False
+
+    abilityConfig = parse_ability_setting(
+        get_ability_for_this_turn(name, minionSection, turn, defaultAbility)
+    )
+    ability = abilityConfig["ability"]
+    if ability == 0:
+        log.debug("No ability selected (0)")
+    elif ability >= 1 and ability <= 3:
+        log.debug(
+            f"abilities Y : {abilitiesPositionY} |"
+            f" abilities X : {abilitiesPositionX}"
+        )
+        partscreen(
+            int(abilitiesWidth),
+            int(abilitiesHeigth),
+            int(windowMP()[1] + abilitiesPositionY),
+            int(windowMP()[0] + abilitiesPositionX[0]),
+        )
+        if (
+            find_ellement(UIElement.hourglass.filename, Action.get_coords_part_screen)
+            is None
+        ):
+            move_mouse_and_click(
+                windowMP(),
+                int(abilitiesPositionX[ability - 1] + abilitiesWidth // 2),
+                int(abilitiesPositionY + abilitiesHeigth // 2),
+            )
+    else:
+        log.warning(f"No ability selected for {name}")
+        abilityConfig["ability"] = 0
+
+    return abilityConfig
+
+
+def select_ability(localhero, myBoard):
+    """Select an ability for a mercenary.
+        Depend on what is available and wich Round (battle)
+    Click only on the ability (doesnt move to an enemy)
+    """
+    global raund
 
     if localhero in mercsAbilities:
-        if (
-            "Mercenary" in ability_order
-            and localhero.lower() in ability_order["Mercenary"]
-        ):
-            round_abilities = ability_order["Mercenary"][localhero.lower()].split(",")
-            abilitiesNumber = len(round_abilities)
-            if abilitiesNumber != 0:
-                ability = raund % abilitiesNumber
-                if ability == 0:
-                    ability = int(round_abilities[len(round_abilities) - 1])
-                else:
-                    ability = int(round_abilities[ability - 1])
-            else:
-                ability = 1
-        else:
-            ability = 1
-
+        retour = False
         chooseone2 = [windowMP()[2] // 2.4, windowMP()[2] // 1.7]
         chooseone3 = [windowMP()[2] // 3, windowMP()[2] // 2, windowMP()[2] // 1.5]
-        log.info("Mercenary Ability Selected : %s", ability)
-        if ability == 0:
-            log.debug("No ability selected (0)")
-            retour = False
-        elif ability >= 1 and ability <= 3:
-            log.debug(
-                f"abilities Y : {abilitiesPositionY} |"
-                f" abilities X : {abilitiesPositionX}"
-            )
-            partscreen(
-                int(abilitiesWidth),
-                int(abilitiesHeigth),
-                int(windowMP()[1] + abilitiesPositionY),
-                int(windowMP()[0] + abilitiesPositionX[0]),
-            )
-            # find_element: Can be changed to return None or bool type
-            if (
-                find_ellement(
-                    UIElement.hourglass.filename, Action.get_coords_part_screen
-                )
-                is None
-            ):
+
+        abilitySetting = didnt_find_a_name_for_this_one(
+            localhero, "Mercenary", raund, 1
+        )
+        if abilitySetting["ability"] != 0:
+            ability = abilitySetting["ability"]
+            if isinstance(mercsAbilities[localhero][str(ability)], bool):
+                retour = mercsAbilities[localhero][str(ability)]
+            elif mercsAbilities[localhero][str(ability)] == "chooseone3":
+                time.sleep(0.2)
                 move_mouse_and_click(
                     windowMP(),
-                    int(abilitiesPositionX[ability - 1] + abilitiesWidth // 2),
-                    int(abilitiesPositionY + abilitiesHeigth // 2),
+                    chooseone3[abilitySetting["chooseone"]],
+                    windowMP()[3] // 2,
                 )
-                if isinstance(mercsAbilities[localhero][str(ability)], bool):
-                    retour = mercsAbilities[localhero][str(ability)]
-                elif mercsAbilities[localhero][str(ability)] == "chooseone3":
-                    time.sleep(0.2)
-                    move_mouse_and_click(windowMP(), chooseone3[0], windowMP()[3] // 2)
-                    retour = False
-                elif mercsAbilities[localhero][str(ability)] == "chooseone2":
-                    time.sleep(0.2)
-                    move_mouse_and_click(windowMP(), chooseone2[0], windowMP()[3] // 2)
-                    retour = False
-                elif mercsAbilities[localhero][str(ability)] == "friend":
-                    time.sleep(0.2)
-                    move_mouse_and_click(
-                        windowMP(),
-                        ability_target_merc("friend", myBoard),
-                        windowMP()[3] / 1.5,
-                    )
-                    retour = False
-        else:
-            log.info(f"No ability selected for {localhero}")
+            elif mercsAbilities[localhero][str(ability)] == "chooseone2":
+                time.sleep(0.2)
+                move_mouse_and_click(
+                    windowMP(),
+                    chooseone2[abilitySetting["chooseone"]],
+                    windowMP()[3] // 2,
+                )
+            elif mercsAbilities[localhero][str(ability)] == "friend":
+                time.sleep(0.2)
+                move_mouse_and_click(
+                    windowMP(),
+                    ability_target_merc("friend", myBoard),
+                    windowMP()[3] / 1.5,
+                )
     else:
         localhero = re.sub(r" [0-9]$", "", localhero)
-        if "Neutral" in ability_order and localhero.lower() in ability_order["Neutral"]:
-            round_abilities = ability_order["Neutral"][localhero.lower()].split(",")
-            abilitiesNumber = len(round_abilities)
-            if abilitiesNumber != 0:
-                ability = raund % abilitiesNumber
-                if ability == 0:
-                    ability = len(round_abilities)
-                ability = int(round_abilities[ability - 1])
-            else:
-                ability = 1
-
-            log.info("Neutral Minion ability selected : %s", ability)
-            partscreen(
-                int(abilitiesWidth),
-                int(abilitiesHeigth),
-                int(windowMP()[1] + abilitiesPositionY),
-                int(windowMP()[0] + abilitiesPositionX[0]),
-            )
-            # find_element: Can be changed to return None or bool type
-            if (
-                find_ellement(
-                    UIElement.hourglass.filename, Action.get_coords_part_screen
-                )
-                is None
-            ):
-                move_mouse_and_click(
-                    windowMP(),
-                    int(abilitiesPositionX[ability - 1] + abilitiesWidth // 2),
-                    int(abilitiesPositionY + abilitiesHeigth // 2),
-                )
-
-                retour = True
+        abilitySetting = didnt_find_a_name_for_this_one(localhero, "Neutral", raund, 0)
+        if abilitySetting["ability"] == 0:
+            retour = False
+        else:
+            retour = True
 
     return retour
 
