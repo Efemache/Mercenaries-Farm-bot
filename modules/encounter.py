@@ -99,31 +99,29 @@ def get_ability_for_this_turn(name, minionSection, turn, defaultAbility=0):
             ability = turn % abilitiesNumber
             if ability == 0:
                 ability = len(round_abilities)
-            ability = int(round_abilities[ability - 1])
+            ability = round_abilities[ability - 1]
         else:
             ability = defaultAbility
     else:
         ability = defaultAbility
 
-    log.info("%s Ability Selected : %s", minionSection, ability)
+    log.info("%s Ability Selected : %s", name, ability)
 
-    return ability
+    return str(ability)
 
 
 def parse_ability_setting(ability):
-    retour = {}
-    if isinstance(ability, int):
-        retour["ability"] = ability
+    retour = {"chooseone": 0, "ai": "byColor", "name": None, "miniontype": None}
+
+    if not ":" in ability:
+        retour["ability"] = int(ability)
     else:
-        retour["ability"], retour["config"] = ability.split(":")
-        retour["chooseone"] = 0
-        retour["ai"] = "byColor"
-        retour["name"] = None
-        retour["miniontype"] = None
+        retour["ability"] = int(ability.split(":")[0])
+        retour["config"] = ability.split(":")[1]
         for i in retour["config"].split("&"):
             key, value = i.split("=")
             if key == "chooseone":
-                retour["chooseone"] = value
+                retour["chooseone"] = int(value) - 1
             elif key == "ai":
                 retour["ai"] = value
             elif key == "name":
@@ -180,7 +178,7 @@ def didnt_find_a_name_for_this_one(name, minionSection, turn, defaultAbility=0):
                 int(abilitiesPositionY + abilitiesHeigth // 2),
             )
     else:
-        log.info(f"No ability selected for {name}")
+        log.warning(f"No ability selected for {name}")
         abilityConfig["ability"] = 0
 
     return abilityConfig
@@ -199,7 +197,7 @@ def select_ability(localhero, myBoard):
         chooseone3 = [windowMP()[2] // 3, windowMP()[2] // 2, windowMP()[2] // 1.5]
 
         abilitySetting = didnt_find_a_name_for_this_one(
-            localhero, "Mercenaries", raund, 1
+            localhero, "Mercenary", raund, 1
         )
         if abilitySetting["ability"] != 0:
             ability = abilitySetting["ability"]
