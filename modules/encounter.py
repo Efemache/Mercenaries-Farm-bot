@@ -55,7 +55,7 @@ def select_random_enemy_to_attack(enemies=None):
 
     # attacks the middle enemy minion if you don't find any enemy
     if not retour:
-        select_enemy_to_attack(windowMP()[2] / 2.1, windowMP()[3] / 3.6)
+        select_enemy_to_attack([windowMP()[2] / 2.1, windowMP()[3] / 3.6])
 
     # right click added to avoid some problem (if enemy wasn't clickable)
     mouse_click("right")
