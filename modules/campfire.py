@@ -38,7 +38,7 @@ def look_at_campfire_completed_tasks():
                 # so the bot click too soon. Need to make a loop to try several time to click
                 while find_ellement(Button.campfire_claim.filename, Action.move_and_click):
                     time.sleep(0.5)
-                    move_mouse(windowMP(), windowMP()[2] / 2, windowMP()[3] / 1.25)
+                    move_mouse(windowMP(), windowMP()[2] / 2, windowMP()[3] / 1.125)
                    
                 time.sleep(2)
                 while not find_ellement(UIElement.campfire.filename, Action.screenshot):
