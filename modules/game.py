@@ -22,7 +22,7 @@ def countdown(t, step=1, msg="Sleeping"):
         time.sleep(step)
 
 
-def waitForItOrPass(image, duration):
+def waitForItOrPass(image, duration, step=0.5):
     """Wait to find 'image' on screen during 'duration' seconds (max)
     and continue if you don't find it.
     The purpose is to permit to find a particular part in Hearthstone
@@ -32,8 +32,9 @@ def waitForItOrPass(image, duration):
     retour = False
 
     log.info(f"Waiting ({str(duration)}s max) for : {image}")
-    for _ in range(duration * 2):
-        time.sleep(0.5)
+    for _ in range(int(duration / step)):
+        time.sleep(step)
+        # time.sleep(0.5)
         if find_ellement(image.filename, Action.screenshot):
             retour = True
             break

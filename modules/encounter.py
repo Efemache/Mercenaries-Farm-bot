@@ -9,7 +9,7 @@ from .mouse_utils import move_mouse_and_click, move_mouse, mouse_click  # , mous
 
 from .image_utils import partscreen, find_ellement
 from .constants import UIElement, Button, Action
-from .game import countdown
+from .game import countdown, waitForItOrPass
 from .log_board import LogHSMercs
 from .settings import settings_dict, mercslist, mercsAbilities, ability_order
 
@@ -55,7 +55,7 @@ def select_random_enemy_to_attack(enemies=None):
 
     # attacks the middle enemy minion if you don't find any enemy
     if not retour:
-        select_enemy_to_attack(windowMP()[2] / 2.1, windowMP()[3] / 3.6)
+        select_enemy_to_attack([windowMP()[2] / 2.1, windowMP()[3] / 3.6])
 
     # right click added to avoid some problem (if enemy wasn't clickable)
     mouse_click("right")
@@ -63,7 +63,6 @@ def select_random_enemy_to_attack(enemies=None):
 
 def ability_target_merc(targettype, myMercs):
     """Return the X coord of one of our mercenaries"""
-    number = int(sorted(myMercs)[-1])
 
     cardSize = int(windowMP()[2] / 12)
     firstOdd = int(windowMP()[0] + (windowMP()[2] / 3))
@@ -75,6 +74,13 @@ def ability_target_merc(targettype, myMercs):
         if i != 5:
             positionOdd.append(int(firstOdd + (i * cardSize)))
 
+    number = int(sorted(myMercs)[-1])
+    # if targettype == "friend:Dragon":
+    #     position=1
+    #     for i in myMercs:
+    #         if myMercs[i] == "Nefarian":
+    #             position=int(i)
+    # else:
     position = random.randint(1, number)
 
     if number % 2 == 0:  # if mercenaries number is even
@@ -113,7 +119,7 @@ def get_ability_for_this_turn(name, minionSection, turn, defaultAbility=0):
 def parse_ability_setting(ability):
     retour = {"chooseone": 0, "ai": "byColor", "name": None, "miniontype": None}
 
-    if not ":" in ability:
+    if ":" not in ability:
         retour["ability"] = int(ability)
     else:
         retour["ability"] = int(ability.split(":")[0])
@@ -224,6 +230,13 @@ def select_ability(localhero, myBoard):
                     ability_target_merc("friend", myBoard),
                     windowMP()[3] / 1.5,
                 )
+            # elif mercsAbilities[localhero][str(ability)] == "friend:Dragon":
+            #     time.sleep(0.2)
+            #     move_mouse_and_click(
+            #         windowMP(),
+            #         ability_target_merc("friend:Dragon", myBoard),
+            #         windowMP()[3] / 1.5,
+            #     )
     else:
         localhero = re.sub(r" [0-9]$", "", localhero)
         abilitySetting = didnt_find_a_name_for_this_one(localhero, "Neutral", raund, 0)
@@ -469,10 +482,13 @@ def battle():
                     enemynoclass2,
                     mol,
                 )
-                # in rare case, the bot detects an enemy ("noclass" most of the times) outside of the battlezone.
-                # the second click (to select the enemy), which is on an empty space, doesnt work.
-                # next move : instead of selecting the next mercenaries (to choose an ability),
-                # the mercenary is clicked on to be targeted (from previous abilitay). Need a "rightclick" to cancel this action
+                # in rare case, the bot detects an enemy ("noclass" most of the
+                #   times) outside of the battlezone.
+                # the second click (to select the enemy),
+                #   which is on an empty space, doesnt work.
+                # next move : instead of selecting the next mercenaries (to choose an
+                #   ability), the mercenary is clicked on to be targeted (from
+                #   previous ability). Need a "rightclick" to cancel this action.
                 mouse_click("right")
                 time.sleep(0.1)
 
@@ -504,27 +520,31 @@ def selectCardsInHand():
     log.debug("[ SETH - START]")
     retour = True
 
-    while not find_ellement(Button.num.filename, Action.screenshot):
-        time.sleep(2)
+    # while not find_ellement(Button.num.filename, Action.screenshot):
+    #    time.sleep(2)
+    waitForItOrPass(Button.num, 60, 2)
 
-    # wait 'WaitForEXP' (float) in minutes, to make the battle last longer
-    # and win more XP (for the Hearthstone reward track)
-    wait_for_exp = settings_dict["waitforexp"]
-    log.info(f"WaitForEXP - wait (second(s)) : {wait_for_exp}")
-    # time.sleep(wait_for_exp)
-    countdown(wait_for_exp, 10, "Wait for XP : sleeping")
+    if find_ellement(Button.num.filename, Action.screenshot):
+        # wait 'WaitForEXP' (float) in minutes, to make the battle last longer
+        # and win more XP (for the Hearthstone reward track)
+        wait_for_exp = settings_dict["waitforexp"]
+        log.info(f"WaitForEXP - wait (second(s)) : {wait_for_exp}")
+        # time.sleep(wait_for_exp)
+        countdown(wait_for_exp, 10, "Wait for XP : sleeping")
 
-    log.debug(f"windowMP = {windowMP()}")
-    x1 = windowMP()[2] // 2.6
-    y1 = windowMP()[3] // 1.09
-    x2 = windowMP()[2] // 10
-    y2 = windowMP()[3] // 10
+        log.debug(f"windowMP = {windowMP()}")
+        x1 = windowMP()[2] // 2.6
+        y1 = windowMP()[3] // 1.09
+        x2 = windowMP()[2] // 10
+        y2 = windowMP()[3] // 10
 
-    while not find_ellement(Button.num.filename, Action.move_and_click):
-        move_mouse(windowMP(), x1, y1)
-        move_mouse(windowMP(), x2, y2)
+        # let the "while". In future release,
+        #   we could add a function to select specifics cards
+        while not find_ellement(Button.num.filename, Action.move_and_click):
+            move_mouse(windowMP(), x1, y1)
+            move_mouse(windowMP(), x2, y2)
 
-    retour = battle()
-    log.debug("[ SETH - END]")
+        retour = battle()
+        log.debug("[ SETH - END]")
 
     return retour

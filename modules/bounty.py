@@ -121,7 +121,8 @@ def nextlvl():
             look_at_campfire_completed_tasks()
             time.sleep(3)
 
-        # we add this test because, maybe we are not in "Encounter Map" anymore (like after the final boss)
+        # we add this test because, maybe we are not in "Encounter Map" anymore
+        # (like after the final boss)
         elif find_ellement(UIElement.view_party.filename, Action.screenshot):
             x, y = mouse_position(windowMP())
             log.debug(f"Mouse (x, y) : ({x}, {y})")
@@ -226,9 +227,6 @@ def goToEncounter():
     travelEnd = False
 
     while not travelEnd:
-        # ToDo : add a tempo when you detect a new completed task
-        # if find (task completed) :
-        #   time.sleep(2)
 
         if find_ellement(Button.play.filename, Action.screenshot):
             if settings_dict["quitbeforebossfight"] is True and find_ellement(
@@ -238,9 +236,15 @@ def goToEncounter():
                 travelEnd = quitBounty()
                 break
 
-            find_ellement(Button.play.filename, Action.move_and_click)
+            # fix the problem with Hearthstone showing campfire just
+            # after clicking on Play button
+            while find_ellement(Button.play.filename, Action.move_and_click):
+                time.sleep(2)
+            waitForItOrPass(UIElement.campfire, 3)
+            if look_at_campfire_completed_tasks():
+                break
 
-            time.sleep(0.5)
+            #            time.sleep(0.5)
             retour = (
                 selectCardsInHand()
             )  # Start the battle : the bot choose the cards and fight against the enemy
