@@ -63,7 +63,6 @@ def select_random_enemy_to_attack(enemies=None):
 
 def ability_target_merc(targettype, myMercs):
     """Return the X coord of one of our mercenaries"""
-    number = int(sorted(myMercs)[-1])
 
     cardSize = int(windowMP()[2] / 12)
     firstOdd = int(windowMP()[0] + (windowMP()[2] / 3))
@@ -75,6 +74,13 @@ def ability_target_merc(targettype, myMercs):
         if i != 5:
             positionOdd.append(int(firstOdd + (i * cardSize)))
 
+    number = int(sorted(myMercs)[-1])
+    # if targettype == "friend:Dragon":
+    #     position=1
+    #     for i in myMercs:
+    #         if myMercs[i] == "Nefarian":
+    #             position=int(i)
+    # else:
     position = random.randint(1, number)
 
     if number % 2 == 0:  # if mercenaries number is even
@@ -224,6 +230,13 @@ def select_ability(localhero, myBoard):
                     ability_target_merc("friend", myBoard),
                     windowMP()[3] / 1.5,
                 )
+            # elif mercsAbilities[localhero][str(ability)] == "friend:Dragon":
+            #     time.sleep(0.2)
+            #     move_mouse_and_click(
+            #         windowMP(),
+            #         ability_target_merc("friend:Dragon", myBoard),
+            #         windowMP()[3] / 1.5,
+            #     )
     else:
         localhero = re.sub(r" [0-9]$", "", localhero)
         abilitySetting = didnt_find_a_name_for_this_one(localhero, "Neutral", raund, 0)
