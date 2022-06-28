@@ -12,7 +12,7 @@ try:
 except ImportError:
     HAS_AHK = False
     if find_os()=="windows":
-        log.warning("AHK Not Installed")
+        log.debug("AHK Not Installed")
 
 
 HEARHTSTONE_WINDOW_NAME_WINDOWS = "Hearthstone"

@@ -12,7 +12,7 @@ try:
 except ImportError:
     HAS_WIN32GUI = False
     if find_os()=="windows":
-        log.warning("win32gui not installed")
+        log.debug("win32gui not installed")
 
 
 HEARHTSTONE_WINDOW_NAME_WINDOWS = "Hearthstone"

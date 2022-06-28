@@ -314,6 +314,11 @@
         "2": "friend",
         "3": true
     },
+    "Yogg-Saron": {
+        "1": true,
+        "2": "friend",
+        "3": false
+    },
     "Zar'jira, the Sea Witch": {
         "1": true,
         "2": "friend",
