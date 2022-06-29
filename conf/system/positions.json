@@ -6,5 +6,7 @@
     "travelpoint.Blackrock.scroll": -1,
     "travelpoint.Alterac.scroll": -2,
     "travelpoint.Onyxia.scroll": -2,
+    "travelpoint.Darkshore.scroll": -3,
+    "travelpoint.Sunken.scroll": -4,
     "lastOne": "dont touch"
 }
