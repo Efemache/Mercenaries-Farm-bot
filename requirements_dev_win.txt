@@ -24,7 +24,7 @@ mss==6.1
     # via -r requirements.in
 mypy-extensions==0.4.3
     # via black
-numpy==1.21.5
+numpy==1.22
     # via opencv-python
 opencv-python==4.5.3.56
     # via -r requirements.in
