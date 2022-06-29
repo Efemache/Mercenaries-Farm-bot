@@ -3,6 +3,7 @@ import logging
 
 from .base import WindowMgr
 from ..platform import find_os
+from ...exceptions import WindowManagerError
 
 log = logging.getLogger(__name__)
 try:
@@ -14,6 +15,7 @@ except ImportError:
     if find_os()=="linux":
         log.error("gi.repository not installed")
 
+HEARHTSTONE_WINDOW_NAME="Hearthstone"
 
 class WindowMgrLinux(WindowMgr):
     """Encapsulates some calls for Linux window management"""
@@ -29,13 +31,16 @@ class WindowMgrLinux(WindowMgr):
             Gtk.main_iteration()
         windows = screenHW.get_windows()
 
+        win = None
         for w in windows:
-            if w.get_name() == "Hearthstone":
+            if w.get_name() == HEARHTSTONE_WINDOW_NAME:
                 win = w
                 win.activate(int(time.time()))
                 win.make_above()
                 win.unmake_above()
                 break
+        if not win:
+            raise WindowManagerError("No 'Hearthstone' window found.")
         self._win = win
         return win
 
