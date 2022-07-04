@@ -33,8 +33,17 @@ def look_at_campfire_completed_tasks():
         retour = True
         while find_ellement(UIElement.campfire.filename, Action.move):
             waitForItOrPass(Button.campfire_completed_task, 5)
-            if find_ellement(
-                Button.campfire_completed_task.filename, Action.move_and_click
+            if (
+                find_ellement(
+                    Button.campfire_completed_task.filename, Action.move_and_click
+                )
+                or find_ellement(
+                    Button.campfire_completed_eventtask.filename, Action.move_and_click
+                )
+                or find_ellement(
+                    Button.campfire_completed_expansiontask.filename,
+                    Action.move_and_click,
+                )
             ):
                 # time.sleep(2)
                 while not find_ellement(

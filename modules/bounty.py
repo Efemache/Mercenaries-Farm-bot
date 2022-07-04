@@ -75,7 +75,13 @@ def nextlvl():
 
     if not find_ellement(Button.play.filename, Action.screenshot):
 
-        if find_ellement(UIElement.task_completed.filename, Action.screenshot):
+        if (
+            find_ellement(UIElement.task_completed.filename, Action.screenshot)
+            or find_ellement(UIElement.task_event_completed.filename, Action.screenshot)
+            or find_ellement(
+                UIElement.task_expansion_completed.filename, Action.screenshot
+            )
+        ):
             waitForItOrPass(UIElement.campfire, 10)
             look_at_campfire_completed_tasks()
 
