@@ -56,6 +56,7 @@ class UIElement(ImageFragment):
     task_completed = "task_completed"
     task_event_completed = "task_event_completed"
     task_expansion_completed = "task_expansion_completed"
+    team_selection = "team_selection"
     travelpoint = "travelpoint"
     view_party = "view_party"
     visitor = "visitor"
