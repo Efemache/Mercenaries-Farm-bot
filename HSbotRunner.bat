@@ -1,2 +1,2 @@
-python -m pip install -r requirements_win.txt
-python main.py
+py -v3.9 -m pip install -r requirements_win.txt
+py -v3.9 main.py

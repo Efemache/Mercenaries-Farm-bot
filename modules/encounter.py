@@ -55,13 +55,14 @@ def select_random_enemy_to_attack(enemies=None):
 
     # attacks the middle enemy minion if you don't find any enemy
     if not retour:
-        select_enemy_to_attack([windowMP()[2] / 2.1, windowMP()[3] / 3.6])
+        select_enemy_to_attack([windowMP()[2] / 2.01, windowMP()[3] / 2.77])
+        # select_enemy_to_attack([windowMP()[2] / 2.1, windowMP()[3] / 3.6])
 
     # right click added to avoid some problem (if enemy wasn't clickable)
     mouse_click("right")
 
 
-def ability_target_merc(targettype, myMercs):
+def ability_target_friend(targettype, myMercs):
     """Return the X coord of one of our mercenaries"""
 
     cardSize = int(windowMP()[2] / 12)
@@ -75,13 +76,19 @@ def ability_target_merc(targettype, myMercs):
             positionOdd.append(int(firstOdd + (i * cardSize)))
 
     number = int(sorted(myMercs)[-1])
-    # if targettype == "friend:Dragon":
-    #     position=1
-    #     for i in myMercs:
-    #         if myMercs[i] == "Nefarian":
-    #             position=int(i)
-    # else:
-    position = random.randint(1, number)
+    if targettype == "friend":
+        position = random.randint(1, number)
+    else:
+        position = 1
+        for i in myMercs:
+            if myMercs[i] in mercslist:
+                # is a Mercenary
+                if mercslist[myMercs[i]]["minion_type"] == targettype:
+                    position = int(i)
+            else:
+                # is a friendly Minion
+                if targettype == "minion":
+                    position = int(i)
 
     if number % 2 == 0:  # if mercenaries number is even
         pos = int(2 - (number / 2 - 1) + (position - 1))
@@ -223,18 +230,28 @@ def select_ability(localhero, myBoard):
                     chooseone2[abilitySetting["chooseone"]],
                     windowMP()[3] // 2,
                 )
-            elif mercsAbilities[localhero][str(ability)] == "friend":
+            elif mercsAbilities[localhero][str(ability)].startswith("friend"):
                 time.sleep(0.2)
-                move_mouse_and_click(
-                    windowMP(),
-                    ability_target_merc("friend", myBoard),
-                    windowMP()[3] / 1.5,
-                )
+                if ":" in mercsAbilities[localhero][str(ability)]:
+                    move_mouse_and_click(
+                        windowMP(),
+                        ability_target_friend(
+                            mercsAbilities[localhero][str(ability)].split(":")[1],
+                            myBoard,
+                        ),
+                        windowMP()[3] / 1.5,
+                    )
+                else:
+                    move_mouse_and_click(
+                        windowMP(),
+                        ability_target_friend("friend", myBoard),
+                        windowMP()[3] / 1.5,
+                    )
             # elif mercsAbilities[localhero][str(ability)] == "friend:Dragon":
             #     time.sleep(0.2)
             #     move_mouse_and_click(
             #         windowMP(),
-            #         ability_target_merc("friend:Dragon", myBoard),
+            #         ability_target_friend("friend:Dragon", myBoard),
             #         windowMP()[3] / 1.5,
             #     )
     else:
