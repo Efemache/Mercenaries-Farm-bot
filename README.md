@@ -109,7 +109,7 @@ If you have an issue with the bot, please, read the [FAQ](https://github.com/Efe
 ### Battle limitation (will change in future releases)
 * ~~bot doesn't work with ability like "choose one" with 2 choices (ex: Malfurion, but works for Rexxar)~~ ✓ (ok since May 23, 2022)
 * ~~bot doesn't work with ability which need to point to one of your mercenaries (ex: impossible to use healing with Xyrella)~~ ✓ (ok since May 23, 2022)
-  * ~~ bot doesn't work with ability targeting a specific type of mercenary like Dragon, Beast, ...~~ ✓ (ok since Jul 08, 2022)
+  * ~~bot doesn't work with ability targeting a specific type of mercenary like Dragon, Beast, ...~~ ✓ (ok since Jul 08, 2022)
 * ~~bot doesn't use minions on board which are not a mercenary~~ ✓ (ok since 0.4.0 release)
 
 
