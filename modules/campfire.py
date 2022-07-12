@@ -67,6 +67,6 @@ def look_at_campfire_completed_tasks():
             else:
                 break
 
-        move_mouse_and_click(windowMP(), windowMP()[2] / 1.1, windowMP()[3] / 1.08)
+        move_mouse_and_click(windowMP(), windowMP()[2] / 1.16, windowMP()[3] / 1.93)
 
     return retour
