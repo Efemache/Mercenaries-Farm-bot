@@ -81,6 +81,7 @@ class Button(ImageFragment):
     choose_team = "choose_team"
     choose_travel = "choose_travel"
     done = "done"
+    done_bonus = "done_bonus"
     fight = "fight"
     finishok = "finishok"
     group_name = "group_name"
