@@ -98,7 +98,7 @@ If you have an issue with the bot, please, read the [FAQ](https://github.com/Efe
 |8. choose abilities :  | ✓|
 |    * for each mercenary (using configuration in conf/user/combo.ini) | ✓|
 |    * or the first abilities by default (if no configuration exists) | ✓|
-|    * ⚠️ the bot can't point an ability to a specific mercenary (like Dragon or Beast)  | x|
+|    * ⚠️ the bot can't point an ability to a specific mercenary  by name | x|
 |9. attack opponents (if ability requires it) | ✓|
 |10. choose a treasure after passing a level | ✓|
 |11. collect rewards for reaching the last level|  ✓|
