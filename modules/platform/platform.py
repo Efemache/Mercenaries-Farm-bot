@@ -14,5 +14,5 @@ def find_os():
     else:
         myOS = "unknown"
         log.info(f"sys.platform='{sys.platform}' is unknown.")
-        exit(1)
+        sys.exit()
     return myOS
