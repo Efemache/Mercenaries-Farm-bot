@@ -1,3 +1,4 @@
+import sys
 import random
 import time
 
@@ -68,6 +69,7 @@ def quitBounty():
         while not find_ellement(Button.lockin.filename, Action.move_and_click):
             time.sleep(0.5)
         end = True
+        log.info("Quitting the bounty level before boss battle.")
     return end
 
 
@@ -99,7 +101,7 @@ def nextlvl():
             while find_ellement(UIElement.visitor.filename, Action.screenshot):
                 if settings_dict["stopatstranger"]:
                     log.info("Stopping after meeting Mysterious Stranger")
-                    exit(1)
+                    sys.exit()
 
                 temp = random.choice([3, 2, 1.7])
                 x = windowMP()[2] // temp
@@ -238,6 +240,12 @@ def goToEncounter():
     while not travelEnd:
 
         if find_ellement(Button.play.filename, Action.screenshot):
+            if settings_dict["stopatbossfight"] is True and find_ellement(
+                UIElement.boss.filename, Action.screenshot
+            ):
+                log.info("Stopping before Boos battle.")
+                sys.exit()
+            
             if settings_dict["quitbeforebossfight"] is True and find_ellement(
                 UIElement.boss.filename, Action.screenshot
             ):
