@@ -361,7 +361,7 @@
     },
     "Illidan Stormrage": {
         "1": true,
-        "2": true,
+        "2": false,
         "3": false
     },
     "King Krush": {
