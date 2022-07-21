@@ -43,9 +43,9 @@ def collect():
         move_mouse_and_click(windowMP(), windowMP()[2] / 1.8, windowMP()[3] / 1.3)
         move_mouse_and_click(windowMP(), windowMP()[2] / 1.9, windowMP()[3] / 1.3)
         time.sleep(5)
-        if find_ellement(Button.done_bonus.filename, Action.move_and_click):
-            time.sleep(5)
-            continue
+        #if find_ellement(Button.done_bonus.filename, Action.move_and_click):
+        #    time.sleep(5)
+        #    continue
         if find_ellement(Button.done.filename, Action.move_and_click):
             break
 
