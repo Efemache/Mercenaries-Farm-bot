@@ -161,13 +161,54 @@ def nextlvl():
 
 def chooseTreasure():
     """used to choose a Treasure after a battle/fight
-    Note: should be updated to select "good" (passive?) treasure instead of a random one
+    note: Treasures are added to a queue (FIFO); if no matches are found a random treasure is selected.
     """
-    temp = random.choice([2.3, 1.7, 1.4])
-    y = windowMP()[3] // 2
-    x = windowMP()[2] // temp
-    move_mouse_and_click(windowMP(), x, y)
-    time.sleep(0.5)
+    treasures = []
+    treasures.append(
+        "tempest_fury"
+    )  # Passive 1 - 5 Nature Damage and repeat Lightning Bolt when cast
+    treasures.append(
+        "blessing_of_the_moon"
+    )  # Passive 1 - 3 Nature Damage and Health for NE, Trolls, Tauren
+    treasures.append(
+        "elementary_studies"
+    )  # Passive 1 - 5 Fire Damage and Health for Human, Elementals
+    treasures.append(
+        "fireball_volley"
+    )  # Passive when using fire ability cast Fireball Rank 1 - 5
+    treasures.append("fire_staff")  # Passive 1 - 5 Fire Damage
+    treasures.append(
+        "improved_lightning_bolt"
+    )  # Passive Lightning bolt hits 1 - 2 neighbors
+    treasures.append(
+        "positive_equilibrium"
+    )  # Passive 1 - 4 Nature + Fire damage and Health for Beasts and Dragons
+    treasures.append("nature_staff")  # Passive 1 - 5 Nature Damage
+    treasures.append("ring_of_protection")  # Passive damage reduction 1 - 5
+    treasures.append("celestial_alignment")  # Passive 4 - 16 damage to enemies across
+    treasures.append(
+        "treasure_chest"
+    )  # Passive Pirate health and damage increase from +1/+2 - +5/+10
+
+    log.debug(f"treasures queue contains : {treasures}")
+
+    while treasures:
+        next_treasure = treasures.pop(0)
+
+        treasure = str(f"treasures/{next_treasure}.png")
+
+        if find_ellement(treasure, Action.move_and_click):
+            time.sleep(1)
+            break
+    else:
+        log.debug("No known treasure found - Picking random one")
+        temp = random.choice([2.3, 1.7, 1.4])
+        y = windowMP()[3] // 2
+        x = windowMP()[2] // temp
+        move_mouse_and_click(windowMP(), x, y)
+        time.sleep(1)
+        # break
+
     while True:
         if find_ellement(Button.take.filename, Action.move_and_click):
             time.sleep(1)
@@ -245,7 +286,7 @@ def goToEncounter():
             ):
                 log.info("Stopping before Boos battle.")
                 sys.exit()
-            
+
             if settings_dict["quitbeforebossfight"] is True and find_ellement(
                 UIElement.boss.filename, Action.screenshot
             ):
