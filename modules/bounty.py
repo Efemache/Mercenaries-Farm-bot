@@ -18,6 +18,7 @@ from .settings import settings_dict, jposition, jthreshold
 from .game import waitForItOrPass, defaultCase
 from .encounter import selectCardsInHand
 from .campfire import look_at_campfire_completed_tasks
+from .treasure import chooseTreasure
 
 import logging
 
@@ -43,7 +44,7 @@ def collect():
         move_mouse_and_click(windowMP(), windowMP()[2] / 1.8, windowMP()[3] / 1.3)
         move_mouse_and_click(windowMP(), windowMP()[2] / 1.9, windowMP()[3] / 1.3)
         time.sleep(5)
-        #if find_ellement(Button.done_bonus.filename, Action.move_and_click):
+        # if find_ellement(Button.done_bonus.filename, Action.move_and_click):
         #    time.sleep(5)
         #    continue
         if find_ellement(Button.done.filename, Action.move_and_click):
@@ -157,68 +158,6 @@ def nextlvl():
             defaultCase()
 
     return retour
-
-
-def chooseTreasure():
-    """used to choose a Treasure after a battle/fight
-    note: Treasures are added to a queue (FIFO); if no matches are found a random treasure is selected.
-    """
-    treasures = []
-    treasures.append(
-        "tempest_fury"
-    )  # Passive 1 - 5 Nature Damage and repeat Lightning Bolt when cast
-    treasures.append(
-        "blessing_of_the_moon"
-    )  # Passive 1 - 3 Nature Damage and Health for NE, Trolls, Tauren
-    treasures.append(
-        "elementary_studies"
-    )  # Passive 1 - 5 Fire Damage and Health for Human, Elementals
-    treasures.append(
-        "fireball_volley"
-    )  # Passive when using fire ability cast Fireball Rank 1 - 5
-    treasures.append("fire_staff")  # Passive 1 - 5 Fire Damage
-    treasures.append(
-        "improved_lightning_bolt"
-    )  # Passive Lightning bolt hits 1 - 2 neighbors
-    treasures.append(
-        "positive_equilibrium"
-    )  # Passive 1 - 4 Nature + Fire damage and Health for Beasts and Dragons
-    treasures.append("nature_staff")  # Passive 1 - 5 Nature Damage
-    treasures.append("ring_of_protection")  # Passive damage reduction 1 - 5
-    treasures.append("celestial_alignment")  # Passive 4 - 16 damage to enemies across
-    treasures.append(
-        "treasure_chest"
-    )  # Passive Pirate health and damage increase from +1/+2 - +5/+10
-
-    log.debug(f"treasures queue contains : {treasures}")
-
-    while treasures:
-        next_treasure = treasures.pop(0)
-
-        treasure = str(f"treasures/{next_treasure}.png")
-
-        if find_ellement(treasure, Action.move_and_click):
-            time.sleep(1)
-            break
-    else:
-        log.debug("No known treasure found - Picking random one")
-        temp = random.choice([2.3, 1.7, 1.4])
-        y = windowMP()[3] // 2
-        x = windowMP()[2] // temp
-        move_mouse_and_click(windowMP(), x, y)
-        time.sleep(1)
-        # break
-
-    while True:
-        if find_ellement(Button.take.filename, Action.move_and_click):
-            time.sleep(1)
-            break
-        if find_ellement(Button.keep.filename, Action.move_and_click):
-            time.sleep(1)
-            break
-        if find_ellement(Button.replace.filename, Action.move_and_click):
-            time.sleep(1)
-            break
 
 
 def travelpointSelection():
