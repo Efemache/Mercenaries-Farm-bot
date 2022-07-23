@@ -83,11 +83,11 @@ def nextlvl():
     if not find_ellement(Button.play.filename, Action.screenshot):
 
         if (
-                find_ellement(UIElement.task_completed.filename, Action.screenshot)
-                or find_ellement(UIElement.task_event_completed.filename, Action.screenshot)
-                or find_ellement(
-            UIElement.task_expansion_completed.filename, Action.screenshot
-        )
+            find_ellement(UIElement.task_completed.filename, Action.screenshot)
+            or find_ellement(UIElement.task_event_completed.filename, Action.screenshot)
+            or find_ellement(
+                UIElement.task_expansion_completed.filename, Action.screenshot
+            )
         ):
             waitForItOrPass(UIElement.campfire, 10)
             look_at_campfire_completed_tasks()
@@ -117,7 +117,7 @@ def nextlvl():
                 time.sleep(8)
 
         elif find_ellement(
-                Button.pick.filename, Action.move_and_click
+            Button.pick.filename, Action.move_and_click
         ) or find_ellement(Button.portal_warp.filename, Action.move_and_click):
             time.sleep(1)
             mouse_click()
@@ -141,34 +141,37 @@ def nextlvl():
                 while True:
                     if settings_dict["preferfighter"]:
                         search += 1
-                        if find_ellement(UIElement.fighter_battle.filename, Action.screenshot):
-                            coords = find_ellement(UIElement.fighter_battle.filename, Action.get_coords)
+                        coords = find_ellement(
+                            UIElement.fighter_battle.filename, Action.get_coords
+                        )
+                        if coords:
                             x = coords[0]
-                            y = coords[1] + 100
+                            y = coords[1] + (windowMP()[3] // 10.8)
                             move_mouse_and_click(windowMP(), x, y)
-                            log.info(f"Fighter battle preferred - Clicking on fighter coin")
                             search += 1
                             break
                     if settings_dict["prefercaster"]:
                         search += 1
-                        if find_ellement(UIElement.caster_battle.filename, Action.screenshot):
-                            coords = find_ellement(UIElement.caster_battle.filename, Action.get_coords)
+                        coords = find_ellement(
+                            UIElement.caster_battle.filename, Action.get_coords
+                        )
+                        if coords:
                             x = coords[0]
-                            y = coords[1] + 100
+                            y = coords[1] + (windowMP()[3] // 10.8)
                             move_mouse_and_click(windowMP(), x, y)
-                            log.info(f"Caster battle preferred - Clicking on caster coin")
                             break
                     if settings_dict["preferprotector"]:
                         search += 1
-                        if find_ellement(UIElement.protector_battle.filename, Action.screenshot):
-                            coords = find_ellement(UIElement.protector_battle.filename, Action.get_coords)
+                        coords = find_ellement(
+                            UIElement.protector_battle.filename, Action.get_coords
+                        )
+                        if coords:
                             x = coords[0]
-                            y = coords[1] + 100
+                            y = coords[1] + (windowMP()[3] // 10.8)
                             move_mouse_and_click(windowMP(), x, y)
-                            log.info(f"Protector battle preferred - Clicking on protector coin")
                             break
                     if search > 0:
-                        log.info(f"Looked for preferred battles {search} times.")
+                        log.debug(f"Looked for preferred battles {search} times.")
                         break
         else:
             defaultCase()
@@ -177,11 +180,12 @@ def nextlvl():
 
 
 def searchForEncounter():
+    retour=True
     if find_ellement(UIElement.view_party.filename, Action.screenshot):
         x, y = mouse_position(windowMP())
         log.debug(f"Mouse (x, y) : ({x}, {y})")
         if y >= (windowMP()[3] // 2.2 - mouse_range) and y <= (
-                windowMP()[3] // 2.2 + mouse_range
+            windowMP()[3] // 2.2 + mouse_range
         ):
             x += windowMP()[2] // 25
         else:
@@ -195,6 +199,7 @@ def searchForEncounter():
             y = windowMP()[3] // 2.2
             log.debug(f"move mouse to (x, y) : ({x}, {y})")
             move_mouse_and_click(windowMP(), x, y)
+    return retour
 
 
 def travelpointSelection():
@@ -258,13 +263,13 @@ def goToEncounter():
 
         if find_ellement(Button.play.filename, Action.screenshot):
             if settings_dict["stopatbossfight"] is True and find_ellement(
-                    UIElement.boss.filename, Action.screenshot
+                UIElement.boss.filename, Action.screenshot
             ):
                 log.info("Stopping before Boos battle.")
                 sys.exit()
 
             if settings_dict["quitbeforebossfight"] is True and find_ellement(
-                    UIElement.boss.filename, Action.screenshot
+                UIElement.boss.filename, Action.screenshot
             ):
                 time.sleep(1)
                 travelEnd = quitBounty()
@@ -288,7 +293,7 @@ def goToEncounter():
                 log.info("goToEncounter : battle won")
                 while True:
                     if not find_ellement(
-                            UIElement.take_grey.filename, Action.screenshot
+                        UIElement.take_grey.filename, Action.screenshot
                     ):
                         mouse_click()
                         time.sleep(0.5)
@@ -297,7 +302,7 @@ def goToEncounter():
                         break
 
                     if not find_ellement(
-                            UIElement.replace_grey.filename, Action.screenshot
+                        UIElement.replace_grey.filename, Action.screenshot
                     ):
                         mouse_click()
                         time.sleep(0.5)
@@ -306,7 +311,7 @@ def goToEncounter():
                         break
 
                     if find_ellement(
-                            UIElement.reward_chest.filename, Action.screenshot
+                        UIElement.reward_chest.filename, Action.screenshot
                     ):
                         log.info(
                             "goToEncounter : " "Boss defeated. Time for REWARDS !!!"
@@ -340,10 +345,10 @@ def travelToLevel(page="next"):
     retour = False
 
     if find_ellement(
-            f"levels/{settings_dict['location']}"
-            f"_{settings_dict['mode']}_{settings_dict['level']}.png",
-            Action.move_and_click,
-            jthreshold["levels"],
+        f"levels/{settings_dict['location']}"
+        f"_{settings_dict['mode']}_{settings_dict['level']}.png",
+        Action.move_and_click,
+        jthreshold["levels"],
     ):
         waitForItOrPass(Button.choose_level, 6)
         find_ellement(Button.choose_level.filename, Action.move_and_click)
@@ -353,7 +358,7 @@ def travelToLevel(page="next"):
             time.sleep(1)
             retour = travelToLevel("next")
         if retour is False and find_ellement(
-                Button.arrow_prev.filename, Action.move_and_click
+            Button.arrow_prev.filename, Action.move_and_click
         ):
             time.sleep(1)
             retour = travelToLevel("previous")
