@@ -1,6 +1,6 @@
 import time
 
-from .bounty import travelpointSelection, travelToLevel, goToEncounter, nextlvl, searchForEncounter
+from .bounty import travelpointSelection, travelToLevel, goToEncounter, nextlvl
 from .encounter import selectCardsInHand
 from .constants import UIElement, Button, Action
 from .image_utils import find_ellement
@@ -45,7 +45,6 @@ def where():
 
     if find_ellement(UIElement.view_party.filename, Action.screenshot):
         nextlvl()
-        searchForEncounter()
 
     if find_ellement(UIElement.campfire.filename, Action.screenshot):
         time.sleep(2)

@@ -44,11 +44,9 @@ def chooseTreasure():
 
     while True:
         if find_ellement(Button.take.filename, Action.move_and_click):
-            time.sleep(1)
             break
         if find_ellement(Button.keep.filename, Action.move_and_click):
-            time.sleep(1)
             break
         if find_ellement(Button.replace.filename, Action.move_and_click):
-            time.sleep(1)
             break
+        time.sleep(1)

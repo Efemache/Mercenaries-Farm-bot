@@ -135,7 +135,7 @@ def nextlvl():
 
         # we add this test because, maybe we are not on "Encounter Map" anymore
         # (like after the final boss)
-        if find_ellement(UIElement.view_party.filename, Action.screenshot):
+        elif find_ellement(UIElement.view_party.filename, Action.screenshot):
             search_battle_list = []
             battletypes = ["fighter", "protector", "caster"]
             random.shuffle(battletypes)
@@ -154,9 +154,11 @@ def nextlvl():
                     else:
                         search_battle_list.append((x, y))
             if search_battle_list:
-                x, y = search_battle_list.pop(1)
+                x, y = search_battle_list.pop(0)
                 move_mouse_and_click(windowMP(), x, y)
-                time.sleep(1)
+                time.sleep(2)
+            else:
+                searchForEncounter()
 
         else:
             defaultCase()
