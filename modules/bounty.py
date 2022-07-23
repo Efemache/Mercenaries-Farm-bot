@@ -139,7 +139,7 @@ def nextlvl():
             search_battle_list = []
             battletypes = ["fighter", "protector", "caster"]
             random.shuffle(battletypes)
-            battletypes.append("elite") 
+            battletypes.append("elite")
             for battletype in battletypes:
                 tag = f"{battletype}_battle"
                 coords = find_ellement(

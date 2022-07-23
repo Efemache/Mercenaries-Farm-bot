@@ -16,7 +16,8 @@ log = logging.getLogger(__name__)
 
 def chooseTreasure():
     """used to choose a Treasure after a battle/fight
-    note: Treasures are added to a queue (FIFO); if no matches are found a random treasure is selected.
+    note: Treasures are added to a queue (FIFO); if no matches are
+    found, a random treasure is selected.
     """
     treasures_queue = PriorityQueue()
 

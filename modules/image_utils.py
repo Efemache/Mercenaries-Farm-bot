@@ -1,5 +1,4 @@
 import os.path
-import time
 
 import cv2
 import numpy as np
@@ -33,9 +32,9 @@ def get_gray_image(file, width=default_width, height=default_height):
     # need to resize the image in memory
     if file not in get_gray_image.imagesInMemory:
         if not os.path.isfile(file):
-            log.error(f"Err: file \"{file}\" doesn't exist.")
+            log.error(f'Err: file "{file}" doesn\'t exist.')
         get_gray_image.imagesInMemory[file] = cv2.imread(file, cv2.IMREAD_GRAYSCALE)
-        
+
         log.debug(f"images in memory : {len(get_gray_image.imagesInMemory)}")
 
     return get_gray_image.imagesInMemory[file]
@@ -101,7 +100,7 @@ def find_element_from_file(
         (int, int): coordinates of center of element
     """
     global partImg
-    #time.sleep(speed)
+    # time.sleep(speed)
 
     if threshold == "-":
         if file in jthreshold and jthreshold[file] != "-":

@@ -41,7 +41,7 @@ def where():
     if find_ellement(Button.play.filename, Action.screenshot):
         time.sleep(3)
         goToEncounter()
-        #time.sleep(3)
+        # time.sleep(3)
 
     if find_ellement(UIElement.view_party.filename, Action.screenshot):
         nextlvl()
@@ -53,10 +53,9 @@ def where():
 
     if find_ellement(Button.num.filename, Action.screenshot):
         selectCardsInHand()
-        
-    else :
+
+    else:
         defaultCase()
         time.sleep(3)
-        
 
     return True

@@ -7,6 +7,7 @@ from .settings import settings_dict
 
 mouse_range = 2
 
+
 def mouse_click(btn="left"):
     pyautogui.click(button=btn)
 
