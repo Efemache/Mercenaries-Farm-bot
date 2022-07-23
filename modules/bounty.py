@@ -78,7 +78,6 @@ def nextlvl():
     """Progress on the map (Boon, Portal, ...) to find the next battle"""
     time.sleep(3)
     retour = True
-    search = 0
 
     if not find_ellement(Button.play.filename, Action.screenshot):
 
@@ -134,45 +133,31 @@ def nextlvl():
             look_at_campfire_completed_tasks()
             time.sleep(3)
 
-        # we add this test because, maybe we are not in "Encounter Map" anymore
+        # we add this test because, maybe we are not on "Encounter Map" anymore
         # (like after the final boss)
-        elif search == 0:
-            if find_ellement(UIElement.view_party.filename, Action.screenshot):
-                while True:
-                    if settings_dict["preferfighter"]:
-                        search += 1
-                        coords = find_ellement(
-                            UIElement.fighter_battle.filename, Action.get_coords
-                        )
-                        if coords:
-                            x = coords[0]
-                            y = coords[1] + (windowMP()[3] // 10.8)
-                            move_mouse_and_click(windowMP(), x, y)
-                            search += 1
-                            break
-                    if settings_dict["prefercaster"]:
-                        search += 1
-                        coords = find_ellement(
-                            UIElement.caster_battle.filename, Action.get_coords
-                        )
-                        if coords:
-                            x = coords[0]
-                            y = coords[1] + (windowMP()[3] // 10.8)
-                            move_mouse_and_click(windowMP(), x, y)
-                            break
-                    if settings_dict["preferprotector"]:
-                        search += 1
-                        coords = find_ellement(
-                            UIElement.protector_battle.filename, Action.get_coords
-                        )
-                        if coords:
-                            x = coords[0]
-                            y = coords[1] + (windowMP()[3] // 10.8)
-                            move_mouse_and_click(windowMP(), x, y)
-                            break
-                    if search > 0:
-                        log.debug(f"Looked for preferred battles {search} times.")
-                        break
+        if find_ellement(UIElement.view_party.filename, Action.screenshot):
+            search_battle_list = []
+            battletypes = ["fighter", "protector", "caster"]
+            random.shuffle(battletypes)
+            battletypes.append("elite") 
+            for battletype in battletypes:
+                tag = f"{battletype}_battle"
+                coords = find_ellement(
+                    getattr(UIElement, tag).filename, Action.get_coords
+                )
+                if coords:
+                    battlepreference = f"prefer{battletype}"
+                    x = coords[0]
+                    y = coords[1] + (windowMP()[3] // 10.8)
+                    if settings_dict[battlepreference]:
+                        search_battle_list.insert(0, (x, y))
+                    else:
+                        search_battle_list.append((x, y))
+            if search_battle_list:
+                x, y = search_battle_list.pop(1)
+                move_mouse_and_click(windowMP(), x, y)
+                time.sleep(1)
+
         else:
             defaultCase()
 
@@ -180,7 +165,7 @@ def nextlvl():
 
 
 def searchForEncounter():
-    retour=True
+    retour = True
     if find_ellement(UIElement.view_party.filename, Action.screenshot):
         x, y = mouse_position(windowMP())
         log.debug(f"Mouse (x, y) : ({x}, {y})")
