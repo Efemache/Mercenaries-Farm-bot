@@ -26,7 +26,7 @@ class LogHSMercs:
 
         regexBoard = (
             ".+? tag=ZONE_POSITION "
-            ".+?entityName=(.+?) "
+            ".+?entityName=(.+?) +"
             "id=(.+?) "
             ".+?zonePos=(.) "
             "cardId=.+? "
