@@ -20,6 +20,9 @@ class LogHSMercs:
         self.myBoard = {}
         self.mercsId = {}
 
+        self.enemiesBoard = {}
+        self.enemiesId = {}
+
     def follow(self):
         # go to the end of the file
         self.logfile.seek(0, os.SEEK_END)
@@ -31,6 +34,15 @@ class LogHSMercs:
             ".+?zonePos=(.) "
             "cardId=.+? "
             "player=1\] .+? "
+            "dstPos=(.)"
+        )
+        regexEnemyBoard = (
+            ".+?entityName=(.+?) +"
+            "id=(.+?) "
+            ".+?zonePos=(.) "
+            "cardId=.+? "
+            "player=2\] .+? "
+            "dstZoneTag=PLAY "
             "dstPos=(.)"
         )
 
@@ -60,6 +72,24 @@ class LogHSMercs:
                 if dstpos != "0":
                     self.myBoard[dstpos] = mercId
 
+            elif "ZoneChangeList.ProcessChanges() - processing" in line and re.search(
+                regexEnemyBoard, line
+            ):
+                (enemy, enemyId, srcpos, dstpos) = re.findall(regexEnemyBoard, line)[0]
+                self.enemiesId[enemyId] = enemy
+                # srcpos = actual position.
+                # =0 if it hasn't any previous position
+                if (
+                    srcpos != "0"
+                    and srcpos in self.enemiesBoard
+                    and self.enemiesBoard[srcpos] == enemyId
+                ):
+                    self.enemiesBoard.pop(srcpos)
+
+                # dstpos = 0 if the card is going to GRAVEYARD
+                if dstpos != "0":
+                    self.enemiesBoard[dstpos] = enemyId
+
     def start(self):
         log.debug("Reading logfile: %s", self.logpath)
         self.logfile = open(self.logpath, "r")
@@ -85,9 +115,17 @@ class LogHSMercs:
     def cleanBoard(self):
         self.myBoard = {}
         self.mercsId = {}
+        self.enemiesBoard = {}
+        self.enemiesId = {}
 
-    def getBoard(self):
+    def getMyBoard(self):
         board = {}
         for key in self.myBoard.keys():
             board[key] = self.mercsId[self.myBoard[key]]
+        return board
+
+    def getEnemyBoard(self):
+        board = {}
+        for key in self.enemiesBoard.keys():
+            board[key] = self.enemiesId[self.enemiesBoard[key]]
         return board

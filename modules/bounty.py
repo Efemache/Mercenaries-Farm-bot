@@ -14,10 +14,11 @@ from .mouse_utils import (
 
 from .constants import UIElement, Button, Action
 from .image_utils import find_ellement
-from .settings import settings_dict, jposition, jthreshold
 from .game import waitForItOrPass, defaultCase
 from .encounter import selectCardsInHand
 from .campfire import look_at_campfire_completed_tasks
+from .log_board import LogHSMercs
+from .settings import settings_dict, jposition, jthreshold
 from .treasure import chooseTreasure
 
 import logging
@@ -265,15 +266,17 @@ def goToEncounter():
             # fix the problem with Hearthstone showing campfire just
             # after clicking on Play button
             while find_ellement(Button.play.filename, Action.move_and_click):
-                time.sleep(2)
-            waitForItOrPass(UIElement.campfire, 3)
-            if look_at_campfire_completed_tasks():
-                break
+                time.sleep(1)
+            # waitForItOrPass(UIElement.campfire, 3)
+            # if look_at_campfire_completed_tasks():
+            #    break
 
-            #            time.sleep(0.5)
+            zL = LogHSMercs(settings_dict["zonelog"])
+            zL.start()
             retour = (
-                selectCardsInHand()
+                selectCardsInHand(zL)
             )  # Start the battle : the bot choose the cards and fight against the enemy
+            zL.stop()
             log.info(f"goToEncounter - retour = {retour}")
             time.sleep(1)
             if retour == "win":

@@ -10,7 +10,7 @@ from .mouse_utils import move_mouse_and_click, move_mouse, mouse_click  # , mous
 from .image_utils import partscreen, find_ellement
 from .constants import UIElement, Button, Action
 from .game import countdown, waitForItOrPass
-from .log_board import LogHSMercs
+# from .log_board import LogHSMercs
 from .settings import settings_dict, mercslist, mercsAbilities, ability_order
 
 
@@ -405,7 +405,7 @@ def find_enemy(enemy_type):
     return enemy
 
 
-def battle():
+def battle(zoneLog=None):
     """Find the cards on the battlefield (yours and those of your opponents)
     and make them battle until one of yours die
     """
@@ -413,8 +413,8 @@ def battle():
     retour = True
 
     # init the reading of Hearthstone filelog to detect your board / mercenaries
-    zoneLog = LogHSMercs(settings_dict["zonelog"])
-    zoneLog.start()
+    # zoneLog = LogHSMercs(settings_dict["zonelog"])
+    # zoneLog.start()
 
     raund = 1
     while True:
@@ -456,8 +456,10 @@ def battle():
         ):  # or find_ellement(Button.startbattle1.filename, Action.screenshot):
 
             # looks for your Mercenaries on board thanks to log file
-            mercenaries = zoneLog.getBoard()
-            log.info(f"ROUND {raund} : your board {mercenaries}")
+            mercenaries = zoneLog.getMyBoard()
+            log.info(f"ROUND {raund} :  your board {mercenaries}")
+            enemies = zoneLog.getEnemyBoard()
+            log.info(f"ROUND {raund} : enemy board {enemies}")
 
             # click on neutral zone to avoid problem with screenshot
             # when you're looking for red/green/blue enemies
@@ -521,11 +523,10 @@ def battle():
             time.sleep(3)
             raund += 1
 
-    zoneLog.stop()
     return retour
 
 
-def selectCardsInHand():
+def selectCardsInHand(zL=None):
     """Select the cards to put on battlefield
     and then, start the 'battle' function
     Update : actually, the bot doesn't choose it anymore
@@ -561,7 +562,7 @@ def selectCardsInHand():
             move_mouse(windowMP(), x1, y1)
             move_mouse(windowMP(), x2, y2)
 
-        retour = battle()
+        retour = battle(zL)
         log.debug("[ SETH - END]")
 
     return retour
