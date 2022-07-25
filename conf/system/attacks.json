@@ -104,6 +104,11 @@
         "2": false,
         "3": true
     },
+    "Sir Finley": {
+        "1": true,
+        "2": "chooseone3",
+        "3": "friend"
+    },
     "Sneed": {
         "1": true,
         "2": false,
@@ -332,6 +337,11 @@
     "Blademaster Samuro": {
         "1": true,
         "2": true,
+        "3": false
+    },
+    "C’Thun": {
+        "1": true,
+        "2": false,
         "3": false
     },
     "Captain Galvangar": {
