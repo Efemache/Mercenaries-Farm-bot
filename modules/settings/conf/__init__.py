@@ -22,6 +22,7 @@ mercslist = _root_settings_dict["mercs.json"]
 mercsAbilities = _root_settings_dict["attacks.json"]
 ability_order = _root_settings_dict["combo.ini"]
 settings_dict = _root_settings_dict["settings.ini"]
+treasures_priority = _root_settings_dict["treasures.json"]
 
 __all__ = [
     "jthreshold",
@@ -30,4 +31,5 @@ __all__ = [
     "mercsAbilities",
     "ability_order",
     "settings_dict",
+    "treasures_priority",
 ]

@@ -21,6 +21,7 @@ config_files = [
     "settings.ini",
     "positions.json",
     "thresholds.json",
+    "treasures.json",
 ]
 
 

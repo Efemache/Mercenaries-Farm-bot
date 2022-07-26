@@ -41,7 +41,7 @@ def where():
     if find_ellement(Button.play.filename, Action.screenshot):
         time.sleep(3)
         goToEncounter()
-        #time.sleep(3)
+        # time.sleep(3)
 
     if find_ellement(UIElement.view_party.filename, Action.screenshot):
         nextlvl()
@@ -51,12 +51,13 @@ def where():
         look_at_campfire_completed_tasks()
         time.sleep(3)
 
-    if find_ellement(Button.num.filename, Action.screenshot):
-        selectCardsInHand()
-        
-    else :
+    # Note: feature disabled because of enemy board detection needing
+    # to start log scan before battle starter
+    # if find_ellement(Button.num.filename, Action.screenshot):
+    #     selectCardsInHand()
+
+    else:
         defaultCase()
         time.sleep(3)
-        
 
     return True

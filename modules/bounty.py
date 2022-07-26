@@ -1,3 +1,4 @@
+import sys
 import random
 import time
 
@@ -13,10 +14,12 @@ from .mouse_utils import (
 
 from .constants import UIElement, Button, Action
 from .image_utils import find_ellement
-from .settings import settings_dict, jposition, jthreshold
 from .game import waitForItOrPass, defaultCase
 from .encounter import selectCardsInHand
 from .campfire import look_at_campfire_completed_tasks
+from .log_board import LogHSMercs
+from .settings import settings_dict, jposition, jthreshold
+from .treasure import chooseTreasure
 
 import logging
 
@@ -42,9 +45,9 @@ def collect():
         move_mouse_and_click(windowMP(), windowMP()[2] / 1.8, windowMP()[3] / 1.3)
         move_mouse_and_click(windowMP(), windowMP()[2] / 1.9, windowMP()[3] / 1.3)
         time.sleep(5)
-        if find_ellement(Button.done_bonus.filename, Action.move_and_click):
-            time.sleep(5)
-            continue
+        # if find_ellement(Button.done_bonus.filename, Action.move_and_click):
+        #    time.sleep(5)
+        #    continue
         if find_ellement(Button.done.filename, Action.move_and_click):
             break
 
@@ -68,6 +71,7 @@ def quitBounty():
         while not find_ellement(Button.lockin.filename, Action.move_and_click):
             time.sleep(0.5)
         end = True
+        log.info("Quitting the bounty level before boss battle.")
     return end
 
 
@@ -99,7 +103,7 @@ def nextlvl():
             while find_ellement(UIElement.visitor.filename, Action.screenshot):
                 if settings_dict["stopatstranger"]:
                     log.info("Stopping after meeting Mysterious Stranger")
-                    exit(1)
+                    sys.exit()
 
                 temp = random.choice([3, 2, 1.7])
                 x = windowMP()[2] // temp
@@ -130,26 +134,32 @@ def nextlvl():
             look_at_campfire_completed_tasks()
             time.sleep(3)
 
-        # we add this test because, maybe we are not in "Encounter Map" anymore
+        # we add this test because, maybe we are not on "Encounter Map" anymore
         # (like after the final boss)
         elif find_ellement(UIElement.view_party.filename, Action.screenshot):
-            x, y = mouse_position(windowMP())
-            log.debug(f"Mouse (x, y) : ({x}, {y})")
-            if y >= (windowMP()[3] // 2.2 - mouse_range) and y <= (
-                windowMP()[3] // 2.2 + mouse_range
-            ):
-                x += windowMP()[2] // 25
-            else:
-                x = windowMP()[2] // 3.7
-
-            if x > windowMP()[2] // 1.5:
-                log.debug("Didnt find a battle. Try to go 'back'")
-                find_ellement(Button.back.filename, Action.move_and_click)
-                retour = False
-            else:
-                y = windowMP()[3] // 2.2
-                log.debug(f"move mouse to (x, y) : ({x}, {y})")
+            search_battle_list = []
+            battletypes = ["fighter", "protector", "caster"]
+            random.shuffle(battletypes)
+            battletypes.append("elite")
+            for battletype in battletypes:
+                tag = f"{battletype}_battle"
+                coords = find_ellement(
+                    getattr(UIElement, tag).filename, Action.get_coords
+                )
+                if coords:
+                    battlepreference = f"prefer{battletype}"
+                    x = coords[0]
+                    y = coords[1] + (windowMP()[3] // 10.8)
+                    if settings_dict[battlepreference]:
+                        search_battle_list.insert(0, (x, y))
+                    else:
+                        search_battle_list.append((x, y))
+            if search_battle_list:
+                x, y = search_battle_list.pop(0)
                 move_mouse_and_click(windowMP(), x, y)
+                time.sleep(2)
+            else:
+                searchForEncounter()
 
         else:
             defaultCase()
@@ -157,25 +167,27 @@ def nextlvl():
     return retour
 
 
-def chooseTreasure():
-    """used to choose a Treasure after a battle/fight
-    Note: should be updated to select "good" (passive?) treasure instead of a random one
-    """
-    temp = random.choice([2.3, 1.7, 1.4])
-    y = windowMP()[3] // 2
-    x = windowMP()[2] // temp
-    move_mouse_and_click(windowMP(), x, y)
-    time.sleep(0.5)
-    while True:
-        if find_ellement(Button.take.filename, Action.move_and_click):
-            time.sleep(1)
-            break
-        if find_ellement(Button.keep.filename, Action.move_and_click):
-            time.sleep(1)
-            break
-        if find_ellement(Button.replace.filename, Action.move_and_click):
-            time.sleep(1)
-            break
+def searchForEncounter():
+    retour = True
+    if find_ellement(UIElement.view_party.filename, Action.screenshot):
+        x, y = mouse_position(windowMP())
+        log.debug(f"Mouse (x, y) : ({x}, {y})")
+        if y >= (windowMP()[3] // 2.2 - mouse_range) and y <= (
+            windowMP()[3] // 2.2 + mouse_range
+        ):
+            x += windowMP()[2] // 25
+        else:
+            x = windowMP()[2] // 3.7
+
+        if x > windowMP()[2] // 1.5:
+            log.debug("Didnt find a battle. Try to go 'back'")
+            find_ellement(Button.back.filename, Action.move_and_click)
+            retour = False
+        else:
+            y = windowMP()[3] // 2.2
+            log.debug(f"move mouse to (x, y) : ({x}, {y})")
+            move_mouse_and_click(windowMP(), x, y)
+    return retour
 
 
 def travelpointSelection():
@@ -238,6 +250,12 @@ def goToEncounter():
     while not travelEnd:
 
         if find_ellement(Button.play.filename, Action.screenshot):
+            if settings_dict["stopatbossfight"] is True and find_ellement(
+                UIElement.boss.filename, Action.screenshot
+            ):
+                log.info("Stopping before Boos battle.")
+                sys.exit()
+
             if settings_dict["quitbeforebossfight"] is True and find_ellement(
                 UIElement.boss.filename, Action.screenshot
             ):
@@ -248,15 +266,17 @@ def goToEncounter():
             # fix the problem with Hearthstone showing campfire just
             # after clicking on Play button
             while find_ellement(Button.play.filename, Action.move_and_click):
-                time.sleep(2)
-            waitForItOrPass(UIElement.campfire, 3)
-            if look_at_campfire_completed_tasks():
-                break
+                time.sleep(1)
+            # waitForItOrPass(UIElement.campfire, 3)
+            # if look_at_campfire_completed_tasks():
+            #    break
 
-            #            time.sleep(0.5)
+            zL = LogHSMercs(settings_dict["zonelog"])
+            zL.start()
             retour = (
-                selectCardsInHand()
+                selectCardsInHand(zL)
             )  # Start the battle : the bot choose the cards and fight against the enemy
+            zL.stop()
             log.info(f"goToEncounter - retour = {retour}")
             time.sleep(1)
             if retour == "win":
