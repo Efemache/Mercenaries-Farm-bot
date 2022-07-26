@@ -82,7 +82,7 @@ If you have an issue with the bot, please, read the [FAQ](https://github.com/Efe
 ### Language & resolution supported
 |               |     English    |
 | :------------ | :-------------:|
-|(true) 1920x1080|        ✅      |
+|   1920x1080   |       ✅      |
 
 
 ### Support
@@ -92,17 +92,18 @@ If you have an issue with the bot, please, read the [FAQ](https://github.com/Efe
 |2. transition to Level/Bounty selection | ✓|
 |3. transition between encounters | ✓ |
 |4. prioritize the mysterious stranger  | ✓|
+|    * Cursed Treasure is not supported | x|
 |5. prioritize the spirit healer  | ✓|
 |6. put mercs on the board | ✓|
 |7. search for suitable opponents | ✓|
 |8. choose abilities :  | ✓|
-|    * for each mercenary (using configuration in conf/user/combo.ini) | ✓|
+|    * for each mercenary (using `combo.ini` files) | ✓|
 |    * or the first abilities by default (if no configuration exists) | ✓|
 |    * ⚠️ the bot can't point an ability to a specific mercenary  by name | x|
 |9. attack opponents (if ability requires it) | ✓|
 |10. choose a treasure after passing a level | ✓|
 |11. collect rewards for reaching the last level|  ✓|
-|12. claim packs and coins from completed tasks  | ✓|
+|12. claim packs, coins and equipments from completed tasks  | ✓|
 |13. repeat from 1 point | ✓|
 
 
