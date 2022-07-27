@@ -1,6 +1,9 @@
 import sys
 import time
 
+import os
+import pathlib
+
 from .image_utils import find_ellement
 from .constants import Button, Action
 
@@ -50,7 +53,22 @@ def selectGroup():
     log.info("selectGroup : entering")
     # threshold = 0.8
 
-    if find_ellement(Button.group_name.filename, Action.move_and_click):
+    # bad code but easily works
+    # need to change it later to have a better solution
+    ######### section to replace #########
+    group_name_custom = pathlib.PurePath(
+        "conf/user/", Button.group_name.filename
+    ).as_posix()
+
+    group_name = (
+        f"../../{group_name_custom}"
+        if os.path.exists(group_name_custom)
+        else Button.group_name.filename
+    )
+    ### end of the section to replace ###
+
+
+    if find_ellement(group_name, Action.move_and_click):
         find_ellement(Button.choose_team.filename, Action.move_and_click)
         move_mouse(windowMP(), windowMP()[2] / 1.5, windowMP()[3] / 2)
         waitForItOrPass(Button.lockin, 3)
