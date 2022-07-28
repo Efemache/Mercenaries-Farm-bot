@@ -31,6 +31,8 @@ def collect():
 
     # it's difficult to find every boxes with lib CV2 so,
     # we try to detect just one and then we click on all known positions
+    collectAttempts = 0
+
     while True:
         move_mouse_and_click(windowMP(), windowMP()[2] / 2.5, windowMP()[3] / 3.5)
         move_mouse_and_click(windowMP(), windowMP()[2] / 2, windowMP()[3] / 3.5)
@@ -48,7 +50,11 @@ def collect():
         # if find_ellement(Button.done_bonus.filename, Action.move_and_click):
         #    time.sleep(5)
         #    continue
+        collectAttempts += 1
         if find_ellement(Button.done.filename, Action.move_and_click):
+            break
+        if collectAttempts > 10:
+            log.info(f"Attempted to collect treasure {collectAttempts} times, attempting to recover.")
             break
 
     # move the mouse to avoid a bug where the it is over a card/hero (at the end)
