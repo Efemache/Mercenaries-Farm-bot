@@ -20,6 +20,7 @@ from .campfire import look_at_campfire_completed_tasks
 from .log_board import LogHSMercs
 from .settings import settings_dict, jposition, jthreshold
 from .treasure import chooseTreasure
+from .notification import send_notification
 
 import logging
 
@@ -102,6 +103,7 @@ def nextlvl():
             time.sleep(7)
             while find_ellement(UIElement.visitor.filename, Action.screenshot):
                 if settings_dict["stopatstranger"]:
+                    send_notification({"message": "Stopping after meeting Mysterious Stranger"})
                     log.info("Stopping after meeting Mysterious Stranger")
                     sys.exit()
 
@@ -253,6 +255,7 @@ def goToEncounter():
             if settings_dict["stopatbossfight"] is True and find_ellement(
                 UIElement.boss.filename, Action.screenshot
             ):
+                send_notification({"message": "Stopping before Boos battle."})
                 log.info("Stopping before Boos battle.")
                 sys.exit()
 
