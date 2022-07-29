@@ -2,7 +2,7 @@ import unittest
 from unittest.mock import patch
 from pathlib import Path
 
-from modules.settings.settings import (
+from modules.settings.conf.settings import (
     get_settings,
     copy_config_from_sample_if_not_exists,
 )
@@ -29,6 +29,7 @@ class TestSettings(unittest.TestCase):
             "stopatstranger": False,
             "waitforexp": 0,
             "zonelog": "C:/Test/Location/Hearthstone/Logs/Zone.log",
+            "notificationurl": "https://example.com",
         }
 
         self.assertEqual(actual_settings_dict, expected_settings_dict)
