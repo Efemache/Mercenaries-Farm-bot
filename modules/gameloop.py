@@ -1,7 +1,7 @@
 import time
 
-from .bounty import travelpointSelection, travelToLevel, goToEncounter, nextlvl
-from .encounter import selectCardsInHand
+from .bounty import travelToLevel, goToEncounter, nextlvl
+from .travelpoint import travelpointSelection
 from .constants import UIElement, Button, Action
 from .image_utils import find_ellement
 from .game import selectGroup, defaultCase
@@ -53,6 +53,7 @@ def where():
 
     # Note: feature disabled because of enemy board detection needing
     # to start log scan before battle starter
+    # Note: could work if log scan had something like a rewind scan
     # if find_ellement(Button.num.filename, Action.screenshot):
     #     selectCardsInHand()
 
