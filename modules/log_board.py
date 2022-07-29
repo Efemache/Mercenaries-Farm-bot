@@ -45,6 +45,15 @@ class LogHSMercs:
             "dstZoneTag=PLAY "
             "dstPos=(.)"
         )
+        regexEnemyBoardUpdate = (
+            ".+? tag=ZONE_POSITION "
+            ".+?entityName=(.+?) +"
+            "id=(.+?) "
+            ".+?zonePos=(.) "
+            "cardId=.+? "
+            "player=2\] .+? "
+            "dstPos=(.)"
+        )
 
         # start infinite loop to read log file
         while self.__running:
@@ -76,6 +85,25 @@ class LogHSMercs:
                 regexEnemyBoard, line
             ):
                 (enemy, enemyId, srcpos, dstpos) = re.findall(regexEnemyBoard, line)[0]
+                self.enemiesId[enemyId] = enemy
+                # srcpos = actual position.
+                # =0 if it hasn't any previous position
+                if (
+                    srcpos != "0"
+                    and srcpos in self.enemiesBoard
+                    and self.enemiesBoard[srcpos] == enemyId
+                ):
+                    self.enemiesBoard.pop(srcpos)
+
+                # dstpos = 0 if the card is going to GRAVEYARD
+                if dstpos != "0":
+                    self.enemiesBoard[dstpos] = enemyId
+            elif "ZoneChangeList.ProcessChanges() - processing" in line and re.search(
+                regexEnemyBoardUpdate, line
+            ):
+                (enemy, enemyId, srcpos, dstpos) = re.findall(
+                    regexEnemyBoardUpdate, line
+                )[0]
                 self.enemiesId[enemyId] = enemy
                 # srcpos = actual position.
                 # =0 if it hasn't any previous position

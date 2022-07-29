@@ -420,8 +420,8 @@ def battle(zoneLog=None):
     while True:
         move_mouse(
             windowMP(),
-            windowMP()[2] // 2.6,
-            windowMP()[3] // 1.09,
+            windowMP()[2] // 4,
+            windowMP()[3] // 2,
         )
 
         # we look for the (green) "ready" button because :
@@ -455,11 +455,12 @@ def battle(zoneLog=None):
             Button.fight.filename, Action.screenshot
         ):  # or find_ellement(Button.startbattle1.filename, Action.screenshot):
 
+            # looks for your enemies on board thanks to log file
+            enemies = zoneLog.getEnemyBoard()
+            log.info(f"Round {raund} : enemy board {enemies}")
             # looks for your Mercenaries on board thanks to log file
             mercenaries = zoneLog.getMyBoard()
-            log.info(f"ROUND {raund} :  your board {mercenaries}")
-            enemies = zoneLog.getEnemyBoard()
-            log.info(f"ROUND {raund} : enemy board {enemies}")
+            log.info(f"Round {raund} :  your board {mercenaries}")
 
             # click on neutral zone to avoid problem with screenshot
             # when you're looking for red/green/blue enemies
