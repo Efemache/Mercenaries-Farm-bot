@@ -13,6 +13,8 @@ import logging
 
 log = logging.getLogger(__name__)
 
+TREASURES_DIR = "treasures"
+
 
 def chooseTreasure():
     """used to choose a Treasure after a battle/fight
@@ -29,7 +31,7 @@ def chooseTreasure():
     while not treasures_queue.empty():
         next_treasure = treasures_queue.get()[1]
 
-        treasure = str(f"treasures/{next_treasure}.png")
+        treasure = str(f"{TREASURES_DIR}/{next_treasure}.png")
 
         if find_ellement(treasure, Action.move_and_click):
             time.sleep(1)
@@ -43,11 +45,9 @@ def chooseTreasure():
         time.sleep(1)
         # break
 
-    while True:
-        if find_ellement(Button.take.filename, Action.move_and_click):
-            break
-        if find_ellement(Button.keep.filename, Action.move_and_click):
-            break
-        if find_ellement(Button.replace.filename, Action.move_and_click):
-            break
+    while not (
+        find_ellement(Button.take.filename, Action.move_and_click)
+        or find_ellement(Button.keep.filename, Action.move_and_click)
+        or find_ellement(Button.replace.filename, Action.move_and_click)
+    ):
         time.sleep(1)
