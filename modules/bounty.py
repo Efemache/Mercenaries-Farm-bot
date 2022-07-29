@@ -199,7 +199,7 @@ def searchForEncounter():
 
 
 def travelpointSelection():
-    """Choose a Travel Point (The Barrens, Felwood, ...)
+    """Choose a Travel Point (Barrens, Felwood, ...)
     and the mode : Normal or Heroic
     """
 
@@ -212,7 +212,7 @@ def travelpointSelection():
 
         location = settings_dict["location"]
         tag = f"travelpoint.{location}.scroll"
-        if location == "The Barrens":
+        if location == "Barrens":
             find_ellement(
                 UIElement.Barrens.filename,
                 Action.move_and_click,

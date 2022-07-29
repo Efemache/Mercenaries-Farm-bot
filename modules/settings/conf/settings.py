@@ -39,7 +39,7 @@ def get_settings(settings_filename):
     Settings -
         0: MonitorResolution (1920x1080),
         1: level (20),
-        2: location (The Barrens),
+        2: location (Barrens),
         3: mode (Heroic),
         4: quitBeforeBossFight (True),
         5: stopAtStranger (True),
