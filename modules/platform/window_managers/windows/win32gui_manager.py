@@ -34,7 +34,8 @@ class WindowMgrWindowsWin32Gui(WindowMgr):
         return self._handle
 
     def get_window_geometry(self):
-        return win32gui.GetWindowRect(self._handle)
+        (left, top, right, bottom) = win32gui.GetWindowRect(self._handle)
+        return (left, top, right - left, bottom - top)
 
     def _find_window(self):
         self._handle = win32gui.FindWindow(None, HEARHTSTONE_WINDOW_NAME_WINDOWS)
