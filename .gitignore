@@ -2,6 +2,7 @@ files/1920x1080/part.png
 __pycache__/
 *.bck
 *.old
+*.swp
 backup/
 development/
 

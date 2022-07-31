@@ -66,8 +66,8 @@ def ability_target_friend(targettype, myMercs):
     """Return the X coord of one of our mercenaries"""
 
     cardSize = int(windowMP()[2] / 12)
-    firstOdd = int(windowMP()[0] + (windowMP()[2] / 3))
-    firstEven = int(windowMP()[0] + (windowMP()[2] / 3.6))
+    firstOdd = int(windowMP()[2] / 3)
+    firstEven = int (windowMP()[2] / 3.6)
     positionOdd = []  # positionOdd=[640,800,960,1120,1280]
     positionEven = []  # positionEven=[560,720,880,1040,1200,1360]
     for i in range(6):
@@ -292,8 +292,8 @@ def attacks(
     number = int(sorted(myMercs)[-1])
 
     cardSize = int(windowMP()[2] / 12)
-    firstOdd = int(windowMP()[0] + (windowMP()[2] / 3))
-    firstEven = int(windowMP()[0] + (windowMP()[2] / 3.6))
+    firstOdd = int(windowMP()[2] / 3)
+    firstEven = int(windowMP()[2] / 3.6)
     positionOdd = []  # positionOdd=[640,800,960,1120,1280]
     positionEven = []  # positionEven=[560,720,880,1040,1200,1360]
     for i in range(6):
@@ -399,8 +399,8 @@ def find_enemy(enemy_type):
     # find_element: Can be changed to return None or actual coords if exists
     if enemy:
         enemy = (
-            enemy[0] + windowMP()[0],
-            enemy[1] + windowMP()[1],
+            enemy[0],
+            enemy[1],
         )
     return enemy
 
@@ -420,8 +420,8 @@ def battle(zoneLog=None):
     while True:
         move_mouse(
             windowMP(),
-            windowMP()[2] // 2.6,
-            windowMP()[3] // 1.09,
+            windowMP()[2] // 4,
+            windowMP()[3] // 2,
         )
 
         # we look for the (green) "ready" button because :
@@ -455,11 +455,12 @@ def battle(zoneLog=None):
             Button.fight.filename, Action.screenshot
         ):  # or find_ellement(Button.startbattle1.filename, Action.screenshot):
 
+            # looks for your enemies on board thanks to log file
+            enemies = zoneLog.getEnemyBoard()
+            log.info(f"Round {raund} : enemy board {enemies}")
             # looks for your Mercenaries on board thanks to log file
             mercenaries = zoneLog.getMyBoard()
-            log.info(f"ROUND {raund} :  your board {mercenaries}")
-            enemies = zoneLog.getEnemyBoard()
-            log.info(f"ROUND {raund} : enemy board {enemies}")
+            log.info(f"Round {raund} :  your board {mercenaries}")
 
             # click on neutral zone to avoid problem with screenshot
             # when you're looking for red/green/blue enemies

@@ -8,7 +8,6 @@ from .mouse_utils import (
     move_mouse,
     mouse_position,
     mouse_click,
-    mouse_scroll,
     mouse_range,
 )
 
@@ -18,8 +17,9 @@ from .game import waitForItOrPass, defaultCase
 from .encounter import selectCardsInHand
 from .campfire import look_at_campfire_completed_tasks
 from .log_board import LogHSMercs
-from .settings import settings_dict, jposition, jthreshold
+from .settings import settings_dict, jthreshold
 from .treasure import chooseTreasure
+from .notification import send_notification
 
 import logging
 
@@ -31,6 +31,8 @@ def collect():
 
     # it's difficult to find every boxes with lib CV2 so,
     # we try to detect just one and then we click on all known positions
+    collectAttempts = 0
+
     while True:
         move_mouse_and_click(windowMP(), windowMP()[2] / 2.5, windowMP()[3] / 3.5)
         move_mouse_and_click(windowMP(), windowMP()[2] / 2, windowMP()[3] / 3.5)
@@ -48,7 +50,13 @@ def collect():
         # if find_ellement(Button.done_bonus.filename, Action.move_and_click):
         #    time.sleep(5)
         #    continue
+        collectAttempts += 1
         if find_ellement(Button.done.filename, Action.move_and_click):
+            break
+        if collectAttempts > 10:
+            log.info(
+                f"Attempted to collect treasure {collectAttempts} times, attempting to recover."
+            )
             break
 
     # move the mouse to avoid a bug where the it is over a card/hero (at the end)
@@ -102,6 +110,9 @@ def nextlvl():
             time.sleep(7)
             while find_ellement(UIElement.visitor.filename, Action.screenshot):
                 if settings_dict["stopatstranger"]:
+                    send_notification(
+                        {"message": "Stopping after meeting Mysterious Stranger"}
+                    )
                     log.info("Stopping after meeting Mysterious Stranger")
                     sys.exit()
 
@@ -190,54 +201,6 @@ def searchForEncounter():
     return retour
 
 
-def travelpointSelection():
-    """Choose a Travel Point (The Barrens, Felwood, ...)
-    and the mode : Normal or Heroic
-    """
-
-    if find_ellement(UIElement.travelpoint.filename, Action.screenshot):
-
-        move_mouse(windowMP(), windowMP()[2] // 1.5, windowMP()[3] // 2)
-
-        mouse_scroll(jposition["travelpoint.scroll.top"])
-        time.sleep(0.5)
-
-        location = settings_dict["location"]
-        tag = f"travelpoint.{location}.scroll"
-        if location == "The Barrens":
-            find_ellement(
-                UIElement.Barrens.filename,
-                Action.move_and_click,
-                jthreshold["travelpoints"],
-            )
-
-        else:
-            try:
-                mouse_scroll(jposition[tag])
-                move_mouse(windowMP(), windowMP()[2] // 3, windowMP()[3] // 2)
-                time.sleep(0.5)
-                find_ellement(
-                    getattr(UIElement, location).filename,
-                    Action.move_and_click,
-                    jthreshold["travelpoints"],
-                )
-            except Exception:
-                log.error(f"Travel Point unknown : {location}")
-
-        move_mouse(windowMP(), windowMP()[2] // 2, windowMP()[3] // 2)
-        time.sleep(0.5)
-
-        if settings_dict["mode"] == "Normal":
-            find_ellement(UIElement.normal.filename, Action.move_and_click)
-        elif settings_dict["mode"] == "Heroic":
-            find_ellement(UIElement.heroic.filename, Action.move_and_click)
-        else:
-            log.error("Settings (for Heroic/Normal) unrecognized.")
-
-    waitForItOrPass(Button.choose_travel, 2)
-    find_ellement(Button.choose_travel.filename, Action.move_and_click)
-
-
 def goToEncounter():
     """
     Start new fight,
@@ -253,6 +216,7 @@ def goToEncounter():
             if settings_dict["stopatbossfight"] is True and find_ellement(
                 UIElement.boss.filename, Action.screenshot
             ):
+                send_notification({"message": "Stopping before Boos battle."})
                 log.info("Stopping before Boos battle.")
                 sys.exit()
 
@@ -273,8 +237,8 @@ def goToEncounter():
 
             zL = LogHSMercs(settings_dict["zonelog"])
             zL.start()
-            retour = (
-                selectCardsInHand(zL)
+            retour = selectCardsInHand(
+                zL
             )  # Start the battle : the bot choose the cards and fight against the enemy
             zL.stop()
             log.info(f"goToEncounter - retour = {retour}")
