@@ -1,7 +1,9 @@
+# Files directory
 files/
 !files/1920x1080
+files/1920x1080/part.png
 !files/gui
-!files/Images_LICENCE
+!files/Images_LICENSE
 
 # Cache
 __pycache__/
