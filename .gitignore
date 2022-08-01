@@ -1,9 +1,16 @@
-files/1920x1080/part.png
+files/
+!files/1920x1080
+!files/gui
+!files/Images_LICENCE
+
+# Cache
 __pycache__/
 *.bck
 *.old
 *.swp
 backup/
+
+# Development
 development/
 
 # IDE Settings
