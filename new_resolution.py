@@ -1,7 +1,7 @@
-import os
 import cv2
 
 from modules.settings import settings_dict
+from modules.file_utils import copy_dir_and_func_files
 
 BASEDIR = "files"
 orig_resolution = "1920x1080"
@@ -19,23 +19,6 @@ def resize_image(srcfile, dstfile, params=[]):
     # print(f"resize: {imgfile} -> {dst}/{name}")
     imgresized = cv2.resize(img, (width, height), interpolation=cv2.INTER_CUBIC)
     cv2.imwrite(dstfile, imgresized)
-
-
-def copy_dir_and_func_files(rootpath, srcdir, dstdir, ext, func, func_params):
-    src = f"{rootpath}/{srcdir}"
-    dst = f"{rootpath}/{dstdir}"
-    os.path.exists(dst) or os.mkdir(dst)
-
-    for name in os.listdir(src):
-        if os.path.isdir(f"{src}/{name}"):
-            print(f"Processing directory: {dst}/{name}... wait")
-            copy_dir_and_func_files(
-                rootpath, f"{srcdir}/{name}", f"{dstdir}/{name}", ext, func, func_params
-            )
-        else:
-            extfile = f"{src}/{name}"
-            if extfile.endswith(ext):
-                func(extfile, f"{dst}/{name}", func_params)
 
 
 new_resolution = settings_dict["monitor resolution"]
