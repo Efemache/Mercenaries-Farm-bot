@@ -52,6 +52,9 @@ def collect():
         #    continue
         collectAttempts += 1
         if find_ellement(Button.done.filename, Action.move_and_click):
+            time.sleep(2)
+            log.info(f"Clicking again if done button was not clicked before.")
+            find_ellement(Button.done.filename, Action.move_and_click)
             break
         if collectAttempts > 10:
             log.info(
