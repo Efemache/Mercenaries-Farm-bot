@@ -19,9 +19,10 @@ from .campfire import look_at_campfire_completed_tasks
 from .log_board import LogHSMercs
 from .settings import settings_dict, jthreshold
 from .treasure import chooseTreasure
-from .notification import send_notification
+from .notification import send_notification, send_slack_notification
 
 import logging
+import json
 
 log = logging.getLogger(__name__)
 
@@ -57,6 +58,8 @@ def collect():
             find_ellement(Button.done.filename, Action.move_and_click)
             break
         if collectAttempts > 10:
+            send_slack_notification(json.dumps(
+                {"text": f"@channel Attempted to collect treasure {collectAttempts} times, attempting to recover."}))
             log.info(
                 f"Attempted to collect treasure {collectAttempts} times, attempting to recover."
             )
@@ -113,9 +116,8 @@ def nextlvl():
             time.sleep(7)
             while find_ellement(UIElement.visitor.filename, Action.screenshot):
                 if settings_dict["stopatstranger"]:
-                    send_notification(
-                        {"message": "Stopping after meeting Mysterious Stranger"}
-                    )
+                    send_notification({"message": "Stopping after meeting Mysterious Stranger"})
+                    send_slack_notification(json.dumps({"text": "@channel Stopping after meeting Mysterious Stranger"}))
                     log.info("Stopping after meeting Mysterious Stranger")
                     sys.exit()
 
@@ -219,8 +221,9 @@ def goToEncounter():
             if settings_dict["stopatbossfight"] is True and find_ellement(
                 UIElement.boss.filename, Action.screenshot
             ):
-                send_notification({"message": "Stopping before Boos battle."})
-                log.info("Stopping before Boos battle.")
+                send_notification({"message": "Stopping before Boss battle."})
+                send_slack_notification(json.dumps({"text": "@channel Stopping before Boss battle."}))
+                log.info("Stopping before Boss battle.")
                 sys.exit()
 
             if settings_dict["quitbeforebossfight"] is True and find_ellement(
@@ -270,6 +273,8 @@ def goToEncounter():
                     if find_ellement(
                         UIElement.reward_chest.filename, Action.screenshot
                     ):
+                        send_notification({"message": "Boss defeated. Time for REWARDS !!!"})
+                        send_slack_notification(json.dumps({"text": "Boss defeated. Time for REWARDS !!!"}))
                         log.info(
                             "goToEncounter : " "Boss defeated. Time for REWARDS !!!"
                         )
@@ -278,6 +283,8 @@ def goToEncounter():
                         break
             elif retour == "loose":
                 travelEnd = True
+                send_notification({"message": "goToEncounter : Battle lost"})
+                send_slack_notification(json.dumps({"text": "goToEncounter : Battle lost"}))
                 log.info("goToEncounter : Battle lost")
             else:
                 travelEnd = True
@@ -309,6 +316,8 @@ def travelToLevel(page="next"):
     ):
         waitForItOrPass(Button.choose_level, 6)
         find_ellement(Button.choose_level.filename, Action.move_and_click)
+        send_notification({"message": f"Starting {settings_dict['location']} bounty."})
+        send_slack_notification(json.dumps({"text": f"Starting {settings_dict['location']} bounty."}))
         retour = True
     elif page == "next":
         if find_ellement(Button.arrow_next.filename, Action.move_and_click):
