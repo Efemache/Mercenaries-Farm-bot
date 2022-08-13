@@ -1,8 +1,8 @@
 import re
 import time
 import random
-
 import logging
+from typing import List
 
 from .platform import windowMP
 from .mouse_utils import move_mouse_and_click, move_mouse, mouse_click  # , mouse_scroll
@@ -16,6 +16,14 @@ from .settings import settings_dict, mercslist, mercsAbilities, ability_order
 
 log = logging.getLogger(__name__)
 
+class Enemies:
+    def __init__(self, red, green, blue, noclass, noclass2, mol):
+        self.red = red
+        self.green = green
+        self.blue = blue
+        self.noclass = noclass
+        self.noclass2 = noclass2
+        self.mol = mol
 
 def select_enemy_to_attack(index):
     """Used to move the mouse over an enemy to attack it
@@ -62,7 +70,28 @@ def select_random_enemy_to_attack(enemies=None):
     mouse_click("right")
 
 
-def ability_target_friend(targettype, myMercs):
+def priorityMercByType(myMercs, targettype) -> List[int]:
+    """
+    return merc position list prioritize by the targetType comes first,
+        non target type after and minion comes last
+    """
+    mercs_pos = []
+    # add targettype mercs first
+    for i in myMercs:
+        if myMercs[i] in mercslist:
+            if mercslist[myMercs[i]]["type"] == targettype:
+                mercs_pos.append(int(i))
+    # add non targettype mercs to the end of the list 
+    for i in myMercs:
+        if myMercs[i] in mercslist:
+            mercs_pos.append(int(i))
+    # add friendly minion
+    for i in myMercs:            
+        if targettype == "minion":
+            mercs_pos.append(int(i))
+    return mercs_pos
+
+def ability_target_friend(targettype, myMercs, enemies: Enemies):
     """Return the X coord of one of our mercenaries"""
 
     cardSize = int(windowMP()[2] / 12)
@@ -77,7 +106,18 @@ def ability_target_friend(targettype, myMercs):
 
     number = int(sorted(myMercs)[-1])
     if targettype == "friend":
-        position = random.randint(1, number)
+        blueEnemiesLen, greenEnemiesLen, redEnemiesLen = len(enemies.blue), len(enemies.green), len(enemies.red)
+        if blueEnemiesLen >= greenEnemiesLen and blueEnemiesLen >= redEnemiesLen:
+             # enemies have blue the most so we buff red merc first
+            position = priorityMercByType(myMercs, "Protector")[0]
+        elif greenEnemiesLen >= blueEnemiesLen and greenEnemiesLen >= redEnemiesLen:
+             # enemies have green the most so we buff blue merc first
+            position = priorityMercByType(myMercs, "Caster")[0]
+        elif redEnemiesLen >= greenEnemiesLen and redEnemiesLen >= blueEnemiesLen:
+            # enemies have red the most so we buff green merc first
+            position = priorityMercByType(myMercs, "Fighter")[0]
+        else:
+            position = random.randint(1, number)
     else:
         position = 1
         for i in myMercs:
@@ -199,7 +239,7 @@ def didnt_find_a_name_for_this_one(name, minionSection, turn, defaultAbility=0):
     return abilityConfig
 
 
-def select_ability(localhero, myBoard):
+def select_ability(localhero, myBoard, enemies: Enemies):
     """Select an ability for a mercenary.
         Depend on what is available and wich Round (battle)
     Click only on the ability (doesnt move to an enemy)
@@ -240,20 +280,21 @@ def select_ability(localhero, myBoard):
                         ability_target_friend(
                             mercsAbilities[localhero][str(ability)].split(":")[1],
                             myBoard,
+                            enemies,
                         ),
                         windowMP()[3] / 1.5,
                     )
                 else:
                     move_mouse_and_click(
                         windowMP(),
-                        ability_target_friend("friend", myBoard),
+                        ability_target_friend("friend", myBoard, enemies),
                         windowMP()[3] / 1.5,
                     )
             # elif mercsAbilities[localhero][str(ability)] == "friend:Dragon":
             #     time.sleep(0.2)
             #     move_mouse_and_click(
             #         windowMP(),
-            #         ability_target_friend("friend:Dragon", myBoard),
+            #         ability_target_friend("friend:Dragon", myBoard, enemies),
             #         windowMP()[3] / 1.5,
             #     )
     else:
@@ -272,12 +313,7 @@ def attacks(
     mercName,
     # number,
     myMercs,
-    enemyred,
-    enemygreen,
-    enemyblue,
-    enemynoclass,
-    enemynoclass2,
-    mol,
+    enemies: Enemies,
 ):
     """
     Function to attack an enemy (red, green or blue ideally)
@@ -319,39 +355,38 @@ def attacks(
     if mercName in mercslist:
         if (
             mercslist[mercName]["type"] == "Protector"
-            and select_ability(mercName, myMercs)
-            and not select_enemy_to_attack(enemygreen)
-            and not select_enemy_to_attack(mol)
-            and not select_enemy_to_attack(enemynoclass)
-            and not select_enemy_to_attack(enemynoclass2)
+            and select_ability(mercName, myMercs, enemies)
+            and not select_enemy_to_attack(enemies.green)
+            and not select_enemy_to_attack(enemies.mol)
+            and not select_enemy_to_attack(enemies.noclass)
+            and not select_enemy_to_attack(enemies.noclass2)
         ):
-            select_random_enemy_to_attack([enemyred, enemyblue])
+            select_random_enemy_to_attack([enemies.red, enemies.blue])
         elif (
             mercslist[mercName]["type"] == "Fighter"
-            and select_ability(mercName, myMercs)
-            and not select_enemy_to_attack(enemyblue)
-            and not select_enemy_to_attack(mol)
-            and not select_enemy_to_attack(enemynoclass)
-            and not select_enemy_to_attack(enemynoclass2)
+            and select_ability(mercName, myMercs, enemies)
+            and not select_enemy_to_attack(enemies.blue)
+            and not select_enemy_to_attack(enemies.mol)
+            and not select_enemy_to_attack(enemies.noclass)
+            and not select_enemy_to_attack(enemies.noclass2)
         ):
-            select_random_enemy_to_attack([enemyred, enemygreen])
+            select_random_enemy_to_attack([enemies.red, enemies.green])
         elif (
             mercslist[mercName]["type"] == "Caster"
-            and select_ability(mercName, myMercs)
-            and not select_enemy_to_attack(enemyred)
-            and not select_enemy_to_attack(mol)
-            and not select_enemy_to_attack(enemynoclass)
-            and not select_enemy_to_attack(enemynoclass2)
+            and select_ability(mercName, myMercs, enemies)
+            and not select_enemy_to_attack(enemies.red)
+            and not select_enemy_to_attack(enemies.mol)
+            and not select_enemy_to_attack(enemies.noclass)
+            and not select_enemy_to_attack(enemies.noclass2)
         ):
-            select_random_enemy_to_attack([enemygreen, enemyblue])
-    elif select_ability(mercName, myMercs):
+            select_random_enemy_to_attack([enemies.green, enemies.blue])
+    elif select_ability(mercName, myMercs, enemies):
         select_random_enemy_to_attack(
-            [enemyred, enemygreen, enemyblue, enemynoclass, enemynoclass2]
+            [enemies.red, enemies.green, enemies.blue, enemies.noclass, enemies.noclass2, enemies.mol]
         )
 
-
 # Look for enemies
-def find_enemies():
+def find_enemies() -> Enemies:
     enemyred = find_red_enemy()
     enemygreen = find_green_enemy()
     enemyblue = find_blue_enemy()
@@ -367,7 +402,7 @@ def find_enemies():
         f" - noclass2 {enemynoclass2}"
         f" - mol {enemymol}"
     )
-    return enemyred, enemygreen, enemyblue, enemynoclass, enemynoclass2, enemymol
+    return Enemies(enemyred, enemygreen, enemyblue, enemynoclass, enemynoclass2, enemymol)
 
 
 def find_red_enemy():
@@ -480,14 +515,7 @@ def battle(zoneLog=None):
                 scale_size=scale_size,
             )
 
-            (
-                enemyred,
-                enemygreen,
-                enemyblue,
-                enemynoclass,
-                enemynoclass2,
-                mol,
-            ) = find_enemies()
+            enemies = find_enemies()
 
             # Go (mouse) to "central zone" and click on an empty space
             # move_mouse_and_click(windowMP(), windowMP()[2] // 2, windowMP()[3] // 1.2)
@@ -504,12 +532,7 @@ def battle(zoneLog=None):
                     mercenaries[i],
                     # int(sorted(mercenaries)[-1]),
                     mercenaries,
-                    enemyred,
-                    enemygreen,
-                    enemyblue,
-                    enemynoclass,
-                    enemynoclass2,
-                    mol,
+                    enemies,
                 )
                 # in rare case, the bot detects an enemy ("noclass" most of the
                 #   times) outside of the battlezone.
