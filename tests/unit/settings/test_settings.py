@@ -23,7 +23,7 @@ class TestSettings(unittest.TestCase):
             "location": "The Barrens",
             "mode": "Heroic",
             "monitor": 1,
-            "monitor resolution": "1920x1080",
+            "resolution": "1920x1080",
             "mousespeed": 0.3,
             "quitbeforebossfight": False,
             "stopatstranger": False,

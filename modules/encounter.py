@@ -7,7 +7,7 @@ import logging
 from .platform import windowMP
 from .mouse_utils import move_mouse_and_click, move_mouse, mouse_click  # , mouse_scroll
 
-from .image_utils import partscreen, find_ellement
+from .image_utils import partscreen, find_ellement, get_resolution
 from .constants import UIElement, Button, Action
 from .game import countdown, waitForItOrPass
 # from .log_board import LogHSMercs
@@ -175,11 +175,13 @@ def didnt_find_a_name_for_this_one(name, minionSection, turn, defaultAbility=0):
             f"abilities Y : {abilitiesPositionY} |"
             f" abilities X : {abilitiesPositionX}"
         )
+        _, _, _, scale_size = get_resolution()
         partscreen(
             int(abilitiesWidth),
             int(abilitiesHeigth),
             int(windowMP()[1] + abilitiesPositionY),
             int(windowMP()[0] + abilitiesPositionX[0]),
+            scale_size=scale_size,
         )
         if (
             find_ellement(UIElement.hourglass.filename, Action.get_coords_part_screen)
@@ -469,7 +471,14 @@ def battle(zoneLog=None):
             time.sleep(0.5)
 
             # tmp = int(windowMP()[3] / 2)
-            partscreen(windowMP()[2], windowMP()[3] // 2, windowMP()[1], windowMP()[0])
+            _, _, _, scale_size = get_resolution()
+            partscreen(
+                windowMP()[2],
+                windowMP()[3] // 2,
+                windowMP()[1],
+                windowMP()[0],
+                scale_size=scale_size,
+            )
 
             (
                 enemyred,

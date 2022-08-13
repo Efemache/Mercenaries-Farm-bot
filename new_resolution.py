@@ -21,11 +21,12 @@ def resize_image(srcfile, dstfile, params=[]):
     cv2.imwrite(dstfile, imgresized)
 
 
-new_resolution = settings_dict["monitor resolution"]
+new_resolution = settings_dict["resolution"]
 
 ox, oy = orig_resolution.split("x")
 nx, ny = new_resolution.split("x")
-if int(ox) / int(oy) == int(nx) / int(ny) and orig_resolution != new_resolution:
+
+if round(int(ox) / int(oy), 2) == round(int(nx) / int(ny), 2) and orig_resolution != new_resolution:
     copy_dir_and_func_files(
         BASEDIR,
         orig_resolution,
