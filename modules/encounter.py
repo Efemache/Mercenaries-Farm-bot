@@ -81,12 +81,14 @@ def priorityMercByType(myMercs, targettype) -> List[int]:
         if myMercs[i] in mercslist:
             if mercslist[myMercs[i]]["type"] == targettype:
                 mercs_pos.append(int(i))
+    if mercs_pos: return mercs_pos
     # add non targettype mercs to the end of the list 
     for i in myMercs:
         if myMercs[i] in mercslist:
             mercs_pos.append(int(i))
+    if mercs_pos: return mercs_pos
     # add friendly minion
-    for i in myMercs:            
+    for i in myMercs:
         if targettype == "minion":
             mercs_pos.append(int(i))
     return mercs_pos
@@ -109,13 +111,13 @@ def ability_target_friend(targettype, myMercs, enemies: Enemies):
         # TODO get multiple enemies per type for priority by weakness of the most type of enemy
         if enemies.blue:
              # enemies have blue so we buff red merc first
-            position = priorityMercByType(myMercs, "Protector")[0]
+            position = random.choice(priorityMercByType(myMercs, "Protector"))
         elif enemies.green:
              # enemies have green so we buff blue merc first
-            position = priorityMercByType(myMercs, "Caster")[0]
+            position = random.choice(priorityMercByType(myMercs, "Caster"))
         elif enemies.red:
             # enemies have red so we buff green merc first
-            position = priorityMercByType(myMercs, "Fighter")[0]
+            position = random.choice(priorityMercByType(myMercs, "Fighter"))
         else:
             position = random.randint(1, number)
     else:
