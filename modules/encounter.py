@@ -106,15 +106,15 @@ def ability_target_friend(targettype, myMercs, enemies: Enemies):
 
     number = int(sorted(myMercs)[-1])
     if targettype == "friend":
-        blueEnemiesLen, greenEnemiesLen, redEnemiesLen = len(enemies.blue), len(enemies.green), len(enemies.red)
-        if blueEnemiesLen >= greenEnemiesLen and blueEnemiesLen >= redEnemiesLen:
-             # enemies have blue the most so we buff red merc first
+        # TODO get multiple enemies per type for priority by weakness of the most type of enemy
+        if enemies.blue:
+             # enemies have blue so we buff red merc first
             position = priorityMercByType(myMercs, "Protector")[0]
-        elif greenEnemiesLen >= blueEnemiesLen and greenEnemiesLen >= redEnemiesLen:
-             # enemies have green the most so we buff blue merc first
+        elif enemies.green:
+             # enemies have green so we buff blue merc first
             position = priorityMercByType(myMercs, "Caster")[0]
-        elif redEnemiesLen >= greenEnemiesLen and redEnemiesLen >= blueEnemiesLen:
-            # enemies have red the most so we buff green merc first
+        elif enemies.red:
+            # enemies have red so we buff green merc first
             position = priorityMercByType(myMercs, "Fighter")[0]
         else:
             position = random.randint(1, number)
