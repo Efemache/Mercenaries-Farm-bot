@@ -21,7 +21,7 @@ def resize_image(srcfile, dstfile, params=[]):
     cv2.imwrite(dstfile, imgresized)
 
 
-new_resolution = settings_dict["monitor resolution"]
+new_resolution = settings_dict["resolution"]
 
 ox, oy = orig_resolution.split("x")
 nx, ny = new_resolution.split("x")
