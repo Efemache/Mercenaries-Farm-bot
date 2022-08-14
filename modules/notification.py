@@ -8,7 +8,7 @@ log = logging.getLogger(__name__)
 
 def send_notification(message: dict):
     """Send notification message to a webhook url from `notificationURL` config."""
-    if not settings_dict['notificationurl']:
+    if 'notificationurl' not in settings_dict or not settings_dict['notificationurl']:
         return
     url = settings_dict['notificationurl']
     try:
@@ -26,7 +26,7 @@ def send_notification(message: dict):
 
 def send_slack_notification(message):
     """Send notification message to a webhook url from `notificationURL` config."""
-    if not settings_dict['slacknotificationurl']:
+    if 'slacknotificationurl' not in settings_dict or not settings_dict['slacknotificationurl']:
         return
     url = settings_dict['slacknotificationurl']
     headers = {'content-type': 'application/json --data'}
