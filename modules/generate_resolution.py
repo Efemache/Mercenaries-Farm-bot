@@ -29,12 +29,18 @@ def generate_temp_resolution():
     new_resolution, _, _, _ = get_resolution()
 
     # clear tmp folder
-    os.path.exists(TEMP_DIR) and os.remove(TEMP_DIR)
+    if os.path.exists(TEMP_DIR):
+        shutil.rmtree(TEMP_DIR, ignore_errors=True)
 
+    print(f"generate temp resolution: {new_resolution}")
+
+    os.mkdir(TEMP_DIR)
+    os.chmod(TEMP_DIR, 0o666)
+    
     if orig_resolution == new_resolution:
-        shutil.copytree(FILES_DIR, TEMP_DIR)
+        shutil.copytree(FILES_DIR, TEMP_DIR, dirs_exist_ok=True)
         return
-
+    
     copy_dir_and_func_files(
         f"{FILES_DIR}/{orig_resolution}",
         f"{TEMP_DIR}/{new_resolution}",
