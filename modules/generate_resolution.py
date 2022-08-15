@@ -17,7 +17,7 @@ def resize_image(srcfile, dstfile, params=[]):
     new_resolution_w = int(params[1].split("x")[0])
 
     img = cv2.imread(srcfile, cv2.IMREAD_UNCHANGED)
-    scale_size = orig_resolution_w / new_resolution_w
+    scale_size = new_resolution_w / orig_resolution_w
     new_w = int(img.shape[1] * scale_size)
     new_h = int(img.shape[0] * scale_size)
 
