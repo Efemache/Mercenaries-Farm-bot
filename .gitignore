@@ -4,6 +4,7 @@ files/
 files/1920x1080/part.png
 !files/gui
 !files/Images_LICENSE
+tmp/
 
 # Cache
 __pycache__/

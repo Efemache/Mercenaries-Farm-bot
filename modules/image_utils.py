@@ -145,7 +145,7 @@ def find_element_from_file(
 
     img = cv2.cvtColor(partImg, cv2.COLOR_BGR2GRAY)
 
-    template = get_gray_image(f"files/{resolution}/{file}")
+    template = get_gray_image(f"tmp/{resolution}/{file}")
 
     click_coords = find_element_center_on_screen(img, template, threshold, scale_size)
 
@@ -171,7 +171,7 @@ def partscreen(x, y, top, left, debug_mode=False, resolution=None, resize_width=
         sct_img = sct.grab(monitor)
 
         if debug_mode:
-            output_file = f"files/{ resolution}/part.png"
+            output_file = f"tmp/{resolution}/part.png"
             mss.tools.to_png(sct_img.rgb, sct_img.size, output=output_file)
 
         partImg = np.array(sct_img)
