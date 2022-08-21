@@ -5,8 +5,8 @@ import os
 import pathlib
 
 from .image_utils import find_ellement
-from .constants import Button, Action
-
+from .constants import Button, Action, UIElement
+from .settings import jposition
 from .mouse_utils import move_mouse, move_mouse_and_click, mouse_position
 from .platform import windowMP
 
@@ -82,10 +82,11 @@ def selectGroup():
 def defaultCase():
     """Clicking on the right edge of the screen to click away popups"""
     """Saving x,y to move back into previous position"""
-    x, y = mouse_position(windowMP())
-    log.debug("Nothing found")
-    move_mouse_and_click(windowMP(), windowMP()[2] / 1.05, windowMP()[3] / 2)
-    time.sleep(0.1)
-    move_mouse(windowMP(), x, y)
+    if find_ellement(UIElement.quests.filename, Action.screenshot):
+        x, y = mouse_position(windowMP())
+        log.info("Trying to skip quests screen.")
+        mx = jposition["mouse.neutral.x"]
+        my = jposition["mouse.neutral.y"]
+        move_mouse_and_click(windowMP(), windowMP()[2] / mx, windowMP()[3] / my)
+        move_mouse(windowMP(), x, y)
 
-    return
