@@ -15,12 +15,6 @@ import logging
 
 log = logging.getLogger(__name__)
 
-default_rect = (0, 69, 1920, 1011)
-# default_rect = (-8, -8, 1936, 1056) => 1936 - (-8) = 1944 pixel ... (?)
-
-default_width = default_rect[2] - default_rect[0]
-default_height = default_rect[3] - default_rect[1]
-
 def get_resolution() -> tuple[str, int, int, float]:
     """
     Get the resolution of the screen
@@ -43,7 +37,7 @@ def resize(img, width, height):
     """resize an image"""
     return cv2.resize(img, (width, height), interpolation=cv2.INTER_CUBIC)
 
-def get_gray_image(file, width=default_width, height=default_height):
+def get_gray_image(file):
     """load an OpenCV version of an image in memory and/or return it"""
     if not hasattr(get_gray_image, "imagesInMemory"):
         get_gray_image.imagesInMemory = {}
