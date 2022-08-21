@@ -8,6 +8,8 @@ orig_resolution = "1920x1080"
 
 
 def resize_image(srcfile, dstfile, params=[]):
+    """resize image from source to destination
+    """
     resolo = params[0]
     resold = params[1]
 
@@ -17,6 +19,8 @@ def resize_image(srcfile, dstfile, params=[]):
     height = int(img.shape[0] * scale_percent)
 
     # print(f"resize: {imgfile} -> {dst}/{name}")
+
+    # INTER_AREA INTER_CUBIC INTER_LANCZOS4 INTER_LINEAR INTER_NEAREST
     imgresized = cv2.resize(img, (width, height), interpolation=cv2.INTER_CUBIC)
     cv2.imwrite(dstfile, imgresized)
 
