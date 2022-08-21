@@ -51,6 +51,7 @@ class UIElement(ImageFragment):
     noclass2 = "noclass2"
     normal = "normal"
     protector_battle = "protector_battle"
+    quests = "quests"
     red = "red"
     replace_grey = "take_grey"
     reward_chest = "reward_chest"
