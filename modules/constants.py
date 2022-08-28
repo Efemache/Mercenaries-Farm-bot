@@ -40,6 +40,7 @@ class UIElement(ImageFragment):
     campfire = "campfire"
     caster_battle = "caster_battle"
     elite_battle = "elite_battle"
+    encounter_card = "encounter_card"
     free_battle = "free_battle"
     fighter_battle = "fighter_battle"
     green = "green"

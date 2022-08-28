@@ -82,7 +82,7 @@ def selectGroup():
 def defaultCase():
     """Clicking on the right edge of the screen to click away popups"""
     """Saving x,y to move back into previous position"""
-    if find_ellement(UIElement.quests.filename, Action.screenshot):
+    if find_ellement(UIElement.quests.filename, Action.screenshot) or find_ellement(UIElement.encounter_card.filename, Action.screenshot):
         x, y = mouse_position(windowMP())
         log.info("Trying to skip quests screen.")
         mx = jposition["mouse.neutral.x"]
