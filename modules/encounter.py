@@ -267,6 +267,7 @@ def select_ability(localhero, myBoard, enemies: Enemies):
                     chooseone3[abilitySetting["chooseone"]],
                     windowMP()[3] // 2,
                 )
+                retour = True
             elif mercsAbilities[localhero][str(ability)] == "chooseone2":
                 time.sleep(0.2)
                 move_mouse_and_click(
@@ -274,6 +275,7 @@ def select_ability(localhero, myBoard, enemies: Enemies):
                     chooseone2[abilitySetting["chooseone"]],
                     windowMP()[3] // 2,
                 )
+                retour = True
             elif mercsAbilities[localhero][str(ability)].startswith("friend"):
                 time.sleep(0.2)
                 if ":" in mercsAbilities[localhero][str(ability)]:
