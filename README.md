@@ -41,7 +41,7 @@ If you only want a version working with the last Hearthstone patch, and are not 
 
 
 ### Windows
-* Install [Python 3.9](https://www.python.org/ftp/python/3.9.0/python-3.9.0-amd64-webinstall.exe) (⚠️ select the "Add Python 3.9 to PATH" during installation) 
+* Install [Python 3.10](https://www.python.org/ftp/python/3.10.0/python-3.10.0-amd64-webinstall.exe) (⚠️ select the "Add Python 3.10 to PATH" during installation) 
 * Download the project
 * Open settings.ini and set your [settings](https://github.com/Efemache/Mercenaries-Farm-bot/wiki/Settings#settingsini) (⚠️ don't forget to set "GameDir" to your Hearthstone directory)
 * Edit your Hearthstone [log.config file](https://github.com/Efemache/Mercenaries-Farm-bot/wiki/Settings#logconfig)
