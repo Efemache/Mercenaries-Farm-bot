@@ -303,7 +303,7 @@ def select_ability(localhero, myBoard, enemies: Enemies):
             #     )
     else:
         localhero = re.sub(r" [0-9]$", "", localhero)
-        abilitySetting = didnt_find_a_name_for_this_one(localhero, "Neutral", raund, 0)
+        abilitySetting = didnt_find_a_name_for_this_one(localhero, "Neutral", raund, 1)
         if abilitySetting["ability"] == 0:
             retour = False
         else:
