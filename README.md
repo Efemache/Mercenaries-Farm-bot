@@ -4,7 +4,7 @@ MFB official URL : https://github.com/Efemache/Mercenaries-Farm-bot/
 Bot is on a development stage but it already works to complete a lot of "Tasks" and some bounties.
 ```
 
-## Purpose
+# Purpose
 The purpose of this bot is to automatically pass the bounty levels to level up your mercenaries, win somes coins and complete campfire tasks.
 
 There is a [```main```](https://github.com/Efemache/Mercenaries-Farm-bot) branch to use daily and a [```dev2```](https://github.com/Efemache/Mercenaries-Farm-bot/tree/dev2) branch with new features but not well tested (and can be broke sometimes).
@@ -12,11 +12,11 @@ There is a [```main```](https://github.com/Efemache/Mercenaries-Farm-bot) branch
 If you only want a version working with the last Hearthstone patch, and are not interested in new feature, I recommend to use the [last tagged version](https://github.com/Efemache/Mercenaries-Farm-bot/tags).
 
 
-## PvE preview (video)
+# PvE preview (video)
 [![Watch the video](https://user-images.githubusercontent.com/56414438/156830161-924cf85c-64a2-4215-870d-d0d005d28adc.jpg)](https://youtu.be/ZQ3xCL9_4Yo)
 
 
-## If you want to support (or thank) us
+# If you want to support (or thank) us
 |    Platform    | Address | QR Code | 
 | :------------ | :-------------:|  :-------------:|  
 |    Patreon    | [mercenaries_farm](https://www.patreon.com/mercenaries_farm) | |
@@ -32,15 +32,15 @@ If you only want a version working with the last Hearthstone patch, and are not 
  (\*) on BSC blockchain you can send any BEP-20 token (let us know if you send another token than BNB or BUSD)
 
 
-## Installation
-### When the bot is running
+# Installation
+## When the bot is running
 * don't move the Hearthstone window
 * don't put another window in front of Hearthstone
 * don't touch your mouse (except if you want to bypass the bot)
 * don't resize the Hearthstone window or change the resolution
 
 
-### Windows
+## Windows
 * Install [Python 3.10](https://www.python.org/ftp/python/3.10.0/python-3.10.0-amd64-webinstall.exe) (⚠️ select the "Add Python 3.10 to PATH" during installation) 
 * Download the project
 * Open settings.ini and set your [settings](https://github.com/Efemache/Mercenaries-Farm-bot/wiki/Settings#settingsini) (⚠️ don't forget to set "GameDir" to your Hearthstone directory)
@@ -50,7 +50,7 @@ If you only want a version working with the last Hearthstone patch, and are not 
 * Run HSbotRunner.bat
 
 
-### Linux
+## Linux
 * Install gir1.2-wnck-3.0 (sudo apt install gir1.2-wnck-3.0)
 * Download the project
 * Open settings.ini and set your [settings](https://github.com/Efemache/Mercenaries-Farm-bot/wiki/Settings#settingsini) (⚠️ don't forget to set "GameDir" to your Hearthstone directory)
@@ -60,11 +60,11 @@ If you only want a version working with the last Hearthstone patch, and are not 
 * Run HSbotRunner.sh
 
 
-### Bot Installation/Configuration Video
+## Bot Installation/Configuration Video
 [![Watch the video](https://user-images.githubusercontent.com/56414438/171742740-ef583e7a-e773-46f8-8baf-7100d84ced87.png)](https://youtu.be/azOptPolsIM)
 
 
-## News & contact 
+# News & contact 
 More informations in [Wiki](https://github.com/Efemache/Mercenaries-Farm-Bot/wiki)
 
 For bugs, open an [issue](https://github.com/Efemache/Mercenaries-Farm-Bot/issues)
@@ -75,17 +75,17 @@ For videos (news, settings, ...), subscribe on YouTube : [MercenariesFarm Channe
 
 To discuss with the community, go to discord : [Mercenaries Farm server](https://discord.gg/ePghxaUBEK)
 
-If you have an issue with the bot, please, read the [FAQ](https://github.com/Efemache/Mercenaries-Farm-bot/wiki/FAQ) before posting any question on discord.
+If you have an issue with the bot, please, read the [Frequently Asked Questions](https://github.com/Efemache/Mercenaries-Farm-bot/wiki/FAQ) before posting any question on discord.
 
 
-## Dev progress
-### Language & resolution supported
+# Dev progress
+## Language & resolution supported
 |               |     English    |
 | :------------ | :-------------:|
 |   1920x1080   |       ✅      |
 
 
-### Support
+## Support
 |               |  1920x1080 |
 | :------------ | :-------------:|
 |1. transition to Travel point selection | ✓|
@@ -107,7 +107,7 @@ If you have an issue with the bot, please, read the [FAQ](https://github.com/Efe
 |13. repeat from 1 point | ✓|
 
 
-### Battle limitation (will change in future releases)
+## Battle limitation (will change in future releases)
 * ~~bot doesn't work with ability like "choose one" with 2 choices (ex: Malfurion, but works for Rexxar)~~ ✓ (ok since May 23, 2022)
 * ~~bot doesn't work with ability which need to point to one of your mercenaries (ex: impossible to use healing with Xyrella)~~ ✓ (ok since May 23, 2022)
   * ~~bot doesn't work with ability targeting a specific type of mercenary like Dragon, Beast, ...~~ ✓ (ok since Jul. 08, 2022)
