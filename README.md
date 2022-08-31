@@ -79,15 +79,22 @@ If you have an issue with the bot, please, read the [Frequently Asked Questions]
 
 
 # Dev progress
-## Language & resolution supported
-|               |     English    |
-| :------------ | :-------------:|
-|   1920x1080   |       ✅      |
+## Language & resolution
+|                       |     English    |
+| :------------------- | :-------------:|
+| 1920x1080 Fullscreen  |        ✅      |
+| 1920x1080 windowed (*)|        ✅      |
+|  1600x900 windowed (*)|        ✅      |
+|  16:9 windowed (*)|        ✅      |
 
+(\*) 
+* monitor need to have a higher resolution than Hearthstone for both width AND height
+* 16:9 resolution should work if at least 768x432
+* only 1920x1080 is officially supported but the other mentionned resolutions work too
 
 ## Support
-|               |  1920x1080 |
-| :------------ | :-------------:|
+|                                        |   1920x1080    |
+| :------------------------------------- | :-------------:|
 |1. transition to Travel point selection | ✓|
 |2. transition to Level/Bounty selection | ✓|
 |3. transition between encounters | ✓ |
