@@ -366,7 +366,7 @@
     },
     "Eudora": {
         "1": true,
-        "2": false,
+        "2": "chooseone2",
         "3": "friend"
     },
     "Illidan Stormrage": {
