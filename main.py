@@ -4,7 +4,7 @@ import sys
 
 from modules.gameloop import where
 from modules.platforms import win
-from modules.gen_resolution import gen_resolution_images
+from modules.gen_resolution import gen_images_new_resolution
 
 import logging
 
