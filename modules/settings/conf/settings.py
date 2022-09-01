@@ -8,6 +8,24 @@ from modules.utils import update
 
 log = logging.getLogger(__name__)
 
+DEFAULT_RESOLUTION = "1920x1080"
+BASE_IMAGES_DIR = "files"
+
+
+def add_bot_settings(set_dict):
+    set_dict["default_resolution"] = DEFAULT_RESOLUTION
+
+    set_dict["root_images_dir"] = BASE_IMAGES_DIR
+    set_dict["images_dir"] = pathlib.PurePath(
+        BASE_IMAGES_DIR, DEFAULT_RESOLUTION
+    ).as_posix()
+
+    set_dict["user_files_dir"] = pathlib.PurePath("conf", "user").as_posix()
+    print(set_dict["user_files_dir"])
+    print(set_dict["images_dir"])
+
+    return set_dict
+
 
 def get_system_user_settings(system_settings_filename, user_settings_filename):
     try:
@@ -29,9 +47,9 @@ def get_system_user_settings(system_settings_filename, user_settings_filename):
         for setting, value in settings_dict.items():
             log.info(f" - {setting}: {value}")
     except Exception as e:
-        log.error("Running without settings")
+        log.error("Running without settings:",e)
 
-    return settings_dict
+    return add_bot_settings(settings_dict)
 
 
 def get_settings(settings_filename):

@@ -2,7 +2,7 @@ import time
 import logging
 
 from .base import WindowMgr
-from ..platform import find_os
+from ..platforms import find_os
 from ...exceptions import WindowManagerError
 
 log = logging.getLogger(__name__)

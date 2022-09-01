@@ -8,7 +8,7 @@ from .image_utils import find_ellement
 from .constants import Button, Action, UIElement
 from .settings import jposition
 from .mouse_utils import move_mouse, move_mouse_and_click, mouse_position
-from .platform import windowMP
+from .platforms import windowMP
 
 import logging
 

@@ -4,7 +4,7 @@ import random
 import logging
 from typing import List
 
-from .platform import windowMP
+from .platforms import windowMP
 from .mouse_utils import move_mouse_and_click, move_mouse, mouse_click  # , mouse_scroll
 
 from .image_utils import partscreen, find_ellement, get_resolution

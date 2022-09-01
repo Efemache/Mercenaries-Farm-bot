@@ -3,7 +3,7 @@ import random
 import time
 import json
 
-from .platform import windowMP
+from .platforms import windowMP
 from .mouse_utils import (
     move_mouse_and_click,
     move_mouse,

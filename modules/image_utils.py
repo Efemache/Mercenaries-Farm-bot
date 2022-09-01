@@ -5,7 +5,7 @@ import cv2
 import numpy as np
 
 
-from .platform import windowMP
+from .platforms import windowMP
 from .mouse_utils import move_mouse_and_click, move_mouse
 
 from .settings import settings_dict, jthreshold
@@ -165,7 +165,7 @@ def partscreen(x, y, top, left, debug_mode=False, resolution=None, resize_width=
         sct_img = sct.grab(monitor)
 
         if debug_mode:
-            output_file = f"files/{ resolution}/part.png"
+            output_file = f"files/{resolution}/part.png"
             mss.tools.to_png(sct_img.rgb, sct_img.size, output=output_file)
 
         partImg = np.array(sct_img)

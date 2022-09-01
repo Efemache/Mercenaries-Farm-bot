@@ -8,7 +8,7 @@ from .game import selectGroup, defaultCase
 from .campfire import look_at_campfire_completed_tasks
 from .settings import jposition
 from .mouse_utils import move_mouse
-from .platform import windowMP
+from .platforms import windowMP
 
 
 def where():
