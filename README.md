@@ -45,7 +45,7 @@ If you only want a version working with the last Hearthstone patch, and are not 
 * Download the project
 * Open settings.ini and set your [settings](https://github.com/Efemache/Mercenaries-Farm-bot/wiki/Settings#settingsini) (⚠️ don't forget to set "GameDir" to your Hearthstone directory)
 * Edit your Hearthstone [log.config file](https://github.com/Efemache/Mercenaries-Farm-bot/wiki/Settings#logconfig)
-* Start Hearthstone (in 1920x1080)
+* Start Hearthstone (with same resolution as set in settings.ini)
 * Create a group of mercenaries named "Botwork" (and go back to main menu)
 * Run HSbotRunner.bat
 
@@ -55,7 +55,7 @@ If you only want a version working with the last Hearthstone patch, and are not 
 * Download the project
 * Open settings.ini and set your [settings](https://github.com/Efemache/Mercenaries-Farm-bot/wiki/Settings#settingsini) (⚠️ don't forget to set "GameDir" to your Hearthstone directory)
 * Edit your Hearthstone [log.config file](https://github.com/Efemache/Mercenaries-Farm-bot/wiki/Settings#logconfig)
-* Start Hearthstone (in 1920x1080)
+* Start Hearthstone (with same resolution as set in settings.ini)
 * Create a group of mercenaries named "Botwork" (and go back to main menu)
 * Run HSbotRunner.sh
 
@@ -80,20 +80,23 @@ If you have an issue with the bot, please, read the [Frequently Asked Questions]
 
 # Dev progress
 ## Language & resolution
-|                       |     English    |
-| :------------------- | :-------------:|
-| 1920x1080 Fullscreen  |        ✅      |
-| 1920x1080 windowed (*)|        ✅      |
-|  1600x900 windowed (*)|        ✅      |
-|  16:9 windowed (*)|        ✅      |
+⚠️ 1920x1080 is the only resolution officially supported (but the other mentionned resolutions work too)
 
-(\*) 
-* monitor need to have a higher resolution than Hearthstone for both width AND height
-* 16:9 resolution should work if at least 768x432
-* only 1920x1080 is officially supported but the other mentionned resolutions work too
+⚠️ windowed : monitor needs to have a higher resolution than Hearthstone for both width AND height
+
+| Resolution | English |
+| :------------------- | :-------------:|
+| 1920x1080 fullscreen |        ✅      |
+| 1920x1080 windowed  |        ✅      |
+|  16:9 fullscreen  <sup>*</sup> |        ✅      |
+|  16:9 windowed  <sup>*</sup> |        ✅      |
+
+(\*)
+* 16:9 resolution should work if at least 960x540 (960x540, 1024x576, 1280x720, 1600x900, ...)
+* higher 16:9 resolution (than 1920) has been tested with 2560x1440
 
 ## Support
-|                                        |   1920x1080    |
+|                                        |   |
 | :------------------------------------- | :-------------:|
 |1. transition to Travel point selection | ✓|
 |2. transition to Level/Bounty selection | ✓|
