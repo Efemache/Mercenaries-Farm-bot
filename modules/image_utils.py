@@ -15,6 +15,7 @@ import logging
 
 log = logging.getLogger(__name__)
 
+
 def get_resolution() -> tuple[str, int, int, float]:
     """
     Get the resolution of the screen
@@ -26,16 +27,20 @@ def get_resolution() -> tuple[str, int, int, float]:
         setting_w, setting_h = int(setting_size[0]), int(setting_size[1])
         windows_w, windows_h = windowMP()[2], windowMP()[3]
         if round(windows_w / setting_w, 2) != round(windows_h / setting_h, 2):
-            raise Exception("setting resolution and windows resolution are not the same aspect ratio")
+            raise Exception(
+                "setting resolution and windows resolution are not the same aspect ratio"
+            )
         scale_size = setting_w / windows_w
         return resolution, setting_w, setting_h, scale_size
     except Exception as e:
-        log.error(f"the resolution {resolution} not support: {e}")
+        log.error(f"the resolution {resolution} is not supported: {e}")
         sys.exit()
+
 
 def resize(img, width, height):
     """resize an image"""
     return cv2.resize(img, (width, height), interpolation=cv2.INTER_CUBIC)
+
 
 def get_gray_image(file):
     """load an OpenCV version of an image in memory and/or return it"""
@@ -153,7 +158,17 @@ def find_element_from_file(
     return click_coords
 
 
-def partscreen(x, y, top, left, debug_mode=False, resolution=None, resize_width=None, resize_height=None, scale_size=1):
+def partscreen(
+    x,
+    y,
+    top,
+    left,
+    debug_mode=False,
+    resolution=None,
+    resize_width=None,
+    resize_height=None,
+    scale_size=1,
+):
     """
     take screeenshot for a part of the screen to find some part of the image
     """
@@ -171,10 +186,16 @@ def partscreen(x, y, top, left, debug_mode=False, resolution=None, resize_width=
         partImg = np.array(sct_img)
 
         if resize_width and resize_height:
-            partImg = cv2.resize(partImg, (resize_width, resize_height), interpolation=cv2.INTER_CUBIC)
+            partImg = cv2.resize(
+                partImg, (resize_width, resize_height), interpolation=cv2.INTER_CUBIC
+            )
         elif scale_size != 1:
-            partImg = cv2.resize(partImg, (int(x * scale_size), int(y * scale_size)), interpolation=cv2.INTER_CUBIC)
-    
+            partImg = cv2.resize(
+                partImg,
+                (int(x * scale_size), int(y * scale_size)),
+                interpolation=cv2.INTER_CUBIC,
+            )
+
     return partImg
 
 
@@ -195,4 +216,8 @@ def find_element_center_on_screen(img, template, threshold=0, scale_size=1):
     w = template.shape[1] // 2
     _, max_val, _, max_loc = cv2.minMaxLoc(result)
 
-    return ((max_loc[0] + w) / scale_size, (max_loc[1] + h) / scale_size) if max_val > threshold else None
+    return (
+        ((max_loc[0] + w) / scale_size, (max_loc[1] + h) / scale_size)
+        if max_val > threshold
+        else None
+    )

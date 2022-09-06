@@ -20,7 +20,7 @@ def main():
             if win.find_game():
                 where()
         except KeyboardInterrupt as kerr:
-            log.error("Keyboard Interrupt %s", kerr)
+            log.info("Keyboard Interrupt %s", kerr)
             sys.exit(0)
         except Exception as error:
             log.error("Error: %s", error)
