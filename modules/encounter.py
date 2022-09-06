@@ -10,11 +10,13 @@ from .mouse_utils import move_mouse_and_click, move_mouse, mouse_click  # , mous
 from .image_utils import partscreen, find_ellement, get_resolution
 from .constants import UIElement, Button, Action
 from .game import countdown, waitForItOrPass
+
 # from .log_board import LogHSMercs
 from .settings import settings_dict, mercslist, mercsAbilities, ability_order
 
 
 log = logging.getLogger(__name__)
+
 
 class Enemies:
     def __init__(self, red, green, blue, noclass, noclass2, mol):
@@ -24,6 +26,23 @@ class Enemies:
         self.noclass = noclass
         self.noclass2 = noclass2
         self.mol = mol
+
+
+class Board:
+    def __init__(self):
+        self.card_width = windowMP()[2] // 16
+        self.card_height = windowMP()[3] // 6
+
+        card_size = windowMP()[2] // 12
+        first_even = windowMP()[2] // 3.6
+
+        positions = [first_even + i * card_size // 2 for i in range(11)]
+        self.position_even = positions[::2]
+        self.position_odd = positions[1::2]
+
+        self.myboard.y = windowMP()[3] / 1.5
+        # self.enemy.y =
+
 
 def select_enemy_to_attack(index):
     """Used to move the mouse over an enemy to attack it
@@ -81,24 +100,27 @@ def priorityMercByType(myMercs, targettype) -> List[int]:
         if myMercs[i] in mercslist:
             if mercslist[myMercs[i]]["type"] == targettype:
                 mercs_pos.append(int(i))
-    if mercs_pos: return mercs_pos
-    # add non targettype mercs to the end of the list 
+    if mercs_pos:
+        return mercs_pos
+    # add non targettype mercs to the end of the list
     for i in myMercs:
         if myMercs[i] in mercslist:
             mercs_pos.append(int(i))
-    if mercs_pos: return mercs_pos
+    if mercs_pos:
+        return mercs_pos
     # add friendly minion
     for i in myMercs:
         if targettype == "minion":
             mercs_pos.append(int(i))
     return mercs_pos
 
+
 def ability_target_friend(targettype, myMercs, enemies: Enemies):
     """Return the X coord of one of our mercenaries"""
 
     cardSize = int(windowMP()[2] / 12)
     firstOdd = int(windowMP()[2] / 3)
-    firstEven = int (windowMP()[2] / 3.6)
+    firstEven = int(windowMP()[2] / 3.6)
     positionOdd = []  # positionOdd=[640,800,960,1120,1280]
     positionEven = []  # positionEven=[560,720,880,1040,1200,1360]
     for i in range(6):
@@ -110,10 +132,10 @@ def ability_target_friend(targettype, myMercs, enemies: Enemies):
     if targettype == "friend":
         # TODO get multiple enemies per type for priority by weakness of the most type of enemy
         if enemies.blue:
-             # enemies have blue so we buff red merc first
+            # enemies have blue so we buff red merc first
             position = random.choice(priorityMercByType(myMercs, "Protector"))
         elif enemies.green:
-             # enemies have green so we buff blue merc first
+            # enemies have green so we buff blue merc first
             position = random.choice(priorityMercByType(myMercs, "Caster"))
         elif enemies.red:
             # enemies have red so we buff green merc first
@@ -241,12 +263,11 @@ def didnt_find_a_name_for_this_one(name, minionSection, turn, defaultAbility=0):
     return abilityConfig
 
 
-def select_ability(localhero, myBoard, enemies: Enemies):
+def select_ability(localhero, myBoard, enemies: Enemies, raund):
     """Select an ability for a mercenary.
         Depend on what is available and wich Round (battle)
     Click only on the ability (doesnt move to an enemy)
     """
-    global raund
 
     if localhero in mercsAbilities:
         retour = False
@@ -312,12 +333,12 @@ def select_ability(localhero, myBoard, enemies: Enemies):
     return retour
 
 
-def attacks(
+def take_turn_action(
     position,
     mercName,
-    # number,
     myMercs,
     enemies: Enemies,
+    raund,
 ):
     """
     Function to attack an enemy (red, green or blue ideally)
@@ -327,7 +348,6 @@ def attacks(
     blue attacks red (if exists)
     else merc attacks minion with special abilities or neutral
     """
-    global raund
 
     log.debug("Attacks function")
 
@@ -359,7 +379,7 @@ def attacks(
     if mercName in mercslist:
         if (
             mercslist[mercName]["type"] == "Protector"
-            and select_ability(mercName, myMercs, enemies)
+            and select_ability(mercName, myMercs, enemies, raund)
             and not select_enemy_to_attack(enemies.green)
             and not select_enemy_to_attack(enemies.mol)
             and not select_enemy_to_attack(enemies.noclass)
@@ -368,7 +388,7 @@ def attacks(
             select_random_enemy_to_attack([enemies.red, enemies.blue])
         elif (
             mercslist[mercName]["type"] == "Fighter"
-            and select_ability(mercName, myMercs, enemies)
+            and select_ability(mercName, myMercs, enemies, raund)
             and not select_enemy_to_attack(enemies.blue)
             and not select_enemy_to_attack(enemies.mol)
             and not select_enemy_to_attack(enemies.noclass)
@@ -377,17 +397,25 @@ def attacks(
             select_random_enemy_to_attack([enemies.red, enemies.green])
         elif (
             mercslist[mercName]["type"] == "Caster"
-            and select_ability(mercName, myMercs, enemies)
+            and select_ability(mercName, myMercs, enemies, raund)
             and not select_enemy_to_attack(enemies.red)
             and not select_enemy_to_attack(enemies.mol)
             and not select_enemy_to_attack(enemies.noclass)
             and not select_enemy_to_attack(enemies.noclass2)
         ):
             select_random_enemy_to_attack([enemies.green, enemies.blue])
-    elif select_ability(mercName, myMercs, enemies):
+    elif select_ability(mercName, myMercs, enemies, raund):
         select_random_enemy_to_attack(
-            [enemies.red, enemies.green, enemies.blue, enemies.noclass, enemies.noclass2, enemies.mol]
+            [
+                enemies.red,
+                enemies.green,
+                enemies.blue,
+                enemies.noclass,
+                enemies.noclass2,
+                enemies.mol,
+            ]
         )
+
 
 # Look for enemies
 def find_enemies() -> Enemies:
@@ -406,7 +434,9 @@ def find_enemies() -> Enemies:
         f" - noclass2 {enemynoclass2}"
         f" - mol {enemymol}"
     )
-    return Enemies(enemyred, enemygreen, enemyblue, enemynoclass, enemynoclass2, enemymol)
+    return Enemies(
+        enemyred, enemygreen, enemyblue, enemynoclass, enemynoclass2, enemymol
+    )
 
 
 def find_red_enemy():
@@ -450,7 +480,6 @@ def battle(zoneLog=None):
     """Find the cards on the battlefield (yours and those of your opponents)
     and make them battle until one of yours die
     """
-    global raund
     retour = True
 
     # init the reading of Hearthstone filelog to detect your board / mercenaries
@@ -531,12 +560,13 @@ def battle(zoneLog=None):
                     windowMP(), windowMP()[2] // 2, windowMP()[3] // 1.2
                 )
 
-                attacks(
+                take_turn_action(
                     int(i),
                     mercenaries[i],
                     # int(sorted(mercenaries)[-1]),
                     mercenaries,
                     enemies,
+                    raund,
                 )
                 # in rare case, the bot detects an enemy ("noclass" most of the
                 #   times) outside of the battlezone.

@@ -147,13 +147,10 @@ class LogHSMercs:
         self.enemiesId = {}
 
     def getMyBoard(self):
-        board = {}
-        for key in self.myBoard.keys():
-            board[key] = self.mercsId[self.myBoard[key]]
-        return board
+        return {key: self.mercsId[self.myBoard[key]] for key in self.myBoard.keys()}
 
     def getEnemyBoard(self):
-        board = {}
-        for key in self.enemiesBoard.keys():
-            board[key] = self.enemiesId[self.enemiesBoard[key]]
-        return board
+        return {
+            key: self.enemiesId[self.enemiesBoard[key]]
+            for key in self.enemiesBoard.keys()
+        }
