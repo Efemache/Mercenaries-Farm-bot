@@ -28,6 +28,16 @@ def resize_image(srcfile, dstfile, params=[]):
     cv2.imwrite(dstfile, imgresized)
 
 
+def check_resolution(window):
+    # retour=False
+    # margin_error=0.1
+
+    # windowx, windowy = window.split("x")
+    # settingx, setting = setting.split("x")
+
+    return window == settings_dict["resolution"]
+
+
 def gen_images_new_resolution():
     new_resolution = settings_dict["resolution"]
 
