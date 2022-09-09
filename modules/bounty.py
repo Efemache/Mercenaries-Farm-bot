@@ -305,6 +305,7 @@ def goToEncounter():
                         )
                         collect()
                         travelEnd = True
+                        time.sleep(3)
                         break
             elif retour == "loose":
                 travelEnd = True
@@ -325,7 +326,7 @@ def goToEncounter():
         waitForItOrPass(UIElement.campfire, 5)
         look_at_campfire_completed_tasks()
         move_mouse_and_click(windowMP(), windowMP()[2] / 2, windowMP()[3] / 1.25)
-        time.sleep(2)
+        time.sleep(3)
 
 
 def travelToLevel(page="next"):
