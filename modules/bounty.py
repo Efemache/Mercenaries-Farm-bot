@@ -321,8 +321,7 @@ def goToEncounter():
             if not nextlvl():
                 break
 
-    while not find_ellement(Button.back.filename, Action.screenshot):
-        waitForItOrPass(UIElement.campfire, 5)
+    while not find_ellement(UIElement.bounties.filename, Action.screenshot):
         look_at_campfire_completed_tasks()
         move_mouse_and_click(windowMP(), windowMP()[2] / 2, windowMP()[3] / 1.25)
         time.sleep(2)
