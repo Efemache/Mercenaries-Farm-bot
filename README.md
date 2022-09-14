@@ -61,7 +61,7 @@ If you only want a version working with the last Hearthstone patch, and are not 
 
 
 ## Bot Installation/Configuration Video
-[![Watch the video](https://user-images.githubusercontent.com/56414438/171742740-ef583e7a-e773-46f8-8baf-7100d84ced87.png)](https://youtu.be/azOptPolsIM)
+[![Watch the video](https://user-images.githubusercontent.com/56414438/190275041-fb8933ce-cee1-4257-ab06-fdd0419c9ad6.png)](https://youtu.be/Nh73f-YXUjg)
 
 
 # News & contact 
