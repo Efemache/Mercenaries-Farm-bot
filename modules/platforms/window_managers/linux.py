@@ -2,18 +2,20 @@ import time
 import logging
 
 from .base import WindowMgr
-from ..platform import find_os
+from ..platforms import find_os
 from ...exceptions import WindowManagerError
 
 log = logging.getLogger(__name__)
 try:
+    import pgi
+    pgi.install_as_gi()
     import gi
 
     gi.require_version("Wnck", "3.0")
     from gi.repository import Wnck, Gtk
 except ImportError:
     if find_os()=="linux":
-        log.error("gi.repository not installed")
+        log.error("gi.repository and/or pgi not installed")
 
 HEARHTSTONE_WINDOW_NAME="Hearthstone"
 

@@ -1,14 +1,23 @@
+# Files directory
+files/*
+!files/1920x1080/
+!files/gui/
+!files/Images_LICENSE
 files/1920x1080/part.png
+
+# Cache
 __pycache__/
 *.bck
 *.old
 *.swp
 backup/
+
+# Development
 development/
 
 # IDE Settings
 .vscode/
-.idea
+.idea/
 
 # Personal Settings Files
 conf/user/*.ini

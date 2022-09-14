@@ -5,10 +5,10 @@ import os
 import pathlib
 
 from .image_utils import find_ellement
-from .constants import Button, Action
-
+from .constants import Button, Action, UIElement
+from .settings import jposition
 from .mouse_utils import move_mouse, move_mouse_and_click, mouse_position
-from .platform import windowMP
+from .platforms import windowMP
 
 import logging
 
@@ -48,14 +48,11 @@ def waitForItOrPass(image, duration, step=0.5):
 def selectGroup():
     """Look for the mercenaries group 'Botwork' and select it
     (click on 'LockIn' if necessary)"""
-    # global threshold
-    # tempthreshold = threshold
-    log.info("selectGroup : entering")
-    # threshold = 0.8
+
+    log.debug("selectGroup : entering")
 
     # bad code but easily works
     # need to change it later to have a better solution
-    ######### section to replace #########
     group_name_custom = pathlib.PurePath(
         "conf/user/", Button.group_name.filename
     ).as_posix()
@@ -65,8 +62,7 @@ def selectGroup():
         if os.path.exists(group_name_custom)
         else Button.group_name.filename
     )
-    ### end of the section to replace ###
-
+    # end of the section to replace #
 
     if find_ellement(group_name, Action.move_and_click):
         find_ellement(Button.choose_team.filename, Action.move_and_click)
@@ -74,7 +70,6 @@ def selectGroup():
         waitForItOrPass(Button.lockin, 3)
         find_ellement(Button.lockin.filename, Action.move_and_click)
 
-    # threshold = tempthreshold
     log.debug("selectGroup : ended")
     return
 
@@ -82,10 +77,12 @@ def selectGroup():
 def defaultCase():
     """Clicking on the right edge of the screen to click away popups"""
     """Saving x,y to move back into previous position"""
-    x, y = mouse_position(windowMP())
-    log.debug("Nothing found")
-    move_mouse_and_click(windowMP(), windowMP()[2] / 1.05, windowMP()[3] / 2)
-    time.sleep(0.1)
-    move_mouse(windowMP(), x, y)
-
-    return
+    if find_ellement(UIElement.quests.filename, Action.screenshot) or find_ellement(
+        UIElement.encounter_card.filename, Action.screenshot
+    ):
+        x, y = mouse_position(windowMP())
+        log.info("Trying to skip quests screen.")
+        mx = jposition["mouse.neutral.x"]
+        my = jposition["mouse.neutral.y"]
+        move_mouse_and_click(windowMP(), windowMP()[2] / mx, windowMP()[3] / my)
+        move_mouse(windowMP(), x, y)

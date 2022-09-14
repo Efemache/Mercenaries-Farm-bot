@@ -1,7 +1,7 @@
 import logging
 
 from ..base import WindowMgr
-from ...platform import find_os
+from ...platforms import find_os
 
 log = logging.getLogger(__name__)
 
@@ -34,8 +34,9 @@ class WindowMgrWindowsWin32Gui(WindowMgr):
         return self._handle
 
     def get_window_geometry(self):
-        (left, top, right, bottom) = win32gui.GetWindowRect(self._handle)
-        return (left, top, right - left, bottom - top)
+        left, top, width, height = win32gui.GetClientRect(self._handle)
+        left, top = win32gui.ClientToScreen(self._handle, (left, top))
+        return (left, top, width, height)
 
     def _find_window(self):
         self._handle = win32gui.FindWindow(None, HEARHTSTONE_WINDOW_NAME_WINDOWS)

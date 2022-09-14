@@ -256,7 +256,7 @@
     },
     "Natalie Seline": {
         "1": true,
-        "2": true,
+        "2": "friend",
         "3": false
     },
     "N'Zoth": {
@@ -339,7 +339,7 @@
         "2": true,
         "3": false
     },
-    "C’Thun": {
+    "C'Thun": {
         "1": true,
         "2": false,
         "3": false
@@ -366,7 +366,7 @@
     },
     "Eudora": {
         "1": true,
-        "2": false,
+        "2": "chooseone2",
         "3": "friend"
     },
     "Illidan Stormrage": {

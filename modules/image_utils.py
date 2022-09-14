@@ -1,10 +1,11 @@
+import sys
 import os.path
 
 import cv2
 import numpy as np
 
 
-from .platform import windowMP
+from .platforms import windowMP
 from .mouse_utils import move_mouse_and_click, move_mouse
 
 from .settings import settings_dict, jthreshold
@@ -14,14 +15,34 @@ import logging
 
 log = logging.getLogger(__name__)
 
-default_rect = (0, 69, 1920, 1011)
-# default_rect = (-8, -8, 1936, 1056) => 1936 - (-8) = 1944 pixel ... (?)
 
-default_width = default_rect[2] - default_rect[0]
-default_height = default_rect[3] - default_rect[1]
+def get_resolution() -> tuple[str, int, int, float]:
+    """
+    Get the resolution of the screen
+    return tuple(resolution, width, height, scale_size)
+    """
+    try:
+        resolution = settings_dict["resolution"]
+        setting_size = resolution.split("x")
+        setting_w, setting_h = int(setting_size[0]), int(setting_size[1])
+        windows_w, windows_h = windowMP()[2], windowMP()[3]
+        if round(windows_w / setting_w, 2) != round(windows_h / setting_h, 2):
+            raise Exception(
+                "setting resolution and windows resolution are not the same aspect ratio"
+            )
+        scale_size = setting_w / windows_w
+        return resolution, setting_w, setting_h, scale_size
+    except Exception as e:
+        log.error(f"the resolution {resolution} is not supported: {e}")
+        sys.exit()
 
 
-def get_gray_image(file, width=default_width, height=default_height):
+def resize(img, width, height):
+    """resize an image"""
+    return cv2.resize(img, (width, height), interpolation=cv2.INTER_CUBIC)
+
+
+def get_gray_image(file):
     """load an OpenCV version of an image in memory and/or return it"""
     if not hasattr(get_gray_image, "imagesInMemory"):
         get_gray_image.imagesInMemory = {}
@@ -108,16 +129,24 @@ def find_element_from_file(
         else:
             threshold = jthreshold["default_grey"]
 
+    resolution, width, height, scale_size = get_resolution()
+
     # choose if the bot need to look into the screen or in a part of the screen
     if new_screenshot:
-        partscreen(windowMP()[2], windowMP()[3], windowMP()[1], windowMP()[0])
+        partscreen(
+            windowMP()[2],
+            windowMP()[3],
+            windowMP()[1],
+            windowMP()[0],
+            resize_width=width,
+            resize_height=height,
+        )
 
     img = cv2.cvtColor(partImg, cv2.COLOR_BGR2GRAY)
-    monitor_resolution = settings_dict["monitor resolution"]
 
-    template = get_gray_image(f"files/{monitor_resolution}/{file}")
+    template = get_gray_image(f"files/{resolution}/{file}")
 
-    click_coords = find_element_center_on_screen(img, template, threshold=threshold)
+    click_coords = find_element_center_on_screen(img, template, threshold, scale_size)
 
     if click_coords is not None:
         log.info(
@@ -129,7 +158,17 @@ def find_element_from_file(
     return click_coords
 
 
-def partscreen(x, y, top, left, debug_mode=False, monitor_resolution=None):
+def partscreen(
+    x,
+    y,
+    top,
+    left,
+    debug_mode=False,
+    resolution=None,
+    resize_width=None,
+    resize_height=None,
+    scale_size=1,
+):
     """
     take screeenshot for a part of the screen to find some part of the image
     """
@@ -141,13 +180,26 @@ def partscreen(x, y, top, left, debug_mode=False, monitor_resolution=None):
         sct_img = sct.grab(monitor)
 
         if debug_mode:
-            output_file = f"files/{ monitor_resolution}/part.png"
+            output_file = f"files/{resolution}/part.png"
             mss.tools.to_png(sct_img.rgb, sct_img.size, output=output_file)
+
         partImg = np.array(sct_img)
+
+        if resize_width and resize_height:
+            partImg = cv2.resize(
+                partImg, (resize_width, resize_height), interpolation=cv2.INTER_CUBIC
+            )
+        elif scale_size != 1:
+            partImg = cv2.resize(
+                partImg,
+                (int(x * scale_size), int(y * scale_size)),
+                interpolation=cv2.INTER_CUBIC,
+            )
+
     return partImg
 
 
-def find_element_center_on_screen(img, template, threshold=0):
+def find_element_center_on_screen(img, template, threshold=0, scale_size=1):
     """Finds Element if on screen and returns center
 
     Args:
@@ -164,4 +216,8 @@ def find_element_center_on_screen(img, template, threshold=0):
     w = template.shape[1] // 2
     _, max_val, _, max_loc = cv2.minMaxLoc(result)
 
-    return (max_loc[0] + w, max_loc[1] + h) if max_val > threshold else None
+    return (
+        ((max_loc[0] + w) / scale_size, (max_loc[1] + h) / scale_size)
+        if max_val > threshold
+        else None
+    )

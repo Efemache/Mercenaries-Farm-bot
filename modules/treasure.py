@@ -3,7 +3,7 @@ import time
 
 from queue import PriorityQueue
 
-from .platform import windowMP
+from .platforms import windowMP
 from .mouse_utils import move_mouse_and_click
 from .constants import Button, Action
 from .image_utils import find_ellement

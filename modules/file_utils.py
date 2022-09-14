@@ -1,3 +1,4 @@
+import os
 import json
 import configparser
 import re
@@ -48,3 +49,18 @@ def readINI(inifile):
         raise SettingsError(f"Duplicate Option in Settings File: {err}") from err
 
     return config._sections
+
+
+def copy_dir_and_func_files(srcdir, dstdir, ext, func, func_params):
+    os.path.exists(dstdir) or os.mkdir(dstdir)
+
+    for name in os.listdir(srcdir):
+        if os.path.isdir(f"{srcdir}/{name}"):
+            print(f"Processing directory: {dstdir}/{name}... wait")
+            copy_dir_and_func_files(
+                f"{srcdir}/{name}", f"{dstdir}/{name}", ext, func, func_params
+            )
+        else:
+            extfile = f"{srcdir}/{name}"
+            if extfile.endswith(ext):
+                func(extfile, f"{dstdir}/{name}", func_params)

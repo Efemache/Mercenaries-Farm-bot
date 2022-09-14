@@ -8,5 +8,7 @@
     "travelpoint.Onyxia.scroll": -2,
     "travelpoint.Darkshore.scroll": -3,
     "travelpoint.Sunken.scroll": -4,
+    "mouse.neutral.x": 1.05,
+    "mouse.neutral.y": 2,
     "lastOne": "dont touch"
 }
