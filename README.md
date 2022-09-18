@@ -10,7 +10,7 @@ MFB official URL : https://github.com/Efemache/Mercenaries-Farm-bot/
 * I won't say much about guys who didn't even they "Hello" (to ask for help) or "Thanks" (when I solved their problem)
 * I talked with some users/devs who coded something to improve the bot but never shared it ... and it's like 50/50 (50% shared, 50% didn't share)
 * As I explained on Discord, I don't really use the bot anymore (since a long time) but I continued to help others, fixed bugs and I even added features (that I don't need to) but, in return, I had no donation and (some) bad behaviors.
-* I suppose you understand I spent way too much time with no (or too few) "reward" and, in fact, it wasn't even the first purpose of my participation, so eventually it's more a win/lose for me
+* I suppose you understand I spent way too much time with no (or too few) "reward" and, in fact, it wasn't even the first purpose of my participation, so it's eventually more a lose/win for me
 
 (\*) "officially supported" (1920x1080) :
 ```
@@ -24,6 +24,7 @@ MFB official URL : https://github.com/Efemache/Mercenaries-Farm-bot/
 * **I will continue to accept PR (Pull request)** so if you know how to code and want to send a patch, you can and I'll merge it (but I won't test it).
 * If MFB doesn't work anymore after a HS patch or doesn't work for you, sorry 
 * **If some donations come to dev something, fix a bug or support new Hearthstone patch, maybe I could work on it**
+* If more devs come to help, maybe I could work on it
 * Even if this explanation shows a lot of bad things (I just tried to explain why I stop here), in overall, it was a **good experience and I worked with some nice people. Thank you all**
 
 I hope Mercenary mode will become a far more interresting mode in HS. Potential is here but Blizzard need to improve it. Bye.
