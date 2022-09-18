@@ -1,8 +1,32 @@
 # Mercenaries Farm Bot (for Hearthstone)
 MFB official URL : https://github.com/Efemache/Mercenaries-Farm-bot/
+## ⚠️ A big change starting 2022-09-18 : 
+### Context
+* I started to work on this bot (november 2021) because **I thought doing it open source, some devs would come** too to improve MFB so it would be a win/win
+* Too few devs came (**big thanks to those who participated**) and they, generally, added a feature or two or fixed a bug but none staied on a long term or to globally help
+* A lot of users asked for : features, doc update, videos, bugs fix (a lot of them didn't even impact me), help because they misconfigured MFB, help on their setup which wasn't even "offically supported" (\*) and I helped each time I could.
+  * **Only 3 people made a donation** (and one of them did it just because MFB was working, not because I helped him, Thanks).
+  * A donation is like "Hey, you helped me, thanks, let me buy you a beer or a coffee" especially when I spent 1 to 3 hours to help someone
+* I won't say much about guys who didn't even they "Hello" (to ask for help) or "Thanks" (when I solved their problem)
+* I talked with some users/devs who coded something to improve the bot but never shared it ... and it's like 50/50 (50% shared, 50% didn't share)
+* As I explained on Discord, I don't really use the bot anymore (since a long time) but I continued to help others, fixed bugs and I even added features (that I don't need to) but, in return, I had no donation and (some) bad behaviors.
+* I suppose you understand I spent way too much time with no (or too few) "reward" and, in fact, it wasn't even the first purpose of my participation, so eventually it's more a win/lose for me
+
+(\*) "officially supported" (1920x1080) :
 ```
-Bot is on a development stage but it already works to complete a lot of "Tasks" and some bounties.
+* some users think I owe them something because I mentioned "officially supported" on documentation; documentation (wiki, homepage, videos, ...) that I don't need in first place to run the bot...
+* official support means "I can only test on 1980x1080 and not on other setup"
+* in no way it means "I will work freely for you and/or fix every bugs you could have on your setup"
 ```
+
+### In conclusion: 
+* I won't continue my work on Github
+* **I will continue to accept PR (Pull request)** so if you know how to code and want to send a patch, you can and I'll merge it (but I won't test it).
+* If MFB doesn't work anymore after a HS patch or doesn't work for you, sorry 
+* **If some donations come to dev something, fix a bug or support new Hearthstone patch, maybe I could work on it**
+* Even if this explanation shows a lot of bad things (I just tried to explain why I stop here), in overall, it was a **good experience and I worked with some nice people. Thank you all**
+
+I hope Mercenary mode will become a far more interresting mode in HS. Potential is here but Blizzard need to improve it. Bye.
 
 # Purpose
 The purpose of this bot is to automatically pass the bounty levels to level up your mercenaries, win somes coins and complete campfire tasks.
@@ -73,27 +97,33 @@ For news, follow us on Twitter : [@MercenariesFarm](https://twitter.com/Mercenar
 
 For videos (news, settings, ...), subscribe on YouTube : [MercenariesFarm Channel](https://www.youtube.com/channel/UCye37bX5PJnPgChWvzjTqKg)
 
-To discuss with the community, go to discord : [Mercenaries Farm server](https://discord.gg/ePghxaUBEK)
+To discuss with the community (⚠️ I won't answer to private messages), go to discord : [Mercenaries Farm server](https://discord.gg/ePghxaUBEK)
 
 If you have an issue with the bot, please, read the [Frequently Asked Questions](https://github.com/Efemache/Mercenaries-Farm-bot/wiki/FAQ) before posting any question on discord.
 
 
 # Dev progress
+```
+Bot was on a development stage and already works to complete a lot of "Tasks" and some bounties.
+```
+
 ## Language & resolution
-⚠️ 1920x1080 is the only resolution officially supported (but the other mentionned resolutions work too)
+⚠️ 1920x1080 is the only resolution "officially supported" (meaning, I can only test this resolution) but the other mentionned resolutions work too
 
 ⚠️ windowed : monitor needs to have a higher resolution than Hearthstone for both width AND height
 
 | Resolution | English |
 | :------------------- | :-------------:|
-| 1920x1080 fullscreen |        ✅      |
+| 1920x1080 fullscreen <sup>1</sup> |        ✅      |
 | 1920x1080 windowed  |        ✅      |
-|  16:9 fullscreen  <sup>*</sup> |        ✅      |
-|  16:9 windowed  <sup>*</sup> |        ✅      |
+|  16:9 fullscreen  <sup>1</sup> <sup>2</sup> |        ✅      |
+|  16:9 windowed  <sup>2</sup> |        ✅      |
 
-(\*)
+(1)
+* for fullscreen mode, Hearthstone resolution and screen resolution need to be the same (example : 1920x1080 for both)
+(\2)
 * 16:9 resolution should work if at least 960x540 (960x540, 1024x576, 1280x720, 1600x900, ...)
-* higher 16:9 resolution (than 1920) has been tested with 2560x1440
+* higher (than 1920x1080) 16:9 resolution has been tested with 2560x1440
 
 ## Support
 |                                        |   |
@@ -102,20 +132,25 @@ If you have an issue with the bot, please, read the [Frequently Asked Questions]
 |2. transition to Level/Bounty selection | ✓|
 |3. transition between encounters | ✓ |
 |4. prioritize the mysterious stranger  | ✓|
-|    * Cursed Treasure is not supported | x|
+|    * Cursed Treasure | x|
 |5. prioritize the spirit healer  | ✓|
-|6. put mercs on the board | ✓|
+|6. put mercs on board | ✓|
 |7. search for suitable opponents | ✓|
 |8. choose abilities :  | ✓|
 |    * for each mercenary (using `combo.ini` files) | ✓|
 |    * or the first abilities by default (if no configuration exists) | ✓|
 |    * ⚠️ the bot can't point an ability to a specific mercenary  by name | x|
+|    * taunt, stealth, divine shield, attack, health, ... detection | x|
 |9. attack opponents (if ability requires it) | ✓|
 |10. choose a treasure after passing a level | ✓|
 |11. collect rewards for reaching the last level|  ✓|
-|12. claim packs, coins and equipments from completed tasks  | ✓|
+|12. claim packs, coins and equipments from completed tasks | ✓|
 |13. repeat from 1 point | ✓|
 
+## AI
+### Battles
+MFB uses a simple AI which can be described as : 
+* Red (Protector) > Green (Fighter) > Blue (Caster) > Red (Protector)
 
 ## Battle limitation (will change in future releases)
 * ~~bot doesn't work with ability like "choose one" with 2 choices (ex: Malfurion, but works for Rexxar)~~ ✓ (ok since May 23, 2022)
