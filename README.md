@@ -8,7 +8,7 @@ MFB official URL : https://github.com/Efemache/Mercenaries-Farm-bot/
 * Too few devs came (**big thanks to those who participated**) and they, generally, added a feature or two or fixed a bug but none staied on a long term or to globally help
 * A lot of users asked for : features, doc update, videos, bugs fix (a lot of them didn't even impact me), help because they misconfigured MFB, help on their setup which wasn't even "offically supported" (\*) and I helped each time I could :
   * **Only 3 people made a donation** (and one of them did it because MFB was working, not because I helped him; Thanks).
-  * A donation is like "Hey, you helped me, thanks, let me buy you a beer or a coffee" (especially when I spent 1 hour or more to help someone)
+  * A donation is like "Great job" or "Hey, you helped me, thanks, let me buy you a beer or a coffee" (especially when I spent 1 hour or more to help someone)
 * I talked with some users/devs who coded something to improve the bot but never shared it ... and it's around 50% (half shared, half didn't share)
 * As I explained on Discord, I don't really use the bot anymore (since a long time) but I continued to help others, fixed bugs and I even added features (that I don't need to) but, in return, I had only 3 donations and, from some users, bad behaviors (\*).
 * I suppose you understand I spent way too much time with no (or too few) "reward" and, in fact, it wasn't even the first purpose of my participation
@@ -17,7 +17,7 @@ MFB official URL : https://github.com/Efemache/Mercenaries-Farm-bot/
 
 (\*) "officially supported" (1920x1080) :
 ```
-* some users, who neither coded nor made a donation, think I owe them something because I mentioned "officially supported" on documentation (that I don't need in first place to run the bot...)
+* some users, who neither participated nor made a donation, think we owe them something because I mentioned "officially supported" on documentation (that I don't need in first place to run the bot...)
 * official support means "I can only test on 1980x1080 and not on other setup"
 * in no way it means "I will work freely for you and/or fix every bugs you could have on your setup"
 ```
@@ -26,12 +26,12 @@ MFB official URL : https://github.com/Efemache/Mercenaries-Farm-bot/
 
 * I discontinued my work on Github/MFB
 * **I continue to accept Pull Request** (if you code, feel free to send PR and I'll merge it, without testing)
-* If MFB doesn't work anymore after a HearthStone patch or doesn't work for you, sorry 
+* Maybe MFB won't work for you or won't work anymore after a HearthStone patch 
 * **If some [donations](#if-you-want-to-support-or-thank-us) come to dev something, fix a bug or support new Hearthstone patch, maybe I could work on it**
 * If more devs come to help, maybe I could work on MFB
+
 ```
-TL;DR
-MFB is no longer actively developed but for sure, up to "Murder at Castle Nathira" expansion, it works to complete a lot of campfire tasks and some bounties.
+MFB is no longer actively developed but for sure, up to "Murder at Castle Nathria" expansion, it works to complete a lot of campfire tasks and some bounties.
 ```
 
 # Purpose
@@ -47,28 +47,28 @@ If you only want a version working with the last Hearthstone patch, and are not 
 
 
 # If you want to support (or thank) us
-## Fiat money ($, €, ¥, ...)
+## Buy us a coffee, a beer or more 😄 
 |    Platform           | Address |  
 | :------------         | :-------------:|
 |Ko-Fi       | [mercenariesfarm](https://ko-fi.com/mercenariesfarm) |
 |Patreon     | [mercenaries_farm](https://www.patreon.com/mercenaries_farm) |
 
 
-## Crypto money
+## Or send crypto
 
 |    Platform           | Address | QR Code | 
 | :------------         | :-------------:|  :-------------:|  
 | Bitcoin (BTC)         | 3L4MJh6JVrnHyDDrvrkZQNtUytYNjop18f | <img src="https://user-images.githubusercontent.com/56414438/162740117-eeebb1ef-2971-40d3-8e8f-a39fa51e8c6e.png" alt="BTC" width="200" /> |
-|Ethereum (ETH) or <br />Binance Smart Chain (BNB/BUSD)| 0x6Db162daDe8385608867A3B19CF1465e0ed7c0e2 | <img src="https://user-images.githubusercontent.com/56414438/162740147-39c72409-94f3-4871-b9e5-a782ab9c2522.png" alt="ETH-BSC" width="200" /> |
+|Ethereum (ETH) or <br />Binance Smart Chain (BNB/BUSD) (*)| 0x6Db162daDe8385608867A3B19CF1465e0ed7c0e2 | <img src="https://user-images.githubusercontent.com/56414438/162740147-39c72409-94f3-4871-b9e5-a782ab9c2522.png" alt="ETH-BSC" width="200" /> |
 
- (\*) yes, BSC and ETH addresses are the same
+ (\*) *yes, BSC and ETH addresses are the same*
 
- (\*) on Ethereum blockchain you can send any ERC-20 token (let us know if you send token other than ETH)
+ (\*) *on Ethereum blockchain you can send any ERC-20 token (let us know if you send token other than ETH)*
 
- (\*) on BSC blockchain you can send any BEP-20 token (let us know if you send another token than BNB or BUSD)
+ (\*) *on BSC blockchain you can send any BEP-20 token (let us know if you send another token than BNB or BUSD)*
 
 
-## Just a "thanks"
+## Just a "Thanks"
 |    Platform           | Address |
 | :------------         | :-------------:|
 | "Thank you"           | [<img src="https://user-images.githubusercontent.com/56414438/163575703-d249c687-1fd4-4c4d-b549-e27b01bb022b.png" alt="twitter" width="35rem">](https://twitter.com/MercenariesFarm) [<img src="https://user-images.githubusercontent.com/56414438/163575713-a5b96683-f788-4d48-b598-a838e7e97b8b.png" alt="youtube" width="35rem">](https://www.youtube.com/channel/UCye37bX5PJnPgChWvzjTqKg) [<img src="https://user-images.githubusercontent.com/56414438/163575692-c6d78ec2-ae37-46e9-84ca-fd650d3835c2.png" alt="discord" width="35rem">](https://discord.gg/ePghxaUBEK)| |
@@ -114,9 +114,9 @@ For news, follow us on Twitter : [@MercenariesFarm](https://twitter.com/Mercenar
 
 For videos (news, settings, ...), subscribe on YouTube : [MercenariesFarm Channel](https://www.youtube.com/channel/UCye37bX5PJnPgChWvzjTqKg)
 
-To discuss with the community (⚠️ I won't answer to private messages), go to discord : [Mercenaries Farm server](https://discord.gg/ePghxaUBEK)
+To discuss with the community, go to discord : [Mercenaries Farm server](https://discord.gg/ePghxaUBEK) (don't ask in private message)
 
-If you have an issue with the bot, please, read the [Frequently Asked Questions](https://github.com/Efemache/Mercenaries-Farm-bot/wiki/FAQ) before posting any question on discord.
+If you have an issue with the bot, please, read the [FAQ (Frequently Asked Questions)](https://github.com/Efemache/Mercenaries-Farm-bot/wiki/FAQ) before posting any question on discord or opening an issue on Github.
 
 
 # Dev progress
@@ -134,11 +134,11 @@ If you have an issue with the bot, please, read the [Frequently Asked Questions]
 |  16:9 windowed  <sup>2</sup> |        ✅      |
 
 (1)
-* for fullscreen mode, Hearthstone resolution and screen resolution need to be the same (example : 1920x1080 for both)
+* *for fullscreen mode, Hearthstone resolution and screen resolution need to be the same (example : 1920x1080 for both)*
 
 (2)
-* 16:9 resolution should work if at least 960x540 (960x540, 1024x576, 1280x720, 1600x900, ...)
-* higher (than 1920x1080) 16:9 resolution has been tested with 2560x1440
+* *16:9 resolution should work if at least 960x540 (960x540, 1024x576, 1280x720, 1600x900, ...)*
+* *higher (than 1920x1080) 16:9 resolution has been tested with 2560x1440*
 
 ## Support
 |                                        |   |
@@ -166,6 +166,7 @@ If you have an issue with the bot, please, read the [Frequently Asked Questions]
 ### Battles
 MFB uses a simple AI which can be described as : 
 * Red (Protector) > Green (Fighter) > Blue (Caster) > Red (Protector)
+* It doesn't know about taunt, devine shield, stealth, attack, health, ...
 
 ## Battle limitation (will change in future releases)
 * ~~bot doesn't work with ability like "choose one" with 2 choices (ex: Malfurion, but works for Rexxar)~~ ✓ (ok since May 23, 2022)
