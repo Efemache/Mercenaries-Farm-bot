@@ -14,6 +14,11 @@
         "2": false,
         "3": "friend"
     },
+    "Bwonsamdi": {
+        "1": true,
+        "2": "chooseone3",
+        "3": true
+    },
     "Cairne Bloodhoof": {
         "1": true,
         "2": false,
@@ -38,6 +43,11 @@
         "1": true,
         "2": false,
         "3": false
+    },
+    "Garona Halforcen": {
+        "1": true,
+        "2": false,
+        "3": "chooseone3"
     },
     "Garrosh Hellscream": {
         "1": true,
@@ -414,6 +424,11 @@
         "2": "friend:Dragon",
         "3": false
     },
+    "Nemsy Necrofizzle": {
+        "1": true,
+        "2": "friend",
+        "3": "friend"
+    },
     "Old Murk-Eye": {
         "1": true,
         "2": false,
@@ -453,6 +468,11 @@
         "1": true,
         "2": false,
         "3": false
+    },
+    "Tess Greymane": {
+        "1": true,
+        "2": "friend",
+        "3": "chooseone3"
     },
     "Tirion Fordring": {
         "1": true,
