@@ -4,6 +4,16 @@
         "2": true,
         "3": true
     },
+    "Aranna Starseeker": {
+        "1": true,
+        "2": true,
+        "3": true
+    },    
+    "Archimonde": {
+        "1": true,
+        "2": false,
+        "3": false
+    }, 
     "Baine Bloodhoof": {
         "1": true,
         "2": "friend",
@@ -54,6 +64,11 @@
         "2": false,
         "3": false
     },
+    "Genn Greymane": {
+        "1": true,
+        "2": true,
+        "3": false
+    },
     "Grommash Hellscream": {
         "1": true,
         "2": true,
@@ -68,6 +83,16 @@
         "1": true,
         "2": false,
         "3": "friend:Beast"
+    },
+    "Khadgar": {
+        "1": true,
+        "2": false,
+        "3": false
+    },
+    "Korrak the Bloodrager": {
+        "1": true,
+        "2": false,
+        "3": false
     },
     "Kurtrus Ashfallen": {
         "1": true,
@@ -99,12 +124,32 @@
         "2": true,
         "3": false
     },
+    "Medivh": {
+        "1": true,
+        "2": "friend",
+        "3": false
+    },
     "Mr. Smite": {
         "1": true,
         "2": false,
         "3": false
     },
+    "Murloc Holmes": {
+        "1": true,
+        "2": "friend",
+        "3": "chooseone3"
+    },
+    "Neeru Fireblade": {
+        "1": true,
+        "2": false,
+        "3": "friend:Demon"
+    },
     "Niuzao": {
+        "1": true,
+        "2": false,
+        "3": false
+    },
+    "Prince Malchezaar": {
         "1": true,
         "2": false,
         "3": false
@@ -518,5 +563,10 @@
         "1": true,
         "2": false,
         "3": false
+    },
+    "Ysera": {
+        "1": true,
+        "2": "chooseone3",
+        "3": "friend"
     }
 }
