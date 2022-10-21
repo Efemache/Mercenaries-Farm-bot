@@ -1,11 +1,11 @@
 import time
 import sys
 
-from .bounty import travelToLevel, goToEncounter
+from .bounty import selectGroup, travelToLevel, goToEncounter
 from .travelpoint import travelpointSelection
 from .constants import UIElement, Button, Action
 from .image_utils import find_ellement
-from .game import selectGroup, defaultCase
+from .game import defaultCase
 from .campfire import look_at_campfire_completed_tasks
 from .settings import jposition
 from .mouse_utils import move_mouse
@@ -65,10 +65,9 @@ def where():
     #    if find_ellement(UIElement.view_party.filename, Action.screenshot):
     #        nextlvl()
 
-    
     if find_ellement(UIElement.view_party.filename, Action.screenshot):
         goToEncounter()
-    
+
     if find_ellement(UIElement.campfire.filename, Action.screenshot):
         #        time.sleep(2)
         look_at_campfire_completed_tasks()
