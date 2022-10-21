@@ -7,7 +7,7 @@ MFB official URL : https://github.com/Efemache/Mercenaries-Farm-bot/
 * I started to work on this bot (november 2021) because **I thought doing it open source, some devs would come** too to improve MFB so it would be a win/win
 * Too few devs came (**big thanks to those who participated**) and they, generally, added a feature or two or fixed a bug but none staied on a long term or to globally help
 * A lot of users asked for : features, doc update, videos, bugs fix (a lot of them didn't even impact me), help because they misconfigured MFB, help on their setup which wasn't even "offically supported" (\*) and I helped each time I could :
-  * **Only 3 people made a donation** (and one of them did it because MFB was working, not because I helped him; Thanks).
+  * **Only 4 people made a donation**
   * A donation is like "Great job" or "Hey, you helped me, thanks, let me buy you a beer or a coffee" (especially when I spent 1 hour or more to help someone)
 * I talked with some users/devs who coded something to improve the bot but never shared it ... and it's around 50% (half shared, half didn't share)
 * As I explained on Discord, I don't really use the bot anymore (since a long time) but I continued to help others, fixed bugs and I even added features (that I don't need to) but, in return, I had only 3 donations and, from some users, bad behaviors (\*).
@@ -24,14 +24,13 @@ MFB official URL : https://github.com/Efemache/Mercenaries-Farm-bot/
 ### In conclusion 
 </details>
 
-* I discontinued my work on Github/MFB
-* **I continue to accept Pull Request** (if you code, feel free to send PR and I'll merge it, without testing)
-* Maybe MFB won't work for you or won't work anymore after a HearthStone patch 
-* **If some [donations](#if-you-want-to-support-or-thank-us) come to dev something, fix a bug or support new Hearthstone patch, maybe I could work on it**
-* If more devs come to help, maybe I could work on MFB
+* I discontinued my active work on MFB; I will push to repo when/if I have time and motivation.
+* I don't earn enough to be more on it: please, **if you like the bot, think about [giving a tip](#if-you-want-to-support-or-thank-us)**.
+* **I continue to accept Pull Request**: if you have a bug or want a new feature, code it if you know how-to do it and send a PR.
+* MFB will be better if we work together : send new level screenshots, new mercs configuration, bugfix, new feature, ... in PR.
 
 ```
-MFB is no longer actively developed but for sure, up to "Murder at Castle Nathria" expansion, it works to complete a lot of campfire tasks and some bounties.
+MFB works to complete a lot of campfire tasks and somes bounties up to "Murder at Castle Nathria" expansion.
 ```
 
 # Purpose
@@ -108,15 +107,15 @@ If you only want a version working with the last Hearthstone patch, and are not 
 # News & contact 
 More informations in [Wiki](https://github.com/Efemache/Mercenaries-Farm-Bot/wiki)
 
-For bugs, open an [issue](https://github.com/Efemache/Mercenaries-Farm-Bot/issues)
-
 For news, follow us on Twitter : [@MercenariesFarm](https://twitter.com/MercenariesFarm)
 
 For videos (news, settings, ...), subscribe on YouTube : [MercenariesFarm Channel](https://www.youtube.com/channel/UCye37bX5PJnPgChWvzjTqKg)
 
-To discuss with the community, go to discord : [Mercenaries Farm server](https://discord.gg/ePghxaUBEK) (don't ask in private message)
+If you have any issue with the bot, please, read first the [FAQ (Frequently Asked Questions)](https://github.com/Efemache/Mercenaries-Farm-bot/wiki/FAQ) before posting any question on discord or opening an issue on Github.
 
-If you have an issue with the bot, please, read the [FAQ (Frequently Asked Questions)](https://github.com/Efemache/Mercenaries-Farm-bot/wiki/FAQ) before posting any question on discord or opening an issue on Github.
+For bugs, open an [issue](https://github.com/Efemache/Mercenaries-Farm-Bot/issues)
+
+To discuss with the community, go to discord : [Mercenaries Farm server](https://discord.gg/ePghxaUBEK) (don't ask in private message)
 
 
 # Dev progress
