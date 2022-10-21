@@ -7,10 +7,12 @@ from both system and user setting folders
 """
 import logging
 
-from .conf import get_config as _get_config
+from .conf import initusersettings as _initusersettings, get_config as _get_config
 
 
 _log = logging.getLogger(__name__)
+
+_initusersettings()
 
 _log.debug("Read in conf/ settings")
 _root_settings_dict = _get_config()
