@@ -1,10 +1,12 @@
 import logging
 import logging.config
 
+import configparser
+
 log_config = {
     "version": 1,
     "root": {
-        "handlers": ["console", "file"],
+        "handlers": ["console"],
         "level": "DEBUG",
     },
     "handlers": {
@@ -18,6 +20,8 @@ log_config = {
             "class": "logging.FileHandler",
             "level": "DEBUG",
             "filename": "mfb.log",
+            "mode": "w",
+            "delay": True,
         },
     },
     "formatters": {
@@ -29,4 +33,27 @@ log_config = {
     },
 }
 
+_usersetting = "conf/user/settings.ini"
+_systsetting = "conf/system/settings.ini"
+filelogs = False
+_config = configparser.ConfigParser()
+try:
+    _config.read(_systsetting)
+    if _config._sections["BotSettings"]["logs"] == "True":
+        filelogs = True
+except Exception:
+    pass
+
+try:
+    _config.read(_usersetting)
+    if _config._sections["BotSettings"]["logs"] == "True":
+        filelogs = True
+    elif _config._sections["BotSettings"]["logs"] == "False":
+        filelogs = False
+except Exception:
+    pass
+
+print(f"Logs: {filelogs}")
+if filelogs:
+    log_config["root"]["handlers"].append("file")
 logging.config.dictConfig(log_config)
