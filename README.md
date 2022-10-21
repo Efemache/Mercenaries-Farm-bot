@@ -24,14 +24,13 @@ MFB official URL : https://github.com/Efemache/Mercenaries-Farm-bot/
 ### In conclusion 
 </details>
 
-* I discontinued my active work on MFB; I will push to repo when/if I have time and motivation.
+* I won't continue actively my work on MFB; I will push to repo when/if I have time and motivation.
 * I don't earn enough to be more on it: please, **if you like the bot, think about [giving a tip](#if-you-want-to-support-or-thank-us)**.
 * **I continue to accept Pull Request**: if you have a bug or want a new feature, code it if you know how-to do it and send a PR.
 * MFB will be better if we work together : send new level screenshots, new mercs configuration, bugfix, new feature, ... in PR.
 
-```
-MFB works to complete a lot of campfire tasks and somes bounties up to "Murder at Castle Nathria" expansion.
-```
+> **Note**
+> Up to "Murder at Castle Nathria" expansion, MFB works to complete a lot of campfire tasks and somes bounties.
 
 # Purpose
 The purpose of this bot is to automatically pass the bounty levels to level up your mercenaries, win somes coins and complete campfire tasks.
