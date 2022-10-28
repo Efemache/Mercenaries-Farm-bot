@@ -4,7 +4,7 @@ MFB official URL : https://github.com/Efemache/Mercenaries-Farm-bot/
 <details><summary>Click here if you want some context</summary>
 
 ### Context
-* I started to work on this bot (november 2021) because **I thought doing it open source, some devs would come** too to improve MFB so it would be a win/win
+* I started to actively work on this bot (november 2021) because **I thought doing it open source, some devs would come** too to improve MFB so it would be a win/win
 * Too few devs came (**big thanks to those who participated**) and they, generally, added a feature or two or fixed a bug but none staied on a long term or to globally help
 * A lot of users asked for : features, doc update, videos, bugs fix (a lot of them didn't even impact me), help because they misconfigured MFB, help on their setup which wasn't even "offically supported" (\*) and I helped each time I could :
   * **Only 4 people made a donation**
@@ -24,12 +24,12 @@ MFB official URL : https://github.com/Efemache/Mercenaries-Farm-bot/
 ### In conclusion 
 </details>
 
-* I won't continue actively my work on MFB; I will push to repo when/if I have time and motivation.
-* I don't earn enough to be more on it: please, **if you like the bot, think about [giving a tip](#if-you-want-to-support-or-thank-us)**.
+* I stopped to actively work on MFB; I will push to repo when/if I have time.
+* please, **if you like the bot, think about [giving a tip](#if-you-want-to-support-or-thank-us)**.
 * **I continue to accept Pull Request**: if you have a bug or want a new feature, code it if you know how-to do it and send a PR.
 * MFB will be better if we work together : send new level screenshots, new mercs configuration, bugfix, new feature, ... in PR.
 
-> **Note**
+> **Note** 
 > Up to "Murder at Castle Nathria" expansion, MFB works to complete a lot of campfire tasks and somes bounties.
 
 # Purpose
@@ -90,7 +90,8 @@ If you only want a version working with the last Hearthstone patch, and are not 
 
 
 ## Linux
-* Install gir1.2-wnck-3.0 (sudo apt install gir1.2-wnck-3.0)
+* Install gir1.2-wnck-3.0 (`sudo apt install gir1.2-wnck-3.0`)
+* Install - if needed - libharfbuzz-gobject0 (`sudo apt install libharfbuzz-gobject0`)
 * Download the project
 * Open settings.ini and set your [settings](https://github.com/Efemache/Mercenaries-Farm-bot/wiki/Settings#settingsini) (⚠️ don't forget to set "GameDir" to your Hearthstone directory)
 * Edit your Hearthstone [log.config file](https://github.com/Efemache/Mercenaries-Farm-bot/wiki/Settings#logconfig)
