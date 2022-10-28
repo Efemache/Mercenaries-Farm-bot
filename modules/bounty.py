@@ -2,6 +2,7 @@ import sys
 import random
 import time
 import json
+import pathlib
 
 from .platforms import windowMP
 from .mouse_utils import (
@@ -364,3 +365,34 @@ def travelToLevel(page="next"):
         else:
             find_ellement(Button.back.filename, Action.move_and_click)
     return retour
+
+
+def selectGroup():
+    """Look for the mercenaries group 'Botwork' and select it
+    (click on 'LockIn' if necessary)"""
+
+    log.debug("selectGroup : entering")
+
+    # bad code but easily works
+    # need to change it later to have a better solution
+    group_name_custom = pathlib.PurePath(
+        settings_dict["user_files_dir"],
+        settings_dict["resolution"],
+        Button.group_name.filename,
+    ).as_posix()
+
+    group_name = (
+        f"../../{group_name_custom}"
+        if pathlib.Path(group_name_custom).exists
+        else Button.group_name.filename
+    )
+    # end of the section to replace #
+
+    if find_ellement(group_name, Action.move_and_click):
+        find_ellement(Button.choose_team.filename, Action.move_and_click)
+        move_mouse(windowMP(), windowMP()[2] / 1.5, windowMP()[3] / 2)
+        waitForItOrPass(Button.lockin, 3)
+        find_ellement(Button.lockin.filename, Action.move_and_click)
+
+    log.debug("selectGroup : ended")
+    return

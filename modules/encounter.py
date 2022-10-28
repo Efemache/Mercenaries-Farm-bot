@@ -153,6 +153,8 @@ def ability_target_friend(targettype, myMercs, enemies: Enemies):
                 # is a friendly Minion
                 if targettype == "minion":
                     position = int(i)
+                elif targettype == "Imp" and re.search(r"\bImp\b", myMercs[i]):
+                    position = int(i)
 
     if number % 2 == 0:  # if mercenaries number is even
         pos = int(2 - (number / 2 - 1) + (position - 1))
@@ -205,6 +207,9 @@ def parse_ability_setting(ability):
                 retour["name"] = value
             elif key == "miniontype":
                 retour["miniontype"] = value
+            # elif key == "role":
+            # "role" should be "Protector", "Caster" or "Fighter"
+            #    retour["role"] = value
             else:
                 log.warning("Unknown parameter")
 

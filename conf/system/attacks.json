@@ -14,6 +14,11 @@
         "2": false,
         "3": "friend"
     },
+    "Bwonsamdi": {
+        "1": true,
+        "2": "chooseone3",
+        "3": true
+    },
     "Cairne Bloodhoof": {
         "1": true,
         "2": false,
@@ -39,9 +44,19 @@
         "2": false,
         "3": false
     },
+    "Garona Halforcen": {
+        "1": true,
+        "2": false,
+        "3": "chooseone3"
+    },
     "Garrosh Hellscream": {
         "1": true,
         "2": false,
+        "3": false
+    },
+    "Genn Greymane": {
+        "1": true,
+        "2": true,
         "3": false
     },
     "Grommash Hellscream": {
@@ -89,12 +104,27 @@
         "2": true,
         "3": false
     },
+    "Medivh": {
+        "1": true,
+        "2": "friend",
+        "3": false
+    },
     "Mr. Smite": {
         "1": true,
         "2": false,
         "3": false
     },
+    "Murloc Holmes": {
+        "1": true,
+        "2": "friend",
+        "3": "chooseone3"
+    },
     "Niuzao": {
+        "1": true,
+        "2": false,
+        "3": false
+    },
+    "Prince Malchezaar": {
         "1": true,
         "2": false,
         "3": false
@@ -114,6 +144,11 @@
         "2": false,
         "3": true
     },
+    "Tess Greymane": {
+        "1": true,
+        "2": "friend",
+        "3": "chooseone3"
+    },
     "The Lich King": {
         "1": true,
         "2": true,
@@ -132,6 +167,11 @@
     "Trigore the Lasher": {
         "1": true,
         "2": false,
+        "3": false
+    },
+    "Uther Lightbringer": {
+        "1": true,
+        "2": "friend",
         "3": false
     },
     "Vanessa VanCleef": {
@@ -165,6 +205,16 @@
         "3": false
     },
     "Antonidas": {
+        "1": true,
+        "2": false,
+        "3": false
+    },
+    "Aranna Starseeker": {
+        "1": true,
+        "2": true,
+        "3": true
+    },
+    "Archimonde": {
         "1": true,
         "2": false,
         "3": false
@@ -224,9 +274,24 @@
         "2": true,
         "3": false
     },
+    "Khadgar": {
+        "1": true,
+        "2": false,
+        "3": false
+    },
+    "Archmage Khadgar": {
+        "1": true,
+        "2": false,
+        "3": "chooseone3"
+    },
     "Kazakus, Golem Shaper": {
         "1": false,
         "2": "chooseone3",
+        "3": false
+    },
+    "Korrak the Bloodrager": {
+        "1": true,
+        "2": false,
         "3": false
     },
     "Long'xin": {
@@ -259,8 +324,18 @@
         "2": "friend",
         "3": false
     },
+    "Neeru Fireblade": {
+        "1": true,
+        "2": false,
+        "3": "friend:Imp"
+    },
+    "Nemsy Necrofizzle": {
+        "1": true,
+        "2": "friend",
+        "3": "friend"
+    },
     "N'Zoth": {
-        "1": false,
+        "1": true,
         "2": true,
         "3": false
     },
@@ -299,11 +374,6 @@
         "2": false,
         "3": false
     },
-    "Uther Lightbringer": {
-        "1": true,
-        "2": "friend",
-        "3": false
-    },
     "Varden Dawngrasp": {
         "1": false,
         "2": false,
@@ -327,7 +397,7 @@
     "Zar'jira, the Sea Witch": {
         "1": true,
         "2": "friend",
-        "3": false
+        "3": true
     },
     "Balinda Stonehearth": {
         "1": true,
@@ -339,9 +409,14 @@
         "2": true,
         "3": false
     },
+    "Bwonsamdi": {
+        "1": true,
+        "2": "chooseone3",
+        "3": true
+    },
     "C'Thun": {
         "1": true,
-        "2": false,
+        "2": true,
         "3": false
     },
     "Captain Galvangar": {
@@ -369,6 +444,11 @@
         "2": "chooseone2",
         "3": "friend"
     },
+    "Garona Halforcen": {
+        "1": true,
+        "2": false,
+        "3": "chooseone3"
+    },
     "Illidan Stormrage": {
         "1": true,
         "2": false,
@@ -377,7 +457,7 @@
     "King Krush": {
         "1": false,
         "2": false,
-        "3": false
+        "3": true
     },
     "Lady Anacondra": {
         "1": true,
@@ -414,10 +494,15 @@
         "2": "friend:Dragon",
         "3": false
     },
+    "Nemsy Necrofizzle": {
+        "1": true,
+        "2": "friend",
+        "3": "friend"
+    },
     "Old Murk-Eye": {
         "1": true,
         "2": false,
-        "3": false
+        "3": true
     },
     "Rathorian": {
         "1": true,
@@ -454,6 +539,11 @@
         "2": false,
         "3": false
     },
+    "Tess Greymane": {
+        "1": true,
+        "2": "friend",
+        "3": "chooseone3"
+    },
     "Tirion Fordring": {
         "1": true,
         "2": "friend",
@@ -482,7 +572,7 @@
     "War Master Voone": {
         "1": true,
         "2": true,
-        "3": false
+        "3": true
     },
     "Wrathion": {
         "1": true,
@@ -498,5 +588,10 @@
         "1": true,
         "2": false,
         "3": false
+    },
+    "Ysera": {
+        "1": true,
+        "2": "chooseone3",
+        "3": "chooseone2:friend"
     }
 }

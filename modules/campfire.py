@@ -32,7 +32,7 @@ def look_at_campfire_completed_tasks():
     if find_ellement(UIElement.campfire.filename, Action.screenshot):
         retour = True
         while find_ellement(UIElement.campfire.filename, Action.move):
-            waitForItOrPass(Button.campfire_completed_task, 5)
+            waitForItOrPass(Button.campfire_completed_task, 3)
             if (
                 find_ellement(
                     Button.campfire_completed_task.filename, Action.move_and_click

@@ -1,11 +1,8 @@
 import sys
 import time
 
-import os
-import pathlib
-
 from .image_utils import find_ellement
-from .constants import Button, Action, UIElement
+from .constants import Action, UIElement
 from .settings import jposition
 from .mouse_utils import move_mouse, move_mouse_and_click, mouse_position
 from .platforms import windowMP
@@ -43,35 +40,6 @@ def waitForItOrPass(image, duration, step=0.5):
             break
 
     return retour
-
-
-def selectGroup():
-    """Look for the mercenaries group 'Botwork' and select it
-    (click on 'LockIn' if necessary)"""
-
-    log.debug("selectGroup : entering")
-
-    # bad code but easily works
-    # need to change it later to have a better solution
-    group_name_custom = pathlib.PurePath(
-        "conf/user/", Button.group_name.filename
-    ).as_posix()
-
-    group_name = (
-        f"../../{group_name_custom}"
-        if os.path.exists(group_name_custom)
-        else Button.group_name.filename
-    )
-    # end of the section to replace #
-
-    if find_ellement(group_name, Action.move_and_click):
-        find_ellement(Button.choose_team.filename, Action.move_and_click)
-        move_mouse(windowMP(), windowMP()[2] / 1.5, windowMP()[3] / 2)
-        waitForItOrPass(Button.lockin, 3)
-        find_ellement(Button.lockin.filename, Action.move_and_click)
-
-    log.debug("selectGroup : ended")
-    return
 
 
 def defaultCase():
