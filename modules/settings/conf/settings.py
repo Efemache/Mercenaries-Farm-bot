@@ -47,13 +47,13 @@ def get_system_user_settings(system_settings_filename, user_settings_filename):
         for setting, value in settings_dict.items():
             log.info(f" - {setting}: {value}")
     except Exception as e:
-        log.error("Running without settings:",e)
+        log.error("Running without settings:", e)
 
     return add_bot_settings(settings_dict)
 
 
 def get_settings(settings_filename):
-    """Read settings.ini and put it in a dict. 
+    """Read settings.ini and put it in a dict.
     Settings -
         * Resolution (1920x1080),
         * level (20),
