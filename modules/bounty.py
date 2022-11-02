@@ -123,35 +123,6 @@ def nextlvl():
             move_mouse_and_click(windowMP(), windowMP()[2] / 2, windowMP()[3] // 1.25)
             time.sleep(1.5)
 
-        elif find_ellement(Button.visit.filename, Action.move_and_click):
-            y = windowMP()[3] // 2.2
-            time.sleep(7)
-            while find_ellement(UIElement.visitor.filename, Action.screenshot):
-                if settings_dict["stopatstranger"]:
-                    send_notification(
-                        {"message": "Stopping after meeting Mysterious Stranger"}
-                    )
-                    send_slack_notification(
-                        json.dumps(
-                            {
-                                "text": "@channel Stopping after meeting Mysterious Stranger"
-                            }
-                        )
-                    )
-                    log.info("Stopping after meeting Mysterious Stranger")
-                    sys.exit()
-
-                temp = random.choice([3, 2, 1.7])
-                x = windowMP()[2] // temp
-
-                move_mouse_and_click(windowMP(), x, y)
-
-                time.sleep(0.2)
-                find_ellement(Button.choose_task.filename, Action.move_and_click)
-                time.sleep(3)
-                mouse_click()
-                time.sleep(8)
-
         elif find_ellement(
             Button.pick.filename, Action.move_and_click
         ) or find_ellement(Button.portal_warp.filename, Action.move_and_click):
