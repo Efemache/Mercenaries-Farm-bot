@@ -383,7 +383,7 @@ def selectGroup():
 
     group_name = (
         f"../../{group_name_custom}"
-        if pathlib.Path(group_name_custom).exists
+        if pathlib.Path(group_name_custom).exists()
         else Button.group_name.filename
     )
     # end of the section to replace #
