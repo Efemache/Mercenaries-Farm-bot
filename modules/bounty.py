@@ -123,6 +123,9 @@ def nextlvl():
             move_mouse_and_click(windowMP(), windowMP()[2] / 2, windowMP()[3] // 1.25)
             time.sleep(1.5)
 
+        elif find_ellement(Button.visit.filename, Action.move_and_click):
+            time.sleep(7)
+
         elif find_ellement(
             Button.pick.filename, Action.move_and_click
         ) or find_ellement(Button.portal_warp.filename, Action.move_and_click):
