@@ -1,36 +1,25 @@
 # Mercenaries Farm Bot (for Hearthstone)
 MFB official URL : https://github.com/Efemache/Mercenaries-Farm-bot/
-## ⚠️ A big change starting 2022-09-18 : 
+
+# Free & Tip: 2 ways starting 2022-11-07
 <details><summary>Click here if you want some context</summary>
 
-### Context
+## Context
 * I started to actively work on this bot (november 2021) because **I thought doing it open source, some devs would come** too to improve MFB so it would be a win/win
 * Too few devs came (**big thanks to those who participated**) and they, generally, added a feature or two or fixed a bug but none staied on a long term or to globally help
-* A lot of users asked for : features, doc update, videos, bugs fix (a lot of them didn't even impact me), help because they misconfigured MFB, help on their setup which wasn't even "offically supported" (\*) and I helped each time I could :
+* A lot of users asked for : features, doc update, videos, bugs fix (a lot of them didn't even impact me), help because they misconfigured MFB, help on their setup which wasn't even offically supported and I helped each time I could :
   * **Only 4 people made a donation**
   * A donation is like "Great job" or "Hey, you helped me, thanks, let me buy you a beer or a coffee" (especially when I spent 1 hour or more to help someone)
-* I talked with some users/devs who coded something to improve the bot but never shared it ... and it's around 50% (half shared, half didn't share)
-* As I explained on Discord, I don't really use the bot anymore (since a long time) but I continued to help others, fixed bugs and I even added features (that I don't need to) but, in return, I had only 3 donations and, from some users, bad behaviors (\*).
-* I suppose you understand I spent way too much time with no (or too few) "reward" and, in fact, it wasn't even the first purpose of my participation
-* Finally, it was more a lose/win for me
-* Even if this explanation shows a lot of bad things (I just tried to explain why I stop here), in overall, it was a **good experience and I worked with some nice people. Thank you all**
+* Finally, it was way too much work for me "alone" and a lose/win for me
 
-(\*) "officially supported" (1920x1080) :
-```
-* some users, who neither participated nor made a donation, think we owe them something because I mentioned "officially supported" on documentation (that I don't need in first place to run the bot...)
-* official support means "I can only test on 1980x1080 and not on other setup"
-* in no way it means "I will work freely for you and/or fix every bugs you could have on your setup"
-```
-### In conclusion 
+## In conclusion 
 </details>
 
-* I stopped to actively work on MFB; I will push to repo when/if I have time.
-* please, **if you like the bot, think about [giving a tip](#if-you-want-to-support-or-thank-us)**.
-* **I continue to accept Pull Request**: if you have a bug or want a new feature, code it if you know how-to do it and send a PR.
-* MFB will be better if we work together : send new level screenshots, new mercs configuration, bugfix, new feature, ... in PR.
+To continue to work on and maintain the bot : 
+* MFB will remain **free and open source** but updates will be **delivered 3-4 weeks later**
+* For those who **help** (in coding) **and** those who **[give a tip](#if-you-want-to-support-or-thank-us) (at least 10$)**, updates will be **delivered 3-4 weeks before others**
 
-> **Note** 
-> Up to "Murder at Castle Nathria" expansion, MFB works to complete a lot of campfire tasks and somes bounties.
+ **Pull Request are still accepted**: if you have a bug or want a new feature, code it if you know how-to do it and send a PR.
 
 # Purpose
 The purpose of this bot is to automatically pass the bounty levels to level up your mercenaries, win somes coins and complete campfire tasks.
@@ -38,6 +27,12 @@ The purpose of this bot is to automatically pass the bounty levels to level up y
 There is a [```main```](https://github.com/Efemache/Mercenaries-Farm-bot) branch to use daily and a [```dev2```](https://github.com/Efemache/Mercenaries-Farm-bot/tree/dev2) branch with new features but not well tested (and can be broken sometimes).
 
 If you only want a version working with the last Hearthstone patch, and are not interested in new feature, I recommend to use the [last tagged version](https://github.com/Efemache/Mercenaries-Farm-bot/tags).
+
+
+> **Note** 
+> Up to "Murder at Castle Nathria" expansion, MFB works to complete a lot of campfire tasks and somes bounties.
+
+**If you like the bot, think about [giving a tip](#if-you-want-to-support-or-thank-us)**.
 
 
 # PvE preview (video)
@@ -49,7 +44,6 @@ If you only want a version working with the last Hearthstone patch, and are not 
 |    Platform           | Address |  
 | :------------         | :-------------:|
 |Ko-Fi       | [mercenariesfarm](https://ko-fi.com/mercenariesfarm) |
-|Patreon     | [mercenaries_farm](https://www.patreon.com/mercenaries_farm) |
 
 
 ## Or send crypto
