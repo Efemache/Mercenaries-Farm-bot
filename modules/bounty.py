@@ -36,28 +36,31 @@ def collect():
     collectAttempts = 0
 
     while True:
+        collectAttempts += 1
+
         move_mouse_and_click(windowMP(), windowMP()[2] / 2.5, windowMP()[3] / 3.5)
         move_mouse_and_click(windowMP(), windowMP()[2] / 2, windowMP()[3] / 3.5)
         move_mouse_and_click(windowMP(), windowMP()[2] / 1.5, windowMP()[3] / 3.5)
         move_mouse_and_click(windowMP(), windowMP()[2] / 1.5, windowMP()[3] / 2.4)
         move_mouse_and_click(windowMP(), windowMP()[2] / 2.7, windowMP()[3] / 1.4)
-
         move_mouse_and_click(windowMP(), windowMP()[2] / 3, windowMP()[3] / 2.7)
         move_mouse_and_click(windowMP(), windowMP()[2] / 1.4, windowMP()[3] / 1.3)
         move_mouse_and_click(windowMP(), windowMP()[2] / 1.6, windowMP()[3] / 1.3)
         move_mouse_and_click(windowMP(), windowMP()[2] / 1.7, windowMP()[3] / 1.3)
         move_mouse_and_click(windowMP(), windowMP()[2] / 1.8, windowMP()[3] / 1.3)
         move_mouse_and_click(windowMP(), windowMP()[2] / 1.9, windowMP()[3] / 1.3)
-        time.sleep(3)
-        # if find_ellement(Button.done_bonus.filename, Action.move_and_click):
-        #    time.sleep(5)
-        #    continue
-        collectAttempts += 1
-        if find_ellement(Button.done.filename, Action.move_and_click):
-            time.sleep(2)
-            log.info("Clicking again if done button was not clicked before.")
-            find_ellement(Button.done.filename, Action.move_and_click)
+
+        # click done button in middle
+        move_mouse_and_click(windowMP(), windowMP()[2] / 1.9, windowMP()[3] / 1.8)
+
+        # move the mouse to avoid a bug where it is over a card/hero (at the end)
+        # hiding the "OK" button
+        move_mouse(windowMP(), windowMP()[2] // 1.25, windowMP()[3] // 1.25)
+        time.sleep(5)
+
+        if find_ellement(Button.finishok.filename, Action.move_and_click):
             break
+
         if collectAttempts > 10:
             send_notification(
                 {
@@ -75,15 +78,6 @@ def collect():
                 f"Attempted to collect treasure {collectAttempts} times, attempting to recover."
             )
             break
-
-    # move the mouse to avoid a bug where the it is over a card/hero (at the end)
-    # hiding the "OK" button
-    move_mouse(windowMP(), windowMP()[2] // 1.25, windowMP()[3] // 1.25)
-    # quit the bounty
-    while not find_ellement(Button.finishok.filename, Action.move_and_click):
-        time.sleep(1)
-        mouse_click()
-        time.sleep(2)
 
 
 def quitBounty():
