@@ -134,6 +134,11 @@
         "2": false,
         "3": true
     },
+    "Rattlegore": {
+        "1": true,
+        "2": true,
+        "3": true
+    },
     "Sir Finley": {
         "1": true,
         "2": "chooseone3",
