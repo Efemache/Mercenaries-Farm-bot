@@ -144,16 +144,25 @@ def nextlvl():
             search_battle_list = []
             battletypes = ["fighter", "protector", "caster"]
             random.shuffle(battletypes)
+            boontypes = ["boonfighter", "boonprotector", "booncaster"]
+            random.shuffle(boontypes)
+            encountertypes = battletypes + boontypes
             battletypes.append("elite")
-            for battletype in battletypes:
-                tag = f"{battletype}_battle"
+            encountertypes.append("elite")
+            for encounter in encountertypes:
+                tag = f"encounter_{encounter}"
                 coords = find_ellement(
                     getattr(UIElement, tag).filename, Action.get_coords
                 )
                 if coords:
-                    battlepreference = f"prefer{battletype}"
+                    battlepreference = f"prefer{encounter}"
                     x = coords[0]
-                    y = coords[1] + (windowMP()[3] // 10.8)
+                    y = (
+                        coords[1] + (windowMP()[3] // 10.8)
+                        if encounter in battletypes
+                        else coords[1]
+                    )
+
                     if settings_dict[battlepreference]:
                         search_battle_list.insert(0, (x, y))
                     else:
