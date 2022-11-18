@@ -628,6 +628,13 @@ def selectCardsInHand(zL=None):
         x2 = windowMP()[2] // 10
         y2 = windowMP()[3] // 10
 
+        log.info(f"Cards in hand: {zL.getHand()}")
+
+        cards = cardsInHand(windowMP(), zL, 3)
+#        cards.send_to_board("Lord Jaraxxus")
+#        cards.send_to_board("Zar'jira, the Sea Witch")
+#        cards.send_to_board("Maestra")
+
         # let the "while". In future release,
         #   we could add a function to select specifics cards
         while not find_ellement(Button.num.filename, Action.move_and_click):
@@ -638,3 +645,68 @@ def selectCardsInHand(zL=None):
         log.debug("[ SETH - END]")
 
     return retour
+
+
+class cardsInHand:
+    def __init__(self, win, zLog, max_on_board):
+        self.win = win
+        self.zone_log = zLog
+        # used to init (set to False) "AutoCorrectZonesAfterServerChange"
+        self.zone_log.get_zonechanged()
+        self.in_hand = self.zone_log.getHand()
+        self.on_board = 0
+        self.max_on_board = max_on_board
+
+    def send_to_board(self, mercenary):
+        if self.on_board < self.max_on_board:
+            coord_x = self.get_coord(mercenary)
+            if coord_x == 0:
+                return False
+            move_mouse_and_click(self.win, coord_x, self.coord_y)
+            move_mouse_and_click(self.win, self.win[2]//1.33, self.win[3]//1.63)
+            log.debug(f"Put on board: {mercenary}")
+            self.on_board += 1
+            self.in_hand.remove(mercenary)
+            i = 0
+            while not self.zone_log.get_zonechanged():
+                time.sleep(0.5)
+                i += 1
+                if i > 10:
+                    log.error(f"Putting {mercenary} on board failed.")
+                    break
+
+    def clean(self):
+        self.in_hand = []
+        self.on_board = 0
+
+    def get_size(self):
+        return len(self.in_hand)
+
+    def get_coord(self, mercenary):
+        self.coord_y = self.win[3] // 1.085
+        if mercenary not in self.in_hand:
+            return 0
+        size = self.get_size()
+        if size == 6:
+            card_width = self.win[2] // 21
+            starting_position = self.win[2] // 2.8
+        elif size == 5:
+            card_width = self.win[2] // 17.39
+            starting_position = self.win[2] // 2.8
+        elif size == 4:
+            card_width = self.win[2] // 13.91
+            starting_position = self.win[2] // 2.8
+        elif size == 3:
+            card_width = self.win[2] // 14.55
+            starting_position = self.win[2] // 2.5
+        elif size == 2:
+            card_width = self.win[2] // 14.55
+            starting_position = self.win[2] // 2.28
+        elif size == 1:
+            card_width = self.win[2] // 14.55
+            starting_position = self.win[2] // 2.13
+        return (
+            starting_position
+            + (card_width // 2)
+            + self.in_hand.index(mercenary) * card_width
+        )
