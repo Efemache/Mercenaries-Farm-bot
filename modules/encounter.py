@@ -628,16 +628,23 @@ def selectCardsInHand(zL=None):
         x2 = windowMP()[2] // 10
         y2 = windowMP()[3] // 10
 
-        log.info(f"Cards in hand: {zL.getHand()}")
+        # Look if user configured the bot to select cards in hand
+        # and put them on board
+        if "_handselection" in ability_order["Mercenary"]:
+            log.info(f"Cards in hand: {zL.getHand()}")
+            cards = cardsInHand(windowMP(), zL, 3)
 
-        cards = cardsInHand(windowMP(), zL, 3)
-#        cards.send_to_board("Lord Jaraxxus")
-#        cards.send_to_board("Zar'jira, the Sea Witch")
-#        cards.send_to_board("Maestra")
+            for merc in ability_order["Mercenary"]["_handselection"].split("+"):
+                cards.send_to_board(merc)
+                if find_ellement(Button.allready.filename, Action.screenshot):
+                    break
 
         # let the "while". In future release,
         #   we could add a function to select specifics cards
-        while not find_ellement(Button.num.filename, Action.move_and_click):
+        while not (
+            find_ellement(Button.num.filename, Action.move_and_click)
+            or find_ellement(Button.allready.filename, Action.move_and_click)
+        ):
             move_mouse(windowMP(), x1, y1)
             move_mouse(windowMP(), x2, y2)
 
@@ -663,7 +670,7 @@ class cardsInHand:
             if coord_x == 0:
                 return False
             move_mouse_and_click(self.win, coord_x, self.coord_y)
-            move_mouse_and_click(self.win, self.win[2]//1.33, self.win[3]//1.63)
+            move_mouse_and_click(self.win, self.win[2] // 1.33, self.win[3] // 1.63)
             log.debug(f"Put on board: {mercenary}")
             self.on_board += 1
             self.in_hand.remove(mercenary)
