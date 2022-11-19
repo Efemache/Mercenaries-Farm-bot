@@ -144,7 +144,7 @@ class LogHSMercs:
 
     def start(self):
         log.debug("Reading logfile: %s", self.logpath)
-        self.logfile = open(self.logpath, "r")
+        self.logfile = open(self.logpath, "r", encoding="UTF-8")
         self.__running = True
         t1 = threading.Thread(target=self.follow)
         self.thread = t1
