@@ -29,6 +29,7 @@ class UIElement(ImageFragment):
     Barrens = "Barrens"
     Blackrock = "Blackrock"
     Darkshore = "Darkshore"
+    Darkmoon = "Darkmoon"
     Felwood = "Felwood"
     Onyxia = "Onyxia"
     Sunken = "Sunken"
