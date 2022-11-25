@@ -23,7 +23,7 @@ class LogHSMercs:
         self.enemiesBoard = {}
         self.enemiesId = {}
 
-        self.zonechange_finished=False
+        self.zonechange_finished = False
 
     def follow(self):
         # go to the end of the file
@@ -64,6 +64,14 @@ class LogHSMercs:
         )
         # D 14:25:59.2307890 ZoneChangeList.ProcessChanges() - processing index=4 change=powerTask=[power=[type=TAG_CHANGE entity=[id=5 cardId=LETL_006H_01 name=Lord Jaraxxus] tag=FAKE_ZONE value=3 ] complete=False] entity=[entityName=Lord Jaraxxus id=5 zone=SETASIDE zonePos=0 cardId=LETL_006H_01 player=3] srcZoneTag=INVALID srcPos= dstZoneTag=HAND dstPos=
 
+        regexGoToEnemy = (
+            ".+?entityName=.+? +"
+            "id=.+? zone=PLAY "
+            "zonePos=(.) "
+            ".+?zone from FRIENDLY PLAY -> OPPOSING PLAY"
+        )
+        # ZoneChangeList.ProcessChanges() - id=28 local=False [entityName=Spud M.E. 1 id=62 zone=PLAY zonePos=1 cardId=LETL_903t_01 player=2] zone from FRIENDLY PLAY -> OPPOSING PLAY
+
         # start infinite loop to read log file
         while self.__running:
             # read last line of file
@@ -72,6 +80,7 @@ class LogHSMercs:
             if not line:
                 time.sleep(0.1)
                 continue
+
             if "ZoneChangeList.ProcessChanges() - processing" in line and re.search(
                 regexBoard, line
             ):
@@ -107,6 +116,7 @@ class LogHSMercs:
                 # dstpos = 0 if the card is going to GRAVEYARD
                 if dstpos != "0":
                     self.enemiesBoard[dstpos] = enemyId
+
             elif "ZoneChangeList.ProcessChanges() - processing" in line and re.search(
                 regexEnemyBoardUpdate, line
             ):
@@ -132,12 +142,19 @@ class LogHSMercs:
                 mercenary = re.findall(regexInHand, line)[0]
                 if mercenary not in self.cardsInHand:
                     self.cardsInHand.append(mercenary)
+
+            elif " ZoneChangeList.ProcessChanges() " in line and re.search(
+                regexGoToEnemy, line
+            ):
+                zonepos = re.findall(regexGoToEnemy, line)[0]
+                self.myBoard.pop(zonepos)
+
             elif "ZoneMgr.AutoCorrectZonesAfterServerChange()" in line:
-                self.zonechange_finished=True 
+                self.zonechange_finished = True
 
     def get_zonechanged(self):
         if self.zonechange_finished:
-            self.zonechange_finished=False
+            self.zonechange_finished = False
             return True
         else:
             return False
