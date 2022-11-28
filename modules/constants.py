@@ -68,6 +68,7 @@ class UIElement(ImageFragment):
     task_expansion_completed = "task_expansion_completed"
     team_selection = "team_selection"
     travelpoint = "travelpoint"
+    treasure_passive = "treasure_passive"
     view_party = "view_party"
     win = "win"
     win_final = "win_final"
