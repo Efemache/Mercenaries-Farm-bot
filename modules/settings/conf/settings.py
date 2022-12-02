@@ -47,24 +47,23 @@ def get_system_user_settings(system_settings_filename, user_settings_filename):
         for setting, value in settings_dict.items():
             log.info(f" - {setting}: {value}")
     except Exception as e:
-        log.error("Running without settings:",e)
+        log.error("Running without settings:", e)
 
     return add_bot_settings(settings_dict)
 
 
 def get_settings(settings_filename):
-    """Read settings.ini and put it in a table :
+    """Read settings.ini and put it in a dict.
     Settings -
-        0: MonitorResolution (1920x1080),
-        1: level (20),
-        2: location (Barrens),
-        3: mode (Heroic),
-        4: quitBeforeBossFight (True),
-        5: stopAtStranger (True),
-        6: monitor (1),
-        7: MouseSpeed (0.5),
-        8: WaitForEXP (3),
-        9: Zonelog (GameDir/Logs/Zone.log)
+        * Resolution (1920x1080),
+        * level (20),
+        * location (Barrens),
+        * mode (Heroic),
+        * quitBeforeBossFight (True),
+        * monitor (1),
+        * MouseSpeed (0.5),
+        * WaitForEXP (3),
+        * Zonelog (GameDir/Logs/Zone.log)
     """
     raw_settings = readINI(settings_filename)
 
