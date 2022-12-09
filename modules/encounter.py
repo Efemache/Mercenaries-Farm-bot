@@ -14,8 +14,10 @@ from .game import countdown, waitForItOrPass
 # from .log_board import LogHSMercs
 from .settings import settings_dict, mercslist, mercsAbilities, ability_order
 
-
 log = logging.getLogger(__name__)
+
+default_ability_section = "Mercenary"
+ability_section = default_ability_section
 
 
 class Enemies:
@@ -130,7 +132,8 @@ def ability_target_friend(targettype, myMercs, enemies: Enemies):
 
     number = int(sorted(myMercs)[-1])
     if targettype == "friend":
-        # TODO get multiple enemies per type for priority by weakness of the most type of enemy
+        # TODO get multiple enemies per type for priority by
+        # weakness of the most type of enemy
         if enemies.blue:
             # enemies have blue so we buff red merc first
             position = random.choice(priorityMercByType(myMercs, "Protector"))
@@ -252,7 +255,9 @@ def didnt_find_a_name_for_this_one(name, minionSection, turn, defaultAbility=0):
         ]
         if (
             find_ellement(
-                UIElement.hourglass.filename, Action.get_coords, new_screen=newscreenshot
+                UIElement.hourglass.filename,
+                Action.get_coords,
+                new_screen=newscreenshot,
             )
             is None
         ):
@@ -280,7 +285,7 @@ def select_ability(localhero, myBoard, enemies: Enemies, raund):
         chooseone3 = [windowMP()[2] // 3, windowMP()[2] // 2, windowMP()[2] // 1.5]
 
         abilitySetting = didnt_find_a_name_for_this_one(
-            localhero, "Mercenary", raund, 1
+            localhero, ability_section, raund, 1
         )
         if abilitySetting["ability"] != 0:
             ability = abilitySetting["ability"]
@@ -487,10 +492,6 @@ def battle(zoneLog=None):
     """
     retour = True
 
-    # init the reading of Hearthstone filelog to detect your board / mercenaries
-    # zoneLog = LogHSMercs(settings_dict["zonelog"])
-    # zoneLog.start()
-
     raund = 1
     while True:
         move_mouse(
@@ -548,7 +549,7 @@ def battle(zoneLog=None):
                 windowMP()[2],
                 windowMP()[3] // 2,
                 windowMP()[1],
-                windowMP()[0]
+                windowMP()[0],
             ]
 
             enemies = find_enemies(newscreenshot)
@@ -607,12 +608,22 @@ def selectCardsInHand(zL=None):
 
     log.debug("[ SETH - START]")
     retour = True
+    global ability_section
 
     # while not find_ellement(Button.num.filename, Action.screenshot):
     #    time.sleep(2)
     waitForItOrPass(Button.num, 60, 2)
 
     if find_ellement(Button.num.filename, Action.screenshot):
+        # check if HS is ready for the battle
+        # and check logs to find
+        boss = zL.getEnemyBoard()
+        for i in boss:
+            if boss[i] in ability_order:
+                log.info(f"Specific conf found to beat: {boss[i]}")
+                ability_section = boss[i]
+                break
+
         # wait 'WaitForEXP' (float) in minutes, to make the battle last longer
         # and win more XP (for the Hearthstone reward track)
         wait_for_exp = settings_dict["waitforexp"]
@@ -628,11 +639,11 @@ def selectCardsInHand(zL=None):
 
         # Look if user configured the bot to select cards in hand
         # and put them on board
-        if "_handselection" in ability_order["Mercenary"]:
+        if "_handselection" in ability_order[ability_section]:
             log.info(f"Cards in hand: {zL.getHand()}")
             cards = cardsInHand(windowMP(), zL, 3)
 
-            for merc in ability_order["Mercenary"]["_handselection"].split("+"):
+            for merc in ability_order[ability_section]["_handselection"].split("+"):
                 cards.send_to_board(merc)
                 if find_ellement(Button.allready.filename, Action.screenshot):
                     break
@@ -648,6 +659,9 @@ def selectCardsInHand(zL=None):
 
         retour = battle(zL)
         log.debug("[ SETH - END]")
+
+        # put back default value to selection abilities from [Mercenary] section
+        ability_section = default_ability_section
 
     return retour
 
