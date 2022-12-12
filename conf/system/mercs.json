@@ -24,6 +24,7 @@
     "Niuzao": {"type": "Protector", "minion_type": "Beast"},
     "Prince Malchezaar": {"type": "Protector", "minion_type": "Demon"},
     "Ragnaros": {"type": "Protector", "minion_type": "Elemental"},
+    "Rattlegore": {"type": "Protector", "minion_type": "Undead"},
     "Sir Finley": {"type": "Protector", "minion_type": "Murloc"},
     "Sneed": {"type": "Protector", "minion_type": "Pirate"},
     "Tess Greymane": {"type": "Protector", "minion_type": "Human"},

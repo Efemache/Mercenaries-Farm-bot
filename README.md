@@ -29,7 +29,7 @@ There is a [```main```](https://github.com/Efemache/Mercenaries-Farm-bot) branch
 If you only want a version working with the last Hearthstone patch, and are not interested in new feature, I recommend to use the [last tagged version](https://github.com/Efemache/Mercenaries-Farm-bot/tags).
 
 
-> **Note** 
+> **Note**:  
 > Up to "Murder at Castle Nathria" expansion, MFB works to complete a lot of campfire tasks and somes bounties.
 
 **If you like the bot, think about [giving a tip](#if-you-want-to-support-or-thank-us)**.
@@ -76,7 +76,7 @@ If you only want a version working with the last Hearthstone patch, and are not 
 ## Windows
 * Install [Python 3.10](https://www.python.org/ftp/python/3.10.0/python-3.10.0-amd64-webinstall.exe) (⚠️ select the "Add Python 3.10 to PATH" during installation) 
 * Download the project
-* Open settings.ini and set your [settings](https://github.com/Efemache/Mercenaries-Farm-bot/wiki/Settings#settingsini) (⚠️ don't forget to set "GameDir" to your Hearthstone directory)
+* Open conf/user/settings.ini and set your [settings](https://github.com/Efemache/Mercenaries-Farm-bot/wiki/Settings#settingsini-confusersettingsini) (⚠️ don't forget to set "GameDir" to your Hearthstone directory)
 * Edit your Hearthstone [log.config file](https://github.com/Efemache/Mercenaries-Farm-bot/wiki/Settings#logconfig)
 * Start Hearthstone (with same resolution as set in settings.ini)
 * Create a group of mercenaries named "Botwork" (and go back to main menu)
@@ -87,7 +87,7 @@ If you only want a version working with the last Hearthstone patch, and are not 
 * Install gir1.2-wnck-3.0 (`sudo apt install gir1.2-wnck-3.0`)
 * Install - if needed - libharfbuzz-gobject0 (`sudo apt install libharfbuzz-gobject0`)
 * Download the project
-* Open settings.ini and set your [settings](https://github.com/Efemache/Mercenaries-Farm-bot/wiki/Settings#settingsini) (⚠️ don't forget to set "GameDir" to your Hearthstone directory)
+* Open conf/user/settings.ini and set your [settings](https://github.com/Efemache/Mercenaries-Farm-bot/wiki/Settings#settingsini-confusersettingsini) (⚠️ don't forget to set "GameDir" to your Hearthstone directory)
 * Edit your Hearthstone [log.config file](https://github.com/Efemache/Mercenaries-Farm-bot/wiki/Settings#logconfig)
 * Start Hearthstone (with same resolution as set in settings.ini)
 * Create a group of mercenaries named "Botwork" (and go back to main menu)
@@ -109,7 +109,7 @@ If you have any issue with the bot, please, read first the [FAQ (Frequently Aske
 
 For bugs, open an [issue](https://github.com/Efemache/Mercenaries-Farm-Bot/issues)
 
-To discuss with the community, go to discord : [Mercenaries Farm server](https://discord.gg/ePghxaUBEK) (don't ask in private message)
+To discuss with the community, go to discord : [Mercenaries Farm server](https://discord.gg/ePghxaUBEK) (⚠️ don't ask in private message)
 
 
 # Dev progress
@@ -145,7 +145,7 @@ To discuss with the community, go to discord : [Mercenaries Farm server](https:/
 |6. put mercs on board | ✓|
 |7. search for suitable opponents | ✓|
 |8. choose abilities :  | ✓|
-|    * for each mercenary (using `combo.ini` files) | ✓|
+|    * for each mercenary (using [combo.ini](https://github.com/Efemache/Mercenaries-Farm-bot/wiki/Settings#comboini-confusercomboini) files) | ✓|
 |    * or the first abilities by default (if no configuration exists) | ✓|
 |    * ⚠️ the bot can't point an ability to a specific mercenary  by name | x|
 |    * taunt, stealth, divine shield, attack, health, ... detection | x|
