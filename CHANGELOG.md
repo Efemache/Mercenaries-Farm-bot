@@ -5,29 +5,8 @@
 New:
 ~~~~
 - you can configure combos for a specific enemy/battle (usefull for Boss Battle)
-- select a passive treasure (when MFB doesn't find a known/configured treasure)
-- new Mercenary 'Chromie' added
 - feature to pick cards/mercenaries from hand added
-- boon priorization available
-- CHANGELOG created and READM updated
-- new bounties added (Darkmoon and missing Blackrock)
-- trying to support "Bonus loot" button at end of bounty
-- Rattlegore (protector) added
-
-Changes:
-~~~~~~~~
-- Raven Familiar will use second ability and Blue Portal won't attack
 - user can configure (in combo.ini) which cards to put on board
-
-Bug Fixes:
-~~~~~~~~~~
-- SPUD leaving your side of the board should be well detected. Fixes #21
-- Darkmoon zone added
-- thresholds updated to improve battles detection on Encounter Map
-- image bounty for Neeru Fireblade wasn't correct
-- new images for better battles (encounter map) detection
-- update for Jaraxxus (Fel Infernal doesn't have Charge)
-- images updated for battle on encounter map (to avoid to click on a disabled battle)
 
 
 2022-11-28
