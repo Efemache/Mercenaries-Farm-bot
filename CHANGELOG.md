@@ -5,8 +5,7 @@
 New:
 ~~~~
 - you can configure combos for a specific enemy/battle (usefull for Boss Battle)
-- feature to pick cards/mercenaries from hand added
-- user can configure (in combo.ini) which cards to put on board
+- feature added to select mercenaries from cards in hand (usefull for Boss Battle)
 
 
 2022-11-28
