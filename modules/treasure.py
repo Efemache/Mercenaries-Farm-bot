@@ -5,9 +5,9 @@ from queue import PriorityQueue
 
 from .platforms import windowMP
 from .mouse_utils import move_mouse_and_click
-from .constants import Button, Action
+from .constants import Button, Action, UIElement
 from .image_utils import find_ellement
-from .settings import treasures_priority
+from .settings import treasures_priority, settings_dict
 
 import logging
 
@@ -37,13 +37,20 @@ def chooseTreasure():
             time.sleep(1)
             break
     else:
-        log.info("No known treasure found: picking random one")
-        temp = random.choice([2.3, 1.7, 1.4])
-        y = windowMP()[3] // 2
-        x = windowMP()[2] // temp
-        move_mouse_and_click(windowMP(), x, y)
-        time.sleep(1)
-        # break
+        found = False
+        if settings_dict["preferpassivetreasures"] is True:
+            log.info("No known treasure found: looking for passive one")
+            if find_ellement(UIElement.treasure_passive.filename, Action.move_and_click):
+                found = True
+                time.sleep(1)
+        
+        if found is False:
+            log.info("No known treasure found: picking random one")
+            temp = random.choice([2.3, 1.7, 1.4])
+            y = windowMP()[3] // 2
+            x = windowMP()[2] // temp
+            move_mouse_and_click(windowMP(), x, y)
+            time.sleep(1)
 
     while not (
         find_ellement(Button.take.filename, Action.move_and_click)

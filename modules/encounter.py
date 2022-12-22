@@ -7,7 +7,7 @@ from typing import List
 from .platforms import windowMP
 from .mouse_utils import move_mouse_and_click, move_mouse, mouse_click  # , mouse_scroll
 
-from .image_utils import partscreen, find_ellement, get_resolution
+from .image_utils import find_ellement
 from .constants import UIElement, Button, Action
 from .game import countdown, waitForItOrPass
 
@@ -244,16 +244,16 @@ def didnt_find_a_name_for_this_one(name, minionSection, turn, defaultAbility=0):
             f"abilities Y : {abilitiesPositionY} |"
             f" abilities X : {abilitiesPositionX}"
         )
-        _, _, _, scale_size = get_resolution()
-        partscreen(
+        newscreenshot = [
             int(abilitiesWidth),
             int(abilitiesHeigth),
             int(windowMP()[1] + abilitiesPositionY),
             int(windowMP()[0] + abilitiesPositionX[0]),
-            scale_size=scale_size,
-        )
+        ]
         if (
-            find_ellement(UIElement.hourglass.filename, Action.get_coords_part_screen)
+            find_ellement(
+                UIElement.hourglass.filename, Action.get_coords, new_screen=newscreenshot
+            )
             is None
         ):
             move_mouse_and_click(
@@ -423,13 +423,13 @@ def take_turn_action(
 
 
 # Look for enemies
-def find_enemies() -> Enemies:
-    enemyred = find_red_enemy()
-    enemygreen = find_green_enemy()
-    enemyblue = find_blue_enemy()
-    enemynoclass = find_noclass_enemy()
-    enemynoclass2 = find_noclass2_enemy()
-    enemymol = find_mol_enemy()
+def find_enemies(ns=True) -> Enemies:
+    enemyred = find_red_enemy(ns)
+    enemygreen = find_green_enemy(ns)
+    enemyblue = find_blue_enemy(ns)
+    enemynoclass = find_noclass_enemy(ns)
+    enemynoclass2 = find_noclass2_enemy(ns)
+    enemymol = find_mol_enemy(ns)
 
     log.info(
         f"Enemies : red {enemyred}"
@@ -444,33 +444,33 @@ def find_enemies() -> Enemies:
     )
 
 
-def find_red_enemy():
-    return find_enemy("red")
+def find_red_enemy(ns=True):
+    return find_enemy("red", ns)
 
 
-def find_green_enemy():
-    return find_enemy("green")
+def find_green_enemy(ns=True):
+    return find_enemy("green", ns)
 
 
-def find_blue_enemy():
-    return find_enemy("blue")
+def find_blue_enemy(ns=True):
+    return find_enemy("blue", ns)
 
 
-def find_noclass_enemy():
-    return find_enemy("noclass")
+def find_noclass_enemy(ns=True):
+    return find_enemy("noclass", ns)
 
 
-def find_noclass2_enemy():
-    return find_enemy("noclass2")
+def find_noclass2_enemy(ns=True):
+    return find_enemy("noclass2", ns)
 
 
-def find_mol_enemy():
-    return find_enemy("sob")
+def find_mol_enemy(ns=True):
+    return find_enemy("sob", ns)
 
 
-def find_enemy(enemy_type):
+def find_enemy(enemy_type, ns=True):
     enemy = find_ellement(
-        getattr(UIElement, enemy_type).filename, Action.get_coords_part_screen
+        getattr(UIElement, enemy_type).filename, Action.get_coords, new_screen=ns
     )
     # find_element: Can be changed to return None or actual coords if exists
     if enemy:
@@ -544,16 +544,14 @@ def battle(zoneLog=None):
             time.sleep(0.5)
 
             # tmp = int(windowMP()[3] / 2)
-            _, _, _, scale_size = get_resolution()
-            partscreen(
+            newscreenshot = [
                 windowMP()[2],
                 windowMP()[3] // 2,
                 windowMP()[1],
-                windowMP()[0],
-                scale_size=scale_size,
-            )
+                windowMP()[0]
+            ]
 
-            enemies = find_enemies()
+            enemies = find_enemies(newscreenshot)
 
             # Go (mouse) to "central zone" and click on an empty space
             # move_mouse_and_click(windowMP(), windowMP()[2] // 2, windowMP()[3] // 1.2)
@@ -628,9 +626,23 @@ def selectCardsInHand(zL=None):
         x2 = windowMP()[2] // 10
         y2 = windowMP()[3] // 10
 
+        # Look if user configured the bot to select cards in hand
+        # and put them on board
+        if "_handselection" in ability_order["Mercenary"]:
+            log.info(f"Cards in hand: {zL.getHand()}")
+            cards = cardsInHand(windowMP(), zL, 3)
+
+            for merc in ability_order["Mercenary"]["_handselection"].split("+"):
+                cards.send_to_board(merc)
+                if find_ellement(Button.allready.filename, Action.screenshot):
+                    break
+
         # let the "while". In future release,
         #   we could add a function to select specifics cards
-        while not find_ellement(Button.num.filename, Action.move_and_click):
+        while not (
+            find_ellement(Button.num.filename, Action.move_and_click)
+            or find_ellement(Button.allready.filename, Action.move_and_click)
+        ):
             move_mouse(windowMP(), x1, y1)
             move_mouse(windowMP(), x2, y2)
 
@@ -638,3 +650,68 @@ def selectCardsInHand(zL=None):
         log.debug("[ SETH - END]")
 
     return retour
+
+
+class cardsInHand:
+    def __init__(self, win, zLog, max_on_board):
+        self.win = win
+        self.zone_log = zLog
+        # used to init (set to False) "AutoCorrectZonesAfterServerChange"
+        self.zone_log.get_zonechanged()
+        self.in_hand = self.zone_log.getHand()
+        self.on_board = 0
+        self.max_on_board = max_on_board
+
+    def send_to_board(self, mercenary):
+        if self.on_board < self.max_on_board:
+            coord_x = self.get_coord(mercenary)
+            if coord_x == 0:
+                return False
+            move_mouse_and_click(self.win, coord_x, self.coord_y)
+            move_mouse_and_click(self.win, self.win[2] // 1.33, self.win[3] // 1.63)
+            log.debug(f"Put on board: {mercenary}")
+            self.on_board += 1
+            self.in_hand.remove(mercenary)
+            i = 0
+            while not self.zone_log.get_zonechanged():
+                time.sleep(0.5)
+                i += 1
+                if i > 10:
+                    log.error(f"Putting {mercenary} on board failed.")
+                    break
+
+    def clean(self):
+        self.in_hand = []
+        self.on_board = 0
+
+    def get_size(self):
+        return len(self.in_hand)
+
+    def get_coord(self, mercenary):
+        self.coord_y = self.win[3] // 1.085
+        if mercenary not in self.in_hand:
+            return 0
+        size = self.get_size()
+        if size == 6:
+            card_width = self.win[2] // 21
+            starting_position = self.win[2] // 2.8
+        elif size == 5:
+            card_width = self.win[2] // 17.39
+            starting_position = self.win[2] // 2.8
+        elif size == 4:
+            card_width = self.win[2] // 13.91
+            starting_position = self.win[2] // 2.8
+        elif size == 3:
+            card_width = self.win[2] // 14.55
+            starting_position = self.win[2] // 2.5
+        elif size == 2:
+            card_width = self.win[2] // 14.55
+            starting_position = self.win[2] // 2.28
+        elif size == 1:
+            card_width = self.win[2] // 14.55
+            starting_position = self.win[2] // 2.13
+        return (
+            starting_position
+            + (card_width // 2)
+            + self.in_hand.index(mercenary) * card_width
+        )

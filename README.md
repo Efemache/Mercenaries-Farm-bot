@@ -16,18 +16,19 @@ MFB official URL : https://github.com/Efemache/Mercenaries-Farm-bot/
 </details>
 
 To continue to work on and maintain the bot : 
-* MFB will remain **free and open source** but updates will be **delivered 3-4 weeks later**
+* MFB remains **free and open source** but updates will be **delivered 3-4 weeks later**
 * For those who **help** (in coding) **and** those who **[give a tip](#if-you-want-to-support-or-thank-us) (at least 10$)**, updates will be **delivered 3-4 weeks before others**
 
  **Pull Request are still accepted**: if you have a bug or want a new feature, code it if you know how-to do it and send a PR.
 
+> **Note**:  
+> Look at the [changelog](https://ko-fi.com/mercenariesfarm/posts) to see what is already available in the supporters version and release dates for github.
+
+
 # Purpose
 The purpose of this bot is to automatically pass the bounty levels to level up your mercenaries, win somes coins and complete campfire tasks.
 
-There is a [```main```](https://github.com/Efemache/Mercenaries-Farm-bot) branch to use daily and a [```dev2```](https://github.com/Efemache/Mercenaries-Farm-bot/tree/dev2) branch with new features but not well tested (and can be broken sometimes).
-
-If you only want a version working with the last Hearthstone patch, and are not interested in new feature, I recommend to use the [last tagged version](https://github.com/Efemache/Mercenaries-Farm-bot/tags).
-
+There is a [```main```](https://github.com/Efemache/Mercenaries-Farm-bot) branch to use daily. [```dev2```](https://github.com/Efemache/Mercenaries-Farm-bot/tree/dev2) branch is used for PR (Pull Request) only.
 
 > **Note**:  
 > Up to "Murder at Castle Nathria" expansion, MFB works to complete a lot of campfire tasks and somes bounties.
@@ -139,8 +140,9 @@ To discuss with the community, go to discord : [Mercenaries Farm server](https:/
 |1. transition to Travel point selection | ✓|
 |2. transition to Level/Bounty selection | ✓|
 |3. transition between encounters | ✓ |
-|4. prioritize the mysterious stranger  | ✓|
-|    * Cursed Treasure | x|
+|4. prioritize the mysterious node | ✓|
+|    * Bonus Treasure | ✓|
+|    * Cursed Treasure | ✓|
 |5. prioritize the spirit healer  | ✓|
 |6. put mercs on board | ✓|
 |7. search for suitable opponents | ✓|

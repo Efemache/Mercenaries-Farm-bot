@@ -4,6 +4,7 @@
     "Brann Bronzebeard": {"type": "Protector", "minion_type": "Dwarf"},
     "Cairne Bloodhoof": {"type": "Protector", "minion_type": "Tauren"},
     "Cariel Roame": {"type": "Protector", "minion_type": "Human"},
+    "Chromie": {"type": "Protector", "minion_type": "Gnome"},
     "Cornelius Roame": {"type": "Protector", "minion_type": "Human"},
     "Deathwing": {"type": "Protector", "minion_type": "Dragon"},
     "Fathom-Lord Karathress": {"type": "Protector", "minion_type": "Naga"},

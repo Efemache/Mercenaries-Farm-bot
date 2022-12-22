@@ -1,4 +1,25 @@
 
+2022-11-28
+----------
+
+New:
+~~~~
+- select a passive treasure (when MFB doesn't find a known/configured treasure)
+- new Mercenary 'Chromie' added
+- user can choose (in combo.ini) which cards to pick to put on board
+- boon priorization available
+
+Changes:
+~~~~~~~~
+- Raven Familiar will use second ability and Blue Portal won't attack
+
+Bug Fixes:
+~~~~~~~~~~
+- SPUD leaving your side of the board should be well detected. Fixes #21
+- Darkmoon zone added
+- thresholds updated to improve battles detection on Encounter Map
+
+
 2022-11-14
 ----------
 

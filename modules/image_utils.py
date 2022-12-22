@@ -61,7 +61,9 @@ def get_gray_image(file):
     return get_gray_image.imagesInMemory[file]
 
 
-def find_ellement(file, action, threshold="-", speed=settings_dict["bot_speed"]):
+def find_ellement(
+    file, action, threshold="-", new_screen=True, speed=settings_dict["bot_speed"]
+):
     """Find an object ('file') on the screen (UI, Button, ...)
         and do some actions ('action')
                 Screenshot Here  |    Screenshot Before  |  Actions   | Return
@@ -74,7 +76,7 @@ def find_ellement(file, action, threshold="-", speed=settings_dict["bot_speed"])
     """
     click_coords = find_element_from_file(
         file,
-        new_screenshot=action != Action.get_coords_part_screen,
+        new_screenshot=new_screen,
         threshold=threshold,
         speed=speed,
     )
@@ -120,7 +122,7 @@ def find_element_from_file(
     Returns:
         (int, int): coordinates of center of element
     """
-    global partImg
+    # global partImg
     # time.sleep(speed)
 
     if threshold == "-":
@@ -132,14 +134,22 @@ def find_element_from_file(
     resolution, width, height, scale_size = get_resolution()
 
     # choose if the bot need to look into the screen or in a part of the screen
-    if new_screenshot:
-        partscreen(
+    if new_screenshot == True:
+        partImg = partscreen(
             windowMP()[2],
             windowMP()[3],
             windowMP()[1],
             windowMP()[0],
             resize_width=width,
             resize_height=height,
+        )
+    else:
+        partImg = partscreen(
+            new_screenshot[0],
+            new_screenshot[1],
+            new_screenshot[2],
+            new_screenshot[3],
+            scale_size=scale_size,
         )
 
     img = cv2.cvtColor(partImg, cv2.COLOR_BGR2GRAY)
@@ -172,7 +182,6 @@ def partscreen(
     """
     take screeenshot for a part of the screen to find some part of the image
     """
-    global partImg
     import mss.tools
 
     with mss.mss() as sct:
@@ -180,7 +189,7 @@ def partscreen(
         sct_img = sct.grab(monitor)
 
         if debug_mode:
-            output_file = f"files/{resolution}/part.png"
+            output_file = f"files/debug.png"
             mss.tools.to_png(sct_img.rgb, sct_img.size, output=output_file)
 
         partImg = np.array(sct_img)
