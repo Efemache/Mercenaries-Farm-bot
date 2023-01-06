@@ -297,7 +297,7 @@
     "Kazakus, Golem Shaper": {
         "1": false,
         "2": "chooseone3",
-        "3": false
+        "3": true
     },
     "Korrak the Bloodrager": {
         "1": true,
@@ -327,7 +327,7 @@
     "Morgl the Oracle": {
         "1": true,
         "2": false,
-        "3": true
+        "3": "friend"
     },
     "Natalie Seline": {
         "1": true,
