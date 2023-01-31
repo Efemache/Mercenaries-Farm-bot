@@ -28,10 +28,12 @@ To continue to work on and maintain the bot :
 # Purpose
 The purpose of this bot is to automatically pass the bounty levels to level up your mercenaries, win somes coins and complete campfire tasks.
 
-There is a [```main```](https://github.com/Efemache/Mercenaries-Farm-bot) branch to use daily. [```dev2```](https://github.com/Efemache/Mercenaries-Farm-bot/tree/dev2) branch is used for PR (Pull Request) only.
+There is a [```main```](https://github.com/Efemache/Mercenaries-Farm-bot) branch to use daily.  
+[```dev2```](https://github.com/Efemache/Mercenaries-Farm-bot/tree/dev2) branch is used for Pull Request (PR) only.  
+Tags are not used anymore (last one is 0.8.3 and is deprecated); instead, download and use main branch.
 
 > **Note**:  
-> Up to "Murder at Castle Nathria" expansion, MFB works to complete a lot of campfire tasks and somes bounties.
+> Up to "March of the Lich King" expansion release, MFB works to complete a lot of campfire tasks and somes bounties.
 
 **If you like the bot, think about [giving a tip](#if-you-want-to-support-or-thank-us)**.
 
