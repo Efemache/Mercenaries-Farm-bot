@@ -51,6 +51,19 @@ def readINI(inifile):
     return config._sections
 
 
+def writeINI(file, data):
+    """... to write new settings into .ini file and return if ok (or not)"""
+    config = configparser.ConfigParser()
+
+    for section in data:
+        config.add_section(section)
+        for key in data[section]:
+            config.set(section, key, str(data[section][key]))
+
+    with open(file, "w") as configfile:
+        config.write(configfile)
+
+
 def copy_dir_and_func_files(srcdir, dstdir, ext, func, func_params):
     os.path.exists(dstdir) or os.mkdir(dstdir)
 

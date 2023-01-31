@@ -2,7 +2,7 @@ import os
 import shutil
 import logging
 
-from modules.file_utils import readjson, readINI
+from modules.file_utils import readjson, readINI, writeINI
 from modules.utils import update
 from modules.exceptions import MissingSettingsFile
 
@@ -25,19 +25,42 @@ config_files = [
     "treasures.json",
 ]
 
+
+def set_settings(new_settings_data):
+    user_settings_file = os.path.join(
+        BASE_CONFIG_FOLDER, USER_CONFIG_FOLDER, "settings.ini"
+    )
+    user_data = update_settings_with_file({}, user_settings_file)
+
+    new_settings_data = {"BotSettings": new_settings_data}
+    new_data = update(user_data, new_settings_data)
+
+    writeINI(user_settings_file, new_data)
+
+
 def initusersettings():
-    user_settings_file = os.path.join(BASE_CONFIG_FOLDER, USER_CONFIG_FOLDER, "settings.ini")
-    sample_settings_file = os.path.join(BASE_CONFIG_FOLDER, USER_CONFIG_FOLDER, "settings.sample.ini")
-    bad_settings_file = os.path.join(BASE_CONFIG_FOLDER, USER_CONFIG_FOLDER, "settings.ini.ini")
+    user_settings_file = os.path.join(
+        BASE_CONFIG_FOLDER, USER_CONFIG_FOLDER, "settings.ini"
+    )
+    sample_settings_file = os.path.join(
+        BASE_CONFIG_FOLDER, USER_CONFIG_FOLDER, "settings.sample.ini"
+    )
+    bad_settings_file = os.path.join(
+        BASE_CONFIG_FOLDER, USER_CONFIG_FOLDER, "settings.ini.ini"
+    )
 
     if not os.path.isfile(user_settings_file):
         if os.path.isfile(bad_settings_file):
-            os.rename(bad_settings_file,user_settings_file)
-            log.info(f"Bad settings filename '{bad_settings_file}' renamed into {user_settings_file}")
+            os.rename(bad_settings_file, user_settings_file)
+            log.info(
+                f"Bad settings filename '{bad_settings_file}' renamed into {user_settings_file}"
+            )
         elif os.path.isfile(sample_settings_file):
             shutil.copy(sample_settings_file, user_settings_file)
-            log.info(f"No settings file found: {sample_settings_file} copied into {user_settings_file}. Set your settings.")
-            
+            log.info(
+                f"No settings file found: {sample_settings_file} copied into {user_settings_file}. Set your settings."
+            )
+
 
 def get_config(
     base_config_folder=BASE_CONFIG_FOLDER,
