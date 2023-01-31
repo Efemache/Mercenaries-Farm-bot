@@ -78,6 +78,7 @@
     "Xyrella": {"type": "Caster", "minion_type": "Draenei"},
     "Yogg-Saron": {"type": "Caster", "minion_type": "Old God"},
     "Zar'jira, the Sea Witch": {"type": "Caster", "minion_type": "Naga"},
+    "Artus": {"type": "Fighter", "minion_type": "Beast"},
     "Balinda Stonehearth": {"type": "Fighter", "minion_type": "Human"},
     "Blademaster Samuro": {"type": "Fighter", "minion_type": "Orc"},
     "Bwonsamdi": {"type": "Fighter", "minion_type": "Troll"},

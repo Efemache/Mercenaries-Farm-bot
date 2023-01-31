@@ -409,6 +409,11 @@
         "2": "friend",
         "3": true
     },
+    "Artus": {
+        "1": true,
+        "2": false,
+        "3": false
+    },
     "Balinda Stonehearth": {
         "1": true,
         "2": true,
