@@ -471,7 +471,7 @@
     },
     "Lady Anacondra": {
         "1": true,
-        "2": "friend",
+        "2": "friend:Beast",
         "3": false
     },
     "Lady Vashj": {
