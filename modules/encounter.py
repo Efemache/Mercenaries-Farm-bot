@@ -117,9 +117,10 @@ def priorityMercByType(myMercs, targettype) -> List[int]:
     return mercs_pos
 
 
-def ability_target_friend(targettype, myMercs, enemies: Enemies):
+def ability_target_friend(targettype, myMercs, enemies: Enemies, abilityInitiator):
     """Return the X coord of one of our mercenaries"""
 
+    log.debug("Friend targeted is %s", targettype)
     cardSize = int(windowMP()[2] / 12)
     firstOdd = int(windowMP()[2] / 3)
     firstEven = int(windowMP()[2] / 3.6)
@@ -132,19 +133,15 @@ def ability_target_friend(targettype, myMercs, enemies: Enemies):
 
     number = int(sorted(myMercs)[-1])
     if targettype == "friend":
-        # TODO get multiple enemies per type for priority by
-        # weakness of the most type of enemy
-        if enemies.blue:
-            # enemies have blue so we buff red merc first
-            position = random.choice(priorityMercByType(myMercs, "Protector"))
-        elif enemies.green:
-            # enemies have green so we buff blue merc first
-            position = random.choice(priorityMercByType(myMercs, "Caster"))
-        elif enemies.red:
-            # enemies have red so we buff green merc first
-            position = random.choice(priorityMercByType(myMercs, "Fighter"))
+        pickBestAllyToBuff(enemies, myMercs, number)
+    elif targettype == "Beast":
+        if abilityInitiator == "Lady Anacondra":
+            log.debug(" Looking for Nightmare Viper position in mercs board... ")
+            position = find_nightmare_viper_position_in_mercs(myMercs)
         else:
-            position = random.randint(1, number)
+            # should pick random position since it's not implemented for all beasts at this point
+            # for future ideas this could also be used to not buff the viper, but buff an alied merc if health drops too low
+            position = pickBestAllyToBuff(enemies, myMercs, number)
     else:
         position = 1
         for i in myMercs:
@@ -167,6 +164,31 @@ def ability_target_friend(targettype, myMercs, enemies: Enemies):
         x = positionOdd[pos]
 
     return x
+
+
+def pickBestAllyToBuff(enemies, myMercs, number):
+    # TODO get multiple enemies per type for priority by
+    # weakness of the most type of enemy
+    if enemies.blue:
+        # enemies have blue so we buff red merc first
+        position = random.choice(priorityMercByType(myMercs, "Protector"))
+    elif enemies.green:
+        # enemies have green so we buff blue merc first
+        position = random.choice(priorityMercByType(myMercs, "Caster"))
+    elif enemies.red:
+        # enemies have red so we buff green merc first
+        position = random.choice(priorityMercByType(myMercs, "Fighter"))
+    else:
+        position = random.randint(1, number)
+    return position
+
+
+# TODO This could also be moved to an entirely new module when new mercs with beast buffs are added
+def find_nightmare_viper_position_in_mercs(myMercs):
+    for i in myMercs:
+        if re.search(r"\ANightmare Viper", myMercs[i]):
+            return int(i)
+    return 0
 
 
 def get_ability_for_this_turn(name, minionSection, turn, defaultAbility=0):
@@ -215,7 +237,6 @@ def parse_ability_setting(ability):
             #    retour["role"] = value
             else:
                 log.warning("Unknown parameter")
-
     return retour
 
 
@@ -316,13 +337,14 @@ def select_ability(localhero, myBoard, enemies: Enemies, raund):
                             mercsAbilities[localhero][str(ability)].split(":")[1],
                             myBoard,
                             enemies,
+                            localhero
                         ),
                         windowMP()[3] / 1.5,
                     )
                 else:
                     move_mouse_and_click(
                         windowMP(),
-                        ability_target_friend("friend", myBoard, enemies),
+                        ability_target_friend("friend", myBoard, enemies, localhero),
                         windowMP()[3] / 1.5,
                     )
             # elif mercsAbilities[localhero][str(ability)] == "friend:Dragon":
