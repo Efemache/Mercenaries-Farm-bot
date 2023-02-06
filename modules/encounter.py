@@ -117,8 +117,10 @@ def priorityMercByType(myMercs, targettype) -> List[int]:
     return mercs_pos
 
 
-def ability_target_friend(targettype, myMercs, enemies: Enemies, friendName):
+def ability_target_friend(targettype, myMercs, enemies: Enemies, abilitySetting):
     """Return the X coord of one of our mercenaries"""
+
+    friendName = abilitySetting["name"]
 
     log.debug("Friend targeted is %s", targettype)
     log.debug("Friend name is %s", friendName)
@@ -134,11 +136,10 @@ def ability_target_friend(targettype, myMercs, enemies: Enemies, friendName):
 
     number = int(sorted(myMercs)[-1])
     if targettype == "friend":
-        if friendName is not None:
+        if friendName:
             position = findFriendNameInMercs(myMercs, friendName)
-        else:    
-            # should pick random position since it's not implemented for all beasts at this point
-            # for future ideas this could also be used to not buff the viper, but buff an alied merc if health drops too low
+        else:
+            # for future, it could also buff an alied if health drops too low
             position = pickBestAllyToBuff(enemies, myMercs, number)
     else:
         position = 1
@@ -181,11 +182,11 @@ def pickBestAllyToBuff(enemies, myMercs, number):
     return position
 
 
-# TODO This could also be moved to an entirely new module when new mercs with beast buffs are added
+# TODO This could also be moved to an entirely new module
 def findFriendNameInMercs(myMercs, friendName):
     for i in myMercs:
         log.debug("***** Looking for our friend %s ... ******", friendName)
-        if re.search(fr"\A{friendName}\b", myMercs[i]):
+        if re.search(rf"\A{friendName}\b", myMercs[i]):
             log.debug("***** FOUND HIM AT POSITION %s", i)
             return int(i)
     return 0
@@ -330,15 +331,8 @@ def select_ability(localhero, myBoard, enemies: Enemies, raund):
                 retour = True
             elif mercsAbilities[localhero][str(ability)].startswith("friend"):
                 time.sleep(0.2)
-                log.debug("***** Ability setting is: %s *****", abilitySetting)
-                # I believe this is wrong since there should be no : to split for in attacks.json as per your PR comment
-                # I got mislead by this, and first PR turned into a specialized form for the nightmare beast. 
-                # Since all the config should be done in combo.ini file it's there we should define our combo
-                # and what minion to target with the chosen ability having friend should be enough in the attacks.json. 
-                # Of course, I haven't combed the code so I might have missed something, but that's what PR's are for :) 
-                # I'll leave this bit here, it's up to you how to deal with it.
-                # For now, according to the current code in this PR, it will go into the else bracket 
-                # where it will pick up the targeted minion from the abilitySetting["name"]
+
+                # if attacks.json shows something more than just "friend" (like "Beast")
                 if ":" in mercsAbilities[localhero][str(ability)]:
                     move_mouse_and_click(
                         windowMP(),
@@ -346,23 +340,19 @@ def select_ability(localhero, myBoard, enemies: Enemies, raund):
                             mercsAbilities[localhero][str(ability)].split(":")[1],
                             myBoard,
                             enemies,
-                            abilitySetting["name"]
+                            abilitySetting,
                         ),
                         windowMP()[3] / 1.5,
                     )
                 else:
+                    # attacks.json  only contains "friend"
                     move_mouse_and_click(
                         windowMP(),
-                        ability_target_friend("friend", myBoard, enemies, abilitySetting["name"]),
+                        ability_target_friend(
+                            "friend", myBoard, enemies, abilitySetting
+                        ),
                         windowMP()[3] / 1.5,
                     )
-            # elif mercsAbilities[localhero][str(ability)] == "friend:Dragon":
-            #     time.sleep(0.2)
-            #     move_mouse_and_click(
-            #         windowMP(),
-            #         ability_target_friend("friend:Dragon", myBoard, enemies),
-            #         windowMP()[3] / 1.5,
-            #     )
     else:
         localhero = re.sub(r" [0-9]$", "", localhero)
         abilitySetting = didnt_find_a_name_for_this_one(localhero, "Neutral", raund, 1)
