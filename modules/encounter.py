@@ -117,10 +117,11 @@ def priorityMercByType(myMercs, targettype) -> List[int]:
     return mercs_pos
 
 
-def ability_target_friend(targettype, myMercs, enemies: Enemies, abilityInitiator):
+def ability_target_friend(targettype, myMercs, enemies: Enemies, friendName):
     """Return the X coord of one of our mercenaries"""
 
     log.debug("Friend targeted is %s", targettype)
+    log.debug("Friend name is %s", friendName)
     cardSize = int(windowMP()[2] / 12)
     firstOdd = int(windowMP()[2] / 3)
     firstEven = int(windowMP()[2] / 3.6)
@@ -133,12 +134,9 @@ def ability_target_friend(targettype, myMercs, enemies: Enemies, abilityInitiato
 
     number = int(sorted(myMercs)[-1])
     if targettype == "friend":
-        pickBestAllyToBuff(enemies, myMercs, number)
-    elif targettype == "Beast":
-        if abilityInitiator == "Lady Anacondra":
-            log.debug(" Looking for Nightmare Viper position in mercs board... ")
-            position = find_nightmare_viper_position_in_mercs(myMercs)
-        else:
+        if friendName is not None:
+            position = findFriendNameInMercs(myMercs, friendName)
+        else:    
             # should pick random position since it's not implemented for all beasts at this point
             # for future ideas this could also be used to not buff the viper, but buff an alied merc if health drops too low
             position = pickBestAllyToBuff(enemies, myMercs, number)
@@ -184,9 +182,11 @@ def pickBestAllyToBuff(enemies, myMercs, number):
 
 
 # TODO This could also be moved to an entirely new module when new mercs with beast buffs are added
-def find_nightmare_viper_position_in_mercs(myMercs):
+def findFriendNameInMercs(myMercs, friendName):
     for i in myMercs:
-        if re.search(r"\ANightmare Viper", myMercs[i]):
+        log.debug("***** Looking for our friend %s ... ******", friendName)
+        if re.search(fr"\A{friendName}\b", myMercs[i]):
+            log.debug("***** FOUND HIM AT POSITION %s", i)
             return int(i)
     return 0
 
@@ -330,6 +330,15 @@ def select_ability(localhero, myBoard, enemies: Enemies, raund):
                 retour = True
             elif mercsAbilities[localhero][str(ability)].startswith("friend"):
                 time.sleep(0.2)
+                log.debug("***** Ability setting is: %s *****", abilitySetting)
+                # I believe this is wrong since there should be no : to split for in attacks.json as per your PR comment
+                # I got mislead by this, and first PR turned into a specialized form for the nightmare beast. 
+                # Since all the config should be done in combo.ini file it's there we should define our combo
+                # and what minion to target with the chosen ability having friend should be enough in the attacks.json. 
+                # Of course, I haven't combed the code so I might have missed something, but that's what PR's are for :) 
+                # I'll leave this bit here, it's up to you how to deal with it.
+                # For now, according to the current code in this PR, it will go into the else bracket 
+                # where it will pick up the targeted minion from the abilitySetting["name"]
                 if ":" in mercsAbilities[localhero][str(ability)]:
                     move_mouse_and_click(
                         windowMP(),
@@ -337,14 +346,14 @@ def select_ability(localhero, myBoard, enemies: Enemies, raund):
                             mercsAbilities[localhero][str(ability)].split(":")[1],
                             myBoard,
                             enemies,
-                            localhero
+                            abilitySetting["name"]
                         ),
                         windowMP()[3] / 1.5,
                     )
                 else:
                     move_mouse_and_click(
                         windowMP(),
-                        ability_target_friend("friend", myBoard, enemies, localhero),
+                        ability_target_friend("friend", myBoard, enemies, abilitySetting["name"]),
                         windowMP()[3] / 1.5,
                     )
             # elif mercsAbilities[localhero][str(ability)] == "friend:Dragon":
