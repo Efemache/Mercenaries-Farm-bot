@@ -170,7 +170,7 @@ MFB uses a simple AI which can be described as :
 * ~~bot doesn't work with ability which need to point to one of your mercenaries (ex: impossible to use healing with Xyrella)~~ ✓ (ok since May 23, 2022)
   * ~~bot doesn't work with ability targeting a specific type of mercenary like Dragon, Beast, ...~~ ✓ (ok since Jul. 08, 2022)
 * ~~bot doesn't use minions on board which are not a mercenary~~ ✓ (ok since 0.4.0 release) / Feb. 18, 2022
-* MFB can't target a specific Mercenary by name
+* ~~MFB can't target a specific Mercenary by name~~ ✓ (ok since Feb. 06, 2023)
 * MFB can't target a friendly minion/merc with an ability which, usually, point to an enemy
 
 

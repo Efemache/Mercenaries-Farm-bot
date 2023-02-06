@@ -117,9 +117,13 @@ def priorityMercByType(myMercs, targettype) -> List[int]:
     return mercs_pos
 
 
-def ability_target_friend(targettype, myMercs, enemies: Enemies):
+def ability_target_friend(targettype, myMercs, enemies: Enemies, abilitySetting):
     """Return the X coord of one of our mercenaries"""
 
+    friendName = abilitySetting["name"]
+
+    log.debug("Friend targeted is %s", targettype)
+    log.debug("Friend name is %s", friendName)
     cardSize = int(windowMP()[2] / 12)
     firstOdd = int(windowMP()[2] / 3)
     firstEven = int(windowMP()[2] / 3.6)
@@ -132,19 +136,11 @@ def ability_target_friend(targettype, myMercs, enemies: Enemies):
 
     number = int(sorted(myMercs)[-1])
     if targettype == "friend":
-        # TODO get multiple enemies per type for priority by
-        # weakness of the most type of enemy
-        if enemies.blue:
-            # enemies have blue so we buff red merc first
-            position = random.choice(priorityMercByType(myMercs, "Protector"))
-        elif enemies.green:
-            # enemies have green so we buff blue merc first
-            position = random.choice(priorityMercByType(myMercs, "Caster"))
-        elif enemies.red:
-            # enemies have red so we buff green merc first
-            position = random.choice(priorityMercByType(myMercs, "Fighter"))
+        if friendName:
+            position = findFriendNameInMercs(myMercs, friendName)
         else:
-            position = random.randint(1, number)
+            # for future, it could also buff an alied if health drops too low
+            position = pickBestAllyToBuff(enemies, myMercs, number)
     else:
         position = 1
         for i in myMercs:
@@ -167,6 +163,33 @@ def ability_target_friend(targettype, myMercs, enemies: Enemies):
         x = positionOdd[pos]
 
     return x
+
+
+def pickBestAllyToBuff(enemies, myMercs, number):
+    # TODO get multiple enemies per type for priority by
+    # weakness of the most type of enemy
+    if enemies.blue:
+        # enemies have blue so we buff red merc first
+        position = random.choice(priorityMercByType(myMercs, "Protector"))
+    elif enemies.green:
+        # enemies have green so we buff blue merc first
+        position = random.choice(priorityMercByType(myMercs, "Caster"))
+    elif enemies.red:
+        # enemies have red so we buff green merc first
+        position = random.choice(priorityMercByType(myMercs, "Fighter"))
+    else:
+        position = random.randint(1, number)
+    return position
+
+
+# TODO This could also be moved to an entirely new module
+def findFriendNameInMercs(myMercs, friendName):
+    for i in myMercs:
+        log.debug("***** Looking for our friend %s ... ******", friendName)
+        if re.search(rf"\A{friendName}\b", myMercs[i]):
+            log.debug("***** FOUND HIM AT POSITION %s", i)
+            return int(i)
+    return 0
 
 
 def get_ability_for_this_turn(name, minionSection, turn, defaultAbility=0):
@@ -215,7 +238,6 @@ def parse_ability_setting(ability):
             #    retour["role"] = value
             else:
                 log.warning("Unknown parameter")
-
     return retour
 
 
@@ -309,6 +331,8 @@ def select_ability(localhero, myBoard, enemies: Enemies, raund):
                 retour = True
             elif mercsAbilities[localhero][str(ability)].startswith("friend"):
                 time.sleep(0.2)
+
+                # if attacks.json shows something more than just "friend" (like "Beast")
                 if ":" in mercsAbilities[localhero][str(ability)]:
                     move_mouse_and_click(
                         windowMP(),
@@ -316,22 +340,19 @@ def select_ability(localhero, myBoard, enemies: Enemies, raund):
                             mercsAbilities[localhero][str(ability)].split(":")[1],
                             myBoard,
                             enemies,
+                            abilitySetting,
                         ),
                         windowMP()[3] / 1.5,
                     )
                 else:
+                    # attacks.json  only contains "friend"
                     move_mouse_and_click(
                         windowMP(),
-                        ability_target_friend("friend", myBoard, enemies),
+                        ability_target_friend(
+                            "friend", myBoard, enemies, abilitySetting
+                        ),
                         windowMP()[3] / 1.5,
                     )
-            # elif mercsAbilities[localhero][str(ability)] == "friend:Dragon":
-            #     time.sleep(0.2)
-            #     move_mouse_and_click(
-            #         windowMP(),
-            #         ability_target_friend("friend:Dragon", myBoard, enemies),
-            #         windowMP()[3] / 1.5,
-            #     )
     else:
         localhero = re.sub(r" [0-9]$", "", localhero)
         abilitySetting = didnt_find_a_name_for_this_one(localhero, "Neutral", raund, 1)
