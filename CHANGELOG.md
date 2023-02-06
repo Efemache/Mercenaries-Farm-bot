@@ -1,3 +1,10 @@
+2023-02-06
+----------
+
+New:
+~~~~
+- to be able to target a friendly mercenary/minion selected by name (in combo.ini)
+
 
 2022-12-12
 ----------
