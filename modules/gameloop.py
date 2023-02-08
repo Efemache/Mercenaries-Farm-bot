@@ -71,7 +71,6 @@ def where():
 
     if find_ellement(UIElement.campfire.filename, Action.screenshot):
         #        time.sleep(2)
-        log.info("found")
         look_at_campfire_completed_tasks()
     #        time.sleep(3)
 
