@@ -11,6 +11,7 @@ from .settings import jposition
 from .mouse_utils import move_mouse
 from .platforms import windowMP
 from .resolution import check_resolution
+from .mouse_utils import move_mouse_and_click
 
 import logging
 
@@ -73,6 +74,10 @@ def where():
         look_at_campfire_completed_tasks()
     #        time.sleep(3)
 
+    if find_ellement(UIElement.reconnect.filename, Action.screenshot):
+        #        time.sleep(2)
+        move_mouse_and_click(windowMP(), windowMP()[2] / 2.4, windowMP()[3] / 1.317)
+    #        time.sleep(3)
     # Note: feature disabled because of enemy board detection needing
     # to start log-scan before battle started
     # Note: could work if log scan had something like a rewind scan
