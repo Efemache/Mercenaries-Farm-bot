@@ -73,7 +73,6 @@ class UIElement(ImageFragment):
     win = "win"
     win_final = "win_final"
     your_party = "your_party"
-    reconnect = "reconnect"
 
 
 class Button(ImageFragment):
@@ -107,6 +106,7 @@ class Button(ImageFragment):
     pick = "pick"
     play = "play"
     portal_warp = "portal_warp"
+    reconnect = "reconnect"
     replace = "take"
     retire = "retire"
     reveal = "reveal"
@@ -114,7 +114,6 @@ class Button(ImageFragment):
     tavern = "tavern"
     view_party = "view_party"
     visit = "visit"
-
 
 
 class Action(StrEnum):
