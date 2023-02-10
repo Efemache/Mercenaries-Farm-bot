@@ -106,6 +106,7 @@ class Button(ImageFragment):
     pick = "pick"
     play = "play"
     portal_warp = "portal_warp"
+    reconnect = "reconnect"
     replace = "take"
     retire = "retire"
     reveal = "reveal"

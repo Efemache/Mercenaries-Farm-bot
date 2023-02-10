@@ -30,6 +30,8 @@ def where():
         )
         sys.exit()
 
+    find_ellement(Button.reconnect.filename, Action.move_and_click)
+
     find_ellement(Button.join_button.filename, Action.move_and_click)
 
     # Find PVE adventure payed and free

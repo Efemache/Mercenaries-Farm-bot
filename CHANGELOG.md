@@ -1,9 +1,10 @@
-2023-02-06
+2023-02-09
 ----------
 
 New:
 ~~~~
 - to be able to target a friendly mercenary/minion selected by name (in combo.ini)
+- click on reconnect button when Hearthstone shows the pop-in 
 
 
 2022-12-12
