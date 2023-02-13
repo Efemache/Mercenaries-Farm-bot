@@ -74,6 +74,11 @@
         "2": true,
         "3": false
     },
+    "Kel'Thuzad": {
+        "1": true,
+        "2": "friend",
+        "3": true
+    },
     "King Mukla": {
         "1": true,
         "2": false,
@@ -284,6 +289,11 @@
         "2": true,
         "3": false
     },
+    "Jandice Barov": {
+        "1": false,
+        "2": false,
+        "3": false
+    },
     "Khadgar": {
         "1": true,
         "2": false,
@@ -309,6 +319,11 @@
         "2": false,
         "3": "friend"
     },
+    "Lord Godfrey": {
+        "1": true,
+        "2": false,
+        "3": false
+    },
     "Lorewalker Cho": {
         "1": "chooseone3",
         "2": false,
@@ -328,6 +343,11 @@
         "1": true,
         "2": false,
         "3": "friend"
+    },
+    "Mr. Bigglesworth": {
+        "1": true,
+        "2": false,
+        "3": true
     },
     "Natalie Seline": {
         "1": true,
@@ -409,7 +429,7 @@
         "2": "friend",
         "3": true
     },
-    "Artus": {
+    "Arfus": {
         "1": true,
         "2": false,
         "3": false
@@ -488,6 +508,11 @@
         "1": false,
         "2": false,
         "3": false
+    },
+    "Lilian Voss": {
+        "1": true,
+        "2": true,
+        "3": true
     },
     "Lord Slitherspear": {
         "1": true,
