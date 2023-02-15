@@ -146,7 +146,11 @@ def ability_target_friend(targettype, myMercs, enemies: Enemies, abilitySetting)
         for i in myMercs:
             if myMercs[i] in mercslist:
                 # is a Mercenary
-                if targettype in mercslist[myMercs[i]]["minion_type"]:
+                # "type" == Beast, Human, ... "faction" == Pirate, Horde, ...
+                if (
+                    targettype in mercslist[myMercs[i]]["type"]
+                    or targettype == mercslist[myMercs[i]]["faction"]
+                ):
                     position = int(i)
             else:
                 # is a friendly Minion
@@ -217,11 +221,12 @@ def get_ability_for_this_turn(name, minionSection, turn, defaultAbility=0):
 
 def parse_ability_setting(ability):
     retour = {
-        "chooseone": 0,
         "ai": "byColor",
+        "chooseone": 0,
+        "faction": None,
         "name": None,
-        "miniontype": None,
         "role": None,
+        "type": None,
     }
 
     if ":" not in ability:
@@ -237,8 +242,8 @@ def parse_ability_setting(ability):
                 retour["ai"] = value
             elif key == "name":
                 retour["name"] = value
-            elif key == "miniontype":
-                retour["miniontype"] = value
+            elif key == "type":
+                retour["type"] = value
             elif key == "role":
                 # "role" should be "Protector", "Caster" or "Fighter"
                 retour["role"] = value
