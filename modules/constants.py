@@ -27,6 +27,7 @@ class UIElement(ImageFragment):
 
     Alterac = "Alterac"
     Barrens = "Barrens"
+    Bossrush = "Bossrush"
     Blackrock = "Blackrock"
     Darkshore = "Darkshore"
     Darkmoon = "Darkmoon"
@@ -35,7 +36,7 @@ class UIElement(ImageFragment):
     Sunken = "Sunken"
     Winterspring = "Winterspring"
     battle = "battle"
-    battle_mythic = "battle_mythic"
+    battle_portal = "battle_portal"
     blue = "blue"
     encounter_booncaster = "encounter_booncaster"
     encounter_boonfighter = "encounter_boonfighter"
