@@ -21,7 +21,7 @@ To continue to work on and maintain the bot :
 
 
 > **Warning**:  
-> Blizzard pushed the last major update for Mercenary mode (February 14, 2023).
+> Blizzard pushed the last major update for Mercenary mode (February 14, 2023).  
 > I launched quite recently the supporter/community versions (11/2022) with only few temporary exclusives contents for supporters, and it's already the last update.  
 > So, **to be fair**, I decided [this last major MFB update](https://ko-fi.com/mercenariesfarm/posts) will be **exclusive to supporters until release of the next Heartstone expansion**.
 
