@@ -2,7 +2,7 @@
 MFB official URL : https://github.com/Efemache/Mercenaries-Farm-bot/
 
 # Free & Tip: 2 ways starting 2022-11-07
-<details><summary>Click here if you want some context</summary>
+<details><summary>Click here if you want some context about Free & Tip version</summary>
 
 ## Context
 * I started to actively work on this bot (november 2021) because **I thought doing it open source, some devs would come** too to improve MFB so it would be a win/win
@@ -13,16 +13,17 @@ MFB official URL : https://github.com/Efemache/Mercenaries-Farm-bot/
 * Finally, it was way too much work for me "alone" and a lose/win for me
 
 ## In conclusion 
-</details>
-
 To continue to work on and maintain the bot : 
 * MFB remains **free and open source** but updates will be **delivered 3-4 weeks later**
 * For those who **help** (in coding) **and** those who **[give a tip](#if-you-want-to-support-or-thank-us) (at least 10$)**, updates will be **delivered 3-4 weeks before others**
 
- **Pull Request are still accepted**: if you have a bug or want a new feature, code it if you know how-to do it and send a PR.
+</details>
 
-> **Note**:  
-> Look at the [changelog](https://ko-fi.com/mercenariesfarm/posts) to see what is already available in the supporters version and release dates for github.
+
+> **Warning**:  
+> Blizzard pushed the last major update for Mercenary mode (February 14, 2023).
+> I launched quite recently the supporter/community versions (11/2022) with only few temporary exclusives contents for supporters, and it's already the last update.  
+> So, **to be fair**, I decided [this last major MFB update](https://ko-fi.com/mercenariesfarm/posts) will be **exclusive to supporters until release of the next Heartstone expansion**.
 
 
 # Purpose
@@ -33,7 +34,7 @@ There is a [```main```](https://github.com/Efemache/Mercenaries-Farm-bot) branch
 Tags are not used anymore (last one is 0.8.3 and is deprecated); instead, download and use main branch.
 
 > **Note**:  
-> Up to "March of the Lich King" expansion release, MFB works to complete a lot of campfire tasks and somes bounties.
+> Up to "March of the Lich King" expansion (and Mini-set "Returns to Naxxramas") release, MFB works to complete a lot of campfire tasks and somes bounties.  
 
 **If you like the bot, think about [giving a tip](#if-you-want-to-support-or-thank-us)**.
 
@@ -140,18 +141,18 @@ To discuss with the community, go to discord : [Mercenaries Farm server](https:/
 |                                        |   |
 | :------------------------------------- | :-------------:|
 |1. transition to Travel point selection | ✓|
+|    * new travel point portal | ✓|
+|    * Boss Rush support | x|
 |2. transition to Level/Bounty selection | ✓|
-|3. transition between encounters | ✓ |
-|4. prioritize the mysterious node | ✓|
-|    * Bonus Treasure | ✓|
-|    * Cursed Treasure | ✓|
-|5. prioritize the spirit healer  | ✓|
+|3. transition between encounters |  |
+|4. prioritize the spirit healer  | ✓|
+|5. prioritize the mysterious node | ✓|
 |6. put mercs on board | ✓|
 |7. search for suitable opponents | ✓|
 |8. choose abilities :  | ✓|
 |    * for each mercenary (using [combo.ini](https://github.com/Efemache/Mercenaries-Farm-bot/wiki/Settings#comboini-confusercomboini) files) | ✓|
 |    * or the first abilities by default (if no configuration exists) | ✓|
-|    * ⚠️ the bot can't point an ability to a specific mercenary  by name | x|
+|    * ability targetting friendly minion selected by Type, Faction or by Name| ✓|
 |    * taunt, stealth, divine shield, attack, health, ... detection | x|
 |9. attack opponents (if ability requires it) | ✓|
 |10. choose a treasure after passing a level | ✓|
