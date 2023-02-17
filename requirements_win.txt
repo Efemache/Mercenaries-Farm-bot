@@ -30,5 +30,5 @@ pyscreeze==0.1.28
     # via pyautogui
 pytweening==1.0.4
     # via pyautogui
-pywin32==303
+pywin32==305
     # via -r requirements_win.in
