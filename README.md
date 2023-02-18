@@ -13,12 +13,11 @@ MFB official URL : https://github.com/Efemache/Mercenaries-Farm-bot/
 * Finally, it was way too much work for me "alone" and a lose/win for me
 
 ## In conclusion 
+</details>
+
 To continue to work on and maintain the bot : 
 * MFB remains **free and open source** but updates will be **delivered 3-4 weeks later**
 * For those who **help** (in coding) **and** those who **[give a tip](#if-you-want-to-support-or-thank-us) (at least 10$)**, updates will be **delivered 3-4 weeks before others**
-
-</details>
-
 
 > **Warning**:  
 > Blizzard pushed the last major update for Mercenary mode (February 14, 2023).  
