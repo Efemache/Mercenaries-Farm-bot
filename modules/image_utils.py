@@ -4,6 +4,13 @@ import os.path
 import cv2
 import numpy as np
 
+### needed as workaround for Linux
+### https://stackoverflow.com/questions/74856512/screenshot-error-xdefaultrootwindow-failed-after-closing-a-tkinter-toplevel
+### https://github.com/BoboTiG/python-mss/issues/220
+import mss
+sct = mss.mss()
+### workaround end ###
+
 
 from .platforms import windowMP
 from .mouse_utils import move_mouse_and_click, move_mouse
@@ -182,28 +189,29 @@ def partscreen(
     """
     take screeenshot for a part of the screen to find some part of the image
     """
-    import mss.tools
 
-    with mss.mss() as sct:
-        monitor = {"top": top, "left": left, "width": x, "height": y}
-        sct_img = sct.grab(monitor)
+    ### workaround for Linux  (read more info at the top of this file)
+    #with mss.mss() as sct:
+    global sct
+    monitor = {"top": top, "left": left, "width": x, "height": y}
+    sct_img = sct.grab(monitor)
 
-        if debug_mode:
-            output_file = f"files/debug.png"
-            mss.tools.to_png(sct_img.rgb, sct_img.size, output=output_file)
+    if debug_mode:
+        output_file = f"files/debug.png"
+        mss.tools.to_png(sct_img.rgb, sct_img.size, output=output_file)
 
-        partImg = np.array(sct_img)
+    partImg = np.array(sct_img)
 
-        if resize_width and resize_height:
-            partImg = cv2.resize(
-                partImg, (resize_width, resize_height), interpolation=cv2.INTER_CUBIC
-            )
-        elif scale_size != 1:
-            partImg = cv2.resize(
-                partImg,
-                (int(x * scale_size), int(y * scale_size)),
-                interpolation=cv2.INTER_CUBIC,
-            )
+    if resize_width and resize_height:
+        partImg = cv2.resize(
+            partImg, (resize_width, resize_height), interpolation=cv2.INTER_CUBIC
+        )
+    elif scale_size != 1:
+        partImg = cv2.resize(
+            partImg,
+            (int(x * scale_size), int(y * scale_size)),
+            interpolation=cv2.INTER_CUBIC,
+        )
 
     return partImg
 
