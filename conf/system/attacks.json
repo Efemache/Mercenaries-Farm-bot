@@ -291,7 +291,7 @@
     },
     "Jandice Barov": {
         "1": false,
-        "2": false,
+        "2": "chooseone2",
         "3": false
     },
     "Khadgar": {
@@ -511,7 +511,7 @@
     },
     "Lilian Voss": {
         "1": true,
-        "2": true,
+        "2": "friend",
         "3": true
     },
     "Lord Slitherspear": {
