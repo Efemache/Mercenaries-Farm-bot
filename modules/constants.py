@@ -35,6 +35,7 @@ class UIElement(ImageFragment):
     Sunken = "Sunken"
     Winterspring = "Winterspring"
     battle = "battle"
+    battle_mythic = "battle_mythic"
     blue = "blue"
     encounter_booncaster = "encounter_booncaster"
     encounter_boonfighter = "encounter_boonfighter"
