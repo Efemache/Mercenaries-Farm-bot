@@ -603,5 +603,30 @@
         "1": true,
         "2": "chooseone3",
         "3": "chooseone2:friend"
+    },
+    "Kel'Thuzad": {
+        "1": true,
+        "2": "friend",
+        "3": true
+    },
+    "Arfus": {
+        "1": true,
+        "2": false,
+        "3": false
+    },
+    "Lilian Voss": {
+        "1": true,
+        "2": "friend",
+        "3": true
+    },
+    "Lord Godfrey": {
+        "1": true,
+        "2": true,
+        "3": false
+    },
+    "Mr. Bigglesworth": {
+        "1": true,
+        "2": false,
+        "3": true
     }
 }
