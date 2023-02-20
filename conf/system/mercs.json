@@ -114,5 +114,10 @@
     "Wrathion": {"type": "Fighter", "minion_type": "Human"},
     "Xuen": {"type": "Fighter", "minion_type": "Beast"},
     "Yrel": {"type": "Fighter", "minion_type": "Draenei"},
-    "Ysera": {"type": "Fighter", "minion_type": "Dragon"}
+    "Ysera": {"type": "Fighter", "minion_type": "Dragon"},
+    "Kel'Thuzad": {"type": "Protector", "minion_type": "Human"},
+    "Arfus": {"type": "Fighter", "minion_type": "Beast"},
+    "Lord Godfrey": {"type": "Caster", "minion_type": "Human"},
+    "Lilian Voss": {"type": "Fighter", "minion_type": "Human"},
+    "Mr. Bigglesworth": {"type": "Caster", "minion_type": "Beast"}
 }
