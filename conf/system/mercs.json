@@ -119,5 +119,6 @@
     "Arfus": {"type": "Fighter", "minion_type": "Beast"},
     "Lord Godfrey": {"type": "Caster", "minion_type": "Human"},
     "Lilian Voss": {"type": "Fighter", "minion_type": "Human"},
-    "Mr. Bigglesworth": {"type": "Caster", "minion_type": "Beast"}
+    "Mr. Bigglesworth": {"type": "Caster", "minion_type": "Beast"},
+    "Jandice Barov": {"type": "Caster", "minion_type": "Human"}
 }
