@@ -1,3 +1,3 @@
-python3.10 -m venv MFB
-./MFB/Scripts/python -m pip install -r requirements_linux.txt
-./MFB/Scripts/python main.py
+python3.11 -m venv MFB
+./MFB/bin/python -m pip install -r requirements_linux.txt
+./MFB/bin/python main.py
