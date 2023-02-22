@@ -31,7 +31,6 @@ def move_mouse(window, x, y, with_random=False):
     p = random.randint(-mouse_range, mouse_range) if with_random else 0
     s = random.randint(-mouse_range, mouse_range) if with_random else 0
 
-
     try:
         pyautogui.moveTo(
             window[0] + x + p,
@@ -40,7 +39,13 @@ def move_mouse(window, x, y, with_random=False):
             mouse_random_movement(),
         )
     except pyautogui.FailSafeException:
-        pyautogui.alert(text='Do you want to resume ?', title='Paused', button='Yes')
+        pyautogui.alert(text="Do you want to resume ?", title="Paused", button="Yes")
+        pyautogui.moveTo(
+            window[0] + x + p,
+            window[1] + y + s,
+            settings_dict["mousespeed"],
+            mouse_random_movement(),
+        )
 
 
 def mouse_random_movement():
