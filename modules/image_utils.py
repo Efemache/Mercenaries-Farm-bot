@@ -174,7 +174,8 @@ def find_element_from_file(
             f"Found {file} ( {threshold} ) { click_coords[0] } { click_coords[1] }",
         )
     else:
-        log.info(f"Looked for {file} ( {threshold} )")
+        print(f"Waiting for... {file}\033[K", end="\r")
+        log.debug(f"Looked for {file} ( {threshold} )")
 
     return click_coords
 

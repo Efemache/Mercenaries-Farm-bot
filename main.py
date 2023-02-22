@@ -19,7 +19,7 @@ def main():
     BNCount=1
 
     while True:
-        log.info("Loop")
+        log.debug("Loop")
         try:
             if win.find_game("Hearthstone"):
                 where()
