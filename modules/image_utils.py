@@ -4,13 +4,6 @@ import os.path
 import cv2
 import numpy as np
 
-### needed as workaround for Linux
-### https://stackoverflow.com/questions/74856512/screenshot-error-xdefaultrootwindow-failed-after-closing-a-tkinter-toplevel
-### https://github.com/BoboTiG/python-mss/issues/220
-import mss
-sct = mss.mss()
-### workaround end ###
-
 
 from .platforms import windowMP
 from .mouse_utils import move_mouse_and_click, move_mouse
@@ -19,6 +12,14 @@ from .settings import settings_dict, jthreshold
 from .constants import Action
 
 import logging
+
+# needed as workaround for Linux
+# https://stackoverflow.com/questions/74856512/screenshot-error-xdefaultrootwindow-failed-after-closing-a-tkinter-toplevel
+# https://github.com/BoboTiG/python-mss/issues/220
+import mss
+
+sct = mss.mss()
+# workaround end ###
 
 log = logging.getLogger(__name__)
 
@@ -41,7 +42,7 @@ def get_resolution() -> tuple[str, int, int, float]:
         return resolution, setting_w, setting_h, scale_size
     except Exception as e:
         log.error(f"the resolution {resolution} is not supported: {e}")
-        sys.exit()
+        sys.exit(1)
 
 
 def resize(img, width, height):
@@ -129,8 +130,6 @@ def find_element_from_file(
     Returns:
         (int, int): coordinates of center of element
     """
-    # global partImg
-    # time.sleep(speed)
 
     if threshold == "-":
         if file in jthreshold and jthreshold[file] != "-":
@@ -140,9 +139,11 @@ def find_element_from_file(
 
     resolution, width, height, scale_size = get_resolution()
 
-    # choose if the bot need to look into the screen or in a part of the screen
-    if new_screenshot == True:
-        partImg = partscreen(
+    # choose if the bot need to look into the window or in a part of the window
+    if new_screenshot is True:
+        top = 0
+        left = 0
+        find_element_from_file.partImg = partscreen(
             windowMP()[2],
             windowMP()[3],
             windowMP()[1],
@@ -151,7 +152,9 @@ def find_element_from_file(
             resize_height=height,
         )
     else:
-        partImg = partscreen(
+        top = new_screenshot[2] - windowMP()[1]
+        left = new_screenshot[3] - windowMP()[0]
+        find_element_from_file.partImg = partscreen(
             new_screenshot[0],
             new_screenshot[1],
             new_screenshot[2],
@@ -159,13 +162,14 @@ def find_element_from_file(
             scale_size=scale_size,
         )
 
-    img = cv2.cvtColor(partImg, cv2.COLOR_BGR2GRAY)
+    img = cv2.cvtColor(find_element_from_file.partImg, cv2.COLOR_BGR2GRAY)
 
     template = get_gray_image(f"files/{resolution}/{file}")
 
     click_coords = find_element_center_on_screen(img, template, threshold, scale_size)
 
     if click_coords is not None:
+        click_coords = [click_coords[0] + left, click_coords[1] + top]
         log.info(
             f"Found {file} ( {threshold} ) { click_coords[0] } { click_coords[1] }",
         )
@@ -190,14 +194,14 @@ def partscreen(
     take screeenshot for a part of the screen to find some part of the image
     """
 
-    ### workaround for Linux  (read more info at the top of this file)
-    #with mss.mss() as sct:
+    # workaround for Linux  (read more info at the top of this file)
+    # with mss.mss() as sct:
     global sct
     monitor = {"top": top, "left": left, "width": x, "height": y}
     sct_img = sct.grab(monitor)
 
     if debug_mode:
-        output_file = f"files/debug.png"
+        output_file = "files/debug.png"
         mss.tools.to_png(sct_img.rgb, sct_img.size, output=output_file)
 
     partImg = np.array(sct_img)

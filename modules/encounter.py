@@ -280,7 +280,7 @@ def didnt_find_a_name_for_this_one(name, minionSection, turn, defaultAbility=0):
             f"abilities Y : {abilitiesPositionY} |"
             f" abilities X : {abilitiesPositionX}"
         )
-        newscreenshot = [
+        abilityScreenshot = [
             int(abilitiesWidth),
             int(abilitiesHeigth),
             int(windowMP()[1] + abilitiesPositionY),
@@ -290,7 +290,7 @@ def didnt_find_a_name_for_this_one(name, minionSection, turn, defaultAbility=0):
             find_ellement(
                 UIElement.hourglass.filename,
                 Action.get_coords,
-                new_screen=newscreenshot,
+                new_screen=abilityScreenshot,
             )
             is None
         ):
@@ -461,6 +461,8 @@ def take_turn_action(
 
 # Look for enemies
 def find_enemies(ns=True) -> Enemies:
+    # we use new screenshot for the first call
+    # then we already have the image in memory
     enemyred = find_red_enemy(ns)
     enemygreen = find_green_enemy(ns)
     enemyblue = find_blue_enemy(ns)
@@ -576,15 +578,20 @@ def battle(zoneLog=None):
 
             time.sleep(0.5)
 
-            # tmp = int(windowMP()[3] / 2)
-            newscreenshot = [
-                windowMP()[2],
+            # try to target the enemy are (smaller is better to avoid to detect
+            # an enemy outside the zone)
+            enemyBoard_left = int(windowMP()[0] + (windowMP()[2] // 4))
+            enemyBoard_right = int(windowMP()[2] // 1.3) - (
+                enemyBoard_left - windowMP()[0]
+            )
+            enemyBoardScreenshot = [
+                enemyBoard_right,
                 windowMP()[3] // 2,
                 windowMP()[1],
-                windowMP()[0],
+                enemyBoard_left,
             ]
 
-            enemies = find_enemies(newscreenshot)
+            enemies = find_enemies(enemyBoardScreenshot)
 
             # Go (mouse) to "central zone" and click on an empty space
             # move_mouse_and_click(windowMP(), windowMP()[2] // 2, windowMP()[3] // 1.2)
