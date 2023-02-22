@@ -1,4 +1,21 @@
 
+2023-02-22
+----------
+
+New:
+- dedicated environment to install python dependencies
+- feature to pause the bot (move mouse in a corner of the screen)
+
+Changes:
+- use Python 3.11 (instead of 3.10) - users need to upgrade Python
+- output details improved. Users will see less useless logs
+- enemies detection improved (useful in Felwood)
+
+Bug Fixes:
+- second ability for Lord Godfrey fixed
+- second ability for Jandice and Lilian fixed
+
+
 2023-02-15
 ----------
 
