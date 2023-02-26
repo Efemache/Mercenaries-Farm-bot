@@ -61,7 +61,10 @@ class WindowMgrWindowsWin32Gui(WindowMgr):
             return False
         if len(self._handles) > 1:
             print("Selecting the first handle of multiple windows:")
-            self._handle = self._handles[1]
+            if self._handles[1]>self._handles[0]:
+                self._handle=self._handles[1]
+            else:
+                self._handle = self._handles[0]
         else: # len(self._handles) == 1:
             self._handle = self._handles[0]
             print("Matched a single window:")
