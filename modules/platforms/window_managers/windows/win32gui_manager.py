@@ -17,7 +17,7 @@ except ImportError:
 
 SW_SHOW = 5
 
-class WindowMgr:
+class WindowMgrWindowsWin32Gui(WindowMgr):
     """Encapsulates some calls to the winapi for window management"""
 
     def __init__(self):
