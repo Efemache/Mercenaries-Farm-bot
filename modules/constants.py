@@ -35,6 +35,7 @@ class UIElement(ImageFragment):
     Sunken = "Sunken"
     Winterspring = "Winterspring"
     battle = "battle"
+    battle_mythic = "battle_mythic"
     blue = "blue"
     encounter_booncaster = "encounter_booncaster"
     encounter_boonfighter = "encounter_boonfighter"
@@ -73,7 +74,6 @@ class UIElement(ImageFragment):
     win = "win"
     win_final = "win_final"
     your_party = "your_party"
-    reconnect = "reconnect"
 
 
 class Button(ImageFragment):
@@ -107,6 +107,7 @@ class Button(ImageFragment):
     pick = "pick"
     play = "play"
     portal_warp = "portal_warp"
+    reconnect = "reconnect"
     replace = "take"
     retire = "retire"
     reveal = "reveal"
@@ -114,8 +115,9 @@ class Button(ImageFragment):
     tavern = "tavern"
     view_party = "view_party"
     visit = "visit"
-
-
+    battlenet_play = "battlenet_play"
+    battlenet = "battlenet"
+    battlenet_hearthstone = "battlenet_hearthstone"
 
 class Action(StrEnum):
     screenshot = "1"
