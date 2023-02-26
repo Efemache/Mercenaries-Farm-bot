@@ -57,17 +57,15 @@ class WindowMgrWindowsWin32Gui(WindowMgr):
         win32gui.EnumWindows(self._window_enum_callback, WINDOW_NAME_WINDOWS)
 
         if len(self._handles) < 1:
-            print("Matched no window")
+            log.info("Matched no window")
             return False
         if len(self._handles) > 1:
-            print("Selecting the first handle of multiple windows:")
             if self._handles[1]>self._handles[0]:
                 self._handle=self._handles[1]
             else:
                 self._handle = self._handles[0]
         else: # len(self._handles) == 1:
             self._handle = self._handles[0]
-            print("Matched a single window:")
 
     def _show_window(self):
         win32gui.ShowWindow(self._handle, SW_SHOW)
