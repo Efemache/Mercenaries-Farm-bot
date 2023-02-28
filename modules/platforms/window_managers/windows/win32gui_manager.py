@@ -16,6 +16,10 @@ except ImportError:
         log.debug("win32gui not installed")
 
 SW_SHOW = 5
+left = 0
+top = 0
+width = 1920
+height = 1080
 
 class WindowMgrWindowsWin32Gui(WindowMgr):
     """Encapsulates some calls to the winapi for window management"""
@@ -32,6 +36,7 @@ class WindowMgrWindowsWin32Gui(WindowMgr):
         return self._handle
 
     def get_window_geometry(self):
+        global left, top, width, height
         WINDOW_NAME = win32gui.GetWindowText(win32gui.GetForegroundWindow())
         if WINDOW_NAME == "Hearthstone":
             left, top, width, height = win32gui.GetClientRect(self._handle)
