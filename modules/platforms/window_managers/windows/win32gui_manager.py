@@ -31,8 +31,9 @@ class WindowMgrWindowsWin32Gui(WindowMgr):
     def find_game(self, WINDOW_NAME_WINDOWS):
         """find the hearthstone game window"""
         self._find_window(WINDOW_NAME_WINDOWS)
-        self._show_window()
-        self._set_foreground()
+        if(self._handle != None):
+            self._show_window()
+            self._set_foreground()
         return self._handle
 
     def get_window_geometry(self):

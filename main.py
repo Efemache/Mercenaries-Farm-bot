@@ -21,22 +21,21 @@ def main():
         try:
             if win.find_game("Hearthstone"):
                 where()
+            elif win.find_game("Battle.net"): 
+                    log.info("Hearthstone not found, enter from Battle.net")
+                    time.sleep(2)
+                    enter_from_battlenet()
+            else:
+                 log.error("Can not find either Hearthstone or Battle.net window")
+                 sys.exit(0)
+                 time.sleep(1)
         except KeyboardInterrupt as kerr:
             log.info("Keyboard Interrupt %s", kerr)
             sys.exit(0)
         except Exception as error:
-            try:
-                #Try with Battle.net 
-                if win.find_game("Battle.net"): 
-                    log.info("Battle.net found")
-                    time.sleep(2)
-                    log.info("Hearthstone not found, enter from Battle.net")
-                    time.sleep(2)
-                    enter_from_battlenet()
-            except:
-                log.error("Can not find either Hearthstone or Battle.net window")
-                log.error("Error: %s", error)
-                time.sleep(1)
+            log.error("Error: %s", error)
+            sys.exit(0)
+            time.sleep(1)
 
 
 if __name__ == "__main__":
