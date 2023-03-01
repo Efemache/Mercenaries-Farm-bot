@@ -38,7 +38,10 @@ class WindowMgrWindowsWin32Gui(WindowMgr):
 
     def get_window_geometry(self):
         global left, top, width, height
+        #To get the acitve window name
         WINDOW_NAME = win32gui.GetWindowText(win32gui.GetForegroundWindow())
+
+        #Judge which window, fake the BN resolution
         if WINDOW_NAME == "Hearthstone":
             left, top, width, height = win32gui.GetClientRect(self._handle)
             left, top = win32gui.ClientToScreen(self._handle, (left, top))

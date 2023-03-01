@@ -17,7 +17,10 @@ except ImportError:
     if find_os()=="linux":
         log.error("gi.repository and/or pgi not installed")
 
-HEARHTSTONE_WINDOW_NAME="Hearthstone"
+left = 0
+top = 0
+width = 1920
+height = 1080
 
 class WindowMgrLinux(WindowMgr):
     """Encapsulates some calls for Linux window management"""
@@ -26,7 +29,7 @@ class WindowMgrLinux(WindowMgr):
         """Constructor"""
         self.win = None
 
-    def find_game(self):
+    def find_game(self, LINUX_NAME_WINDOWS):
         """find the hearthstone game window"""
         screenHW = Wnck.Screen.get_default()
         while Gtk.events_pending():
@@ -35,16 +38,37 @@ class WindowMgrLinux(WindowMgr):
 
         win = None
         for w in windows:
-            if w.get_name() == HEARHTSTONE_WINDOW_NAME:
+            if w.get_name() == LINUX_NAME_WINDOWS:
                 win = w
+                # Not sure if you need those two lines, they are needed 
+                # in Windows, to switch the active windows
+                #shell = win32.Dispatch("WScript.Shell") 
+                #shell.SendKeys('%')
                 win.activate(int(time.time()))
                 win.make_above()
                 win.unmake_above()
                 break
         if not win:
-            raise WindowManagerError("No 'Hearthstone' window found.")
+            raise WindowManagerError("No 'Hearthstone/Battle.net' window found.")
         self._win = win
         return win
 
     def get_window_geometry(self):
-        return self._win.get_client_window_geometry()
+        global left, top, width, height
+
+        #To get the acitve window name
+        scr = Wnck.Screen.get_default()
+        scr.force_update()
+        CURRENT_NAME_WINDOWS = scr.get_active_window().get_name()
+
+        #Judge which window, fake the BN resolution
+        if CURRENT_NAME_WINDOWS == "Hearthstone":
+            left, top, width, height = self._win.get_client_window_geometry()
+        elif CURRENT_NAME_WINDOWS == "Battle.net":
+            left = 0
+            top = 0
+            width = 1920
+            height = 1080
+        else:
+            log.info(WINDOW_NAME)
+        return (left, top, width, height)
