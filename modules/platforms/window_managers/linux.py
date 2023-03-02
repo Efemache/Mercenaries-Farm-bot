@@ -4,6 +4,7 @@ import logging
 from .base import WindowMgr
 from ..platforms import find_os
 from ...exceptions import WindowManagerError
+from ...settings import settings_dict
 
 log = logging.getLogger(__name__)
 try:
@@ -65,10 +66,12 @@ class WindowMgrLinux(WindowMgr):
         if CURRENT_NAME_WINDOWS == "Hearthstone":
             left, top, width, height = self._win.get_client_window_geometry()
         elif CURRENT_NAME_WINDOWS == "Battle.net":
+            current_resolution = settings_dict["resolution"]
+            ox, oy = current_resolution.split("x")
+            width = int(ox)
+            height = int(oy)
             left = 0
             top = 0
-            width = 1920
-            height = 1080
         else:
             log.info(WINDOW_NAME)
         return (left, top, width, height)

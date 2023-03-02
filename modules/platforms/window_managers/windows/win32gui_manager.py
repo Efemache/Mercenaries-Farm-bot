@@ -3,6 +3,7 @@ import re
 import logging
 import win32com.client as win32
 from ..base import WindowMgr
+from ....settings import settings_dict
 
 log = logging.getLogger(__name__)
 
@@ -18,8 +19,8 @@ except ImportError:
 SW_SHOW = 5
 left = 0
 top = 0
-width = 1920
-height = 1080
+width = 0
+height = 0
 
 class WindowMgrWindowsWin32Gui(WindowMgr):
     """Encapsulates some calls to the winapi for window management"""
@@ -31,6 +32,7 @@ class WindowMgrWindowsWin32Gui(WindowMgr):
     def find_game(self, WINDOW_NAME_WINDOWS):
         """find the hearthstone game window"""
         self._find_window(WINDOW_NAME_WINDOWS)
+        print(self._handle)
         if(self._handle != None):
             self._show_window()
             self._set_foreground()
@@ -46,10 +48,12 @@ class WindowMgrWindowsWin32Gui(WindowMgr):
             left, top, width, height = win32gui.GetClientRect(self._handle)
             left, top = win32gui.ClientToScreen(self._handle, (left, top))
         elif WINDOW_NAME == "Battle.net":
+            current_resolution = settings_dict["resolution"]
+            ox, oy = current_resolution.split("x")
+            width = int(ox)
+            height = int(oy)
             left = 0
             top = 0
-            width = 1920
-            height = 1080
         else:
             log.info(WINDOW_NAME)
         return (left, top, width, height)
