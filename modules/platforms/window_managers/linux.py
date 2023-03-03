@@ -43,11 +43,11 @@ class WindowMgrLinux(WindowMgr):
                 win = w
                 # Not sure if you need those two lines, they are needed 
                 # in Windows, to switch the active windows
-                #shell = win32.Dispatch("WScript.Shell") 
-                #shell.SendKeys('%')
                 win.activate(int(time.time()))
                 win.make_above()
                 win.unmake_above()
+                #shell = win32.Dispatch("WScript.Shell") 
+                #shell.SendKeys('%')
                 break
         if not win:
             raise WindowManagerError("No 'Hearthstone/Battle.net' window found.")

@@ -19,8 +19,8 @@ except ImportError:
 SW_SHOW = 5
 left = 0
 top = 0
-width = 0
-height = 0
+width = 1920
+height = 1080
 
 class WindowMgrWindowsWin32Gui(WindowMgr):
     """Encapsulates some calls to the winapi for window management"""
@@ -32,7 +32,7 @@ class WindowMgrWindowsWin32Gui(WindowMgr):
     def find_game(self, WINDOW_NAME_WINDOWS):
         """find the hearthstone game window"""
         self._find_window(WINDOW_NAME_WINDOWS)
-        print(self._handle)
+        #print(self._handle)
         if(self._handle != None):
             self._show_window()
             self._set_foreground()
@@ -61,6 +61,7 @@ class WindowMgrWindowsWin32Gui(WindowMgr):
     def _window_enum_callback(self, hwnd, WINDOW_NAME_WINDOWS):
         """Pass to win32gui.EnumWindows() to check all the opened windows"""
         if re.match(WINDOW_NAME_WINDOWS, str(win32gui.GetWindowText(hwnd))) is not None:
+            #print(hwnd)
             self._handles.append(hwnd)
             self._handle = hwnd
 
@@ -85,6 +86,6 @@ class WindowMgrWindowsWin32Gui(WindowMgr):
 
     def _set_foreground(self):
         """put the window in the foreground"""
+        win32gui.SetForegroundWindow(self._handle)
         shell = win32.Dispatch("WScript.Shell") 
         shell.SendKeys('%')
-        win32gui.SetForegroundWindow(self._handle)
