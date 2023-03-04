@@ -13,7 +13,11 @@ def mouse_click(btn="left"):
 
 
 def mouse_scroll(s):
-    pyautogui.scroll(s)
+    if s == 0:
+        return
+    step = s // abs(s)
+    for _ in range(0, s, step):
+        pyautogui.scroll(step)
 
 
 def mouse_position(window):
