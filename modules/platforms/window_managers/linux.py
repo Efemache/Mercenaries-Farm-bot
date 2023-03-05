@@ -2,26 +2,28 @@ import time
 import logging
 
 from .base import WindowMgr
-from ..platforms import find_os
 from ...exceptions import WindowManagerError
 from ...settings import settings_dict
 
 log = logging.getLogger(__name__)
 try:
+    from ..platforms import find_os
     import pgi
+
     pgi.install_as_gi()
     import gi
 
     gi.require_version("Wnck", "3.0")
     from gi.repository import Wnck, Gtk
 except ImportError:
-    if find_os()=="linux":
+    if find_os() == "linux":
         log.error("gi.repository and/or pgi not installed")
 
 left = 0
 top = 0
 width = 1920
 height = 1080
+
 
 class WindowMgrLinux(WindowMgr):
     """Encapsulates some calls for Linux window management"""
@@ -41,13 +43,13 @@ class WindowMgrLinux(WindowMgr):
         for w in windows:
             if w.get_name() == LINUX_NAME_WINDOWS:
                 win = w
-                # Not sure if you need those two lines, they are needed 
+                # Not sure if you need those two lines, they are needed
                 # in Windows, to switch the active windows
                 win.activate(int(time.time()))
                 win.make_above()
                 win.unmake_above()
-                #shell = win32.Dispatch("WScript.Shell") 
-                #shell.SendKeys('%')
+                # shell = win32.Dispatch("WScript.Shell")
+                # shell.SendKeys('%')
                 break
         if not win:
             raise WindowManagerError("No 'Hearthstone/Battle.net' window found.")
@@ -57,12 +59,12 @@ class WindowMgrLinux(WindowMgr):
     def get_window_geometry(self):
         global left, top, width, height
 
-        #To get the acitve window name
+        # To get the acitve window name
         scr = Wnck.Screen.get_default()
         scr.force_update()
         CURRENT_NAME_WINDOWS = scr.get_active_window().get_name()
 
-        #Judge which window, fake the BN resolution
+        # Judge which window, fake the BN resolution
         if CURRENT_NAME_WINDOWS == "Hearthstone":
             left, top, width, height = self._win.get_client_window_geometry()
         elif CURRENT_NAME_WINDOWS == "Battle.net":
@@ -73,5 +75,5 @@ class WindowMgrLinux(WindowMgr):
             left = 0
             top = 0
         else:
-            log.info(WINDOW_NAME)
+            log.info(LINUX_NAME_WINDOWS)
         return (left, top, width, height)
