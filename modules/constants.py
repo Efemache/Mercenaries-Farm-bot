@@ -115,7 +115,9 @@ class Button(ImageFragment):
     tavern = "tavern"
     view_party = "view_party"
     visit = "visit"
-
+    battlenet_play = "battlenet_play"
+    battlenet = "battlenet"
+    battlenet_hearthstone = "battlenet_hearthstone"
 
 class Action(StrEnum):
     screenshot = "1"
