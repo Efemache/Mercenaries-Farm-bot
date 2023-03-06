@@ -2,12 +2,12 @@ import time
 import logging
 
 from .base import WindowMgr
-from ...exceptions import WindowManagerError
-from ...settings import settings_dict
+from ..platforms import find_os
+
+# from ...exceptions import WindowManagerError
 
 log = logging.getLogger(__name__)
 try:
-    from ..platforms import find_os
     import pgi
 
     pgi.install_as_gi()
@@ -19,11 +19,6 @@ except ImportError:
     if find_os() == "linux":
         log.error("gi.repository and/or pgi not installed")
 
-left = 0
-top = 0
-width = 1920
-height = 1080
-
 
 class WindowMgrLinux(WindowMgr):
     """Encapsulates some calls for Linux window management"""
@@ -32,7 +27,7 @@ class WindowMgrLinux(WindowMgr):
         """Constructor"""
         self.win = None
 
-    def find_game(self, LINUX_NAME_WINDOWS):
+    def find_game(self, WINDOW_NAME):
         """find the hearthstone game window"""
         screenHW = Wnck.Screen.get_default()
         while Gtk.events_pending():
@@ -41,39 +36,20 @@ class WindowMgrLinux(WindowMgr):
 
         win = None
         for w in windows:
-            if w.get_name() == LINUX_NAME_WINDOWS:
+            if w.get_name() == WINDOW_NAME:
                 win = w
-                # Not sure if you need those two lines, they are needed
-                # in Windows, to switch the active windows
                 win.activate(int(time.time()))
                 win.make_above()
                 win.unmake_above()
-                # shell = win32.Dispatch("WScript.Shell")
-                # shell.SendKeys('%')
                 break
         if not win:
-            raise WindowManagerError("No 'Hearthstone/Battle.net' window found.")
+            print(f"No '{WINDOW_NAME}' window found.")
         self._win = win
         return win
 
     def get_window_geometry(self):
-        global left, top, width, height
-
-        # To get the acitve window name
-        scr = Wnck.Screen.get_default()
-        scr.force_update()
-        CURRENT_NAME_WINDOWS = scr.get_active_window().get_name()
-
-        # Judge which window, fake the BN resolution
-        if CURRENT_NAME_WINDOWS == "Hearthstone":
-            left, top, width, height = self._win.get_client_window_geometry()
-        elif CURRENT_NAME_WINDOWS == "Battle.net":
-            current_resolution = settings_dict["resolution"]
-            ox, oy = current_resolution.split("x")
-            width = int(ox)
-            height = int(oy)
-            left = 0
-            top = 0
+        # workaround for Battle.net
+        if self._win.get_name() == "Battle.net":
+            return (0, 0, 1920, 1080)
         else:
-            log.info(LINUX_NAME_WINDOWS)
-        return (left, top, width, height)
+            return self._win.get_client_window_geometry()

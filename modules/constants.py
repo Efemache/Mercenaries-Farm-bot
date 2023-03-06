@@ -119,6 +119,7 @@ class Button(ImageFragment):
     battlenet = "battlenet"
     battlenet_hearthstone = "battlenet_hearthstone"
 
+
 class Action(StrEnum):
     screenshot = "1"
     move = "2"
