@@ -1,5 +1,6 @@
 import time
 import logging
+import pyautogui
 
 from .base import WindowMgr
 from ..platforms import find_os
@@ -50,6 +51,7 @@ class WindowMgrLinux(WindowMgr):
     def get_window_geometry(self):
         # workaround for Battle.net
         if self._win.get_name() == "Battle.net":
-            return (0, 0, 1920, 1080)
+            (width, height) = pyautogui.size()
+            return (0, 0, width, height)
         else:
             return self._win.get_client_window_geometry()

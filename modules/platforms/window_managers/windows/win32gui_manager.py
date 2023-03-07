@@ -8,6 +8,7 @@ log = logging.getLogger(__name__)
 try:
     import win32gui
     import win32com.client as win32
+    from win32api import GetSystemMetrics
 
     HAS_WIN32GUI = True
 except ImportError:
@@ -43,7 +44,7 @@ class WindowMgrWindowsWin32Gui(WindowMgr):
 
         # Judge which window, fake the BN resolution
         if WINDOW_NAME == "Battle.net":
-            return (0, 0, 1920, 1080)
+            return (0, 0, GetSystemMetrics(0), GetSystemMetrics(1))
         else:
             left, top, width, height = win32gui.GetClientRect(self._handle)
             left, top = win32gui.ClientToScreen(self._handle, (left, top))
