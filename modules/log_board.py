@@ -15,7 +15,10 @@ class LogHSMercs:
         """
         self.logpath = logpath
 
-        Path(logpath).touch(exist_ok=True)
+        if not Path(logpath).exists():
+            log.info(f"Logfile 'Zone.log' doesn't exist. Waiting for it...")
+        while not Path(logpath).exists():
+            time.sleep(0.1)
         self.cardsInHand = []
         self.myBoard = {}
         self.mercsId = {}
