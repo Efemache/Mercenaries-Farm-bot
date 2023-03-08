@@ -22,13 +22,6 @@ def main():
             if win.find_game("Hearthstone"):
                 where()
             elif win.find_game("Battle.net"):
-                log.info("Hearthstone not found, enter from Battle.net")
-                time.sleep(2)
-                enter_from_battlenet()
-            else:
-                log.error("Can not find either Hearthstone or Battle.net window")
-                sys.exit(0)
-                time.sleep(1)
         except KeyboardInterrupt as kerr:
             log.info("Keyboard Interrupt %s", kerr)
             sys.exit(0)
