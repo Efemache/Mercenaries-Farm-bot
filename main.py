@@ -22,12 +22,12 @@ def main():
             if win.find_game("Hearthstone"):
                 where()
             elif win.find_game("Battle.net"):
+                enter_from_battlenet()
         except KeyboardInterrupt as kerr:
             log.info("Keyboard Interrupt %s", kerr)
             sys.exit(0)
         except Exception as error:
             log.error("Error: %s", error)
-
             time.sleep(1)
 
 
