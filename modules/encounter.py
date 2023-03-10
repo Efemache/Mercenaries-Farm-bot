@@ -11,7 +11,7 @@ from .image_utils import find_ellement
 from .constants import UIElement, Button, Action
 from .game import countdown, waitForItOrPass
 
-# from .log_board import LogHSMercs
+from .log_board import LogHSMercs
 from .settings import settings_dict, mercslist, mercsAbilities, ability_order
 
 log = logging.getLogger(__name__)
@@ -654,6 +654,14 @@ def selectCardsInHand(zL=None):
     waitForItOrPass(Button.num, 60, 2)
 
     if find_ellement(Button.num.filename, Action.screenshot):
+        zL = LogHSMercs(settings_dict["zonelog"])
+        # check if Zone.log was erased so we need to go back
+        zL.find_battle_start_log()
+        zL.start()
+        while not zL.eof:
+            print("Reaching Zone.log end before starting")
+            time.sleep(1)
+
         # check if HS is ready for the battle
         # and check logs to find
         boss = zL.getEnemyBoard()
@@ -701,6 +709,8 @@ def selectCardsInHand(zL=None):
 
         # put back default value to selection abilities from [Mercenary] section
         ability_section = default_ability_section
+
+        zL.stop()
 
     return retour
 

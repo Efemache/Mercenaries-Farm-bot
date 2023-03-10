@@ -18,7 +18,7 @@ from .image_utils import find_ellement
 from .game import waitForItOrPass, defaultCase
 from .encounter import selectCardsInHand
 from .campfire import look_at_campfire_completed_tasks
-from .log_board import LogHSMercs
+
 from .settings import settings_dict, jthreshold
 from .treasure import chooseTreasure
 from .notification import send_notification, send_slack_notification
@@ -240,12 +240,7 @@ def goToEncounter():
             # if look_at_campfire_completed_tasks():
             #    break
 
-            zL = LogHSMercs(settings_dict["zonelog"])
-            zL.start()
-            retour = selectCardsInHand(
-                zL
-            )  # Start the battle : the bot choose the cards and fight against the enemy
-            zL.stop()
+            retour = selectCardsInHand()
             log.info(f"goToEncounter - retour = {retour}")
             time.sleep(1)
             if retour == "win":
