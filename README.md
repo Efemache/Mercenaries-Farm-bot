@@ -140,11 +140,12 @@ To discuss with the community, go to discord : [Mercenaries Farm server](https:/
 ## Support
 |                                        |   |
 | :------------------------------------- | :-------------:|
+|0. start from Battle.net | 1080 screen res. |
 |1. transition to Travel point selection | ✓|
 |    * new travel point portal | ✓|
 |    * Boss Rush support | x|
 |2. transition to Level/Bounty selection | ✓|
-|3. transition between encounters |  |
+|3. transition between encounters | ✓|
 |4. prioritize the spirit healer  | ✓|
 |5. prioritize the mysterious node | ✓|
 |6. put mercs on board | ✓|
