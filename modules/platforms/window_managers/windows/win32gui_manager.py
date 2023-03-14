@@ -16,6 +16,7 @@ except ImportError:
         log.debug("win32gui not installed")
 
 SW_SHOW = 5
+shell = win32.Dispatch("WScript.Shell")
 
 
 class WindowMgrWindowsWin32Gui(WindowMgr):
@@ -25,10 +26,12 @@ class WindowMgrWindowsWin32Gui(WindowMgr):
         """Constructor"""
         self._handle = None
 
-    def find_game(self, WINDOW_NAME):
+    def find_game(self, WINDOW_NAME, BNCount=0):
         """find the hearthstone game window"""
-        self._find_window(WINDOW_NAME)
-        if self._handle is not None:
+        self._find_window(WINDOW_NAME, BNCount)
+        if (self._handle is not None) & (
+            WINDOW_NAME != win32gui.GetWindowText(win32gui.GetForegroundWindow())
+        ):
             self._show_window()
             self._set_foreground()
         return self._handle
@@ -52,8 +55,9 @@ class WindowMgrWindowsWin32Gui(WindowMgr):
             # print(hwnd)
             self._handles.append(hwnd)
             self._handle = hwnd
+            print(self._handle)
 
-    def _find_window(self, WINDOW_NAME):
+    def _find_window(self, WINDOW_NAME, BNCount):
         self._handle = None
         self._handles = []
         win32gui.EnumWindows(self._window_enum_callback, WINDOW_NAME)
@@ -62,18 +66,17 @@ class WindowMgrWindowsWin32Gui(WindowMgr):
             log.info("Matched no window")
             return False
         if len(self._handles) > 1:
-            if self._handles[1] > self._handles[0]:
-                self._handle = self._handles[1]
-            else:
-                self._handle = self._handles[0]
+            print(BNCount)
+            self._handle = self._handles[BNCount]
+            print(self._handle)
         else:  # len(self._handles) == 1:
             self._handle = self._handles[0]
 
     def _show_window(self):
+        shell.SendKeys("%")
         win32gui.ShowWindow(self._handle, SW_SHOW)
 
     def _set_foreground(self):
         """put the window in the foreground"""
         win32gui.SetForegroundWindow(self._handle)
-        shell = win32.Dispatch("WScript.Shell")
         shell.SendKeys("%")
