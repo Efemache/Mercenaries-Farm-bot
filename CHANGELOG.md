@@ -1,4 +1,16 @@
 
+2023-03-15
+----------
+
+New:
+- Battle.net support for 1920x1080 screen resolution
+
+Bug Fixes:
+- Board is well detected during first battle; it was broken after last Hearthstone update
+- scroll function updated, for Bounty Level selection, as workaround for Windows users
+- a font/name change in english prevents bounties.png from working in darkmoon, this cropped version fixes it
+
+
 2023-02-22
 ----------
 
