@@ -10,6 +10,8 @@ try:
     import win32com.client as win32
     from win32api import GetSystemMetrics
 
+    shell = win32.Dispatch("WScript.Shell")
+
     HAS_WIN32GUI = True
 except ImportError:
     HAS_WIN32GUI = False
@@ -17,7 +19,6 @@ except ImportError:
         log.debug("win32gui not installed")
 
 SW_SHOW = 5
-shell = win32.Dispatch("WScript.Shell")
 
 
 class WindowMgrWindowsWin32Gui(WindowMgr):

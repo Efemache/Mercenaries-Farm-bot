@@ -28,7 +28,8 @@ class WindowMgrLinux(WindowMgr):
         """Constructor"""
         self.win = None
 
-    def find_game(self, WINDOW_NAME):
+    def find_game(self, WINDOW_NAME, BNCount=0):
+        # BNCount is a workaround for Windows users
         """find the hearthstone game window"""
         screenHW = Wnck.Screen.get_default()
         while Gtk.events_pending():
