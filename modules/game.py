@@ -55,8 +55,13 @@ def defaultCase():
         move_mouse_and_click(windowMP(), windowMP()[2] / mx, windowMP()[3] / my)
         move_mouse(windowMP(), x, y)
     elif find_ellement(Button.reconnect.filename, Action.move_and_click):
-        #Handle the disconnect case
+        # Handle the disconnect case
         log.info("Game disconnected")
     else:
-        #Click somewhere, quit?
+        # Click somewhere, quit?
+        x, y = mouse_position(windowMP())
+        log.info("Trying to skip quests screen.")
+        mx = jposition["mouse.neutral.x"]
+        my = jposition["mouse.neutral.y"]
         move_mouse_and_click(windowMP(), windowMP()[2] / mx, windowMP()[3] / my)
+        time.sleep(30)
