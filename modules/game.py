@@ -45,18 +45,14 @@ def waitForItOrPass(image, duration, step=0.5):
 def defaultCase():
     """Clicking on the right edge of the screen to click away popups"""
     """Saving x,y to move back into previous position"""
-    if find_ellement(UIElement.quests.filename, Action.screenshot) or find_ellement(
-        UIElement.encounter_card.filename, Action.screenshot
-    ):
+    if find_ellement(Button.reconnect.filename, Action.move_and_click):
+        #Handle the disconnect case
+        log.info("Game disconnected")
+    else:
         x, y = mouse_position(windowMP())
         log.info("Trying to skip quests screen.")
         mx = jposition["mouse.neutral.x"]
         my = jposition["mouse.neutral.y"]
         move_mouse_and_click(windowMP(), windowMP()[2] / mx, windowMP()[3] / my)
         move_mouse(windowMP(), x, y)
-    elif find_ellement(Button.reconnect.filename, Action.move_and_click):
-        #Handle the disconnect case
-        log.info("Game disconnected")
-    else:
-        #Click somewhere, quit?
-        move_mouse_and_click(windowMP(), windowMP()[2] / mx, windowMP()[3] / my)
+
