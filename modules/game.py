@@ -58,5 +58,10 @@ def defaultCase():
         #Handle the disconnect case
         log.info("Game disconnected")
     else:
-        #Click somewhere, quit?
+        # Click somewhere, quit?
+        x, y = mouse_position(windowMP())
+        log.info("Trying to skip quests screen.")
+        mx = jposition["mouse.neutral.x"]
+        my = jposition["mouse.neutral.y"]
         move_mouse_and_click(windowMP(), windowMP()[2] / mx, windowMP()[3] / my)
+        time.sleep(30)

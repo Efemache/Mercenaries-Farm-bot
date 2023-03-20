@@ -299,11 +299,15 @@ def goToEncounter():
             if not nextlvl():
                 break
 
-    while not find_ellement(UIElement.bounties.filename, Action.screenshot):
-        look_at_campfire_completed_tasks()
-        move_mouse_and_click(windowMP(), windowMP()[2] / 2, windowMP()[3] / 1.25)
-        time.sleep(2)
+    for x in range(60): 
+        if not find_ellement(UIElement.bounties.filename, Action.screenshot):
+            look_at_campfire_completed_tasks()
+            move_mouse_and_click(windowMP(), windowMP()[2] / 2, windowMP()[3] / 1.25)
+            time.sleep(2)
 
+    if not find_ellement(UIElement.bounties.filename, Action.screenshot):
+        defaultCase()
+        time.sleep(2)
 
 def travelToLevel(page="next"):
     """
