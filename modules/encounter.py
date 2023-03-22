@@ -9,7 +9,7 @@ from .mouse_utils import move_mouse_and_click, move_mouse, mouse_click  # , mous
 
 from .image_utils import find_ellement
 from .constants import UIElement, Button, Action
-from .game import countdown, waitForItOrPass
+from .game import countdown, waitForItOrPass, defaultCase
 
 # from .log_board import LogHSMercs
 from .settings import settings_dict, mercslist, mercsAbilities, ability_order
@@ -604,16 +604,21 @@ def battle(zoneLog=None):
                 time.sleep(0.1)
 
             i = 0
-            while not find_ellement(Button.allready.filename, Action.move_and_click):
-                if i > 5:
-                    move_mouse(windowMP(), windowMP()[2] // 1.2, windowMP()[3] // 3)
-                    mouse_click("right")
-                    find_ellement(Button.fight.filename, Action.move_and_click)
-                    break
-                time.sleep(0.2)
-                i += 1
+            for x in range(60): 
+                if not find_ellement(Button.allready.filename, Action.move_and_click):
+                    if i > 5:
+                        move_mouse(windowMP(), windowMP()[2] // 1.2, windowMP()[3] // 3)
+                        mouse_click("right")
+                        find_ellement(Button.fight.filename, Action.move_and_click)
+                        break
+                    time.sleep(0.2)
+                    i += 1
             time.sleep(3)
             raund += 1
+
+            if not find_ellement(Button.allready.filename, Action.move_and_click):
+                defaultCase()
+                time.sleep(2)
 
     return retour
 
