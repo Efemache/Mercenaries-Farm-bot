@@ -35,7 +35,7 @@ def collect():
     # we try to detect just one and then we click on all known positions
     collectAttempts = 0
 
-    while True:
+    for x in range(60):
         collectAttempts += 1
 
         move_mouse_and_click(windowMP(), windowMP()[2] / 2.5, windowMP()[3] / 3.5)
@@ -84,12 +84,21 @@ def quitBounty():
     """Function to (auto)quit the bounty. Called if the user configured it."""
     end = False
     if find_ellement(Button.view_party.filename, Action.move_and_click):
-        while not find_ellement(UIElement.your_party.filename, Action.move):
-            time.sleep(0.5)
-        while not find_ellement(Button.retire.filename, Action.move_and_click):
-            time.sleep(0.5)
-        while not find_ellement(Button.lockin.filename, Action.move_and_click):
-            time.sleep(0.5)
+        for x in range(60):
+            if not find_ellement(UIElement.your_party.filename, Action.move):
+                time.sleep(0.5)
+            else:
+                break
+        for x in range(60):
+            if not find_ellement(Button.retire.filename, Action.move_and_click):
+                time.sleep(0.5)
+            else:
+                break
+        for x in range(60):
+            if not find_ellement(Button.lockin.filename, Action.move_and_click):
+                time.sleep(0.5)
+            else: 
+                break
         end = True
         log.info("Quitting the bounty level before boss battle.")
     return end
@@ -212,102 +221,105 @@ def goToEncounter():
     time.sleep(2)
     travelEnd = False
 
-    while not travelEnd:
+    for x in range(60):
+        if not travelEnd:
+            if find_ellement(Button.play.filename, Action.screenshot):
+                if settings_dict["stopatbossfight"] is True and find_ellement(
+                    UIElement.boss.filename, Action.screenshot
+                ):
+                    send_notification({"message": "Stopping before Boss battle."})
+                    send_slack_notification(
+                        json.dumps({"text": "@channel Stopping before Boss battle."})
+                    )
+                    log.info("Stopping before Boss battle.")
+                    sys.exit()
 
-        if find_ellement(Button.play.filename, Action.screenshot):
-            if settings_dict["stopatbossfight"] is True and find_ellement(
-                UIElement.boss.filename, Action.screenshot
-            ):
-                send_notification({"message": "Stopping before Boss battle."})
-                send_slack_notification(
-                    json.dumps({"text": "@channel Stopping before Boss battle."})
-                )
-                log.info("Stopping before Boss battle.")
-                sys.exit()
+                if settings_dict["quitbeforebossfight"] is True and find_ellement(
+                    UIElement.boss.filename, Action.screenshot
+                ):
+                    time.sleep(1)
+                    travelEnd = quitBounty()
+                    break
 
-            if settings_dict["quitbeforebossfight"] is True and find_ellement(
-                UIElement.boss.filename, Action.screenshot
-            ):
-                time.sleep(1)
-                travelEnd = quitBounty()
-                break
-
-            # fix the problem with Hearthstone showing campfire just
-            # after clicking on Play button
-            while find_ellement(Button.play.filename, Action.move_and_click):
-                time.sleep(1)
-            # waitForItOrPass(UIElement.campfire, 3)
-            # if look_at_campfire_completed_tasks():
-            #    break
-
-            zL = LogHSMercs(settings_dict["zonelog"])
-            zL.start()
-            retour = selectCardsInHand(
-                zL
-            )  # Start the battle : the bot choose the cards and fight against the enemy
-            zL.stop()
-            log.info(f"goToEncounter - retour = {retour}")
-            time.sleep(1)
-            if retour == "win":
-                log.info("goToEncounter : battle won")
-                while True:
-                    if not find_ellement(
-                        UIElement.take_grey.filename, Action.screenshot
-                    ):
-                        mouse_click()
-                        time.sleep(0.5)
+                # fix the problem with Hearthstone showing campfire just
+                # after clicking on Play button
+                for x in range(60):
+                    if find_ellement(Button.play.filename, Action.move_and_click):
+                        time.sleep(1)
                     else:
-                        chooseTreasure()
                         break
+                # waitForItOrPass(UIElement.campfire, 3)
+                # if look_at_campfire_completed_tasks():
+                #    break
 
-                    if not find_ellement(
-                        UIElement.replace_grey.filename, Action.screenshot
-                    ):
-                        mouse_click()
-                        time.sleep(0.5)
-                    else:
-                        chooseTreasure()
-                        break
+                zL = LogHSMercs(settings_dict["zonelog"])
+                zL.start()
+                retour = selectCardsInHand(
+                    zL
+                )  # Start the battle : the bot choose the cards and fight against the enemy
+                zL.stop()
+                log.info(f"goToEncounter - retour = {retour}")
+                time.sleep(1)
+                if retour == "win":
+                    log.info("goToEncounter : battle won")
+                    for x in range(60):
+                        if not find_ellement(
+                            UIElement.take_grey.filename, Action.screenshot
+                        ):
+                            mouse_click()
+                            time.sleep(0.5)
+                        else:
+                            chooseTreasure()
+                            break
 
-                    if find_ellement(
-                        UIElement.reward_chest.filename, Action.screenshot
-                    ):
-                        send_notification(
-                            {"message": "Boss defeated. Time for REWARDS !!!"}
-                        )
-                        send_slack_notification(
-                            json.dumps({"text": "Boss defeated. Time for REWARDS !!!"})
-                        )
-                        log.info(
-                            "goToEncounter : " "Boss defeated. Time for REWARDS !!!"
-                        )
-                        collect()
-                        travelEnd = True
-                        break
-            elif retour == "loose":
-                travelEnd = True
-                send_notification({"message": "goToEncounter : Battle lost"})
-                send_slack_notification(
-                    json.dumps({"text": "goToEncounter : Battle lost"})
-                )
-                log.info("goToEncounter : Battle lost")
+                        if not find_ellement(
+                            UIElement.replace_grey.filename, Action.screenshot
+                        ):
+                            mouse_click()
+                            time.sleep(0.5)
+                        else:
+                            chooseTreasure()
+                            break
+
+                        if find_ellement(
+                            UIElement.reward_chest.filename, Action.screenshot
+                        ):
+                            send_notification(
+                                {"message": "Boss defeated. Time for REWARDS !!!"}
+                            )
+                            send_slack_notification(
+                                json.dumps({"text": "Boss defeated. Time for REWARDS !!!"})
+                            )
+                            log.info(
+                                "goToEncounter : " "Boss defeated. Time for REWARDS !!!"
+                            )
+                            collect()
+                            travelEnd = True
+                            break
+                elif retour == "loose":
+                    travelEnd = True
+                    send_notification({"message": "goToEncounter : Battle lost"})
+                    send_slack_notification(
+                        json.dumps({"text": "goToEncounter : Battle lost"})
+                    )
+                    log.info("goToEncounter : Battle lost")
+                else:
+                    travelEnd = True
+                    log.info("goToEncounter : don't know what happened !")
+
             else:
-                travelEnd = True
-                log.info("goToEncounter : don't know what happened !")
-
+                if not nextlvl():
+                    break
         else:
-            if not nextlvl():
-                break
+            break
 
     for x in range(60): 
         if not find_ellement(UIElement.bounties.filename, Action.screenshot):
             look_at_campfire_completed_tasks()
             move_mouse_and_click(windowMP(), windowMP()[2] / 2, windowMP()[3] / 1.25)
             time.sleep(2)
-
-    if not find_ellement(UIElement.bounties.filename, Action.screenshot):
-        defaultCase()
-        time.sleep(2)
+        else:
+            break
 
 def travelToLevel(page="next"):
     """

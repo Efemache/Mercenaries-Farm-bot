@@ -9,7 +9,7 @@ from .mouse_utils import move_mouse_and_click, move_mouse, mouse_click  # , mous
 
 from .image_utils import find_ellement
 from .constants import UIElement, Button, Action
-from .game import countdown, waitForItOrPass, defaultCase
+from .game import countdown, waitForItOrPass
 
 # from .log_board import LogHSMercs
 from .settings import settings_dict, mercslist, mercsAbilities, ability_order
@@ -76,10 +76,13 @@ def select_random_enemy_to_attack(enemies=None):
     enemies = enemies or []
     log.debug("select_random_enemy_to_attack : %s len=%s", enemies, len(enemies))
     retour = False
-    while enemies:
-        toAttack = enemies.pop(random.randint(0, len(enemies) - 1))
-        if select_enemy_to_attack(toAttack):
-            retour = True
+    for x in range(60):
+        if enemies:
+            toAttack = enemies.pop(random.randint(0, len(enemies) - 1))
+            if select_enemy_to_attack(toAttack):
+                retour = True
+                break
+        else:
             break
 
     # attacks the middle enemy minion if you don't find any enemy
@@ -514,7 +517,7 @@ def battle(zoneLog=None):
     retour = True
 
     raund = 1
-    while True:
+    for x in range(60):
         move_mouse(
             windowMP(),
             windowMP()[2] // 4,
@@ -604,7 +607,7 @@ def battle(zoneLog=None):
                 time.sleep(0.1)
 
             i = 0
-            for x in range(60): 
+            for x in range(60):
                 if not find_ellement(Button.allready.filename, Action.move_and_click):
                     if i > 5:
                         move_mouse(windowMP(), windowMP()[2] // 1.2, windowMP()[3] // 3)
@@ -613,12 +616,10 @@ def battle(zoneLog=None):
                         break
                     time.sleep(0.2)
                     i += 1
+                else:
+                    break
             time.sleep(3)
             raund += 1
-
-            if not find_ellement(Button.allready.filename, Action.move_and_click):
-                defaultCase()
-                time.sleep(2)
 
     return retour
 
@@ -676,12 +677,15 @@ def selectCardsInHand(zL=None):
 
         # let the "while". In future release,
         #   we could add a function to select specifics cards
-        while not (
-            find_ellement(Button.num.filename, Action.move_and_click)
-            or find_ellement(Button.allready.filename, Action.move_and_click)
-        ):
-            move_mouse(windowMP(), x1, y1)
-            move_mouse(windowMP(), x2, y2)
+        for x in range(60):
+            if not (
+                find_ellement(Button.num.filename, Action.move_and_click)
+                or find_ellement(Button.allready.filename, Action.move_and_click)
+            ):
+                move_mouse(windowMP(), x1, y1)
+                move_mouse(windowMP(), x2, y2)
+            else:
+                break
 
         retour = battle(zL)
         log.debug("[ SETH - END]")
@@ -713,11 +717,14 @@ class cardsInHand:
             self.on_board += 1
             self.in_hand.remove(mercenary)
             i = 0
-            while not self.zone_log.get_zonechanged():
-                time.sleep(0.5)
-                i += 1
-                if i > 10:
-                    log.error(f"Putting {mercenary} on board failed.")
+            for x in range(60):
+                if not self.zone_log.get_zonechanged():
+                    time.sleep(0.5)
+                    i += 1
+                    if i > 10:
+                        log.error(f"Putting {mercenary} on board failed.")
+                        break
+                else:
                     break
 
     def clean(self):

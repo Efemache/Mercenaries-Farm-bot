@@ -40,8 +40,11 @@ def check_party_tasks():
         if find_ellement(
             Button.campfire_completed_partytask.filename, Action.move_and_click
         ):
-            while not find_ellement(Button.campfire_claim.filename, Action.screenshot):
-                time.sleep(0.5)
+            for x in range(60):
+                if not find_ellement(Button.campfire_claim.filename, Action.screenshot):
+                    time.sleep(0.5)
+                else:
+                    break
             return True
     return False
 
@@ -66,20 +69,29 @@ def check_visitor_tasks():
 
 
 def claim_task_reward():
-    while not find_ellement(Button.campfire_claim.filename, Action.screenshot):
-        time.sleep(0.5)
+    for x in range(60):
+        if not find_ellement(Button.campfire_claim.filename, Action.screenshot):
+            time.sleep(0.5)
+        else:
+            break
 
     # Loop added beause sometimes the bot find the button but
     # Hearthstone is not ready, so the bot click too soon.
     # Need to make a loop to try several time to click
-    while find_ellement(Button.campfire_claim.filename, Action.move_and_click):
-        time.sleep(0.5)
-        move_mouse(windowMP(), windowMP()[2] / 2, windowMP()[3] / 1.125)
+    for x in range(60):
+        if find_ellement(Button.campfire_claim.filename, Action.move_and_click):
+            time.sleep(0.5)
+            move_mouse(windowMP(), windowMP()[2] / 2, windowMP()[3] / 1.125)
+        else:
+            break
 
     time.sleep(2)
-    while not find_ellement(UIElement.campfire.filename, Action.screenshot):
-        mouse_click()
-        time.sleep(2)
+    for x in range(60):
+        if not find_ellement(UIElement.campfire.filename, Action.screenshot):
+            mouse_click()
+            time.sleep(2)
+        else:
+            break
 
 
 def look_at_campfire_completed_tasks():
@@ -91,23 +103,26 @@ def look_at_campfire_completed_tasks():
     if find_ellement(UIElement.campfire.filename, Action.screenshot):
         retour = True
         toggled = False
-        while find_ellement(UIElement.campfire.filename, Action.move):
-            if (
-                find_ellement(Button.campfire_hiddenparty.filename, Action.screenshot)
-                and check_visitor_tasks()
-            ) or (
-                find_ellement(
-                    Button.campfire_hiddenvisitors.filename, Action.screenshot
-                )
-                and check_party_tasks()
-            ):
-                claim_task_reward()
-            else:
-                if toggled:
-                    break
+        for x in range(60):
+            if find_ellement(UIElement.campfire.filename, Action.move):
+                if (
+                    find_ellement(Button.campfire_hiddenparty.filename, Action.screenshot)
+                    and check_visitor_tasks()
+                ) or (
+                    find_ellement(
+                        Button.campfire_hiddenvisitors.filename, Action.screenshot
+                    )
+                    and check_party_tasks()
+                ):
+                    claim_task_reward()
                 else:
-                    toggle_campfire_screen()
-                    toggled = True
+                    if toggled:
+                        break
+                    else:
+                        toggle_campfire_screen()
+                        toggled = True
+            else:
+                break
 
         move_mouse_and_click(windowMP(), windowMP()[2] / 1.16, windowMP()[3] / 1.93)
 

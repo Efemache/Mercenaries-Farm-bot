@@ -52,9 +52,12 @@ def chooseTreasure():
             move_mouse_and_click(windowMP(), x, y)
             time.sleep(1)
 
-    while not (
-        find_ellement(Button.take.filename, Action.move_and_click)
-        or find_ellement(Button.keep.filename, Action.move_and_click)
-        or find_ellement(Button.replace.filename, Action.move_and_click)
-    ):
-        time.sleep(1)
+    for x in range(60):
+        if not (
+            find_ellement(Button.take.filename, Action.move_and_click)
+            or find_ellement(Button.keep.filename, Action.move_and_click)
+            or find_ellement(Button.replace.filename, Action.move_and_click)
+        ):
+            time.sleep(1)
+        else:
+            break
