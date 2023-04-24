@@ -11,7 +11,7 @@ from .image_utils import find_ellement
 from .constants import UIElement, Button, Action
 from .game import countdown, waitForItOrPass
 
-# from .log_board import LogHSMercs
+from .log_board import LogHSMercs
 from .settings import settings_dict, mercslist, mercsAbilities, ability_order
 
 log = logging.getLogger(__name__)
@@ -91,20 +91,20 @@ def select_random_enemy_to_attack(enemies=None):
     mouse_click("right")
 
 
-def priorityMercByType(myMercs, targettype) -> List[int]:
+def priorityMercByRole(myMercs, targetrole) -> List[int]:
     """
-    return merc position list prioritize by the targetType comes first,
-        non target type after and minion comes last
+    return merc position list prioritize by the targetRole comes first,
+        non target role after and minion comes last
     """
     mercs_pos = []
-    # add targettype mercs first
+    # add targetrole mercs first
     for i in myMercs:
         if myMercs[i] in mercslist:
-            if mercslist[myMercs[i]]["type"] == targettype:
+            if mercslist[myMercs[i]]["role"] == targetrole:
                 mercs_pos.append(int(i))
     if mercs_pos:
         return mercs_pos
-    # add non targettype mercs to the end of the list
+    # add non targetrole mercs to the end of the list
     for i in myMercs:
         if myMercs[i] in mercslist:
             mercs_pos.append(int(i))
@@ -112,7 +112,7 @@ def priorityMercByType(myMercs, targettype) -> List[int]:
         return mercs_pos
     # add friendly minion
     for i in myMercs:
-        if targettype == "minion":
+        if targetrole == "minion":
             mercs_pos.append(int(i))
     return mercs_pos
 
@@ -146,7 +146,11 @@ def ability_target_friend(targettype, myMercs, enemies: Enemies, abilitySetting)
         for i in myMercs:
             if myMercs[i] in mercslist:
                 # is a Mercenary
-                if mercslist[myMercs[i]]["minion_type"] == targettype:
+                # "type" == Beast, Human, ... "faction" == Pirate, Horde, ...
+                if (
+                    targettype in mercslist[myMercs[i]]["type"]
+                    or targettype == mercslist[myMercs[i]]["faction"]
+                ):
                     position = int(i)
             else:
                 # is a friendly Minion
@@ -166,17 +170,17 @@ def ability_target_friend(targettype, myMercs, enemies: Enemies, abilitySetting)
 
 
 def pickBestAllyToBuff(enemies, myMercs, number):
-    # TODO get multiple enemies per type for priority by
-    # weakness of the most type of enemy
+    # TODO get multiple enemies per role for priority by
+    # weakness of the most role of enemy
     if enemies.blue:
         # enemies have blue so we buff red merc first
-        position = random.choice(priorityMercByType(myMercs, "Protector"))
+        position = random.choice(priorityMercByRole(myMercs, "Protector"))
     elif enemies.green:
         # enemies have green so we buff blue merc first
-        position = random.choice(priorityMercByType(myMercs, "Caster"))
+        position = random.choice(priorityMercByRole(myMercs, "Caster"))
     elif enemies.red:
         # enemies have red so we buff green merc first
-        position = random.choice(priorityMercByType(myMercs, "Fighter"))
+        position = random.choice(priorityMercByRole(myMercs, "Fighter"))
     else:
         position = random.randint(1, number)
     return position
@@ -216,7 +220,14 @@ def get_ability_for_this_turn(name, minionSection, turn, defaultAbility=0):
 
 
 def parse_ability_setting(ability):
-    retour = {"chooseone": 0, "ai": "byColor", "name": None, "miniontype": None}
+    retour = {
+        "ai": "byColor",
+        "chooseone": 0,
+        "faction": None,
+        "name": None,
+        "role": None,
+        "type": None,
+    }
 
     if ":" not in ability:
         retour["ability"] = int(ability)
@@ -231,11 +242,11 @@ def parse_ability_setting(ability):
                 retour["ai"] = value
             elif key == "name":
                 retour["name"] = value
-            elif key == "miniontype":
-                retour["miniontype"] = value
-            # elif key == "role":
-            # "role" should be "Protector", "Caster" or "Fighter"
-            #    retour["role"] = value
+            elif key == "type":
+                retour["type"] = value
+            elif key == "role":
+                # "role" should be "Protector", "Caster" or "Fighter"
+                retour["role"] = value
             else:
                 log.warning("Unknown parameter")
     return retour
@@ -269,7 +280,7 @@ def didnt_find_a_name_for_this_one(name, minionSection, turn, defaultAbility=0):
             f"abilities Y : {abilitiesPositionY} |"
             f" abilities X : {abilitiesPositionX}"
         )
-        newscreenshot = [
+        abilityScreenshot = [
             int(abilitiesWidth),
             int(abilitiesHeigth),
             int(windowMP()[1] + abilitiesPositionY),
@@ -279,7 +290,7 @@ def didnt_find_a_name_for_this_one(name, minionSection, turn, defaultAbility=0):
             find_ellement(
                 UIElement.hourglass.filename,
                 Action.get_coords,
-                new_screen=newscreenshot,
+                new_screen=abilityScreenshot,
             )
             is None
         ):
@@ -409,7 +420,7 @@ def take_turn_action(
     move_mouse(windowMP(), windowMP()[2] / 3, windowMP()[3] / 2)
     if mercName in mercslist:
         if (
-            mercslist[mercName]["type"] == "Protector"
+            mercslist[mercName]["role"] == "Protector"
             and select_ability(mercName, myMercs, enemies, raund)
             and not select_enemy_to_attack(enemies.green)
             and not select_enemy_to_attack(enemies.mol)
@@ -418,7 +429,7 @@ def take_turn_action(
         ):
             select_random_enemy_to_attack([enemies.red, enemies.blue])
         elif (
-            mercslist[mercName]["type"] == "Fighter"
+            mercslist[mercName]["role"] == "Fighter"
             and select_ability(mercName, myMercs, enemies, raund)
             and not select_enemy_to_attack(enemies.blue)
             and not select_enemy_to_attack(enemies.mol)
@@ -427,7 +438,7 @@ def take_turn_action(
         ):
             select_random_enemy_to_attack([enemies.red, enemies.green])
         elif (
-            mercslist[mercName]["type"] == "Caster"
+            mercslist[mercName]["role"] == "Caster"
             and select_ability(mercName, myMercs, enemies, raund)
             and not select_enemy_to_attack(enemies.red)
             and not select_enemy_to_attack(enemies.mol)
@@ -450,6 +461,8 @@ def take_turn_action(
 
 # Look for enemies
 def find_enemies(ns=True) -> Enemies:
+    # we use new screenshot for the first call
+    # then we already have the image in memory
     enemyred = find_red_enemy(ns)
     enemygreen = find_green_enemy(ns)
     enemyblue = find_blue_enemy(ns)
@@ -494,9 +507,9 @@ def find_mol_enemy(ns=True):
     return find_enemy("sob", ns)
 
 
-def find_enemy(enemy_type, ns=True):
+def find_enemy(enemy_role, ns=True):
     enemy = find_ellement(
-        getattr(UIElement, enemy_type).filename, Action.get_coords, new_screen=ns
+        getattr(UIElement, enemy_role).filename, Action.get_coords, new_screen=ns
     )
     # find_element: Can be changed to return None or actual coords if exists
     if enemy:
@@ -565,15 +578,20 @@ def battle(zoneLog=None):
 
             time.sleep(0.5)
 
-            # tmp = int(windowMP()[3] / 2)
-            newscreenshot = [
-                windowMP()[2],
+            # try to target the enemy are (smaller is better to avoid to detect
+            # an enemy outside the zone)
+            enemyBoard_left = int(windowMP()[0] + (windowMP()[2] // 4))
+            enemyBoard_right = int(windowMP()[2] // 1.3) - (
+                enemyBoard_left - windowMP()[0]
+            )
+            enemyBoardScreenshot = [
+                enemyBoard_right,
                 windowMP()[3] // 2,
                 windowMP()[1],
-                windowMP()[0],
+                enemyBoard_left,
             ]
 
-            enemies = find_enemies(newscreenshot)
+            enemies = find_enemies(enemyBoardScreenshot)
 
             # Go (mouse) to "central zone" and click on an empty space
             # move_mouse_and_click(windowMP(), windowMP()[2] // 2, windowMP()[3] // 1.2)
@@ -636,6 +654,14 @@ def selectCardsInHand(zL=None):
     waitForItOrPass(Button.num, 60, 2)
 
     if find_ellement(Button.num.filename, Action.screenshot):
+        zL = LogHSMercs(settings_dict["zonelog"])
+        # check if Zone.log was erased so we need to go back
+        zL.find_battle_start_log()
+        zL.start()
+        while not zL.eof:
+            print("Reaching Zone.log end before starting")
+            time.sleep(1)
+
         # check if HS is ready for the battle
         # and check logs to find
         boss = zL.getEnemyBoard()
@@ -683,6 +709,8 @@ def selectCardsInHand(zL=None):
 
         # put back default value to selection abilities from [Mercenary] section
         ability_section = default_ability_section
+
+        zL.stop()
 
     return retour
 

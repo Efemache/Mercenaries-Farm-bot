@@ -1,5 +1,4 @@
 import time
-import os
 import re
 from pathlib import Path
 import threading
@@ -15,7 +14,16 @@ class LogHSMercs:
         """
         self.logpath = logpath
 
-        Path(logpath).touch(exist_ok=True)
+        if not Path(logpath).exists():
+            log.info("Logfile 'Zone.log' doesn't exist. Waiting for it...")
+        while not Path(logpath).exists():
+            time.sleep(1)
+
+        self.filePos = None
+        self.eof = False
+        self.line = None
+        self.logfile = open(self.logpath, "r", encoding="UTF-8")
+
         self.cardsInHand = []
         self.myBoard = {}
         self.mercsId = {}
@@ -25,9 +33,23 @@ class LogHSMercs:
 
         self.zonechange_finished = False
 
+    def find_battle_start_log(self):
+        line = self.logfile.readline()
+        while line:
+            if re.search(
+                r"ZoneMgr.AddServerZoneChanges\(\) - taskListId=1"
+                " changeListId=1 taskStart=0 taskEnd=",
+                line,
+            ):
+                self.filePos = self.logfile.tell()
+            line = self.logfile.readline()
+
+        if self.filePos:
+            self.logfile.seek(self.filePos)
+
     def follow(self):
         # go to the end of the file
-        self.logfile.seek(0, os.SEEK_END)
+        # self.logfile.seek(0, os.SEEK_END)
 
         regexBoard = (
             ".+? tag=ZONE_POSITION "
@@ -35,7 +57,7 @@ class LogHSMercs:
             "id=(.+?) "
             ".+?zonePos=(.) "
             "cardId=.+? "
-            "player=1\] .+? "
+            r"player=1\] .+? "
             "dstPos=(.)"
         )
         regexEnemyBoard = (
@@ -43,7 +65,7 @@ class LogHSMercs:
             "id=(.+?) "
             ".+?zonePos=(.) "
             "cardId=.+? "
-            "player=2\] .+? "
+            r"player=2\] .+? "
             "dstZoneTag=PLAY "
             "dstPos=(.)"
         )
@@ -53,13 +75,13 @@ class LogHSMercs:
             "id=(.+?) "
             ".+?zonePos=(.) "
             "cardId=.+? "
-            "player=2\] .+? "
+            r"player=2\] .+? "
             "dstPos=(.)"
         )
         regexInHand = (
             ".+?entityName=(.+?) +"
             "id=.+ "
-            ".+?cardId=.+? player=3\] .+? "
+            r".+?cardId=.+? player=3\] .+? "
             "dstZoneTag=HAND .+?"
         )
         # D 14:25:59.2307890 ZoneChangeList.ProcessChanges() - processing index=4 change=powerTask=[power=[type=TAG_CHANGE entity=[id=5 cardId=LETL_006H_01 name=Lord Jaraxxus] tag=FAKE_ZONE value=3 ] complete=False] entity=[entityName=Lord Jaraxxus id=5 zone=SETASIDE zonePos=0 cardId=LETL_006H_01 player=3] srcZoneTag=INVALID srcPos= dstZoneTag=HAND dstPos=
@@ -78,6 +100,7 @@ class LogHSMercs:
             line = self.logfile.readline()
             # sleep if file hasn't been updated
             if not line:
+                self.eof = True
                 time.sleep(0.1)
                 continue
 
@@ -161,7 +184,6 @@ class LogHSMercs:
 
     def start(self):
         log.debug("Reading logfile: %s", self.logpath)
-        self.logfile = open(self.logpath, "r", encoding="UTF-8")
         self.__running = True
         t1 = threading.Thread(target=self.follow)
         self.thread = t1

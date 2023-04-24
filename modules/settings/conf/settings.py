@@ -21,8 +21,8 @@ def add_bot_settings(set_dict):
     ).as_posix()
 
     set_dict["user_files_dir"] = pathlib.PurePath("conf", "user").as_posix()
-    print(set_dict["user_files_dir"])
-    print(set_dict["images_dir"])
+    #    print(set_dict["user_files_dir"])
+    #    print(set_dict["images_dir"])
 
     return set_dict
 

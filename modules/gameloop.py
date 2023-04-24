@@ -30,13 +30,13 @@ def where():
         )
         sys.exit()
 
-    find_ellement(Button.reconnect.filename, Action.move_and_click)
-
     find_ellement(Button.join_button.filename, Action.move_and_click)
 
-    # Find PVE adventure payed and free
-    if find_ellement(UIElement.battle.filename, Action.move_and_click) or find_ellement(
-        UIElement.free_battle.filename, Action.move_and_click
+    # Find PVE adventure payed, free or portal
+    if (
+        find_ellement(UIElement.battle_portal.filename, Action.move_and_click)
+        or find_ellement(UIElement.battle.filename, Action.move_and_click)
+        or find_ellement(UIElement.free_battle.filename, Action.move_and_click)
     ):
         mx = jposition["mouse.neutral.x"]
         my = jposition["mouse.neutral.y"]

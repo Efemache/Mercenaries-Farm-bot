@@ -2,7 +2,7 @@ import sys
 import time
 
 from .image_utils import find_ellement
-from .constants import Action, UIElement
+from .constants import Action, UIElement, Button
 from .settings import jposition
 from .mouse_utils import move_mouse, move_mouse_and_click, mouse_position
 from .platforms import windowMP
@@ -54,3 +54,8 @@ def defaultCase():
         my = jposition["mouse.neutral.y"]
         move_mouse_and_click(windowMP(), windowMP()[2] / mx, windowMP()[3] / my)
         move_mouse(windowMP(), x, y)
+    elif find_ellement(Button.reconnect.filename, Action.move_and_click):
+        # Handle the disconnect case
+        log.info("Game disconnected")
+    # To Do: Is "else" needed to skip other screens ?
+    # To Do: need to add a 'find_ellement' on the "Closed HS" screen

@@ -27,3 +27,6 @@ conf/user/*.json
 
 # Log file
 mfb.log
+
+# venv environment
+MFB/

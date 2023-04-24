@@ -27,6 +27,7 @@ class UIElement(ImageFragment):
 
     Alterac = "Alterac"
     Barrens = "Barrens"
+    Bossrush = "Bossrush"
     Blackrock = "Blackrock"
     Darkshore = "Darkshore"
     Darkmoon = "Darkmoon"
@@ -35,6 +36,7 @@ class UIElement(ImageFragment):
     Sunken = "Sunken"
     Winterspring = "Winterspring"
     battle = "battle"
+    battle_portal = "battle_portal"
     blue = "blue"
     encounter_booncaster = "encounter_booncaster"
     encounter_boonfighter = "encounter_boonfighter"
@@ -114,6 +116,9 @@ class Button(ImageFragment):
     tavern = "tavern"
     view_party = "view_party"
     visit = "visit"
+    battlenet_play = "battlenet_play"
+    battlenet = "battlenet"
+    battlenet_hearthstone = "battlenet_hearthstone"
 
 
 class Action(StrEnum):

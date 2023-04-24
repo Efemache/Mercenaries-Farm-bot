@@ -1,2 +1,2 @@
 -r requirements.in
-pywin32==303
+pywin32==305

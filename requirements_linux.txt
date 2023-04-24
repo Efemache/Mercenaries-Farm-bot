@@ -12,6 +12,8 @@ numpy==1.23.2
     # via opencv-python
 opencv-python==4.6.0.66
     # via -r requirements.in
+pillow==9.4.0
+    # via -r requirements.in
 pgi==0.0.11.2
     # via -r requirements_linux.in
 pyautogui==0.9.53

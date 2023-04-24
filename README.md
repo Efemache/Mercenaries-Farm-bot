@@ -77,7 +77,7 @@ Tags are not used anymore (last one is 0.8.3 and is deprecated); instead, downlo
 
 
 ## Windows
-* Install [Python 3.10](https://www.python.org/ftp/python/3.10.0/python-3.10.0-amd64-webinstall.exe) (⚠️ select the "Add Python 3.10 to PATH" during installation) 
+* Install [Python 3.11](https://www.python.org/ftp/python/3.11.0/python-3.11.0-amd64-webinstall.exe) (⚠️ select the "Add Python 3.11 to PATH" during installation) 
 * Download the project
 * Open conf/user/settings.ini and set your [settings](https://github.com/Efemache/Mercenaries-Farm-bot/wiki/Settings#settingsini-confusersettingsini) (⚠️ don't forget to set "GameDir" to your Hearthstone directory)
 * Edit your Hearthstone [log.config file](https://github.com/Efemache/Mercenaries-Farm-bot/wiki/Settings#logconfig)
@@ -87,6 +87,7 @@ Tags are not used anymore (last one is 0.8.3 and is deprecated); instead, downlo
 
 
 ## Linux
+* Install python3-venv (`sudo apt install python3.11-venv`)
 * Install gir1.2-wnck-3.0 (`sudo apt install gir1.2-wnck-3.0`)
 * Install - if needed - libharfbuzz-gobject0 (`sudo apt install libharfbuzz-gobject0`)
 * Download the project
@@ -139,11 +140,12 @@ To discuss with the community, go to discord : [Mercenaries Farm server](https:/
 ## Support
 |                                        |   |
 | :------------------------------------- | :-------------:|
+|0. start from Battle.net | 1080 screen res. |
 |1. transition to Travel point selection | ✓|
 |    * new travel point portal | ✓|
 |    * Boss Rush support | x|
 |2. transition to Level/Bounty selection | ✓|
-|3. transition between encounters |  |
+|3. transition between encounters | ✓|
 |4. prioritize the spirit healer  | ✓|
 |5. prioritize the mysterious node | ✓|
 |6. put mercs on board | ✓|
