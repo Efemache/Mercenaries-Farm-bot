@@ -20,9 +20,9 @@ To continue to work on and maintain the bot :
 * For those who **help** (in coding) **and** those who **[give a tip](#if-you-want-to-support-or-thank-us) (at least 10$)**, updates will be **delivered 3-4 weeks before others**
 
 > **Warning**:
-> Blizzard pushed the last major update for Mercenary mode (February 14, 2023) and it is well supported by MFB (even in community version).
-> So there won't be new update on MFB. If you like (or liked) it, you can send a [tip](#if-you-want-to-support-or-thank-us)
-> Perhpas the "Supporters" version will get a dedicated GUI (Graphical User Interface)
+> Blizzard pushed the last major update for Mercenary mode (February 14, 2023) and it is well supported by MFB (even in community version).  
+> So there won't be new update on MFB. If you like (or liked) it, you can send a [tip](#if-you-want-to-support-or-thank-us)  
+> Perhpas the "Supporters" version will get a dedicated GUI (Graphical User Interface)  
 
 
 # Purpose
