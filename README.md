@@ -1,28 +1,12 @@
 # Mercenaries Farm Bot (for Hearthstone)
 MFB official URL : https://github.com/Efemache/Mercenaries-Farm-bot/
 
-# Free & Tip: 2 ways starting 2022-11-07
-<details><summary>Click here if you want some context about Free & Tip version</summary>
 
-## Context
-* I started to actively work on this bot (november 2021) because **I thought doing it open source, some devs would come** too to improve MFB so it would be a win/win
-* Too few devs came (**big thanks to those who participated**) and they, generally, added a feature or two or fixed a bug but none staied on a long term or to globally help
-* A lot of users asked for : features, doc update, videos, bugs fix (a lot of them didn't even impact me), help because they misconfigured MFB, help on their setup which wasn't even offically supported and I helped each time I could :
-  * **Only 4 people made a donation**
-  * A donation is like "Great job" or "Hey, you helped me, thanks, let me buy you a beer or a coffee" (especially when I spent 1 hour or more to help someone)
-* Finally, it was way too much work for me "alone" and a lose/win for me
-
-## In conclusion 
-</details>
-
-To continue to work on and maintain the bot : 
-* MFB remains **free and open source** but updates will be **delivered 3-4 weeks later**
-* For those who **help** (in coding) **and** those who **[give a tip](#if-you-want-to-support-or-thank-us) (at least 10$)**, updates will be **delivered 3-4 weeks before others**
-
-> **Warning**:
-> Blizzard pushed the last major update for Mercenary mode (February 14, 2023) and it is well supported by MFB (even in community version).  
-> So there won't be new update on MFB. If you like (or liked) it, you can send a [tip](#if-you-want-to-support-or-thank-us)  
-> Perhpas the "Supporters" version will get a dedicated GUI (Graphical User Interface)  
+> **Warning**:  
+> Blizzard pushed the last major update for Mercenary mode (February 14, 2023) and it was well supported by MFB (even in community version in 2023, April).  
+> So I decided to no longer maintain it (no more update).  
+> At the end of May, Blizzard pushed an Hearthstone update which doesn't work anymore with this bot.  
+> If you liked the bot, you can send a [tip](#if-you-want-to-support-or-thank-us)    
 
 
 # Purpose
