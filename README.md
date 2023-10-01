@@ -3,18 +3,16 @@ MFB official URL : https://github.com/Efemache/Mercenaries-Farm-bot/
 
 
 > **Warning**:  
-> Blizzard pushed the last major update for Mercenary mode (February 14, 2023) and it was well supported by MFB (even in community version in 2023, April).  
+> Blizzard pushed the last major update for Mercenary mode (February 14, 2023) and it was well supported by MFB (even in community version) until April, 2023.  
 > So I decided to no longer maintain it (no more update).  
 > At the end of May, Blizzard pushed an Hearthstone update which doesn't work anymore with this bot.  
-> If you liked the bot, you can send a [tip](#if-you-want-to-support-or-thank-us)    
 
 
 # Purpose
 The purpose of this bot is to automatically pass the bounty levels to level up your mercenaries, win somes coins and complete campfire tasks.
 
 There is a [```main```](https://github.com/Efemache/Mercenaries-Farm-bot) branch to use daily.  
-[```dev2```](https://github.com/Efemache/Mercenaries-Farm-bot/tree/dev2) branch is used for Pull Request (PR) only.  
-Tags are not used anymore (last one is 0.8.3 and is deprecated); instead, download and use main branch.
+Tags are not used anymore; instead, download and use main branch.
 
 > **Note**:  
 > Up to "March of the Lich King" expansion (and Mini-set "Returns to Naxxramas") release, MFB works to complete a lot of campfire tasks and somes bounties.  
@@ -25,32 +23,6 @@ Tags are not used anymore (last one is 0.8.3 and is deprecated); instead, downlo
 # PvE preview (video)
 [![Watch the video](https://user-images.githubusercontent.com/56414438/156830161-924cf85c-64a2-4215-870d-d0d005d28adc.jpg)](https://youtu.be/ZQ3xCL9_4Yo)
 
-
-# If you want to support (or thank) us
-## Buy us a coffee, a beer or more 😄 
-|    Platform           | Address |  
-| :------------         | :-------------:|
-|Ko-Fi       | [mercenariesfarm](https://ko-fi.com/mercenariesfarm) |
-
-
-## Or send crypto
-
-|    Platform           | Address | QR Code | 
-| :------------         | :-------------:|  :-------------:|  
-| Bitcoin (BTC)         | 3L4MJh6JVrnHyDDrvrkZQNtUytYNjop18f | <img src="https://user-images.githubusercontent.com/56414438/162740117-eeebb1ef-2971-40d3-8e8f-a39fa51e8c6e.png" alt="BTC" width="200" /> |
-|Ethereum (ETH) or <br />Binance Smart Chain (BNB/BUSD) (*)| 0x6Db162daDe8385608867A3B19CF1465e0ed7c0e2 | <img src="https://user-images.githubusercontent.com/56414438/162740147-39c72409-94f3-4871-b9e5-a782ab9c2522.png" alt="ETH-BSC" width="200" /> |
-
- (\*) *yes, BSC and ETH addresses are the same*
-
- (\*) *on Ethereum blockchain you can send any ERC-20 token (let us know if you send token other than ETH)*
-
- (\*) *on BSC blockchain you can send any BEP-20 token (let us know if you send another token than BNB or BUSD)*
-
-
-## Just a "Thanks"
-|    Platform           | Address |
-| :------------         | :-------------:|
-| "Thank you"           | [<img src="https://user-images.githubusercontent.com/56414438/163575703-d249c687-1fd4-4c4d-b549-e27b01bb022b.png" alt="twitter" width="35rem">](https://twitter.com/MercenariesFarm) [<img src="https://user-images.githubusercontent.com/56414438/163575713-a5b96683-f788-4d48-b598-a838e7e97b8b.png" alt="youtube" width="35rem">](https://www.youtube.com/channel/UCye37bX5PJnPgChWvzjTqKg) [<img src="https://user-images.githubusercontent.com/56414438/163575692-c6d78ec2-ae37-46e9-84ca-fd650d3835c2.png" alt="discord" width="35rem">](https://discord.gg/ePghxaUBEK)| |
 
 # Installation
 ## When the bot is running
@@ -89,15 +61,13 @@ Tags are not used anymore (last one is 0.8.3 and is deprecated); instead, downlo
 # News & contact 
 More informations in [Wiki](https://github.com/Efemache/Mercenaries-Farm-Bot/wiki)
 
-For news, follow us on Twitter : [@MercenariesFarm](https://twitter.com/MercenariesFarm)
+For videos (news, settings, ...), watch on YouTube (no new video) : [MercenariesFarm Channel](https://www.youtube.com/channel/UCye37bX5PJnPgChWvzjTqKg)
 
-For videos (news, settings, ...), subscribe on YouTube : [MercenariesFarm Channel](https://www.youtube.com/channel/UCye37bX5PJnPgChWvzjTqKg)
+If you have any issue with the bot, please, read first the [FAQ (Frequently Asked Questions)](https://github.com/Efemache/Mercenaries-Farm-bot/tree/main/doc/FAQ.md).
 
-If you have any issue with the bot, please, read first the [FAQ (Frequently Asked Questions)](https://github.com/Efemache/Mercenaries-Farm-bot/wiki/FAQ) before posting any question on discord or opening an issue on Github.
+~~For bugs, open an [issue](https://github.com/Efemache/Mercenaries-Farm-Bot/issues)~~
 
-For bugs, open an [issue](https://github.com/Efemache/Mercenaries-Farm-Bot/issues)
-
-To discuss with the community, go to discord : [Mercenaries Farm server](https://discord.gg/ePghxaUBEK) (⚠️ don't ask in private message)
+~~To discuss with the community, go to discord : [Mercenaries Farm server](https://discord.gg/ePghxaUBEK) (⚠️ don't ask in private message)~~
 
 
 # Dev progress
