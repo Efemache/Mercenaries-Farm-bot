@@ -2,7 +2,7 @@
 MFB official URL : https://github.com/Efemache/Mercenaries-Farm-bot/
 
 
-> **Warning**:  
+> [!WARNING]  
 > Blizzard pushed the last major update for Mercenary mode (February 14, 2023) and it was well supported by MFB (even in community version) until April, 2023.  
 > So I decided to no longer maintain it (no more update).  
 > At the end of May, Blizzard pushed an Hearthstone update which doesn't work anymore with this bot.  
@@ -14,7 +14,7 @@ The purpose of this bot is to automatically pass the bounty levels to level up y
 There is a [```main```](https://github.com/Efemache/Mercenaries-Farm-bot) branch to use daily.  
 Tags are not used anymore; instead, download and use main branch.
 
-> **Note**:  
+> [!NOTE]  
 > Up to "March of the Lich King" expansion (and Mini-set "Returns to Naxxramas") release, MFB works to complete a lot of campfire tasks and somes bounties.  
 
 
