@@ -39,8 +39,11 @@ def get_system_user_settings(system_settings_filename, user_settings_filename):
         if not game_dir.is_dir():
             raise MissingGameDirectory(f"Game directory ({game_dir}) does not exist")
         else:
+            logs_dir = game_dir / "Logs"
+            latest_folder = max(logs_dir.iterdir(), key=lambda x: x.stat().st_mtime)
+            latest_dir = logs_dir / latest_folder
             settings_dict["zonelog"] = pathlib.PurePath(
-                game_dir, "Logs/Zone.log"
+                latest_dir, "Zone.log"
             ).as_posix()
 
         log.info("Settings")
