@@ -6,7 +6,7 @@ You need to configure your [conf/user/settings.ini](https://github.com/Efemache/
 
 ## how-to configure mercenaries attacks ?
 
-You need to edit your [conf/user/combo.ini](https://github.com/Efemache/Mercenaries-Farm-bot/tree/main/doc/settings.md#comboini)
+You need to edit your [conf/user/combo.ini](https://github.com/Efemache/Mercenaries-Farm-bot/tree/main/doc/settings.md#comboini-confusercomboini)
 
 ## how-to change the group's name (default: Botwork) ?
 
