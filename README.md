@@ -33,8 +33,8 @@ Tags are not used anymore; instead, download and use main branch.
 ## Windows
 * Install [Python 3.11](https://www.python.org/ftp/python/3.11.0/python-3.11.0-amd64-webinstall.exe) (⚠️ select the "Add Python 3.11 to PATH" during installation) 
 * Download the project
-* Open conf/user/settings.ini and set your [settings](https://github.com/Efemache/Mercenaries-Farm-bot/wiki/Settings#settingsini-confusersettingsini) (⚠️ don't forget to set "GameDir" to your Hearthstone directory)
-* Edit your Hearthstone [log.config file](https://github.com/Efemache/Mercenaries-Farm-bot/wiki/Settings#logconfig)
+* Open conf/user/settings.ini and set your [settings](https://github.com/Efemache/Mercenaries-Farm-bot/tree/main/doc/settings.md#settingsini-confusersettingsini) (⚠️ don't forget to set "GameDir" to your Hearthstone directory)
+* Edit your Hearthstone [log.config file](https://github.com/Efemache/Mercenaries-Farm-bot/tree/main/doc/settings.md#logconfig)
 * Start Hearthstone (with same resolution as set in settings.ini)
 * Create a group of mercenaries named "Botwork" (and go back to main menu)
 * Run HSbotRunner.bat
@@ -45,8 +45,8 @@ Tags are not used anymore; instead, download and use main branch.
 * Install gir1.2-wnck-3.0 (`sudo apt install gir1.2-wnck-3.0`)
 * Install - if needed - libharfbuzz-gobject0 (`sudo apt install libharfbuzz-gobject0`)
 * Download the project
-* Open conf/user/settings.ini and set your [settings](https://github.com/Efemache/Mercenaries-Farm-bot/wiki/Settings#settingsini-confusersettingsini) (⚠️ don't forget to set "GameDir" to your Hearthstone directory)
-* Edit your Hearthstone [log.config file](https://github.com/Efemache/Mercenaries-Farm-bot/wiki/Settings#logconfig)
+* Open conf/user/settings.ini and set your [settings](https://github.com/Efemache/Mercenaries-Farm-bot/tree/main/doc/settings.md#settingsini-confusersettingsini) (⚠️ don't forget to set "GameDir" to your Hearthstone directory)
+* Edit your Hearthstone [log.config file](https://github.com/Efemache/Mercenaries-Farm-bot/tree/main/doc/settings.md#logconfig)
 * Start Hearthstone (with same resolution as set in settings.ini)
 * Create a group of mercenaries named "Botwork" (and go back to main menu)
 * Run HSbotRunner.sh
@@ -57,7 +57,7 @@ Tags are not used anymore; instead, download and use main branch.
 
 
 # News & contact 
-More informations in [Wiki](https://github.com/Efemache/Mercenaries-Farm-Bot/wiki)
+No more news!
 
 For videos (news, settings, ...), watch on YouTube (no new video) : [MercenariesFarm Channel](https://www.youtube.com/channel/UCye37bX5PJnPgChWvzjTqKg)
 
@@ -103,7 +103,7 @@ If you have any issue with the bot, please, read first the [FAQ (Frequently Aske
 |6. put mercs on board | ✓|
 |7. search for suitable opponents | ✓|
 |8. choose abilities :  | ✓|
-|    * for each mercenary (using [combo.ini](https://github.com/Efemache/Mercenaries-Farm-bot/wiki/Settings#comboini-confusercomboini) files) | ✓|
+|    * for each mercenary (using [combo.ini](https://github.com/Efemache/Mercenaries-Farm-bot/tree/main/doc/settings.md#comboini-confusercomboini) files) | ✓|
 |    * or the first abilities by default (if no configuration exists) | ✓|
 |    * ability targetting friendly minion selected by Type, Faction or by Name| ✓|
 |    * taunt, stealth, divine shield, attack, health, ... detection | x|
