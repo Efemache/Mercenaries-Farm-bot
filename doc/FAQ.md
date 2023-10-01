@@ -19,7 +19,7 @@ The file has to be similar to `files/1920x1080/buttons/group_name.png`
 There is another foregroung window from another process (like Window Menu launched with the "windows" key on keyboard).
 
 ## cp949 error
-You're probably using a Korean Windows. Look at the solution in the issue [#154](https://github.com/Efemache/Mercenaries-Farm-bot/issues/154#issuecomment-1310417583) to solve this.
+You're probably using a Korean Windows. Look at the solution in the issue [#154](https://github.com/Efemache/Mercenaries-Farm-bot/tree/main/doc/issues/154.md#issuecomment-1310417583) to solve this.
 
 
 ## AHK Not Installed
@@ -83,7 +83,7 @@ or
 ## Mercenaries don't attack
 *\<GameDir\>/Logs/Zone.log* (Heartsthone log file) is probably not filled during battle.
 
-Read [these instructions](https://github.com/Efemache/Mercenaries-Farm-bot/tree/main/doc/settings.md#logconfig) and if it doesn’t work, follow instructions in issue [#146](https://github.com/Efemache/Mercenaries-Farm-bot/issues/146)
+Read [these instructions](https://github.com/Efemache/Mercenaries-Farm-bot/tree/main/doc/settings.md#logconfig) and if it doesn’t work, follow instructions in issue [#146](https://github.com/Efemache/Mercenaries-Farm-bot/tree/main/doc/issues/146.md)
 
 ## Mercenaries use first ability (or default ability in conf/system/combo.ini). Combo.ini (combo settings) doesn't work
 
@@ -96,7 +96,7 @@ To solve this problem, 2 solutions:
 
 # Features
 ## Stop / Pause MFB
-[**For Supporters**](https://ko-fi.com/mercenariesfarm/posts), you can put the mouse in a corner of the screen.  
+You can put the mouse in a corner of the screen.  
 Next time the bot will try to move the mouse, it will be paused. You'll easily see how-to resume :)
 
 OR  
