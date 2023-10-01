@@ -9,7 +9,7 @@ Find information about new features [on twitter](https://twitter.com/Mercenaries
 
 ## Frequently Asked Question
 
-Check the [FAQ](https://github.com/Efemache/Mercenaries-Farm-bot/wiki/FAQ) before posting any question.
+Check the [FAQ](https://github.com/Efemache/Mercenaries-Farm-bot/tree/main/doc/FAQ.md) before posting any question.
 
 ## New bot/code
 

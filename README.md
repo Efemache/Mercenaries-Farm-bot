@@ -17,8 +17,6 @@ Tags are not used anymore; instead, download and use main branch.
 > **Note**:  
 > Up to "March of the Lich King" expansion (and Mini-set "Returns to Naxxramas") release, MFB works to complete a lot of campfire tasks and somes bounties.  
 
-**If you like the bot, think about [giving a tip](#if-you-want-to-support-or-thank-us)**.
-
 
 # PvE preview (video)
 [![Watch the video](https://user-images.githubusercontent.com/56414438/156830161-924cf85c-64a2-4215-870d-d0d005d28adc.jpg)](https://youtu.be/ZQ3xCL9_4Yo)

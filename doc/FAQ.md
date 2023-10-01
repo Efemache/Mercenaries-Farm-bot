@@ -1,12 +1,12 @@
 # Configuration 
 ## how-to choose travelpoint/bounty/level ?
 
-You need to configure your [conf/user/settings.ini](https://github.com/Efemache/Mercenaries-Farm-bot/wiki/Settings#settingsini)
+You need to configure your [conf/user/settings.ini](https://github.com/Efemache/Mercenaries-Farm-bot/tree/main/doc/settings.md#settingsini)
 
 
 ## how-to configure mercenaries attacks ?
 
-You need to edit your [conf/user/combo.ini](https://github.com/Efemache/Mercenaries-Farm-bot/wiki/Settings#comboini)
+You need to edit your [conf/user/combo.ini](https://github.com/Efemache/Mercenaries-Farm-bot/tree/main/doc/settings.md#comboini)
 
 ## how-to change the group's name (default: Botwork) ?
 
@@ -42,12 +42,12 @@ Copy the
 `conf/user/settings.ini`
 
 
-Read the [settings wiki page](https://github.com/Efemache/Mercenaries-Farm-bot/wiki/Settings#settingsini) to configure user parameters and don’t forget to set the mandatory settings.
+Read the [settings doc page](https://github.com/Efemache/Mercenaries-Farm-bot/tree/main/doc/settings.md#settingsini) to configure user parameters and don’t forget to set the mandatory settings.
 
 
 ## the mouse pointer doesn't move at all (Windows)
 Not an ideal solution but try to start the .bat as Admin (it works for some users).  
-If it throws an error like [`No such file or directory`](https://github.com/Efemache/Mercenaries-Farm-bot/wiki/FAQ#no-such-file-or-directory), read the [Start as Admin](https://github.com/Efemache/Mercenaries-Farm-bot/wiki/FAQ#start-as-admin) section.
+If it throws an error like [`No such file or directory`](https://github.com/Efemache/Mercenaries-Farm-bot/tree/main/doc/FAQ.md#no-such-file-or-directory), read the [Start as Admin](https://github.com/Efemache/Mercenaries-Farm-bot/tree/main/doc/FAQ.md#start-as-admin) section.
 
 ## No such file or directory
 ```
@@ -58,7 +58,7 @@ C:\Windows\system32>py -3.10 main.py
 C:\Users\user\AppData\Local\Programs\Python\Python310\python.exe: can't open file 'C:\Windows\system32\main.py': [Errno 2] No such file or directory
 ```
 You probably started the bot as Admin. Try to start it as a regular user.  
-If it doesn't work as regular user, read the section to [start it as Admin](https://github.com/Efemache/Mercenaries-Farm-bot/wiki/FAQ#start-as-admin)
+If it doesn't work as regular user, read the section to [start it as Admin](https://github.com/Efemache/Mercenaries-Farm-bot/tree/main/doc/FAQ.md#start-as-admin)
 
 ## Start as Admin
 [Start CMD as admin](https://grok.lsu.edu/article.aspx?articleid=18026&printable=y).  
@@ -83,7 +83,7 @@ or
 ## Mercenaries don't attack
 *\<GameDir\>/Logs/Zone.log* (Heartsthone log file) is probably not filled during battle.
 
-Read [these instructions](https://github.com/Efemache/Mercenaries-Farm-bot/wiki/Settings#logconfig) and if it doesn’t work, follow instructions in issue [#146](https://github.com/Efemache/Mercenaries-Farm-bot/issues/146)
+Read [these instructions](https://github.com/Efemache/Mercenaries-Farm-bot/tree/main/doc/settings.md#logconfig) and if it doesn’t work, follow instructions in issue [#146](https://github.com/Efemache/Mercenaries-Farm-bot/issues/146)
 
 ## Mercenaries use first ability (or default ability in conf/system/combo.ini). Combo.ini (combo settings) doesn't work
 
@@ -107,7 +107,7 @@ OR
 ## Season Pass / Reward Track
 Yes, this feature is already available; the bot can wait to maximize XP earning.
 
-Read info in [settings.ini](https://github.com/Efemache/Mercenaries-Farm-bot/wiki/Settings#botsettings-section)
+Read info in [settings.ini](https://github.com/Efemache/Mercenaries-Farm-bot/tree/main/doc/settings.md#botsettings-section)
 
 
 # Dev 
