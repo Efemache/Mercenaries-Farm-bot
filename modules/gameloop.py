@@ -31,6 +31,8 @@ def where():
         sys.exit()
 
     find_ellement(Button.join_button.filename, Action.move_and_click)
+    find_ellement(Button.merc_button.filename, Action.move_and_click)
+    find_ellement(Button.choose_button.filename, Action.move_and_click)
 
     # Find PVE adventure payed, free or portal
     if (
